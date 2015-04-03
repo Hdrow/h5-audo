@@ -6,6 +6,9 @@ var scrollIphone4=false;
 //判断是否处于微信内置浏览器
 var isWeixin=detectWeixin();
 
+//判断是否处于微博内置浏览器
+var isWeibo=detectWeibo();
+
 //-------------------------------------------------------定义当前站点URL，分享功能会调用到
 var siteUrl='http://t.buzzreader.cn/common/iphone/';
 
@@ -279,6 +282,13 @@ function monitor_handler(data){
 function detectWeixin(){
 	var ua = navigator.userAgent.toLowerCase();
 	if(ua.match(/MicroMessenger/i)=="micromessenger") return true;
+	else return false;
+}//end func
+
+//--------------------------------判断是否处于微博内置浏览器
+function detectWeibo(){
+	var ua = navigator.userAgent.toLowerCase();
+	if(ua.match(/weibo/i)=="weibo") return true;
 	else return false;
 }//end func
 

@@ -16,10 +16,8 @@
 var os=detectOS();
 function detectOS() {
 	var	userAgent=navigator.userAgent;
-	console.log(userAgent);
 	var os = {};
 	os.android = userAgent.match(/(Android)\s+([\d.]+)/) || userAgent.match(/Silk-Accelerated/) ? true : false;
-	os.androidICS = os.android && userAgent.match(/(Android)\s4/) ? true : false;
 	os.ipad = userAgent.match(/(iPad).*OS\s([\d_]+)/) ? true : false;
 	os.iphone = !os.ipad && userAgent.match(/(iPhone\sOS)\s([\d_]+)/) ? true : false;
 	os.ios = os.ipad || os.iphone;
@@ -27,6 +25,12 @@ function detectOS() {
 	os.supportsTouch = ((window.DocumentTouch && document instanceof window.DocumentTouch) || 'ontouchstart' in window);
 	if(os.ios) os.iosVer=parseInt(userAgent.match(/OS \d_/)[0].match(/\d/)[0]);
 	else os.iosVer=0;
+	os.weixin = userAgent.match(/MicroMessenger/) ? true : false;
+	os.weibo = userAgent.match(/Weibo/) || userAgent.match(/weibo/) ? true : false;
+	os.safari = userAgent.match(/Safari/) ? true : false;
+	os.chrome = userAgent.match(/Chrome/) ? true : false;
+	os.firefox = userAgent.match(/Firefox/) ? true : false;
+	os.ie = document.documentMode;
 	return os;
 }//end func
 </script>
@@ -73,9 +77,8 @@ function detectOS() {
 <script>
 $(document).ready(function(e) {
 	
-	
 	//代替alert命令
-	//alertFunc('测试测试');
+	//alertFunc('测试');
 	
 	//顶部提示条
 	//addSignBar('本页面为测试版本,抽奖结果无效!');
