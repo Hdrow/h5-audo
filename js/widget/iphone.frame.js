@@ -1,4 +1,4 @@
-//2014.12.9
+//2015.4.7
 (function($) {	
 	jQuery.fn.extend({
 		frameOn: function(option) {
@@ -6,23 +6,17 @@
 			var _box=_this.children('.box');
 			var _load=_this.children('.load');
 			var _sign=_this.children('.sign');
-			var imgNow,imgMax,imgWd,imgHt,imgSelf,imgPath,imgTest,imgRepeat;
+			var imgNow,imgMax=30,imgWd,imgHt,imgSelf,imgPath='images/frame/',imgType='jpg',imgRepeat=true;
 			var posXSt,posYSt,posXLast,posYLast;
 			var idBox;
 			if(option){
 				imgMax=option.num!=null?option.num:30;//图片多少张
 				imgPath=option.path!=null?option.path:'images/frame/';//360图片路径
+				imgType=option.type!=null?option.type:'jpg';//360图片路径
 				imgWd=option.width;
 				imgHt=option.height;
-				imgTest==option.test!=null?option.test:false;//是否测试
 				imgRepeat=option.repeat!=null?option.repeat:true;//是否循环序列
 			}//end if
-			else{
-				imgMax=30;//u向图片多少张
-				imgPath='images/frame/';//360图片路径
-				imgTest=false;
-				imgRepeat=true;
-			}//end else
 			
 			loadFunc();
 			
@@ -34,7 +28,7 @@
 					_load.html(Math.round(e.completedCount/e.totalCount*100)); 
 				}); 			
 				loader.addCompletionListener(function() {
-					if(window.console) console.log('load complete');
+					console.log('load complete');
 					_load.remove();
 					_sign.show();
 					init();
@@ -45,7 +39,6 @@
 			
 			function init(){
 				_box.empty();
-				if(imgTest) idBox=$('<i></i>').appendTo(_box);	
 				imgSelf=$('<img>').appendTo(_box);	
 				var size=[];
 				if(imgWd && imgHt && imgWd>0 && imgHt>0){
@@ -66,13 +59,12 @@
 						
 			//--------自定义事件
 			function resetFunc(event){
-				if(window.console) console.log('sprite reset');
 				imgNow=0;	
-				upShowCar();
+				switchImg();
 			}//end func
 			function gotoFunc(event,value){
 				imgNow=value;	
-				upShowCar();
+				switchImg();
 			}//end func	
 			
 			//-----------------touch事件
@@ -100,11 +92,10 @@
 					if(imgRepeat) imgNow=posXLast>x?imgNow-1:imgNow+1;
 					else imgNow=posXLast>x?imgNow-1:imgNow+1;
 				}//end if
-				upShowCar();
+				switchImg();
 			}//end func
 			
-			//----------图片切换
-			function upShowCar(){
+			function switchImg(){
 				if(imgRepeat){
 					imgNow=imgNow>imgMax-1?0:imgNow;
 					imgNow=imgNow<0?imgMax-1:imgNow;
@@ -113,37 +104,10 @@
 					imgNow=imgNow>imgMax-1?imgMax-1:imgNow;
 					imgNow=imgNow<0?0:imgNow;
 				}//end else
-				var src=imgPath+imgNow+'.jpg';
-				if(window.console) console.log('src:'+src);
-				if(imgTest) idBox.text(src);
+				var src=imgPath+imgNow+'.'+imgType;
+				console.log('img src:'+src);
 				imgSelf.attr({src:src});
 			};//end func
-			
-			//---------通用函数
-			
-			function mouseSelectOff(){
-				document.onselectstart = function () { return false; };	
-				document.unselectable= "on";
-				$('body').css({"-moz-user-select":"none","-webkit-user-select":"none","-ms-user-select":"none","user-select":"none"});
-			}//end func
-	
-			function mouseSelectOn(){
-				document.onselectstart = function () { return true; };
-				document.unselectable= "off";
-				$('body').css({"-moz-user-select":"auto","-webkit-user-select":"auto","-ms-user-select":"auto","user-select":"auto"});
-			}//end func
-		
-			function mathAutoSize(aryNum,aryMax){
-				var aryNow=new Array()
-				var aryRate = aryNum[0]/aryNum[1];
-				aryNow[0] = aryMax[0];
-				aryNow[1] = Math.round(aryNow[0]/aryRate);
-				if(aryNow[1]>aryMax[1]){
-					aryNow[1] = aryNow[1]<=aryMax[1] ? aryNow[1] : aryMax[1];
-					aryNow[0] = Math.round(aryNow[1]*aryRate);
-				}//end if
-				return aryNow;
-			}//end func
 			
 		},//end fn		
 		frameReset: function() {
