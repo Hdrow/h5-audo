@@ -59,10 +59,11 @@ var isSamsung = os.android && ( (screen.width==480 && screen.height==854) || (sc
 //是否是安卓1080P、2K、4K高清屏（有物理按键的标准16:9屏）
 var isFullHD=isSamsung && screen.width>=1080 && window.devicePixelRatio==3;
 
-//提示框
-var turnBox=$('#turnBox');//翻转手机提示
-var loadBox=$('#loadBox');//加载弹窗提示
-var alertBox=$('#alertBox');//代替系统alert
+//loading浮层
+var loadBox=$('#loadBox');
+
+//翻转提示浮层
+var turnBox;
 
 //主结构
 var htmlBox=$('body');
@@ -112,8 +113,8 @@ $(document).ready(function(e) {
 	}//end if
 	
 	function window_orientationchange(e){//横屏提示
-		if(e.orientation=='landscape') turnBox.show();
-		else turnBox.hide();
+		if(e.orientation=='landscape') turnBox=$('<aside class="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏状态，获得最佳浏览体验！</p></aside>').appendTo(htmlBox);
+		else turnBox.remove();
 	}//end func
 	
 	function shareBtn_click(e){
@@ -317,6 +318,7 @@ function popOn(option){
 	var _obj=option.obj;
 	var _text=option.text;
 	var _callback=option.callback;
+	var _remove=option.remove;
 	var _close;
 	if(_obj){
 		if(_text) _obj.find('.text').html(_text);
@@ -328,7 +330,8 @@ function popOn(option){
 	function obj_close(e){
 		if(_close.length>0) _close.off();
 		else _obj.off();
-		_obj.hide();
+		if(_remove) _obj.remove();
+		else _obj.hide();
 		if(_callback) _callback();
 	}//end func
 }//end func
@@ -355,7 +358,8 @@ function fadeOut(obj,dur,callback){
 }//end func
 
 function alertFunc(text,callback){
-	popOn({obj:alertBox,text:text,callback:callback});
+	var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a class="close">确认</a></p></div></aside>').appendTo(htmlBox);
+	popOn({obj:box,text:text,callback:callback,remove:true});
 }//end func
 
 //判断是否处于微信内置浏览器

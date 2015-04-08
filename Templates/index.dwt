@@ -42,14 +42,11 @@ function detectOS() {
 </head>
 <body>
 <!--------------------------------------------------------------html区域-------------------------------------------------------------------------------------->
-<div class="loadBox" id="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+<aside class="loadBox" id="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></aside>
 <!--html可编辑区域开始 -->
 <!-- TemplateBeginEditable name="html" -->
 <!-- TemplateEndEditable -->
 <!--html可编辑区域结束 -->
-<aside id="alertBox"><div><p class="text"></p><p class="btn"><a class="close">确认</a></p></div></aside>
-<aside id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏状态，获得最佳浏览体验！</p></aside>
-
 <!--------------------------------------------------------------javascript区域-------------------------------------------------------------------------------------->
 <script type="text/javascript" src="js/base/jquery.js"></script>
 <script type="text/javascript" src="js/base/framwork.js"></script>

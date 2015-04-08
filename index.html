@@ -42,13 +42,11 @@ function detectOS() {
 </head>
 <body>
 <!--------------------------------------------------------------html区域-------------------------------------------------------------------------------------->
-<div class="loadBox" id="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+<aside class="loadBox" id="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></aside>
 <!--html可编辑区域开始 -->
 <!-- InstanceBeginEditable name="html" -->
-<!--借助HTML5的新增标签，使得页面结构层次更加语义化 -->
-<header></header>
-<nav></nav>
-<article><!-- article 作为每个页面的根标签来使用，在scrollIphone4=true的条件下，会在iphone4下拉伸高度至121%，与iphone5保持同样高度 -->
+<!-- article 作为每个页面的根标签来使用，在scrollIphone4=true的条件下，会在iphone4下拉伸高度与iphone5保持一致 -->
+<article>
 	<section>
     	<div>
         	<h3></h3>
@@ -60,14 +58,8 @@ function detectOS() {
         </div>
     </section>
 </article>
-<footer></footer>
-<aside></aside><!--aside标签用作弹窗 -->
-
 <!-- InstanceEndEditable -->
 <!--html可编辑区域结束 -->
-<aside id="alertBox"><div><p class="text"></p><p class="btn"><a class="close">确认</a></p></div></aside>
-<aside id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏状态，获得最佳浏览体验！</p></aside>
-
 <!--------------------------------------------------------------javascript区域-------------------------------------------------------------------------------------->
 <script type="text/javascript" src="js/base/jquery.js"></script>
 <script type="text/javascript" src="js/base/framwork.js"></script>
@@ -78,7 +70,7 @@ function detectOS() {
 $(document).ready(function(e) {
 	
 	//代替alert命令
-	//alertFunc('测试');
+	//alertFunc('测试1');
 	
 	//顶部提示条
 	//addSignBar('本页面为测试版本,抽奖结果无效!');
