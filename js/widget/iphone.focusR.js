@@ -1,4 +1,4 @@
-﻿//2015.3.30
+﻿//2015.4.8
 (function($) {	
 	jQuery.fn.extend({
 		focusR: function(option) {	
@@ -62,17 +62,14 @@
 				if(boxBtnL.length>0) boxBtnL.off();
 				if(boxBtnR.length>0) boxBtnR.off();
 				if(boxBtn.length>0) boxBtnThis.off();
-				if(_auto) clearInterval(boxTimer);
+				if(_auto) clearTimeout(boxTimer);
 			}//end func
 					
 			function stopFunc(e){
-				console.log('focus stop');
-				clearInterval(boxTimer);
+				clearTimeout(boxTimer);
 			}//end func
 			function playFunc(e){
-				console.log('focus play');
-				clearInterval(boxTimer);
-				boxTimer=setInterval(boxRollFunc,_delay);
+				timerFunc();
 			}//end func
 			function prevFunc(e){
 				if(!boxCont.hasClass("moving") && boxDis>0 && boxNow > 0){	
@@ -137,8 +134,8 @@
 			}//end func			
 			function timerFunc(){
 				if(_auto){
-					clearInterval(boxTimer);
-					boxTimer=setInterval(boxRollFunc,_delay);
+					clearTimeout(boxTimer);
+					boxTimer=setTimeout(boxRollFunc,_delay);
 				}//end if
 			}//end func			
 			function boxRollFunc(){
@@ -164,6 +161,7 @@
 			function boxMotionComplete(){
 				boxCont.removeClass('moving');
 				_this.one('swipeleft',swipeleft_handler).one('swiperight',swiperight_handler);
+				timerFunc();
 				if(_complete) _complete(boxNow);
 			}//end if		
 			function boxBtnChange(){

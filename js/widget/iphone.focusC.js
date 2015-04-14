@@ -1,4 +1,4 @@
-﻿//2015.3.30
+﻿//2015.4.8
 (function($) {
 	$.fn.extend({
 		focusC: function(option) {
@@ -15,6 +15,7 @@
 			}//end if
 			init();	
 			function init(){
+				console.log('_this.width():'+_this.width());
 				boxMask=_this.children('.boxMask');
 				boxCont=boxMask.children();
 				boxThis=boxCont.children().css({width:_this.width(),height:_this.height()}).each(function(i) {$(this).data({id:i});});
@@ -53,11 +54,11 @@
 				_this.off('swipeleft',swipeleft_handler).off('swiperight',swiperight_handler);
 				if(boxBtnL.length>0) boxBtnL.off();
 				if(boxBtnR.length>0) boxBtnR.off();
-				if(_auto) clearInterval(boxTimer);
+				if(_auto) clearTimeout(boxTimer);
 			}//end func
 			
 			function stopFunc(e){
-				clearInterval(boxTimer);
+				clearTimeout(boxTimer);
 			}//end func
 			function playFunc(e){
 				timerFunc();
@@ -94,8 +95,8 @@
 			}//end func			
 			function timerFunc(){
 				if(_auto){
-					clearInterval(boxTimer);
-					boxTimer=setInterval(boxRollFunc,_delay);
+					clearTimeout(boxTimer);
+					boxTimer=setTimeout(boxRollFunc,_delay);
 				}//end if
 			}//end func			
 			function boxRollFunc(){
@@ -127,6 +128,7 @@
 			function boxMotionComplete(){
 				boxCont.removeClass('moving');
 				_this.one('swipeleft',swipeleft_handler).one('swiperight',swiperight_handler);
+				timerFunc();
 				if(_complete) _complete(boxNow);
 			}//end if
 			function boxBtnChange(){

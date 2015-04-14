@@ -1,4 +1,4 @@
-﻿//2015.3.30
+﻿//2015.4.8
 (function($) {
 	$.fn.extend({
 		scrC: function(option) {
@@ -46,7 +46,7 @@
 			
 			//----------------自定义事件
 			function stopFunc(e){
-				clearInterval(boxTimer);
+				clearTimeout(boxTimer);
 			}//end func
 			function playFunc(e){
 				timerFunc();
@@ -69,8 +69,8 @@
 			}//end func	
 			function timerFunc(){
 				if(boxAuto){
-					clearInterval(boxTimer);
-					boxTimer=setInterval(boxRollFunc,boxDelay);
+					clearTimeout(boxTimer);
+					boxTimer=setTimeout(boxRollFunc,boxDelay);
 				}//end if
 			}//end func				
 			function boxRollFunc(){
@@ -97,6 +97,7 @@
 			function boxMotionComplete(){
 				boxCont.removeClass('moving');
 				_this.one('swipeleft',swipeleft_handler).one('swiperight',swiperight_handler);
+				timerFunc();
 				if(_complete) _complete();	
 			}//end if
 		},//end fn

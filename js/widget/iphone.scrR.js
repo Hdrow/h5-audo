@@ -1,4 +1,4 @@
-﻿//2015.1.26
+﻿//2015.4.8
 (function($) {
 	$.fn.extend({
 		scrR: function(option) {
@@ -36,11 +36,11 @@
 				boxTar=0;
 				boxDir=-1;
 				_this.on("prev",prevFunc).on("next",nextFunc).on("stop",stopFunc).on("play",playFunc);
-				_this.one('swipeleft',swipeleft_handler).one('swiperight',swiperight_handler);
+				boxCont.one('swipeleft',swipeleft_handler).one('swiperight',swiperight_handler);
 				if(boxBtnL.length>0) boxBtnL.on('touchend',boxBtnL_click);
 				if(boxBtnR.length>0) boxBtnR.on('touchend',boxBtnR_click);
 				boxBtnChange();	
-				timerFunc();	
+				timerFunc();
 			}//end func
 			
 			//---------------touch swipe 事件
@@ -55,7 +55,7 @@
 			
 			//----------------自定义事件
 			function stopFunc(e){
-				clearInterval(boxTimer);
+				clearTimeout(boxTimer);
 			}//end func
 			function playFunc(e){
 				timerFunc();
@@ -86,14 +86,14 @@
 			}//end func	
 			function timerFunc(){
 				if(boxAuto){
-					clearInterval(boxTimer);
-					boxTimer=setInterval(boxRollFunc,boxDelay);
+					clearTimeout(boxTimer);
+					boxTimer=setTimeout(boxRollFunc,boxDelay);
 				}//end if
 			}//end func	
 			function boxRollFunc(){
 				if(!boxCont.hasClass("moving") && boxDis>0){
 					boxCont.addClass('moving');	
-					_this.off('swipeleft',swipeleft_handler).off('swiperight',swiperight_handler);
+					boxCont.off('swipeleft',swipeleft_handler).off('swiperight',swiperight_handler);
 					boxTar+=boxUnit*boxDir;
 					if(boxTar==-boxDis || boxTar==0) boxDir=-boxDir;
 					boxCont.transition({x:boxTar}, boxSpeed, boxMotionComplete);
@@ -103,7 +103,8 @@
 			}//end func
 			function boxMotionComplete(){
 				boxCont.removeClass('moving');
-				_this.one('swipeleft',swipeleft_handler).one('swiperight',swiperight_handler);
+				boxCont.one('swipeleft',swipeleft_handler).one('swiperight',swiperight_handler);
+				timerFunc();
 				if(_complete) _complete();	
 			}//end if
 			function boxBtnChange(){

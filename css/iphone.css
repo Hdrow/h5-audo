@@ -60,21 +60,22 @@ a{ text-decoration:none; display:inline-block;}
 /* -------------弹出层----------------*/
 
 /* load浮层*/
-aside.loadBox{ position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:996; display:none;}
-aside.loadBox span{ display:block; position:absolute; left:50%; top:50%; margin-left:-1em; margin-top:-1em; -webkit-transform:scale(0.5);}
-aside.loadBox span i{ display:block; position:absolute; left:0; top:0; width:2em; height:0.8em; border-radius:0.4em; background:rgba(255,255,255,0.7); box-shadow:0 0 0.5em rgba(255,255,255,1);}
-aside.loadBox span i:nth-child(1){ -webkit-transform:translate(3em, 0em) rotate(0deg); -webkit-animation:loadCircle 2.4s 0s linear infinite;}
-aside.loadBox span i:nth-child(2){ -webkit-transform:translate(2.598em, 1.5em) rotate(30deg); -webkit-animation:loadCircle 2.4s 0.2s linear infinite;}
-aside.loadBox span i:nth-child(3){ -webkit-transform:translate(1.5em, 2.598em) rotate(60deg); -webkit-animation:loadCircle 2.4s 0.4s linear infinite;}
-aside.loadBox span i:nth-child(4){ -webkit-transform:translate(0em, 3em) rotate(90deg); -webkit-animation:loadCircle 2.4s 0.6s linear infinite;}
-aside.loadBox span i:nth-child(5){ -webkit-transform:translate(-1.5em, 2.598em) rotate(120deg); -webkit-animation:loadCircle 2.4s 0.8s linear infinite;}
-aside.loadBox span i:nth-child(6){ -webkit-transform:translate(-2.598em, 1.5em) rotate(150deg); -webkit-animation:loadCircle 2.4s 1.0s linear infinite;}
-aside.loadBox span i:nth-child(7){ -webkit-transform:translate(-3em, 0em) rotate(180deg); -webkit-animation:loadCircle 2.4s 1.2s linear infinite;}
-aside.loadBox span i:nth-child(8){ -webkit-transform:translate(-2.598em, -1.5em) rotate(210deg); -webkit-animation:loadCircle 2.4s 1.4s linear infinite;}
-aside.loadBox span i:nth-child(9){ -webkit-transform:translate(-1.5em, -2.598em) rotate(240deg); -webkit-animation:loadCircle 2.4s 1.6s linear infinite;}
-aside.loadBox span i:nth-child(10){ -webkit-transform:translate(0em, -3em) rotate(270deg); -webkit-animation:loadCircle 2.4s 1.8s linear infinite;}
-aside.loadBox span i:nth-child(11){ -webkit-transform:translate(1.5em, -2.598em) rotate(300deg); -webkit-animation:loadCircle 2.4s 2.0s linear infinite;}
-aside.loadBox span i:nth-child(12){ -webkit-transform:translate(2.598em, -1.5em) rotate(330deg); -webkit-animation:loadCircle 2.4s 2.2s linear infinite;}
+.loadBox{ position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:996; display:none;}
+.loadBox span{ display:block; position:absolute; left:50%; top:50%; margin-left:-1em; margin-top:-1em; -webkit-transform:scale(0.5);}
+.loadBox span i{ display:block; position:absolute; left:0; top:0; width:2em; height:0.8em; border-radius:0.4em; background:rgba(255,255,255,0.7); box-shadow:0 0 0.5em rgba(255,255,255,1);}
+.loadBox span i:nth-child(1){ -webkit-transform:translate(3em, 0em) rotate(0deg); -webkit-animation:loadCircle 2.4s 0s linear infinite;}
+.loadBox span i:nth-child(2){ -webkit-transform:translate(2.598em, 1.5em) rotate(30deg); -webkit-animation:loadCircle 2.4s 0.2s linear infinite;}
+.loadBox span i:nth-child(3){ -webkit-transform:translate(1.5em, 2.598em) rotate(60deg); -webkit-animation:loadCircle 2.4s 0.4s linear infinite;}
+.loadBox span i:nth-child(4){ -webkit-transform:translate(0em, 3em) rotate(90deg); -webkit-animation:loadCircle 2.4s 0.6s linear infinite;}
+.loadBox span i:nth-child(5){ -webkit-transform:translate(-1.5em, 2.598em) rotate(120deg); -webkit-animation:loadCircle 2.4s 0.8s linear infinite;}
+.loadBox span i:nth-child(6){ -webkit-transform:translate(-2.598em, 1.5em) rotate(150deg); -webkit-animation:loadCircle 2.4s 1.0s linear infinite;}
+.loadBox span i:nth-child(7){ -webkit-transform:translate(-3em, 0em) rotate(180deg); -webkit-animation:loadCircle 2.4s 1.2s linear infinite;}
+.loadBox span i:nth-child(8){ -webkit-transform:translate(-2.598em, -1.5em) rotate(210deg); -webkit-animation:loadCircle 2.4s 1.4s linear infinite;}
+.loadBox span i:nth-child(9){ -webkit-transform:translate(-1.5em, -2.598em) rotate(240deg); -webkit-animation:loadCircle 2.4s 1.6s linear infinite;}
+.loadBox span i:nth-child(10){ -webkit-transform:translate(0em, -3em) rotate(270deg); -webkit-animation:loadCircle 2.4s 1.8s linear infinite;}
+.loadBox span i:nth-child(11){ -webkit-transform:translate(1.5em, -2.598em) rotate(300deg); -webkit-animation:loadCircle 2.4s 2.0s linear infinite;}
+.loadBox span i:nth-child(12){ -webkit-transform:translate(2.598em, -1.5em) rotate(330deg); -webkit-animation:loadCircle 2.4s 2.2s linear infinite;}
+.loadBox b{ display:block; position:absolute; left:0; top:50%; width:100%; height:2em; line-height:2em; margin-left:-0.5em; margin-top:-1.7em; text-align:center; font-size:1em; color:rgba(255,255,255,0.7);}
 
 /* 翻转提示浮层*/
 aside.turnBox{ position:fixed; left:0; top:0; width:100%; height:100%; background:#000; z-index:999;}
@@ -92,11 +93,10 @@ aside.alertBox>div p{ text-align:center;}
 aside.alertBox>div p.text{ margin-bottom:2em; font-size:1.6em; color:#222;}
 aside.alertBox>div p.btn a{ font-size:1.6em; padding:0.5em 2em; color:#fff; background:#222; letter-spacing:0.2em; border-radius:0.3em;}
 
-
 /* 视频*/
-#videoBox{position:fixed; left:0; top:0; width:100%; height:100%; background:#000; z-index:996; display:none;}
-#videoBox iframe,#videoBox video{width:100%;}
-#videoBox a.close{ position:absolute; right:1.5em; top:1.5em; width:2em; height:2em; background: url(../images/common/close_video.png); background-size:100% 100%;}
+aside.videoBox{position:fixed; left:0; top:0; width:100%; height:100%; background:#000; z-index:996; display:none;}
+aside.videoBox iframe,#videoBox video{width:100%; position:absolute; left:0; overflow:hidden;}
+aside.videoBox a.close{ position:absolute; right:2em; top:2em; width:3em; height:3em; background: url(../images/common/close_video.png); background-size:100% 100%;}
 a.btnVideo,#btnVideo{ position:relative;}
 a.btnVideo video,#btnVideo video,a.btnVideo iframe,#btnVideo iframe{ position:absolute; left:0; top:0; width:100%; height:100%; overflow:hidden; opacity:0;}
 
@@ -130,7 +130,7 @@ img.shareImage{ position:absolute; left:0; top:0; width:0; height:0;}
 /* -------------标签模块----------------*/
 body{ background:#fff; color:#000;}
 article{ width:100%; height:100%; position:relative; background-size:100% 100%;}
-a{ color:#000; display:inline-block;}
+a,a:visited{ color:#000;}
 a>img{ width:100%;}
 
 /* ---------------------------------------- 公共部分结束 ---------------------------------------- */

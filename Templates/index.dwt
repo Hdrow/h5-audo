@@ -42,7 +42,7 @@ function detectOS() {
 </head>
 <body>
 <!--------------------------------------------------------------html区域-------------------------------------------------------------------------------------->
-<aside class="loadBox" id="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></aside>
+<aside class="loadBox" id="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><b></b></aside>
 <!--html可编辑区域开始 -->
 <!-- TemplateBeginEditable name="html" -->
 <!-- TemplateEndEditable -->

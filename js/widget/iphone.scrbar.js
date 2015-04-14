@@ -1,4 +1,4 @@
-﻿//2015.3.16
+﻿//2015.4.8
 (function($) {
 	$.fn.extend({
 		scrbar: function(option) {	
@@ -57,14 +57,16 @@
 			}//end func	
 			//-----------------TOUCH事件
 			function _this_touchstart(e){
-				if(_can) _posLast=[event.touches[0].clientX,event.touches[0].clientY];
+				e.preventDefault();
+				if(_can) _posLast=[e.originalEvent.touches[0].clientX,e.originalEvent.touches[0].clientY];
 			}//end func
 			function _this_touchmove(e){
 				e.preventDefault();
+				e.stopPropagation();
 				if(_can){
-					_tar-=(event.changedTouches[0].clientY-_posLast[1])*_speed;
+					_tar-=(e.originalEvent.changedTouches[0].clientY-_posLast[1])*_speed;
 					scrollFunc();
-					_posLast=[event.changedTouches[0].clientX,event.changedTouches[0].clientY];
+					_posLast=[e.originalEvent.changedTouches[0].clientX,e.originalEvent.changedTouches[0].clientY];
 				}//end if
 			}//end func
 			//-------------------------------运动计算部分	 

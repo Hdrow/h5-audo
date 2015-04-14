@@ -1,4 +1,4 @@
-//2015.4.7
+//2015.4.13
 (function($) {	
 	jQuery.fn.extend({
 		frameOn: function(option) {
@@ -6,11 +6,13 @@
 			var _box=_this.children('.box');
 			var _load=_this.children('.load');
 			var _sign=_this.children('.sign');
-			var imgNow,imgMax=30,imgWd,imgHt,imgSelf,imgPath='images/frame/',imgType='jpg',imgRepeat=true;
-			var posXSt,posYSt,posXLast,posYLast;
+			var _rate=$(window).width()/320;
+			var imgNow,imgMax=30,imgSpeed=2,imgWd,imgHt,imgSelf,imgPath='images/frame/',imgType='jpg',imgRepeat=true;
+			var posXSt,posYSt,posXLast,posYLast;	
 			var idBox;
 			if(option){
 				imgMax=option.num!=null?option.num:30;//图片多少张
+				imgSpeed=option.speed!=null?option.speed:2;//操控速度
 				imgPath=option.path!=null?option.path:'images/frame/';//360图片路径
 				imgType=option.type!=null?option.type:'jpg';//360图片路径
 				imgWd=option.width;
@@ -22,22 +24,24 @@
 			
 			function loadFunc(){
 				//载入图
+				_load.show();
 				var loader = new PxLoader();
-				for(var i=0; i<imgMax; i++) loader.addImage(imgPath+i+'.jpg');			
+				var loadTxt=_load.children('b');
+				for(var i=0; i<imgMax; i++) loader.addImage(imgPath+i+'.'+imgType);			
 				loader.addProgressListener(function(e) { 
-					_load.html(Math.round(e.completedCount/e.totalCount*100)); 
+					loadTxt.html(Math.round(e.completedCount/e.totalCount*100)); 
 				}); 			
 				loader.addCompletionListener(function() {
 					console.log('load complete');
-					_load.remove();
-					_sign.show();
-					init();
 					loader=null;
+					fadeOut(_load,500);		
+					init();
 				});			
 				loader.start();	
 			}//end func
 			
 			function init(){
+				_sign.show();
 				_box.empty();
 				imgSelf=$('<img>').appendTo(_box);	
 				var size=[];
@@ -58,11 +62,11 @@
 			}//end func
 						
 			//--------自定义事件
-			function resetFunc(event){
+			function resetFunc(e){
 				imgNow=0;	
 				switchImg();
 			}//end func
-			function gotoFunc(event,value){
+			function gotoFunc(e,value){
 				imgNow=value;	
 				switchImg();
 			}//end func	
@@ -70,14 +74,15 @@
 			//-----------------touch事件
 			function touchstartHandler(e){
 				e.preventDefault();	
-				posXLast=posXSt=event.touches[0].clientX;
-				posYLast=posYSt=event.touches[0].clientY;
+				posXLast=posXSt=e.originalEvent.touches[0].clientX;
+				posYLast=posYSt=e.originalEvent.touches[0].clientY;
 			}//end func
 			function touchmoveHandler(e){
 				e.preventDefault();
-				moveHandler(event.changedTouches[0].clientX,event.changedTouches[0].clientY);
-				posXLast=event.changedTouches[0].clientX;
-				posYLast=event.changedTouches[0].clientY;
+				e.stopPropagation();
+				moveHandler(e.originalEvent.changedTouches[0].clientX,e.originalEvent.changedTouches[0].clientY);
+				posXLast=e.originalEvent.changedTouches[0].clientX;
+				posYLast=e.originalEvent.changedTouches[0].clientY;
 			}//end func
 			
 			//移动事件
@@ -86,8 +91,7 @@
 				var disY=Math.floor(Math.abs(posYSt-y));
 				var moveX=Math.abs(posXLast-x);
 				var moveY=Math.abs(posYLast-y);
-				if(os.ios) var disRate=1;
-				else var disRate=2;
+				var disRate=Math.round(imgSpeed*_rate);
 				if( moveY<=moveX*2.5 && disX%disRate==0 ){
 					if(imgRepeat) imgNow=posXLast>x?imgNow-1:imgNow+1;
 					else imgNow=posXLast>x?imgNow-1:imgNow+1;
@@ -105,9 +109,21 @@
 					imgNow=imgNow<0?0:imgNow;
 				}//end else
 				var src=imgPath+imgNow+'.'+imgType;
-				console.log('img src:'+src);
+				//console.log('img src:'+src);
 				imgSelf.attr({src:src});
 			};//end func
+			
+			function mathAutoSize(aryNum,aryMax){
+				var aryNow=new Array()
+				var aryRate = aryNum[0]/aryNum[1];
+				aryNow[0] = aryMax[0];
+				aryNow[1] = Math.round(aryNow[0]/aryRate);
+				if(aryNow[1]>aryMax[1]){
+					aryNow[1] = aryNow[1]<=aryMax[1] ? aryNow[1] : aryMax[1];
+					aryNow[0] = Math.round(aryNow[1]*aryRate);
+				}//end if
+				return aryNow;
+			}//end func
 			
 		},//end fn		
 		frameReset: function() {

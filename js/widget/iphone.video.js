@@ -1,9 +1,9 @@
-//2015.3.25
+//2015.4.8
 
 //视频
 var videoIos='system';//ios视频播放模式是和安卓一样点击按钮弹出全屏弹层，还是点击按钮直接调用系统播放器
 var videoBtn=$('a.btnVideo,#btnVideo');
-var videoBox=$("<div id='videoBox'><a class='close'></a></div>");
+var videoBox=$("<aside class='videoBox' id='videoBox'><a class='close'></a></aside>");
 var videoContainer,videoPoser;
 
 $(document).ready(function(e) {
@@ -46,10 +46,11 @@ function video_play(e){
 		var type=$(this).data('type');
 		type=type||'youku';
 		var ht=$(window).width()*9/16;
+		var top=$(window).height()/2-ht/2;
 		videoBox.show();
-		if(type=='youku') videoContainer=$('<iframe src="http://player.youku.com/embed/'+vid+'" frameborder=0 allowfullscreen isAutoPlay="true"></iframe>').css({height:ht,marginTop:$(window).height()/2-ht/2}).prependTo(videoBox);
+		if(type=='youku') videoContainer=$('<iframe src="http://player.youku.com/embed/'+vid+'" frameborder=0 allowfullscreen isAutoPlay="true"></iframe>').css({height:ht,top:top}).prependTo(videoBox);
 		else{
-			videoContainer=$('<video type="video/mp4" controls autoplay>').attr({src:vid}).css({height:ht,marginTop:$(window).height()/2-ht/2}).prependTo(videoBox);
+			videoContainer=$('<video type="video/mp4" controls autoplay>').attr({src:vid}).css({height:ht,top:top}).prependTo(videoBox);
 			videoPoser=$(this).data('poster');
 			if(videoPoser) videoContainer.attr({poster:videoPoser});
 			videoContainer[0].play();
