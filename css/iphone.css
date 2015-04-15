@@ -195,16 +195,4 @@ article.index{}
 	100%{opacity:1;}
 }
 
-@-webkit-keyframes fade1{
-	0%{ opacity:1;}
-	50%{opacity:0;}
-	100%{opacity:1;}
-}
-
-@-webkit-keyframes fade2{
-	0%{ opacity:1;}
-	25%{opacity:0;}
-	50%{opacity:1;}
-}
-
 /*----------------------------------------- css3 animation 动画部分结束 -----------------------------------------*/

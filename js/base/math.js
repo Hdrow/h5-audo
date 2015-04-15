@@ -17,12 +17,6 @@ function randomSort(ary) {
 	for (i=0; i<=len-1; i++) ary[i]=rnd[i];
 }//end func 随机排序一个数组
 
-function getRound(num,n){
-	n=n||2;
-	var r=Math.pow(10, n);
-	return Math.round(num*r)/r;
-}//end func 获得几位小数点
-
 function randomPlus() {
 	return Math.random()<0.5?-1:1;
 }//end func 随机正负
@@ -77,6 +71,22 @@ function mathAutoSize(aryNum,aryMax){
 	return aryNow;
 }//end func
 
+//缓动函数
+function ease(_now,_tar,_speed,_space){
+	_speed=_speed||10;
+	_space=_space||0.1;
+	var _dis=_tar-_now;
+	if(Math.abs(_dis)>_space) return _dis/_speed+_now;
+	else return _tar;
+}//end func
+
+//获得几位小数点
+function getRound(num,n){
+	n=n||2;
+	var r=Math.pow(10, n);
+	return Math.round(num*r)/r;
+}//end func 
+
 //获得一个圆周上平均角度分布的点的坐标
 function getCircle(num,r){
 	var pos=[];
@@ -90,13 +100,4 @@ function getCircle(num,r){
 		console.log(pos[i]);
 	}//end for
 	return pos;
-}//end func
-
-//缓动函数
-function ease(_now,_tar,_speed,_space){
-	_speed=_speed||10;
-	_space=_space||0.1;
-	var _dis=_tar-_now;
-	if(Math.abs(_dis)>_space) return _dis/_speed+_now;
-	else return _tar;
 }//end func
