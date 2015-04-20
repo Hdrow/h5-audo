@@ -1,4 +1,4 @@
-//---------------------------------------数学函数
+//2015.04.20
 	
 function randomRange(min, max) {
 	var randomNumber;
@@ -100,4 +100,19 @@ function getCircle(num,r){
 		console.log(pos[i]);
 	}//end for
 	return pos;
+}//end func
+
+//判断一个数字在一个数组里是否有重复值
+function getRepeat(num,ary){
+	if(ary.length>0){
+		var repeat=false;
+		for(var i=0; i<ary.length; i++){
+			if(num==ary[i]){
+				repeat=true;
+				break;
+			}//end if
+		}//end for
+		return repeat;
+	}//end if
+	else return true;
 }//end func

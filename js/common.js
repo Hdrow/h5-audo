@@ -107,9 +107,9 @@ $(document).ready(function(e) {
 		console.log('window size:'+$(window).width()+'/'+$(window).height());
 	}//end if
 	
-	function input_resize(e){//遇到有输入框的页面，在安卓下，打开输入法会直接改变窗体高度，则必须对输入框所在内容容器进行高度刷新，好让输入法关闭后内容容器高度回到正常
-		if(scrollIphone4 && isIphone4) articleBox.css({height:$(window).height()*1.21});
-		else articleBox.css({height:$(window).height()});
+	//遇到有输入框的页面，在安卓下，打开输入法会直接改变窗体高度，则必须对输入框所在内容容器进行高度刷新，好让输入法关闭后内容容器高度回到正常
+	function input_resize(e){
+		articleBox.css({height:$(window).height()});
 	}//end if
 	
 	function window_orientationchange(e){//横屏提示
