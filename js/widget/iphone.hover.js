@@ -1,15 +1,14 @@
+//2015.4.20
 (function($) {	
 	$.fn.extend({
 		hoverOn: function() {	
 			var _this=$(this);
 			init();
 			function init(){
-				_this.on('off',this_off);
-				_this.on('touchstart',this_touchstart).on('touchend',this_touchend);
+				_this.on('off',this_off).on('touchstart',this_touchstart).on('touchend',this_touchend);
 			}//end func	
 			function this_off(e){
-				_this.off('off');
-				_this.off('touchstart',this_touchstart).off('touchend',this_touchend);
+				_this.off('off').off('touchstart',this_touchstart).off('touchend',this_touchend);
 			}//end func
 			function this_touchstart(e){
 				$(this).addClass('active');

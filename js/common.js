@@ -1,4 +1,4 @@
-//2015.4.15
+//2015.4.20
 
 //iphone4不做一屏兼容，内容高度拉伸到与iphone5，默认false
 var scrollIphone4=false;
@@ -404,7 +404,10 @@ function imageLoad(src,callback){
 //开启网页上下滑动，默认是静止的
 function pageScrollOn() {
 	$(document).off('touchmove',noEvent);
-	if(isIphone4) htmlBox.css({height:'121%'});
+	if(isIphone4){
+		if(isWeixin) articleBox.css({height:'121.2%'});
+		else articleBox.css({height:'123.6%'});
+	}//end if
 }//end func
 
 //禁止网页上下滑动
@@ -428,11 +431,12 @@ function objectPrint(data){
 	console.log("-----------------------------------------------------------------------------");
 }//end func
 
+//取消默认事件
 function noEvent(e){
 	e.preventDefault();
 }//end func	
 
-//---------------------------------------正则
+//常用正则
 function checkStr(str,type){
 	type=type||0;
 	switch(type){
@@ -475,12 +479,14 @@ function checkStr(str,type){
 
 //---------------------------------------常用数学函数
 	
+//获得范围内随机整数
 function randomRange(min, max) {
 	var randomNumber;
 	randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 	return randomNumber;
-}//end func 获得范围内随机整数
+}//end func 
 
+//随机打乱一个数组
 function randomSort(ary) {
 	var len=ary.length;
 	var rnd = [];
@@ -490,51 +496,15 @@ function randomSort(ary) {
 		ary.splice(ran,1);//把数组shu中第k个元素删掉（保证下一次选的一定不会重复)
 	}//end for
 	for (i=0; i<=len-1; i++) ary[i]=rnd[i];
-}//end func 随机排序一个数组
+}//end func 
 
+//随机正负
 function randomPlus() {
 	return Math.random()<0.5?-1:1;
-}//end func 随机正负
-
-function toRadian(degree) {
-	return degree * Math.PI / 180;
-}//end func 角度转弧度
-
-function toDegree(radian) {
-	return radian / Math.PI * 180;
-}//end func 弧度转角度	
-
-function getDis(pos1,pos2){
-	var lineX=pos2[0]-pos1[0];
-	var lineY=pos2[1]-pos1[1];
-	return Math.sqrt(Math.pow(Math.abs(lineX),2)+Math.pow(Math.abs(lineY),2));
-}//end func 获得2点之间的距离
-
-function getDeg(pos1,pos2){
-	var deg;
-	if(pos1[0]==pos2[0] && pos1[1]==pos2[1]){deg=0;}
-	else{
-		var dis_y=pos2[1]-pos1[1];
-		var dis_x=pos2[0]-pos1[0];	
-		deg=Math.atan(dis_y/dis_x)*180/Math.PI;
-		if (dis_x<0) {deg=180+deg;}
-		else if (dis_x>=0 && dis_y<0) {deg=360+deg;}
-	}//end else
-	return deg;
-}//end func 获得2点之间的夹角
-
-function hitTest(obj1,obj2){
-	var pos1=[obj1.offset().left+obj1.width()/2,obj1.offset().top+obj1.height()/2];
-	var pos2=[obj2.offset().left+obj2.width()/2,obj2.offset().top+obj2.height()/2];
-
-	var disX=Math.abs(pos2[0]-pos1[0]);
-	var disY=Math.abs(pos2[1]-pos1[1]);
-	if(disX<=obj1.width()/2+obj2.width()/2 && disY<=obj1.height()/2+obj2.height()/2) return true;
-	else return false;
-}//end func 碰撞函数，测试2个DOM对象是否碰撞
+}//end func 
 
 //等比缩放
-function mathAutoSize(aryNum,aryMax){
+function autoSize(aryNum,aryMax){
 	var aryNow=new Array()
 	var aryRate= aryNum[0]/aryNum[1];
 	aryNow[0] = aryMax[0];
@@ -554,3 +524,68 @@ function ease(_now,_tar,_speed,_space){
 	if(Math.abs(_dis)>_space) return _dis/_speed+_now;
 	else return _tar;
 }//end func
+
+//角度转弧度
+function toRadian(degree) {
+	return degree * Math.PI / 180;
+}//end func 
+
+//弧度转角度
+function toDegree(radian) {
+	return radian / Math.PI * 180;
+}//end func 
+
+//获得2点之间的距离
+function getDis(pos1,pos2){
+	var lineX=pos2[0]-pos1[0];
+	var lineY=pos2[1]-pos1[1];
+	return Math.sqrt(Math.pow(Math.abs(lineX),2)+Math.pow(Math.abs(lineY),2));
+}//end func 
+
+//获得2点之间的夹角
+function getDeg(pos1,pos2){
+	var deg;
+	if(pos1[0]==pos2[0] && pos1[1]==pos2[1]){deg=0;}
+	else{
+		var dis_y=pos2[1]-pos1[1];
+		var dis_x=pos2[0]-pos1[0];	
+		deg=Math.atan(dis_y/dis_x)*180/Math.PI;
+		if (dis_x<0) {deg=180+deg;}
+		else if (dis_x>=0 && dis_y<0) {deg=360+deg;}
+	}//end else
+	return deg;
+}//end func
+
+//碰撞函数，测试2个DOM对象是否碰撞
+function hitTest(obj1,obj2){
+	if(obj1 && obj2){
+		var pos1=[obj1.offset().left+obj1.outerWidth()/2,obj1.offset().top+obj1.outerHeight()/2];
+		var pos2=[obj2.offset().left+obj2.outerWidth()/2,obj2.offset().top+obj2.outerHeight()/2];
+		var disX=Math.abs(pos2[0]-pos1[0]);
+		var disY=Math.abs(pos2[1]-pos1[1]);
+		if(disX<=obj1.outerWidth()/2+obj2.outerWidth()/2 && disY<=obj1.outerHeight()/2+obj2.outerHeight()/2) return true;
+		else return false;
+	}//end if
+	else return false;
+}//end func 
+
+//碰撞函数，测试1个点是否在一个区域内
+function hitPoint(pt,obj){
+	if(pt && obj){
+		var area=[obj.offset().left,obj.offset().left+obj.width(),obj.offset().top,obj.offset().top+obj.height()];
+		if(pt[0]>=area[0] && pt[0]<=area[1] && pt[1]>=area[2] && pt[1]<=area[3]) return true;
+		else return false;
+	}//end if
+	else return false;
+}//end func 
+
+//碰撞函数，测试一个点是否在透明区域
+function hitPixel(pt,size,pixel){
+	if(pt && size && pixel){
+		var id=pt[0]+pt[1]*size[0];
+		if(pixel[id*4+3]) return true;
+		else return false;
+	}//end if
+	else return false;
+}//end func 
+
