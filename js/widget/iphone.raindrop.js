@@ -1,9 +1,9 @@
-//2014.12.14
+//2015.4.23
 (function($) {
 	$.fn.extend({
 		raindropOn: function(option) {
 			var _this=$(this);
-			var _num=50,_delay=2500,_box,_wd=_this.width(),_ht=_this.height(),_data=[];
+			var _num=50,_delay=2500,_box,_wd=_this.width(),_ht=_this.height(),_data=[],_end=false;
 			var isIphone4=os.ios && screen.width==320 && screen.height==480;
 			var _ratio=$(window).width()/320;
 			if(option){
@@ -15,6 +15,12 @@
 			
 			function init(){
 				addBox();
+				_this.on('off',_this_off);
+			}//end func
+			
+			function _this_off(e){
+				_this.off('off',_this_off);
+				_end=true;
 			}//end func
 			
 			function addBox(){				
@@ -44,11 +50,19 @@
 			function moveBox(box,i){
 				_data[i].y+=Math.floor(Math.random()*40)+10;
 				box.transition({x:_data[i].x,y:_data[i].y}, Math.floor((Math.random()*1000)+1000), "ease",function(){
-					if(_data[i].y>_ht) setBox(box,i);
-					else setTimeout(moveBox,_delay+randomRange(0,40)*0.1,box,i);
+					if(!_end){
+						if(_data[i].y>_ht) setBox(box,i);
+						else setTimeout(moveBox,_delay+randomRange(0,40)*0.1,box,i);
+					}//end if
+					else box.transition({opacity:0,scale:0.1},1000,function(){
+						$(this).remove();
+					});
 				});
 			}//end func
 				
+		},//end fn
+		raindropOff: function() {
+			$(this).trigger('off');
 		}//end fn
 	});//end extend
 })(jQuery);//闭包

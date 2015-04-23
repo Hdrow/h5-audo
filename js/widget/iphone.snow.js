@@ -1,9 +1,9 @@
-//2015.1.13
+//2015.4.23
 (function($) {	
 	$.fn.extend({
 		snowOn: function(option) {	
 			var _this=$(this);
-			var _x=-1,_y=-1,_num=50,_speed=5000,_ratio=5,_roll=false,_skew=false,_type=1,_style='style',_offset=0;
+			var _x=-1,_y=-1,_num=50,_speed=5000,_ratio=5,_roll=false,_skew=false,_type=1,_style='style',_offset=0,_end=false;
 			if(option){
 				_num = option.number!=null?option.number:50;
 				_speed = option.speed!=null?option.speed:5000;
@@ -25,7 +25,7 @@
 			
 			function _this_off(e){
 				_this.off('off',_this_off);
-				_this.empty();
+				_end=true;
 			}//end func
 			
 			function box_creat() {
@@ -70,7 +70,8 @@
 					css.skewY=randomRange(-45,45);
 				}//end else
 				box.css(css).transition(trans,speed,'linear', function(){
-					box_set($(this));
+					if(!_end) box_set($(this));
+					else $(this).remove();
 				});
 			}//end func
 			

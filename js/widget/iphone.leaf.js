@@ -1,9 +1,9 @@
-//2015.1.6
+//2015.4.23
 (function($) {	
 	$.fn.extend({
 		leafOn: function(option) {	
 			var _this=$(this);
-			var _x=-1,_y=-1,_box,_num=20,_speed=1,_ratio=5,_roll=true,_skew=true,_type=1,_style='style',_timer,_data=[];
+			var _x=-1,_y=-1,_box,_num=20,_speed=1,_ratio=5,_roll=true,_skew=true,_type=1,_style='style',_timer,_data=[],_end=false;
 			var isIphone4=os.ios && screen.width==320 && screen.height==480;
 			if(option){
 				_num = option.number!=null?option.number:20;
@@ -27,8 +27,7 @@
 			
 			function _this_off(e){
 				_this.off('off',_this_off);
-				_this.empty();
-				clearInterval(_timer);
+				_end=true;
 			}//end func
 			
 			function box_creat() {
@@ -85,7 +84,13 @@
 						$(this).css({rotate:_data[i].rotate,rotateX:'+='+_data[i].rotateXDir*_data[i].rotateXSpeed});
 					}//end if
 					$(this).css({x:_data[i].x,y:_data[i].y});
-					if (_data[i].y>=_this.height()) box_set($(this),i);
+					if (_data[i].y>=_this.height()){
+						if(!_end) box_set($(this),i);
+						else{
+							$(this).remove();
+							if(_this.children().length==0) clearInterval(_timer);
+						}//end else
+					}//end if
 				});
 			}//end func
 			
