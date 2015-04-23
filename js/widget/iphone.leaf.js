@@ -44,6 +44,7 @@
 				start=start||false;
 				if(_type>1) box.removeClass().addClass(_style+randomRange(1,_type));
 				var ratio=randomRange(1,_ratio);//远近比例参数,10 LEVEL
+				box.css({zIndex:ratio});
 				if(_ratio>1) var scale=0.1+ratio*0.18;
 				else var scale=1;
 				var x_tar=randomRange(0,_this.width());

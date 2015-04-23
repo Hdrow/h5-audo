@@ -15,7 +15,6 @@
 			}//end if
 			init();	
 			function init(){
-				console.log('_this.width():'+_this.width());
 				boxMask=_this.children('.boxMask');
 				boxCont=boxMask.children();
 				boxThis=boxCont.children().css({width:_this.width(),height:_this.height()}).each(function(i) {$(this).data({id:i});});
