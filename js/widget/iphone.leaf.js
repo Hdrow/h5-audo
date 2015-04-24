@@ -84,7 +84,7 @@
 						$(this).css({rotate:_data[i].rotate,rotateX:'+='+_data[i].rotateXDir*_data[i].rotateXSpeed});
 					}//end if
 					$(this).css({x:_data[i].x,y:_data[i].y});
-					if (_data[i].y>=_this.height()){
+					if (_data[i].y>=_this.height()+$(this).height()){
 						if(!_end) box_set($(this),i);
 						else{
 							$(this).remove();

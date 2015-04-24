@@ -50,7 +50,7 @@
 					if(start) y=randomRange(0,_this.height());
 					else var y=-box.height();
 				}//end else
-				var y_tar=_this.height();
+				var y_tar=_this.height()+box.height();
 				var speed=_speed+(_ratio-ratio)*randomRange(_speed,_speed*2);
 				if(start){
 					speed=Math.round((y_tar-y)/y_tar*speed);
