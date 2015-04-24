@@ -1,7 +1,7 @@
 //2015.4.23
 //--------------------------------摇一摇函数
 function shakeOn(option){
-	var _delay=50,_hold=150,_max=10,_lev=0,_now=0,_type=1;
+	var _delay=50,_hold=100,_max=10,_lev=0,_now=0,_type=1;
 	var _start,_count,_level,_complete;
 	var _lastTime=0,_lastX,_lastY,_lastZ;
 	
@@ -10,13 +10,12 @@ function shakeOn(option){
 		_count=option.count;
 		_level=option.level;
 		_complete=option.complete;
-		_hold=option.hold!=null?option.hold:150;
+		_hold=option.hold!=null?option.hold:100;
 		_max=option.max!=null?option.max:10;
 		_delay=option.delay!=null?option.delay:50;
 		_type=option.type!=null?option.type:1;
 		_type=_type<1?1:_type;
 		_type=_type>3?3:_type;
-		console.log('_type:'+_type)
 	}//end option
 	init();
 	function init(){
