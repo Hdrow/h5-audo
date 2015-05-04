@@ -567,7 +567,14 @@ function hitTest(obj1,obj2){
 		else return false;
 	}//end if
 	else return false;
-}//end func 
+}//end func
+
+//获得几位小数点
+function getRound(num,n){
+	n=n||2;
+	var r=Math.pow(10, n);
+	return Math.round(num*r)/r;
+}//end func
 
 //碰撞函数，测试1个点是否在一个区域内
 function hitPoint(pt,obj){
