@@ -12,7 +12,7 @@ $(document).ready(function(e) {
 	var imgBtnSub=imgPanel.children('a.btnSub');
 	var imgBtnR=imgPanel.children('a.btnR');
 	var imgBtnCf=$('a.btnCf');
-	var imgCanvas,imgPic='imgPic';
+	var imgCanvas,imgPic;
 	var imgScale=0.5,imgSaleMin=0.1,imgScaleMax=2,imgScaleTimer;
 	
 	//拍照
@@ -97,11 +97,11 @@ $(document).ready(function(e) {
 		imgCanvas.clearCanvas();
 		imgCanvas.drawImage({
 		  layer: true,
-		  name:imgPic,
 		  source: src,
 		  x: imgCanvas.width()/2, y: imgCanvas.height()/2,
 		  fromCenter: true
 		}).drawLayers();
+		imgPic=imgCanvas.getLayer(0);
 		imgScale=0.5;
 		imgScaleSet(imgPic);
 		addImgEvent(imgPic);
@@ -189,10 +189,8 @@ $(document).ready(function(e) {
 		var obj=e.data.obj;
 		if(!mutiTouch && event.touches.length==1){
 			var pos1=[event.touches[0].clientX,event.touches[0].clientY];
-			imgCanvas.setLayer(obj, {
-			  x:'+='+(pos1[0]-posLast1[0]),
-			  y:'+='+(pos1[1]-posLast1[1])
-			});
+			obj.x+=pos1[0]-posLast1[0];
+			obj.y+=pos1[1]-posLast1[1];
 			posLast1=pos1;
 		}//end if
 		else if(event.touches.length>=2){
@@ -203,14 +201,10 @@ $(document).ready(function(e) {
 				imgScale+=0.01*(dis-disLast)/Math.abs(dis-disLast);
 				imgScale=imgScale<=imgSaleMin?imgSaleMin:imgScale;
 				imgScale=imgScale>=imgScaleMax?imgScaleMax:imgScale;
-				imgCanvas.setLayer(obj, {
-				  scale:imgScale
-				});
+				obj.scale=imgScale;
 			}//end if
 			var deg=getDeg(pos1,pos2);
-			imgCanvas.setLayer(obj, {
-			  rotate:'+='+(deg-degLast)
-			});	
+			obj.rotate+=deg-degLast;
 			posLast1=pos1;
 			posLast2=pos2;
 			disLast=dis;
@@ -245,16 +239,16 @@ $(document).ready(function(e) {
 	function imgScaleSet(obj){
 		imgScale=imgScale<=imgSaleMin?imgSaleMin:imgScale;
 		imgScale=imgScale>=imgScaleMax?imgScaleMax:imgScale;
-		imgCanvas.setLayer(obj, {
-		  scale:imgScale
-		}).drawLayers();
+		obj.scale=imgScale;
+		imgCanvas.drawLayers();
 	}//end func
 	
 	//图片旋转
 	function imgBtnR_click(e){
-		imgCanvas.setLayer(e.data.obj, {
-		  rotate:'+=90'
-		}).drawLayers();
+		var obj=e.data.obj;
+		if(obj.rotate%90!=0) obj.rotate=Math.floor(obj.rotate/90)*90;
+		else obj.rotate+=90;
+		imgCanvas.drawLayers();
 	}//end func
 
 });
