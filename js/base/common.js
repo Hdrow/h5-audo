@@ -1,5 +1,8 @@
 //2015.5.12
 
+//测试版页面统一添加顶部提示条
+//addSignBar('本页面为测试版本,抽奖结果无效!');
+
 //iphone4不做一屏兼容，内容高度拉伸到与iphone5，默认false
 var scrollIphone4=false;
 
