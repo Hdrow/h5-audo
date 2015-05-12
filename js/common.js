@@ -319,13 +319,14 @@ function popOn(option){
 	var _text=option.text;
 	var _callback=option.callback;
 	var _remove=option.remove;
+	var _closeEvent=option.closeEvent||'touchend';
 	var _close;
 	if(_obj){
 		if(_text) _obj.find('.text').html(_text);
 		_obj.show();
 		_close=_obj.find('a.close');
-		if(_close.length>0) _close.one('click',obj_close);
-		else _obj.one('click',obj_close);
+		if(_close.length>0) _close.one(_closeEvent,obj_close);
+		else _obj.one(_closeEvent,obj_close);
 	}//end if
 	function obj_close(e){
 		if(_close.length>0) _close.off();
@@ -359,7 +360,7 @@ function fadeOut(obj,dur,callback){
 
 function alertFunc(text,callback){
 	var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a class="close">确认</a></p></div></aside>').appendTo(htmlBox);
-	popOn({obj:box,text:text,callback:callback,remove:true});
+	popOn({obj:box,text:text,callback:callback,remove:true,closeEvent:'click'});
 }//end func
 
 
