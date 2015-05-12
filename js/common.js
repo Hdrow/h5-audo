@@ -324,8 +324,8 @@ function popOn(option){
 		if(_text) _obj.find('.text').html(_text);
 		_obj.show();
 		_close=_obj.find('a.close');
-		if(_close.length>0) _close.one('touchend',obj_close);
-		else _obj.one('touchend',obj_close);
+		if(_close.length>0) _close.one('click',obj_close);
+		else _obj.one('click',obj_close);
 	}//end if
 	function obj_close(e){
 		if(_close.length>0) _close.off();
