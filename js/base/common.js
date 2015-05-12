@@ -1,13 +1,7 @@
-//2015.4.20
+//2015.5.12
 
 //iphone4不做一屏兼容，内容高度拉伸到与iphone5，默认false
 var scrollIphone4=false;
-
-//判断是否处于微信内置浏览器
-var isWeixin=detectWeixin();
-
-//判断是否处于微博内置浏览器
-var isWeibo=detectWeibo();
 
 //-------------------------------------------------------定义当前站点URL，分享功能会调用到
 var siteUrl='http://t.buzzreader.cn/common/iphone/';
@@ -18,34 +12,23 @@ var wxKey='dsglgj21csi1';//老古给的key
 var wxContent={
 	link:siteUrl,
 	image:siteUrl+"images/share.jpg",
-	pic:siteUrl+"images/share.jpg",
 	title:'分享给朋友的标题文字',
 	friend:'分享给朋友的内容文字',
 	timeline:'分享到朋友圈的内容文字',
 	weibo:'分享到新浪微博的内容文字'
 };
 var wxSigned=false;
-if(isWeixin){
+if(os.weixin){
 	document.write('<script type="text/javascript" src="js/base/jweixin.js"></script>');
 	weixin_sign();//微信公众号认证
 }//end if
 
-/*
-改变分享内容的方法：
-1、先修改微信分享内容变量wxContent的内容
-		wxContent.link='新的分享url';
-		wxContent.image='新的分享图标';
-		wxContent.title='新的分享标题文字';
-		wxContent.timeline='新的分享到朋友圈的内容文字';
-		wxContent.friend='新的分享给朋友的内容文字';
-2、再执行一次分享函数：
-wx_share();
-*/
-
-//百度统计
-var _hmt = _hmt || [];
-
-
+//判断是否处于竖屏还是横屏，竖屏是'portrait'，横屏是'landscape'
+var isOrient;
+//判断是否处于微信内置浏览器
+var isWeixin=detectWeixin();
+//判断是否处于微博内置浏览器
+var isWeibo=detectWeibo();
 //是否是iphone6 plus
 var isIphone6Plus=os.ios && screen.width==414 && screen.height==736 && window.devicePixelRatio==3;
 //是否是iphone6
@@ -59,21 +42,19 @@ var isSamsung = os.android && ( (screen.width==480 && screen.height==854) || (sc
 //是否是安卓1080P、2K、4K高清屏（有物理按键的标准16:9屏）
 var isFullHD=isSamsung && screen.width>=1080 && window.devicePixelRatio==3;
 
-//loading浮层
-var loadBox=$('#loadBox');
-
-//翻转提示浮层
-var turnBox;
-
-//主结构
+//根结构
 var htmlBox=$('body');
 var articleBox=$('article');
 
-//分享
-var shareBtn=$('a.btnShare,#btnShare');
-var shareBox=$('#shareBox');
+//loading浮层
+var loadBox=$('#loadBox');
 
-$(document).ready(function(e) {	
+$(document).ready(function(e) {
+	
+
+	//分享
+	var shareBtn=$('a.btnShare,#btnShare');
+	var shareBox=$('#shareBox');
 	
 	//输入框
 	var inputBox=$('input[type=text],input[type=tel],textarea');
@@ -81,20 +62,19 @@ $(document).ready(function(e) {
 	init();
 	
 	function init(){
-		window_resize();
-		$(window).on('resize',window_resize);//自适应窗口大小
-		$(window).on('orientationchange',window_orientationchange);//横屏提示
+		window_orientation();
+		$(window).on('resize',window_orientation);//横屏提示
 		if(scrollIphone4 && isIphone4){
-			if(isWeixin) articleBox.css({height:'121.2%'});
+			if(os.weixin) articleBox.css({height:'121.2%'});
 			else articleBox.css({height:'123.6%'});
 		}//end if
 		else $(document).on('touchmove',noEvent);//禁止页面上下滑动
 		if(shareBtn.length>0){
-			if(isWeixin){
+			if(os.weixin){
 				if(shareBox.length<1) shareBox=$('<aside class="shareBox"><img src="images/common/share.png"></aside>').appendTo(htmlBox);
 				shareBtn.on('touchend',shareBtn_click);
 			}//end if
-			else if(!isWeibo) wb_share(shareBtn);
+			else if(!os.weibo) wb_share(shareBtn);
 		}//end if
 		//安卓输入法改变窗体高度，缩回后窗体高度无法及时弹回的BUG解决方案
 		if(os.android && inputBox.length>0){
@@ -103,19 +83,26 @@ $(document).ready(function(e) {
 		}//end if
 	}//end func
 	
-	function window_resize(e){//自适应窗口大小
+	//横屏提示
+	function window_orientation(e){
+		//翻转提示浮层
+		var turnBox=$('#turnBox');
+		if($(window).width()>$(window).height()){
+			isOrient='landscape';
+			if(turnBox.length==0) turnBox=$('<aside class="turnBox" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏状态，获得最佳浏览体验！</p></aside>').appendTo(htmlBox);
+		}//end if
+		else{
+			isOrient='portrait';
+			if(turnBox.length>0) turnBox.remove();
+		}//end else
 		console.log('window size:'+$(window).width()+'/'+$(window).height());
-	}//end if
+		console.log('iphone orientation:'+isOrient);
+	}//end func
 	
 	//遇到有输入框的页面，在安卓下，打开输入法会直接改变窗体高度，则必须对输入框所在内容容器进行高度刷新，好让输入法关闭后内容容器高度回到正常
 	function input_resize(e){
 		articleBox.css({height:$(window).height()});
 	}//end if
-	
-	function window_orientationchange(e){//横屏提示
-		if(e.orientation=='landscape') turnBox=$('<aside class="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏状态，获得最佳浏览体验！</p></aside>').appendTo(htmlBox);
-		else turnBox.remove();
-	}//end func
 	
 	function shareBtn_click(e){
 		shareBox.show().one('touchend',function(e){
@@ -226,7 +213,7 @@ function wx_share(content){
 function wb_share(btn) {
     if (btn && btn.length > 0){
 		btn.each(function(i) {
-           wbShare({ obj: $(this), url: wxContent.link, text: wxContent.weibo, image: wxContent.pic }); 
+           wbShare({ obj: $(this), url: wxContent.link, text: wxContent.weibo, image: wxContent.image }); 
         });
 	}//end if
 }//end func
@@ -251,32 +238,6 @@ function wbShare(option){
 		}//end for
 		_this.attr({target:'_blank',href:'http://service.weibo.com/share/share.php?url=' + _url + '&title=' + _txt + imgHtml });
 	}//end if
-}//end func
-
-//--------------------------------百度统计
-function monitorAdd(option){
-	if(option){
-		var obj=option.obj;
-		var category=option.category||'页面监测';
-		var action=option.action||'click';
-		var label=option.label||'';
-		if(obj && obj.length>0){
-			obj.each(function(i) {
-				$(this).on(action,{category:category,action:action,label:obj.length==1?label:label+(i+1)},monitor_event);}
-			);
-		}//end if
-		else if(label && label!='') monitor_handler({category:category,action:'JS程序触发',label:label});
-	}//end if
-}//end func
-
-function monitor_event(e){
-	var data=e.data;
-	monitor_handler(data);
-}//end func
-
-function monitor_handler(data){
-	_hmt.push(['_trackEvent', data.category, data.action, data.category+'——'+data.label]);
-	console.log('项目类别：'+data.category+' | '+'交互行为：'+data.action+' | '+'项目说明：'+data.category+'——'+data.label);
 }//end func
 
 //--------------------------------判断是否处于微信内置浏览器
@@ -406,7 +367,7 @@ function imageLoad(src,callback){
 function pageScrollOn() {
 	$(document).off('touchmove',noEvent);
 	if(isIphone4){
-		if(isWeixin) articleBox.css({height:'121.2%'});
+		if(os.weixin) articleBox.css({height:'121.2%'});
 		else articleBox.css({height:'123.6%'});
 	}//end if
 }//end func
@@ -595,5 +556,4 @@ function hitPixel(pt,size,pixel){
 		else return false;
 	}//end if
 	else return false;
-}//end func 
-
+}//end func
