@@ -1,10 +1,10 @@
-﻿//2015.2.11
+﻿//2015.5.12
 (function($) {	
 	$.fn.extend({
 		popOn: function(option) {	
 			var _this=$(this);
 			var _y,_text,_url,_callback,_parent,_fade=0,_wrap=true,_fullclose=false;
-			var _close=_this.find("a.close");
+			var _close=_this.find("a.close"),_closeEvent='touchend';
 			if(option){
 				_text=option.text;
 				_url=option.url!=null?option.url:false;
@@ -13,6 +13,7 @@
 				_fade=option.fade!=null?option.fade:250;
 				_wrap=option.wrap!=null?option.wrap:true;
 				_fullclose=option.fullclose!=null?option.fullclose:false;
+				_closeEvent=option.closeEvent!=null?option.closeEvent:'touchend';
 			}//end if
 			init();
 			
@@ -33,13 +34,13 @@
 					$(document).on('touchmove',noScroll);
 				}//end if
 				_this.one('off',_this_off);
-				if(_fullclose) _this.one('touchend',_this_off);
-				else if(_close.length>0) _close.one('touchend',_this_off);
+				if(_fullclose) _this.one(_closeEvent,_this_off);
+				else if(_close.length>0) _close.one(_closeEvent,_this_off);
 			}//end func
 			function _this_off(e){
 				_this.off('close',_this_off);
-				if(_fullclose) _this.off('touchend',_this_off);
-				else if(_close.length>0) _close.off('touchend',_this_off);
+				if(_fullclose) _this.off(_closeEvent,_this_off);
+				else if(_close.length>0) _close.off(_closeEvent,_this_off);
 				if(_fade>0){
 					if(_wrap) _parent.transition({opacity:0},Math.round(_fade/2));
 					_this.transition({opacity:0},Math.round(_fade/2),closeFunc);

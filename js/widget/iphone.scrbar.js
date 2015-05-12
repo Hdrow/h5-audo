@@ -1,4 +1,4 @@
-﻿//2015.4.8
+﻿//2015.5.12
 (function($) {
 	$.fn.extend({
 		scrbar: function(option) {	
@@ -17,7 +17,7 @@
 				_cont=_this.children(".cont");
 				_panel=_this.children(".panel");
 				_bar=_panel.children();
-				_this.on("off",_this_off).on("reset",resetFunc);
+				_this.on("off",_this_off).on('goto',gotoFunc).on("reset",resetFunc);
 				_this.on("touchstart",_this_touchstart).on("touchmove",_this_touchmove);
 				_sizeLast=_size=0;
 				sizeFunc();
@@ -26,9 +26,15 @@
 			
 			//关闭功能
 			function _this_off(e){
-				_this.off("off",_this_off).off("reset",resetFunc);
+				_this.off("off",_this_off).off('goto',gotoFunc).off("reset",resetFunc);
 				_this.off("touchstart",_this_touchstart).off("touchmove",_this_touchmove);
 				clearInterval(_timer);
+			}//end func
+			
+			//移动功能
+			function gotoFunc(e,value){
+				_tar+=value;
+				scrollFunc();
 			}//end func
 			
 			//重置滚动高度
@@ -81,6 +87,9 @@
 		},//end fn
 		scrbarReset: function() {
 			$(this).trigger('reset');
+		},//end fn
+		scrbarGoto: function(value) {
+			$(this).trigger('goto',[value]);
 		},//end fn
 		scrbarOff: function() {
 			$(this).trigger('off');
