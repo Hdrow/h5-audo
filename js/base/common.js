@@ -1,17 +1,15 @@
-//2015.5.12
+//2015.5.13
 
 //测试版页面统一添加顶部提示条
 //addSignBar('本页面为测试版本,抽奖结果无效!');
 
 //iphone4不做一屏兼容，内容高度拉伸到与iphone5，默认false
+//article 作为每个页面的根标签来使用，在scrollIphone4=true的条件下，会在iphone4下拉伸高度与iphone5保持一致
 var scrollIphone4=false;
 
 //-------------------------------------------------------定义当前站点URL，分享功能会调用到
 var siteUrl='http://t.buzzreader.cn/common/iphone/';
-
-//-------------------------------------------------------微信公众号授权
-var	wxAppId='wx7cdae278cdb40e02';//客户公众号的appid
-var wxKey='dsglgj21csi1';//老古给的key
+//-------------------------------------------------------定义分享内容
 var wxContent={
 	link:siteUrl,
 	image:siteUrl+"images/share.jpg",
@@ -20,10 +18,16 @@ var wxContent={
 	timeline:'分享到朋友圈的内容文字',
 	weibo:'分享到新浪微博的内容文字'
 };
+
+//-------------------------------------------------------微信公众号授权
+var	wxAppId='wx7cdae278cdb40e02';//客户公众号的appid
+var wxKey='dsglgj21csi1';//老古给的key
 var wxSigned=false;
+
+//如果处于微信内部则加载微信验证和分享模块
 if(os.weixin){
 	document.write('<script type="text/javascript" src="js/base/jweixin.js"></script>');
-	weixin_sign();//微信公众号认证
+	document.write('<script type="text/javascript" src="js/base/weixin.js"></script>');
 }//end if
 
 //判断是否处于竖屏还是横屏，竖屏是'portrait'，横屏是'landscape'
@@ -72,13 +76,7 @@ $(document).ready(function(e) {
 			else articleBox.css({height:'123.6%'});
 		}//end if
 		else $(document).on('touchmove',noEvent);//禁止页面上下滑动
-		if(shareBtn.length>0){
-			if(os.weixin){
-				if(shareBox.length<1) shareBox=$('<aside class="shareBox"><img src="images/common/share.png"></aside>').appendTo(htmlBox);
-				shareBtn.on('touchend',shareBtn_click);
-			}//end if
-			else if(!os.weibo) wb_share(shareBtn);
-		}//end if
+		if(shareBtn.length>0 && !os.weixin && !os.weibo) wb_share(shareBtn);//如果有分享按钮，不在微信也不再微博下，点击分享按钮直接跳去微博分享页
 		//安卓输入法改变窗体高度，缩回后窗体高度无法及时弹回的BUG解决方案
 		if(os.android && inputBox.length>0){
 			inputBox.on('focus blur',input_resize);
@@ -115,103 +113,6 @@ $(document).ready(function(e) {
 
 });//end docuemnt ready
 
-//--------------------------------微信分享设置
-function weixin_sign(){
-	var localUrl = encodeURIComponent(window.location.href);
-	$.getJSON("http://s.gumutianqi.com/jssdk/get_sign?callback=?&key="+wxKey+"&url="+ localUrl, function(data){
-		if(data  && data.errcode == "0") {
-			wx.config({
-		        debug: false,
-		        appId: wxAppId,
-		        timestamp: data.result.timestamp,
-		        nonceStr: data.result.noncestr,
-		        signature: data.result.signature,
-		        jsApiList: [
-		            'checkJsApi',
-		            'onMenuShareTimeline',
-		            'onMenuShareAppMessage',
-		            'onMenuShareQQ',
-		            'onMenuShareWeibo',
-		            'hideMenuItems',
-		            'showMenuItems',
-		            'hideAllNonBaseMenuItem',
-		            'showAllNonBaseMenuItem',
-		            'translateVoice',
-		            'startRecord',
-		            'stopRecord',
-		            'onRecordEnd',
-		            'playVoice',
-		            'pauseVoice',
-		            'stopVoice',
-		            'uploadVoice',
-		            'downloadVoice',
-		            'chooseImage',
-		            'previewImage',
-		            'uploadImage',
-		            'downloadImage',
-		            'getNetworkType',
-		            'openLocation',
-		            'getLocation',
-		            'hideOptionMenu',
-		            'showOptionMenu',
-		            'closeWindow',
-		            'scanQRCode',
-		            'chooseWXPay',
-		            'openProductSpecificView',
-		            'addCard',
-		            'chooseCard',
-		            'openCard'
-		        ]
-			});//end wx.config
-			wxSigned=true;//通过微信新SDK验证
-			wx.ready(function(){
-				wx.showOptionMenu();//用微信“扫一扫”打开，optionMenu是off状态，默认开启
-				wx_share();
-			});//end wx.ready
-		}//end if(data)
-	});//end ajax
-}//end func
-
-function wx_share(content){
-	if(wxSigned){
-		if(content){
-			wxContent.link=content.link!=null?content.link:wxContent.link;
-			wxContent.image=content.image!=null?content.image:wxContent.image;
-			wxContent.title=content.title!=null?content.title:wxContent.title;
-			wxContent.friend=content.friend!=null?content.friend:wxContent.friend;
-			wxContent.timeline=content.timeline!=null?content.timeline:wxContent.timeline;
-		}//end if
-		wx.onMenuShareTimeline({
-			title: wxContent.timeline, // 分享标题
-			link: wxContent.link, // 分享链接
-			imgUrl: wxContent.image, // 分享图标
-			success: function () { 
-				// 用户确认分享后执行的回调函数
-				monitorAdd({label:'分享到朋友圈'});
-			},
-			cancel: function () { 
-				// 用户取消分享后执行的回调函数
-			}
-		});
-		wx.onMenuShareAppMessage({
-			title: wxContent.title, // 分享标题
-			desc: wxContent.friend, // 分享描述
-			link: wxContent.link, // 分享链接
-			imgUrl: wxContent.image, // 分享图标
-			type: 'link', // 分享类型,music、video或link，不填默认为link
-			dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-			success: function () { 
-				// 用户确认分享后执行的回调函数
-				monitorAdd({label:'分享给朋友'});
-			},
-			cancel: function () { 
-				// 用户取消分享后执行的回调函数
-			}
-		});
-	}//end if
-	else setTimeout(wx_share,250,content);
-}//end func
-
 //--------------------------------新浪微博分享
 function wb_share(btn) {
     if (btn && btn.length > 0){
@@ -243,40 +144,8 @@ function wbShare(option){
 	}//end if
 }//end func
 
-//--------------------------------判断是否处于微信内置浏览器
-function detectWeixin(){
-	var ua = navigator.userAgent.toLowerCase();
-	if(ua.match(/MicroMessenger/i)=="micromessenger") return true;
-	else return false;
-}//end func
+//--------------------------------------------------------------公共方法--------------------------------------------------------------
 
-//--------------------------------判断是否处于微博内置浏览器
-function detectWeibo(){
-	var ua = navigator.userAgent.toLowerCase();
-	if(ua.match(/weibo/i)=="weibo") return true;
-	else return false;
-}//end func
-
-//--------------------------------iPhone4恢复一屏锁定
-function unscrollIphone4(){
-	scrollIphone4=false;
-	$(document).on('touchmove',noEvent);
-	articleBox.css({height:'100%'});
-}//end func
-	
-//-------------------------------新增测试版提示信息
-function addSignBar(text){
-	$('#signBar').remove();
-    var sign=$('<div id="signBar"></div>').appendTo('body');
-	var text=$('<span></span>').html(text).appendTo(sign);
-}//end func
-
-function removeSignBar(){
-	$('#signBar').remove();
-}//end func
-
-//--------------------------------公共函数
-	
 //简易版popOn
 function popOn(option){
 	var _obj=option.obj;
@@ -322,6 +191,7 @@ function fadeOut(obj,dur,callback){
 	}//end if
 }//end func
 
+//取代系统alert
 function alertFunc(text,callback){
 	var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a class="close">确认</a></p></div></aside>').appendTo(htmlBox);
 	popOn({obj:box,text:text,callback:callback,remove:true,closeEvent:'click'});
@@ -366,6 +236,38 @@ function imageLoad(src,callback){
 	}//end if
 }//end func	
 
+//新增测试版提示信息
+function addSignBar(text){
+	$('#signBar').remove();
+    var sign=$('<div id="signBar"></div>').appendTo('body');
+	var text=$('<span></span>').html(text).appendTo(sign);
+}//end func
+
+function removeSignBar(){
+	$('#signBar').remove();
+}//end func
+
+//判断是否处于微信内置浏览器
+function detectWeixin(){
+	var ua = navigator.userAgent.toLowerCase();
+	if(ua.match(/MicroMessenger/i)=="micromessenger") return true;
+	else return false;
+}//end func
+
+//判断是否处于微博内置浏览器
+function detectWeibo(){
+	var ua = navigator.userAgent.toLowerCase();
+	if(ua.match(/weibo/i)=="weibo") return true;
+	else return false;
+}//end func
+
+//--------------------------------iPhone4恢复一屏锁定
+function unscrollIphone4(){
+	scrollIphone4=false;
+	$(document).on('touchmove',noEvent);
+	articleBox.css({height:'100%'});
+}//end func
+
 //开启网页上下滑动，默认是静止的
 function pageScrollOn() {
 	$(document).off('touchmove',noEvent);
@@ -407,42 +309,31 @@ function checkStr(str,type){
 	switch(type){
 		case 0:
 			var reg= new RegExp(/^1[3-9]\d{9}$/);//手机号码验证
-		break;
+			break;
 		case 1:
-			var reg= new RegExp(/^\d+$/);//是否为0-9的数字
-		break;
+			var reg= new RegExp(/\w+@\w+/);//匹配EMAIL
+			break;
 		case 2:
-			var reg= new RegExp(/^[a-z]+$/);//是否为小写
-		break;
+			var reg= new RegExp(/^\d+$/);//是否为0-9的数字
+			break;
 		case 3:
-			var reg= new RegExp(/^[A-Z]+$/);//是否为大写
-		break;
+			var reg= new RegExp(/^[a-zA-Z\u0391-\uFFE5]*[\w\u0391-\uFFE5]*$/);//不能以数字或符号开头
+			break;
 		case 4:
 			var reg= new RegExp(/^\w+$/);//匹配由数字、26个英文字母或者下划线组成的字符串
-		break;
+			break;
 		case 5:
 			var reg= new RegExp(/^[\u0391-\uFFE5]+$/);//匹配中文
-		break;
+			break;
 		case 6:
-			var reg= new RegExp(/\w+@\w+/);//匹配EMAIL
-		break;
-		case 7:
 			var reg= new RegExp(/^[a-zA-Z\u0391-\uFFE5]+$/);//不能包含数字和符号
-		break;
-		case 8:
-			var reg= new RegExp(/^\d{9}$/);//，9位数字
-		break;
-		case 9:
-			var reg= new RegExp(/^[a-zA-Z\u0391-\uFFE5]*[\w\u0391-\uFFE5]*$/);//不能以数字或符号开头
-		break;
-		default: 
-		break;
+			break;
 	}//end switch
 	if(reg.exec($.trim(str))) return true;
 	else return false;
 }//end func
 
-//---------------------------------------常用数学函数
+//------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------
 	
 //获得范围内随机整数
 function randomRange(min, max) {
@@ -560,3 +451,27 @@ function hitPixel(pt,size,pixel){
 	}//end if
 	else return false;
 }//end func
+
+
+//------------------------------------------------------------------------------兼容性HACK------------------------------------------------------------------------------
+//安卓部分浏览器不支持原生requestAnimationFrame，这里做兼容性处理
+(function() {
+	var lastTime = 0;
+	var vendors = ['ms', 'moz', 'webkit', 'o'];
+	for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+		window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+		window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+	}
+	if (!window.requestAnimationFrame) window.requestAnimationFrame = function(callback, element) {
+		var currTime = new Date().getTime();
+		var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+		var id = window.setTimeout(function() {
+			callback(currTime + timeToCall);
+		}, timeToCall);
+		lastTime = currTime + timeToCall;
+		return id;
+	};
+	if (!window.cancelAnimationFrame) window.cancelAnimationFrame = function(id) {
+		clearTimeout(id);
+	};
+}());

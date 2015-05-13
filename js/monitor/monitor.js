@@ -1,9 +1,9 @@
-<!--PM提供的百度统计代码贴在这里-->
+//百度统计按钮添加方法方法
+//monitorAdd({obj:$('#btnTest'),category:'首页',label:'测试按钮'});
 
 //百度统计
 var _hmt = _hmt || [];
 
-//--------------------------------百度统计
 function monitorAdd(option){
 	if(option){
 		var obj=option.obj;
@@ -29,3 +29,4 @@ function monitor_handler(data){
 	console.log('项目类别：'+data.category+' | '+'交互行为：'+data.action+' | '+'项目说明：'+data.category+'——'+data.label);
 }//end func
 
+<!--------------------------------PM提供的百度统计代码贴在这里---------------------------------->

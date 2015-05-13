@@ -9,70 +9,18 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
-<script>
-//平台检测，判断浏览器、操作系统环境
-var os=detectOS();
-function detectOS() {
-	var	userAgent=navigator.userAgent;
-	var os = {};
-	os.android = userAgent.match(/(Android)\s+([\d.]+)/) || userAgent.match(/Silk-Accelerated/) ? true : false;
-	os.ipad = userAgent.match(/(iPad).*OS\s([\d_]+)/) ? true : false;
-	os.iphone = !os.ipad && userAgent.match(/(iPhone\sOS)\s([\d_]+)/) ? true : false;
-	os.ios = os.ipad || os.iphone;
-	os.wp=userAgent.match(/Windows Phone/) || userAgent.match(/IEMobile/) ? true : false;
-	os.supportsTouch = ((window.DocumentTouch && document instanceof window.DocumentTouch) || 'ontouchstart' in window);
-	if(os.ios) os.iosVer=parseInt(userAgent.match(/OS \d_/)[0].match(/\d/)[0]);
-	else os.iosVer=0;
-	os.weixin = userAgent.match(/MicroMessenger/) ? true : false;
-	os.weibo = userAgent.match(/Weibo/) || userAgent.match(/weibo/) ? true : false;
-	os.safari = userAgent.match(/Safari/) ? true : false;
-	os.chrome = userAgent.match(/Chrome/) ? true : false;
-	os.firefox = userAgent.match(/Firefox/) ? true : false;
-	os.ie = document.documentMode;
-	return os;
-}//end func
-</script>
+<script type="text/javascript" src="js/base/head.js"></script>
 <link rel="stylesheet" type="text/css" href="css/iphone.css" />
 </head>
 <body>
-<!--------------------------------------------------------------html区域-------------------------------------------------------------------------------------->
 <aside class="loadBox" id="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><b></b></aside>
-<!-- article 作为每个页面的根标签来使用，在scrollIphone4=true的条件下，会在iphone4下拉伸高度与iphone5保持一致 -->
-<article>
-	<section>
-    	<div>
-        	<h3></h3>
-            <p>
-            	<span>
-                	<i></i>
-                </span>
-            </p>
-        </div>
-    </section>
-</article>
+<!--------------------------------------------------------------html区域-------------------------------------------------------------------------------------------->
+
+
 <!--------------------------------------------------------------javascript区域-------------------------------------------------------------------------------------->
 <script type="text/javascript" src="js/base/jquery.js"></script>
 <script type="text/javascript" src="js/base/framwork.js"></script>
 <script type="text/javascript" src="js/base/common.js"></script>
 <script type="text/javascript" src="js/monitor/monitor.js"></script>
-<script>
-$(document).ready(function(e) {
-	
-	//代替alert命令
-	//alertFunc('测试');
-	
-	init();
-	
-	function init(){
-		addMonitor();//给按钮添加统计监测
-	}//end init
-	
-	//给按钮添加统计监测
-	function addMonitor(){
-		//monitorAdd({obj:$('#btnTest'),category:'首页',label:'测试按钮'});
-	}//end func
-	
-});
-</script>
 </body>
 </html>
