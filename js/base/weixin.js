@@ -1,19 +1,3 @@
-//-------------------------------------------------------微信公众号授权
-var	wxAppId='wx7cdae278cdb40e02';//客户公众号的appid
-var wxKey='dsglgj21csi1';//老古给的key
-var wxSigned=false;
-//-------------------------------------------------------定义当前站点URL，分享功能会调用到
-var siteUrl='http://t.buzzreader.cn/common/iphone/';
-//-------------------------------------------------------定义分享内容
-var wxContent={
-	link:siteUrl,
-	image:siteUrl+"images/share.jpg",
-	title:'分享给朋友的标题文字',
-	friend:'分享给朋友的内容文字',
-	timeline:'分享到朋友圈的内容文字',
-	weibo:'分享到新浪微博的内容文字'
-};
-
 $(document).ready(function(e) {
 
 	//分享

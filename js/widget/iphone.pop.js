@@ -1,4 +1,4 @@
-﻿//2015.5.12
+﻿//2015.5.13
 (function($) {	
 	$.fn.extend({
 		popOn: function(option) {	
