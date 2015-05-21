@@ -27,7 +27,7 @@ if(os.weixin){
 	document.write('<script type="text/javascript" src="js/base/weixin.js"></script>');
 }//end if
 
-os.loadBox=$('#loadBox');//loading浮层
+var loadBox=os.loadBox=$('#loadBox');//loading浮层
 
 $(document).ready(function(e) {	
 
