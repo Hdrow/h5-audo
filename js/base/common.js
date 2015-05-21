@@ -1,63 +1,35 @@
-//2015.5.13
+//2015.5.21
 
-//测试版页面统一添加顶部提示条
-//addSignBar('本页面为测试版本,抽奖结果无效!');
+//-------------------------------------------------------定义顶级变量
+var os=os||{};
 
-//iphone4不做一屏兼容，内容高度拉伸到与iphone5，默认false
-//article 作为每个页面的根标签来使用，在scrollIphone4=true的条件下，会在iphone4下拉伸高度与iphone5保持一致
-var scrollIphone4=false;
+//-------------------------------------------------------辅助功能
+//addSignBar('本页面为测试版本,抽奖结果无效!');//测试版页面统一添加顶部提示条
+os.iphone4Scroll=iphone4Scroll(true);//article 作为每个页面的根标签,iphone4Scroll(true)会让iphone4下的article标签高度拉伸到与iphone5一致，默认开启
 
-//-------------------------------------------------------定义当前站点URL，分享功能会调用到
-var siteUrl='http://t.buzzreader.cn/common/iphone/';
-//-------------------------------------------------------定义分享内容
-var wxContent={
-	link:siteUrl,
-	image:siteUrl+"images/share.jpg",
+//-------------------------------------------------------定义当前站点的分享设置
+os.url='http://t.buzzreader.cn/common/iphone/';
+os.content={
+	link:os.url,
+	image:os.url+"images/share.jpg",
 	title:'分享给朋友的标题文字',
 	friend:'分享给朋友的内容文字',
 	timeline:'分享到朋友圈的内容文字',
 	weibo:'分享到新浪微博的内容文字'
 };
+os.wxId='wx7cdae278cdb40e02';//客户公众号的appid
+os.wxKey='dsglgj21csi1';//老古给的key
+os.wxSigned=false;
 
-//-------------------------------------------------------微信公众号授权
-var	wxAppId='wx7cdae278cdb40e02';//客户公众号的appid
-var wxKey='dsglgj21csi1';//老古给的key
-var wxSigned=false;
-
-//如果处于微信内部则加载微信验证和分享模块
+//-------------------------------------------------------加载微信SDK验证和分享程序
 if(os.weixin){
 	document.write('<script type="text/javascript" src="js/base/jweixin.js"></script>');
 	document.write('<script type="text/javascript" src="js/base/weixin.js"></script>');
 }//end if
 
-//判断是否处于竖屏还是横屏，竖屏是'portrait'，横屏是'landscape'
-var isOrient;
-//判断是否处于微信内置浏览器
-var isWeixin=detectWeixin();
-//判断是否处于微博内置浏览器
-var isWeibo=detectWeibo();
-//是否是iphone6 plus
-var isIphone6Plus=os.ios && screen.width==414 && screen.height==736 && window.devicePixelRatio==3;
-//是否是iphone6
-var isIphone6=os.ios && screen.width==375 && screen.height==667;
-//是否是iphone5
-var isIphone5=os.ios && screen.width==320 && screen.height==568;
-//是否是iphone4
-var isIphone4=os.ios && screen.width==320 && screen.height==480;
-//是否是16:9标准三星屏（有物理按键的标准16:9屏，不是的话就是SONY坑爹屏）
-var isSamsung = os.android && ( (screen.width==480 && screen.height==854) || (screen.width >= 540 && screen.width/screen.height==0.5625) );
-//是否是安卓1080P、2K、4K高清屏（有物理按键的标准16:9屏）
-var isFullHD=isSamsung && screen.width>=1080 && window.devicePixelRatio==3;
+os.loadBox=$('#loadBox');//loading浮层
 
-//根结构
-var htmlBox=$('body');
-var articleBox=$('article');
-
-//loading浮层
-var loadBox=$('#loadBox');
-
-$(document).ready(function(e) {
-	
+$(document).ready(function(e) {	
 
 	//分享
 	var shareBtn=$('a.btnShare,#btnShare');
@@ -71,11 +43,6 @@ $(document).ready(function(e) {
 	function init(){
 		window_orientation();
 		$(window).on('resize',window_orientation);//横屏提示
-		if(scrollIphone4 && isIphone4){
-			if(os.weixin) articleBox.css({height:'121.2%'});
-			else articleBox.css({height:'123.6%'});
-		}//end if
-		else $(document).on('touchmove',noEvent);//禁止页面上下滑动
 		if(shareBtn.length>0 && !os.weixin && !os.weibo) wb_share(shareBtn);//如果有分享按钮，不在微信也不再微博下，点击分享按钮直接跳去微博分享页
 		//安卓输入法改变窗体高度，缩回后窗体高度无法及时弹回的BUG解决方案
 		if(os.android && inputBox.length>0){
@@ -89,20 +56,20 @@ $(document).ready(function(e) {
 		//翻转提示浮层
 		var turnBox=$('#turnBox');
 		if($(window).width()>$(window).height()){
-			isOrient='landscape';
-			if(turnBox.length==0) turnBox=$('<aside class="turnBox" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏状态，获得最佳浏览体验！</p></aside>').appendTo(htmlBox);
+			os.orient='landscape';
+			if(turnBox.length==0) turnBox=$('<aside class="turnBox" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏状态，获得最佳浏览体验！</p></aside>').appendTo($('body'));
 		}//end if
 		else{
-			isOrient='portrait';
+			os.orient='portrait';
 			if(turnBox.length>0) turnBox.remove();
 		}//end else
 		console.log('window size:'+$(window).width()+'/'+$(window).height());
-		console.log('iphone orientation:'+isOrient);
+		console.log('iphone orientation:'+os.orient);
 	}//end func
 	
 	//遇到有输入框的页面，在安卓下，打开输入法会直接改变窗体高度，则必须对输入框所在内容容器进行高度刷新，好让输入法关闭后内容容器高度回到正常
 	function input_resize(e){
-		articleBox.css({height:$(window).height()});
+		$('article').css({height:$(window).height()});
 	}//end if
 	
 	function shareBtn_click(e){
@@ -117,7 +84,7 @@ $(document).ready(function(e) {
 function wb_share(btn) {
     if (btn && btn.length > 0){
 		btn.each(function(i) {
-           wbShare({ obj: $(this), url: wxContent.link, text: wxContent.weibo, image: wxContent.image }); 
+           wbShare({ obj: $(this), url: os.content.link, text: os.content.weibo, image: os.content.image }); 
         });
 	}//end if
 }//end func
@@ -142,6 +109,23 @@ function wbShare(option){
 		}//end for
 		_this.attr({target:'_blank',href:'http://service.weibo.com/share/share.php?url=' + _url + '&title=' + _txt + imgHtml });
 	}//end if
+}//end func
+
+//------------------------
+function iphone4Scroll(scr){
+	scr=scr||0;
+	if(os.iphone4){
+		if(scr){
+			if(os.weixin) $('article').css({height:'121.2%'});
+			else $('article').css({height:'123.6%'});
+		}//end if
+		else{
+			$(document).on('touchmove',function(e){e.preventDefault();});
+			$('article').css({height:'100%'});
+		}//end else
+	}//end if
+	else $(document).on('touchmove',function(e){e.preventDefault();});
+	return scr;
 }//end func
 
 //--------------------------------------------------------------公共方法--------------------------------------------------------------
@@ -193,7 +177,7 @@ function fadeOut(obj,dur,callback){
 
 //取代系统alert
 function alertFunc(text,callback){
-	var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a class="close">确认</a></p></div></aside>').appendTo(htmlBox);
+	var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a class="close">确认</a></p></div></aside>').appendTo($('body'));
 	popOn({obj:box,text:text,callback:callback,remove:true,closeEvent:'click'});
 }//end func
 
@@ -218,7 +202,6 @@ function getQueryId(len){
 function imageLoad(src,callback){
 	//载入图
 	if(src){
-		loadBox.show();
 		var loader = new PxLoader();
 		if($.type(src) === "string" && src!='') loader.addImage(src);
 		else if($.type(src) === "array" && src.length>0){
@@ -229,7 +212,6 @@ function imageLoad(src,callback){
 		loader.addCompletionListener(function() {
 			console.log('images load complete');
 			loader=null;
-			loadBox.hide();
 			if(callback) callback(src);
 		});			
 		loader.start();	
@@ -247,41 +229,6 @@ function removeSignBar(){
 	$('#signBar').remove();
 }//end func
 
-//判断是否处于微信内置浏览器
-function detectWeixin(){
-	var ua = navigator.userAgent.toLowerCase();
-	if(ua.match(/MicroMessenger/i)=="micromessenger") return true;
-	else return false;
-}//end func
-
-//判断是否处于微博内置浏览器
-function detectWeibo(){
-	var ua = navigator.userAgent.toLowerCase();
-	if(ua.match(/weibo/i)=="weibo") return true;
-	else return false;
-}//end func
-
-//--------------------------------iPhone4恢复一屏锁定
-function unscrollIphone4(){
-	scrollIphone4=false;
-	$(document).on('touchmove',noEvent);
-	articleBox.css({height:'100%'});
-}//end func
-
-//开启网页上下滑动，默认是静止的
-function pageScrollOn() {
-	$(document).off('touchmove',noEvent);
-	if(isIphone4){
-		if(os.weixin) articleBox.css({height:'121.2%'});
-		else articleBox.css({height:'123.6%'});
-	}//end if
-}//end func
-
-//禁止网页上下滑动
-function pageScrollOff() {
-	$(document).on('touchmove',noEvent);
-}//end func
-
 //打印json数据
 function jsonPrint(data){
 	console.log("-----------------------------------------------------------------------------");
@@ -297,11 +244,6 @@ function objectPrint(data){
 	console.log(info);
 	console.log("-----------------------------------------------------------------------------");
 }//end func
-
-//取消默认事件
-function noEvent(e){
-	e.preventDefault();
-}//end func	
 
 //常用正则
 function checkStr(str,type){
@@ -455,6 +397,7 @@ function hitPixel(pt,size,pixel){
 
 //------------------------------------------------------------------------------兼容性HACK------------------------------------------------------------------------------
 //安卓部分浏览器不支持原生requestAnimationFrame，这里做兼容性处理
+if(os.android){
 (function() {
 	var lastTime = 0;
 	var vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -475,3 +418,4 @@ function hitPixel(pt,size,pixel){
 		clearTimeout(id);
 	};
 }());
+}//end if
