@@ -1,6 +1,7 @@
-//2015.5.21
-var os=detectOS();//平台检测，判断浏览器、操作系统、机型、环境
-function detectOS() {
+//2015.5.22
+//平台检测，判断浏览器、操作系统、机型、环境
+var os=importOS();
+function importOS() {
 	var	userAgent=navigator.userAgent;
 	var os = {};
 	os.android = userAgent.match(/(Android)\s+([\d.]+)/) || userAgent.match(/Silk-Accelerated/) ? true : false;
@@ -25,4 +26,5 @@ function detectOS() {
 	os.screenHD=screen.width>=1080 && window.devicePixelRatio>=3;
 	return os;
 }//end func
+//写入loadBox
 document.write('<aside class="loadBox" id="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><b></b></aside>');
