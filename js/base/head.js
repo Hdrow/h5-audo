@@ -14,7 +14,7 @@ function importOS() {
 	else os.iosVer=0;
 	os.weixin = userAgent.match(/MicroMessenger/) ? true : false;
 	os.weibo = userAgent.match(/Weibo/) || userAgent.match(/weibo/) ? true : false;
-	os.safari = userAgent.match(/Safari/) ? true : false;
+	os.safari = os.ios && userAgent.match(/Safari/) ? true : false;
 	os.chrome = userAgent.match(/Chrome/) ? true : false;
 	os.firefox = userAgent.match(/Firefox/) ? true : false;
 	os.ie = document.documentMode;
