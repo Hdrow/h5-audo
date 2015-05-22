@@ -17,7 +17,7 @@ $(document).ready(function(e) {
 	init();
 	
 	function init(){
-		window_orientation();
+		window_resize_orientation();//一进入页面判断是否横屏
 		$(window).on('resize',window_orientation);//横屏提示
 		//安卓输入法改变窗体高度，缩回后窗体高度无法及时弹回的BUG解决方案
 		if(os.android && inputBox.length>0){
@@ -26,20 +26,32 @@ $(document).ready(function(e) {
 		}//end if
 	}//end func
 	
-	//横屏提示
-	function window_orientation(e){
+	//---------------------------横屏提示
+	function window_resize_orientation(e){
+		if($(window).width()>$(window).height()) orientationHandler('landscape');
+		else orientationHandler('portrait');
+		console.log('window size:'+$(window).width()+'/'+$(window).height());
+	}//end func
+	
+	function window_orientation(e) {
 		//翻转提示浮层
 		var turnBox=$('#turnBox');
-		if($(window).width()>$(window).height()){
-			os.orient='landscape';
+		if (window.orientation == 90 || window.orientation == -90) orientationHandler('landscape');
+		else if (window.orientation == 0 || window.orientation == 180) orientationHandler('portrait');
+	}//end if
+	
+	function orientationHandler(orientation){
+		//翻转提示浮层
+		var turnBox=$('#turnBox');
+		if (orientation=='landscape') {
+			os.orientation = 'landscape';		
 			if(turnBox.length==0) turnBox=$('<aside class="turnBox" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏状态，获得最佳浏览体验！</p></aside>').appendTo($('body'));
 		}//end if
-		else{
-			os.orient='portrait';
+		else if (orientation=='portrait'){
+			os.orientation='portrait';
 			if(turnBox.length>0) turnBox.remove();
-		}//end else
-		console.log('window size:'+$(window).width()+'/'+$(window).height());
-		console.log('iphone orientation:'+os.orient);
+		}//edn else
+		console.log('mobile orientation:'+os.orientation);
 	}//end func
 	
 	//遇到有输入框的页面，在安卓下，打开输入法会直接改变窗体高度，则必须对输入框所在内容容器进行高度刷新，好让输入法关闭后内容容器高度回到正常
