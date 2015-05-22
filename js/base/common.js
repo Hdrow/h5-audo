@@ -34,8 +34,6 @@ $(document).ready(function(e) {
 	}//end func
 	
 	function window_orientation(e) {
-		//翻转提示浮层
-		var turnBox=$('#turnBox');
 		if (window.orientation == 90 || window.orientation == -90) orientationHandler('landscape');
 		else if (window.orientation == 0 || window.orientation == 180) orientationHandler('portrait');
 	}//end if
