@@ -9,9 +9,6 @@ $(document).ready(function(e) {
 	//测试版页面统一添加顶部提示条
 	//icom.addSignBar('本页面为测试版本,抽奖结果无效!');
 	
-	//输入框
-	var inputBox=$('input[type=text],input[type=tel],textarea');
-	
 	var os=window.os||{};
 	
 	init();
@@ -19,11 +16,6 @@ $(document).ready(function(e) {
 	function init(){
 		window_resize_orientation();//一进入页面判断是否横屏
 		$(window).on('resize',window_orientation);//横屏提示
-		//安卓输入法改变窗体高度，缩回后窗体高度无法及时弹回的BUG解决方案
-		if(os.android && inputBox.length>0){
-			inputBox.on('focus blur',input_resize);
-			$(window).on('resize',input_resize);
-		}//end if
 	}//end func
 	
 	//---------------------------横屏提示
@@ -51,11 +43,6 @@ $(document).ready(function(e) {
 		}//edn else
 		console.log('mobile orientation:'+os.orientation);
 	}//end func
-	
-	//遇到有输入框的页面，在安卓下，打开输入法会直接改变窗体高度，则必须对输入框所在内容容器进行高度刷新，好让输入法关闭后内容容器高度回到正常
-	function input_resize(e){
-		$('article').css({height:$(window).height()});
-	}//end if
 
 });//end docuemnt ready
 
