@@ -64,7 +64,6 @@ function importCom(){
 			}//end else
 		}//end if
 		else $(document).on('touchmove',function(e){e.preventDefault();});
-		return scr;
 	}//end func
 	
 	//简易版popOn
