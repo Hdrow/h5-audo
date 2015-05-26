@@ -1,4 +1,4 @@
-//2015.5.22
+//2015.5.26
 var ishare=importShare();
 
 function importShare(){
@@ -13,8 +13,8 @@ function importShare(){
 		timeline:'分享到朋友圈的内容文字',
 		weibo:'分享到新浪微博的内容文字'
 	};
-	share.wxId='wx7cdae278cdb40e02';//客户公众号的appid
-	share.wxKey='dsglgj21csi1';//老古给的key
+	share.wxId='wxebba976e487ba7d7';//微信 appid
+	share.wxKey='dd8h3gbidsb9';//老古生成的key
 	share.wxSigned=false;
 	
 	//-------------------------------------------------------微信SDK验证
