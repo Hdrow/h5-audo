@@ -1,4 +1,4 @@
-//2015.5.22
+//2015.5.27
 var icom=importCom();
 
 $(document).ready(function(e) {
@@ -68,25 +68,27 @@ function importCom(){
 	
 	//简易版popOn
 	com.popOn=function(option){
-		var _obj=option.obj;
-		var _text=option.text;
-		var _callback=option.callback;
-		var _remove=option.remove;
-		var _closeEvent=option.closeEvent||'touchend';
-		var _close;
-		if(_obj){
+		if(option && option._obj){
+			var _obj=option.obj;
+			var _text=option.text;
+			var _open=option.onOpen;
+			var _callback=option.onClose;
+			var _remove=option.remove;
+			var _closeEvent=option.closeEvent||'touchend';
+			var _closeType=option.closeType||'button';
+			var _closeBtn=_obj.find('a.close');
 			if(_text) _obj.find('.text').html(_text);
 			_obj.show();
-			_close=_obj.find('a.close');
-			if(_close.length>0) _close.one(_closeEvent,obj_close);
+			if(_open) _open();
+			if(_closeBtn.length>0 && _closeType=='button') _closeBtn.one(_closeEvent,obj_close);
 			else _obj.one(_closeEvent,obj_close);
 		}//end if
 		function obj_close(e){
-			if(_close.length>0) _close.off();
-			else _obj.off();
+			if(_closeBtn.length>0 && _closeType=='button') _closeBtn.off(_closeEvent,obj_close);
+			else _obj.off(_closeEvent,obj_close);
 			if(_remove) _obj.remove();
 			else _obj.hide();
-			if(_callback) _callback();
+			if(_close) _close();
 		}//end func
 	}//end func
 	
@@ -204,25 +206,6 @@ function importCom(){
 				break;
 		}//end switch
 		if(reg.exec($.trim(str))) return true;
-		else return false;
-	}//end func
-	
-	//碰撞函数，测试2个DOM对象是否碰撞
-	com.hitTest=function(source,target){
-		if(source && target){
-			if($.isArray(source)){
-				var area=[target.offset().left,target.offset().left+target.width(),target.offset().top,target.offset().top+target.height()];
-				if(source[0]>=area[0] && source[0]<=area[1] && source[1]>=area[2] && source[1]<=area[3]) return true;
-				else return false;
-			}//end if
-			else{
-				var pos1=[source.offset().left+source.outerWidth()/2,source.offset().top+source.outerHeight()/2];
-				var pos2=[target.offset().left+target.outerWidth()/2,target.offset().top+target.outerHeight()/2];
-				var disX=Math.abs(pos2[0]-pos1[0]);
-				var disY=Math.abs(pos2[1]-pos1[1]);
-				if(disX<=source.outerWidth()/2+target.outerWidth()/2 && disY<=source.outerHeight()/2+target.outerHeight()/2) return true;
-			}//end else
-		}//end if
 		else return false;
 	}//end func
 	

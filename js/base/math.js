@@ -1,4 +1,4 @@
-//2015.5.22
+//2015.5.27
 var imath=importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath(){
@@ -79,6 +79,25 @@ function importMath(){
 			else if (dis_x>=0 && dis_y<0) {deg=360+deg;}
 		}//end else
 		return deg;
+	}//end func
+	
+	//碰撞函数，测试2个DOM对象是否碰撞
+	math.hitTest=function(source,target){
+		if(source && target){
+			if($.isArray(source)){
+				var area=[target.offset().left,target.offset().left+target.width(),target.offset().top,target.offset().top+target.height()];
+				if(source[0]>=area[0] && source[0]<=area[1] && source[1]>=area[2] && source[1]<=area[3]) return true;
+				else return false;
+			}//end if
+			else{
+				var pos1=[source.offset().left+source.outerWidth()/2,source.offset().top+source.outerHeight()/2];
+				var pos2=[target.offset().left+target.outerWidth()/2,target.offset().top+target.outerHeight()/2];
+				var disX=Math.abs(pos2[0]-pos1[0]);
+				var disY=Math.abs(pos2[1]-pos1[1]);
+				if(disX<=source.outerWidth()/2+target.outerWidth()/2 && disY<=source.outerHeight()/2+target.outerHeight()/2) return true;
+			}//end else
+		}//end if
+		else return false;
 	}//end func
 	
 	return math;
