@@ -66,33 +66,6 @@ function importCom(){
 		else $(document).on('touchmove',function(e){e.preventDefault();});
 	}//end func
 	
-	//简易版popOn
-	com.popOn=function(option){
-		if(option && option.obj){
-			var _obj=option.obj;
-			var _text=option.text;
-			var onOpen=option.onOpen;
-			var onClose=option.onClose;
-			var _remove=option.remove;
-			var _closeEvent=option.closeEvent||'touchend';
-			var _closeType=option.closeType||'button';
-			var _closeBtn=_obj.find('a.close');
-			
-			if(_text) _obj.find('.text').html(_text);
-			_obj.show();
-			if(onOpen) onOpen();
-			if(_closeBtn.length>0 && _closeType=='button') _closeBtn.one(_closeEvent,obj_close);
-			else _obj.one(_closeEvent,obj_close);
-		}//end if
-		function obj_close(e){
-			if(_closeBtn.length>0 && _closeType=='button') _closeBtn.off(_closeEvent,obj_close);
-			else _obj.off(_closeEvent,obj_close);
-			if(_remove) _obj.remove();
-			else _obj.hide();
-			if(onClose) onClose();
-		}//end func
-	}//end func
-	
 	//取代jquery的fadeIn
 	com.fadeIn=function(obj,dur,callback){
 		if(obj){
@@ -112,6 +85,37 @@ function importCom(){
 				if(callback) callback();
 			});
 		}//end if
+	}//end func
+	
+	//简易版popOn
+	com.popOn=function(option){
+		if(option && option.obj){
+			var _obj=option.obj;
+			var _fade=option.fade;
+			var _text=option.text;
+			var onOpen=option.onOpen;
+			var onClose=option.onClose;
+			var _remove=option.remove;
+			var _closeEvent=option.closeEvent||'touchend';
+			var _closeType=option.closeType||'button';
+			var _closeBtn=_obj.find('a.close');
+			if(_text) _obj.find('.text').html(_text);
+			if(_fade) com.fadeIn(_obj,_fade);
+			else _obj.show();
+			if(onOpen) onOpen();
+			if(_closeBtn.length>0 && _closeType=='button') _closeBtn.one(_closeEvent,obj_close);
+			else _obj.one(_closeEvent,obj_close);
+		}//end if
+		function obj_close(e){
+			if(_closeBtn.length>0 && _closeType=='button') _closeBtn.off(_closeEvent,obj_close);
+			else _obj.off(_closeEvent,obj_close);
+			if(_fade) com.fadeOut(_obj,_fade,function(){
+				if(_remove) _obj.remove();
+			});
+			else if(_remove) _obj.remove();
+			else _obj.hide();
+			if(onClose) onClose();
+		}//end func
 	}//end func
 	
 	//取代系统alert
