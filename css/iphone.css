@@ -16,7 +16,7 @@
 
 @charset "UTF-8";
 /* ---------------------------------------- css base 基础部分开始---------------------------------------- */
-* {margin:0;padding:0; border:0; word-break:normal; font-family:Arial;}
+* {margin:0;padding:0; border:0; word-break:normal; font-family:Arial; background-size:100% 100%;}
 html,body{ width:100%; height:100%; -webkit-text-size-adjust: 100%!important;}
 table{border-collapse:collapse;border-spacing:0;}
 th,tr,td,h1,h2,h3,h4,h5,h6,i,b,em{font-style:normal;font-weight:normal;}
@@ -130,7 +130,7 @@ img.shareImage{ position:absolute; left:0; top:0; width:0; height:0;}
 
 /* -------------标签模块----------------*/
 body{ background:#fff; color:#000;}
-article{ width:100%; height:100%; position:relative; background-size:100% 100%;}
+article{ width:100%; height:100%; position:relative; overflow: hidden;}
 a,a:visited{ color:#000;}
 a>img{ width:100%;}
 input::-webkit-input-placeholder,input:focus::-webkit-input-placeholder{color:#000;}
