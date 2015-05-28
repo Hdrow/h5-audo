@@ -1,4 +1,4 @@
-//2015.5.27
+//2015.5.28
 var icom=importCom();
 
 $(document).ready(function(e) {
@@ -68,18 +68,19 @@ function importCom(){
 	
 	//简易版popOn
 	com.popOn=function(option){
-		if(option && option._obj){
+		if(option && option.obj){
 			var _obj=option.obj;
 			var _text=option.text;
-			var _open=option.onOpen;
-			var _callback=option.onClose;
+			var onOpen=option.onOpen;
+			var onClose=option.onClose;
 			var _remove=option.remove;
 			var _closeEvent=option.closeEvent||'touchend';
 			var _closeType=option.closeType||'button';
 			var _closeBtn=_obj.find('a.close');
+			
 			if(_text) _obj.find('.text').html(_text);
 			_obj.show();
-			if(_open) _open();
+			if(onOpen) onOpen();
 			if(_closeBtn.length>0 && _closeType=='button') _closeBtn.one(_closeEvent,obj_close);
 			else _obj.one(_closeEvent,obj_close);
 		}//end if
@@ -88,7 +89,7 @@ function importCom(){
 			else _obj.off(_closeEvent,obj_close);
 			if(_remove) _obj.remove();
 			else _obj.hide();
-			if(_close) _close();
+			if(onClose) onClose();
 		}//end func
 	}//end func
 	
@@ -116,7 +117,7 @@ function importCom(){
 	//取代系统alert
 	com.alert=function(text,callback){
 		var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a class="close">确认</a></p></div></aside>').appendTo($('body'));
-		com.popOn({obj:box,text:text,callback:callback,remove:true,closeEvent:'click'});
+		com.popOn({obj:box,text:text,onClose:callback,remove:true,closeEvent:'click'});
 	}//end func
 	
 	
