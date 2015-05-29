@@ -1,13 +1,13 @@
-//2015.5.26
+//2015.5.29
 var ishare=importShare();
 
 function importShare(){
 	var share={};
 	//-------------------------------------------------------定义当前站点的分享设置
-	share.url='http://t.buzzreader.cn/common/iphone/';
+	share.url='http://t.cloud.be-xx.com/common/iphone';
 	share.content={
 		link:share.url,
-		image:share.url+"images/share.jpg",
+		image:share.url+"/images/share.jpg",
 		title:'分享给朋友的标题文字',
 		friend:'分享给朋友的内容文字',
 		timeline:'分享到朋友圈的内容文字',
@@ -135,18 +135,9 @@ function importShare(){
 		wxSign();
 	}//end if
 	
-	return share;
-}//end import
-
-$(document).ready(function(e) {
-
-	//分享
-	var shareBtn=$('a.btnShare,#btnShare');
-	var shareBox=$('#shareBox');
-	
-	init();
-	
-	function init(){
+	share.btnShare=function(){
+		var shareBtn=$('a.btnShare,#btnShare');
+		var shareBox=$('#shareBox');
 		if(shareBtn.length>0){
 			if(os.weixin){
 				if(shareBox.length<1) shareBox=$('<aside class="shareBox"><img src="images/common/share.png"></aside>').appendTo($('body'));
@@ -154,12 +145,14 @@ $(document).ready(function(e) {
 			}//end if
 			else if(!os.weibo) ishare.wbShare({ obj: shareBtn, url: ishare.content.link, text: ishare.content.weibo, image: ishare.content.image });
 		}//end if
+		
+		function shareBtn_click(e){
+			shareBox.show().one('touchend',function(e){
+				$(this).hide();
+			});
+		}//end func
+		
 	}//end func
 	
-	function shareBtn_click(e){
-		shareBox.show().one('touchend',function(e){
-			$(this).hide();
-		});
-	}//end func
-
-});//end docuemnt ready
+	return share;
+}//end import
