@@ -4,10 +4,10 @@ var ishare=importShare();
 function importShare(){
 	var share={};
 	//-------------------------------------------------------定义当前站点的分享设置
-	share.url='http://t.cloud.be-xx.com/common/iphone';
+	share.url='http://t.cloud.be-xx.com/common/iphone/';
 	share.content={
 		link:share.url,
-		image:share.url+"/images/share.jpg",
+		image:share.url+"images/share.jpg",
 		title:'分享给朋友的标题文字',
 		friend:'分享给朋友的内容文字',
 		timeline:'分享到朋友圈的内容文字',
