@@ -19,7 +19,6 @@ a>img{ width:100%;}
 .noDefault{-webkit-touch-callout: none;}/* 禁止ios 长按时不触发系统的菜单，禁止ios&android长按时下载图片 */
 .noSelect{-webkit-user-select:none;}/* 禁止ios和android用户选中文字 */
 
-/* media font-size */
 @media screen{html{font-size:10px;}}
 @media screen and (device-width:320px){html{font-size:10px;}}
 @media screen and (device-width:375px){html{font-size:11.7px;}}
