@@ -1,4 +1,4 @@
-//2015.5.29
+//2015.6.3
 var ishare=importShare();
 
 function importShare(){
@@ -82,7 +82,7 @@ function importShare(){
 				imgUrl: share.content.image, // 分享图标
 				success: function () { 
 					// 用户确认分享后执行的回调函数
-					monitorAdd({label:'分享到朋友圈'});
+					if(imonitor) imonitor.add({label:'分享到朋友圈'});
 				},
 				cancel: function () { 
 					// 用户取消分享后执行的回调函数
@@ -97,7 +97,7 @@ function importShare(){
 				dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 				success: function () { 
 					// 用户确认分享后执行的回调函数
-					monitorAdd({label:'分享给朋友'});
+					if(imonitor) imonitor.add({label:'分享给朋友'});
 				},
 				cancel: function () { 
 					// 用户取消分享后执行的回调函数
