@@ -4,7 +4,7 @@ var ishare=importShare();
 function importShare(){
 	var share={};
 	//-------------------------------------------------------定义当前站点的分享设置
-	share.url='http://t.cloud.be-xx.com/common/iphone/';
+	share.url='http://t.cloud.be-xx.com/framework/iphone/';
 	share.content={
 		link:share.url,
 		image:share.url+"images/share.jpg",
@@ -16,6 +16,7 @@ function importShare(){
 	share.wxId='wxebba976e487ba7d7';//微信 appid
 	share.wxKey='dd8h3gbidsb9';//老古生成的key
 	share.wxSigned=false;
+	var wxShareComplete;
 	
 	//-------------------------------------------------------微信SDK验证
 	function wxSign(){
@@ -83,6 +84,7 @@ function importShare(){
 				success: function () { 
 					// 用户确认分享后执行的回调函数
 					if(imonitor) imonitor.add({label:'分享到朋友圈'});
+					if(wxShareComplete) wxShareComplete();
 				},
 				cancel: function () { 
 					// 用户取消分享后执行的回调函数
@@ -98,6 +100,7 @@ function importShare(){
 				success: function () { 
 					// 用户确认分享后执行的回调函数
 					if(imonitor) imonitor.add({label:'分享给朋友'});
+					if(wxShareComplete) wxShareComplete();
 				},
 				cancel: function () { 
 					// 用户取消分享后执行的回调函数
@@ -145,13 +148,15 @@ function importShare(){
 			}//end if
 			else if(!os.weibo) ishare.wbShare({ obj: shareBtn, url: ishare.content.link, text: ishare.content.weibo, image: ishare.content.image });
 		}//end if
-		
 		function shareBtn_click(e){
 			shareBox.show().one('touchend',function(e){
 				$(this).hide();
 			});
 		}//end func
-		
+	}//end func
+	
+	share.callbackShare=function(callback){
+		if(callback) wxShareComplete=callback;
 	}//end func
 	
 	return share;
