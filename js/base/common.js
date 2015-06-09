@@ -35,7 +35,7 @@ $(document).ready(function(e) {
 		var turnBox=$('#turnBox');
 		if (orientation=='landscape') {
 			os.orientation = 'landscape';		
-			if(turnBox.length==0) turnBox=$('<aside class="turnBox" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏状态，获得最佳浏览体验！</p></aside>').appendTo($('body'));
+			if(turnBox.length==0) turnBox=$('<aside class="turnBox" id="turnBox"><img src="images/common/turn.gif" class="turn"><p>请将手机调至竖屏状态，获得最佳浏览体验！</p></aside>').appendTo($('body'));
 		}//end if
 		else if (orientation=='portrait'){
 			os.orientation='portrait';
