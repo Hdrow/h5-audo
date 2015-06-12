@@ -1,17 +1,17 @@
-//2015.6.3
+//2015.6.12
 var ishare=importShare();
 
 function importShare(){
 	var share={};	
 	//-------------------------------------------------------定义当前站点的分享设置
-	share.url='http://t.cloud.be-xx.com/onlinework/NewBalance-colorrun/';
+	share.url='http://t.cloud.be-xx.com/framework/iphone/';
 	share.content={
 		link:share.url,
 		image:share.url+"images/share.jpg",
-		title:'New Balance',
-		friend:'什么鬼！一个The color run把你跑成...',
-		timeline:'什么鬼！一个The color run把你跑成...',
-		weibo:'什么鬼！一个The color run把你跑成...'
+		title:'发送给朋友的标题文字',
+		friend:'发送给朋友的文字',
+		timeline:'分享到朋友圈的文字',
+		weibo:'分享到微博的文字'
 	};
 	share.wxId='wxebba976e487ba7d7';//微信 appid
 	share.wxKey='dd8h3gbidsb9';//老古生成的key
@@ -138,9 +138,11 @@ function importShare(){
 		}//end if
 	}//end func
 	
-	share.btnShare=function(){
-		var shareBtn=$('.btnShare,#btnShare');
-		var shareBox=$('#shareBox');
+	share.btnShare=function(btn,box){
+		if(btn) var shareBtn=btn;
+		else var shareBtn=$('a.btnShare,#btnShare');
+		if(box) var shareBox=box;
+		else var shareBox=$('#shareBox');
 		if(shareBtn.length>0){
 			if(os.weixin){
 				if(shareBox.length<1) shareBox=$('<aside class="shareBox"><img src="images/common/share.png"></aside>').appendTo($('body'));
@@ -148,7 +150,6 @@ function importShare(){
 			}//end if
 			else if(!os.weibo) ishare.wbShare({ obj: shareBtn, url: ishare.content.link, text: ishare.content.weibo, image: ishare.content.image });
 		}//end if
-		
 		function shareBtn_click(e){
 			shareBox.show().one('touchend',function(e){
 				$(this).hide();
