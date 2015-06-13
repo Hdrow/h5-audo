@@ -1,27 +1,23 @@
-//2015.6.12
+//2015.6.13
 var ishare=importShare();
 
 function importShare(){
-	var share={};	
+	var share={};
+	var imonitor=window.imonitor||{};
 	//-------------------------------------------------------定义当前站点的分享设置
 	share.url='http://t.cloud.be-xx.com/framework/iphone/';
 	share.content={
 		link:share.url,
 		image:share.url+"images/share.jpg",
-		title:'发送给朋友的标题文字',
-		friend:'发送给朋友的文字',
-		timeline:'分享到朋友圈的文字',
-		weibo:'分享到微博的文字'
+		title:'分享给朋友的标题文字',
+		friend:'分享给朋友的内容文字',
+		timeline:'分享到朋友圈的内容文字',
+		weibo:'分享到新浪微博的内容文字'
 	};
 	share.wxId='wxebba976e487ba7d7';//微信 appid
 	share.wxKey='dd8h3gbidsb9';//老古生成的key
 	share.wxSigned=false;
-	var wxShareComplete;
-	
-	if(os.weixin){
-		document.write('<script type="text/javascript" src="js/base/jweixin.js"></script>');
-		wxSign();
-	}//end if
+	share.wxShareCallback=undefined;
 	
 	//-------------------------------------------------------微信SDK验证
 	function wxSign(){
@@ -88,8 +84,8 @@ function importShare(){
 				imgUrl: share.content.image, // 分享图标
 				success: function () { 
 					// 用户确认分享后执行的回调函数
-					if(imonitor) imonitor.add({label:'分享到朋友圈'});
-					if(wxShareComplete) wxShareComplete();
+					if(imonitor.add) imonitor.add({label:'分享到朋友圈'});
+					if(share.wxShareCallback) share.wxShareCallback();
 				},
 				cancel: function () { 
 					// 用户取消分享后执行的回调函数
@@ -104,8 +100,8 @@ function importShare(){
 				dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 				success: function () { 
 					// 用户确认分享后执行的回调函数
-					if(imonitor) imonitor.add({label:'分享给朋友'});
-					if(wxShareComplete) wxShareComplete();
+					if(imonitor.add) imonitor.add({label:'分享给朋友'});
+					if(share.wxShareCallback) share.wxShareCallback();
 				},
 				cancel: function () { 
 					// 用户取消分享后执行的回调函数
@@ -117,26 +113,32 @@ function importShare(){
 	
 	//-------------------------------------------------------微博站外分享函数
 	share.wbShare=function(option){
-		var _url,_txt,_img,_this,imgHtml='';
-		if(option && option.obj){
-			_this=option.obj;
-			_url=option.url||window.location.href;
-			_txt=option.text||"";
-			_img=option.image;
-			_txt=encodeURIComponent(_txt);
-			_url=encodeURIComponent(_url);
-			if(_img && _img.length>0){
+		var url,txt,img,imgHtml='';
+		if(option.obj) var btn=option.obj;
+		else var btn=$('a.btnShare,#btnShare');
+		if(option && btn.length>0){
+			url=option.url||window.location.href;
+			txt=option.text||"";
+			img=option.image;
+			txt=encodeURIComponent(txt);
+			url=encodeURIComponent(url);
+			if(img && img.length>0){
 				imgHtml="&pic=";
-				if($.type(_img) === "string") imgHtml+=_img;
-				else for(var i=0; i<_img.length; i++){
-					imgHtml+=_img[i];
-					if(i<_img.length-1) imgHtml+='||'
+				if($.type(img) === "string") imgHtml+=img;
+				else for(var i=0; i<img.length; i++){
+					imgHtml+=img[i];
+					if(i<img.length-1) imgHtml+='||'
 				}//end for
 				imgHtml+='&searchPic=false';
 			}//end for
-			_this.attr({target:'_blank',href:'http://service.weibo.com/share/share.php?url=' + _url + '&title=' + _txt + imgHtml });
+			btn.attr({target:'_blank',href:'http://service.weibo.com/share/share.php?url=' + url + '&title=' + txt + imgHtml });
 		}//end if
 	}//end func
+	
+	if(os.weixin){
+		document.write('<script type="text/javascript" src="js/base/jweixin.js"></script>');
+		wxSign();
+	}//end if
 	
 	share.btnShare=function(btn,box){
 		if(btn) var shareBtn=btn;
@@ -145,20 +147,16 @@ function importShare(){
 		else var shareBox=$('#shareBox');
 		if(shareBtn.length>0){
 			if(os.weixin){
-				if(shareBox.length<1) shareBox=$('<aside class="shareBox"><img src="images/common/share.png"></aside>').appendTo($('body'));
-				shareBtn.on('touchend',shareBtn_click);
+				if(shareBox.length==0) shareBox=$('<aside class="shareBox"><img src="images/common/share.png"></aside>').appendTo($('body'));
+				shareBtn.off().one('touchend',shareBtn_click);
 			}//end if
 			else if(!os.weibo) ishare.wbShare({ obj: shareBtn, url: ishare.content.link, text: ishare.content.weibo, image: ishare.content.image });
 		}//end if
 		function shareBtn_click(e){
-			shareBox.show().one('touchend',function(e){
-				$(this).hide();
+			if(shareBox.length>0) shareBox.show().one('touchend',function(e){
+				$(this).hide().one('touchend',shareBtn_click);
 			});
 		}//end func
-	}//end func
-	
-	share.callbackShare=function(callback){
-		if(callback) wxShareComplete=callback;
 	}//end func
 	
 	return share;
