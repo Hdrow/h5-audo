@@ -1,4 +1,4 @@
-//2015.5.25
+//2015.6.14
 //平台检测，判断浏览器、操作系统、机型、环境
 var os=importOS();
 function importOS() {
@@ -22,9 +22,10 @@ function importOS() {
 	os.iphone6==os.ios && screen.width==375 && screen.height==667;
 	os.iphone5=os.ios && screen.width==320 && screen.height==568;
 	os.iphone4=os.ios && screen.width==320 && screen.height==480;
-	os.screen169=screen.width/screen.height==9/16 || screen.height/screen.width==9/16;
-	os.screenHD=screen.width>=1080 && window.devicePixelRatio>=3;
+	os.android169=os.android && (screen.width/screen.height==9/16 || screen.height/screen.width==9/16);
+	os.androidHD=os.android && (screen.width>=1080 && window.devicePixelRatio>=3);
 	return os;
 }//end func
 //写入loadBox
 document.write('<aside class="loadBox" id="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><b></b></aside>');
+
