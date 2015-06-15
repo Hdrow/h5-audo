@@ -1,10 +1,16 @@
-//2015.5.28
+//2015.6.15
 var icom=importCom();
 
 $(document).ready(function(e) {
 	
-	//article 作为每个页面的根标签,iphone4ToIphone5(true)会让iphone4下的article标签高度拉伸到与iphone5一致，默认开启
-	icom.iphone4ToIphone5(true);
+	/*
+	 * screenTo169(iphone4,androidVirtualKey)：默认把article作为页面的根容器，如果屏幕高宽比不是16：9，则强制拉伸到16:9
+		 * 参数：
+		 * iphone4：让iphone4下的article标签高度拉伸到与iphone5一致，默认值true
+		 * androidVirtualKey：让使用虚拟系统按键安卓机的article标签高度拉伸到与使用物理系统按键的安卓机一致，默认值false
+	 *如果页面是自动高度的，则可以注释掉这个方法，这样页面就可以滑动滚动 
+	*/ 
+	icom.screenTo169(true,false);
 	
 	//测试版页面统一添加顶部提示条
 	//icom.addSignBar('本页面为测试版本,抽奖结果无效!');
@@ -51,19 +57,46 @@ function importCom(){
 	var com={};
 
 	//--------------------------------iphone4 article标签适配到iphone5高度
-	com.iphone4ToIphone5=function(scr){
-		scr=scr||0;
-		if(os.iphone4){
-			if(scr){
-				if(os.weixin) $('article').css({height:'121.2%'});
-				else $('article').css({height:'123.6%'});
+	com.screenTo169=function(iphone4,androidVirtualKey){
+		iphone4=iphone4||false;
+		androidVirtualKey=androidVirtualKey||false;
+		var article=$('article');
+		if(article.length>0){
+			if(os.ios){
+				if(os.iphone4){
+					if(iphone4){
+						$(document).off('touchmove',noScroll);
+						if(os.weixin) article.css({height:'121.2%'});
+						else article.css({height:'123.6%'});
+					}//end if
+					else{
+						$(document).on('touchmove',noScroll);
+						article.css({height:'100%'});
+					}//end else
+				}//end if
+				else $(document).on('touchmove',noScroll);
 			}//end if
-			else{
-				$(document).on('touchmove',function(e){e.preventDefault();});
-				$('article').css({height:'100%'});
-			}//end else
+			else if(os.android){
+				if(!os.android169){
+					if(androidVirtualKey){
+						$(document).off('touchmove',noScroll);
+						article.css({height:'109%'});
+					}//end if
+					else{
+						$(document).on('touchmove',noScroll);
+						article.css({height:'100%'});
+					}//end else
+				}//end if
+				else $(document).on('touchmove',noScroll);
+			}//end else if
+			else $(document).on('touchmove',noScroll);
+			alert(article.height());
 		}//end if
-		else $(document).on('touchmove',function(e){e.preventDefault();});
+		else $(document).on('touchmove',noScroll);
+	}//end func
+	
+	function noScroll(e){
+		e.preventDefault();
 	}//end func
 	
 	//取代jquery的fadeIn
