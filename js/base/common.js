@@ -90,7 +90,6 @@ function importCom(){
 				else $(document).on('touchmove',noScroll);
 			}//end else if
 			else $(document).on('touchmove',noScroll);
-			alert(article.height());
 		}//end if
 		else $(document).on('touchmove',noScroll);
 	}//end func
