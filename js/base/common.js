@@ -1,4 +1,4 @@
-//2015.6.15
+//2015.6.16
 var icom=importCom();
 
 $(document).ready(function(e) {
@@ -153,16 +153,21 @@ function importCom(){
 	
 	//取代系统alert
 	com.alert=function(text,callback){
-		var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a class="close">确认</a></p></div></aside>').appendTo($('body'));
-		com.popOn({obj:box,text:text,onClose:callback,remove:true,closeEvent:'click'});
+		if(text && text!=''){
+			var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a class="close">确认</a></p></div></aside>').appendTo($('body'));
+			com.popOn({obj:box,text:text,onClose:callback,remove:true,closeEvent:'click'});
+		}//end if
 	}//end func
 	
 	
 	//获得http url参数
 	com.getQueryString=function(name) {
-		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-		var r = window.location.search.substr(1).match(reg);
-		if (r != null) return decodeURIComponent(r[2]); return null;
+		if(name && name!=''){
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return decodeURIComponent(r[2]); return null;
+		}//end if
+		else return null;
 	}//end func
 	
 	//获得http url文件名末尾的数字
@@ -176,8 +181,7 @@ function importCom(){
 	
 	//带Loading的载入图片函数
 	com.imageLoad=function(src,callback){
-		//载入图
-		if(src){
+		if(src && src!=''){
 			var loader = new PxLoader();
 			if($.type(src) === "string" && src!='') loader.addImage(src);
 			else if($.type(src) === "array" && src.length>0){
@@ -196,54 +200,66 @@ function importCom(){
 	
 	//新增测试版提示信息
 	com.addSignBar=function(text){
-		$('#signBar').remove();
-		var sign=$('<div id="signBar"></div>').appendTo('body');
-		var text=$('<span></span>').html(text).appendTo(sign);
+		if(text && text!=''){
+			var sign=$('#signBar');
+			if(sign.length>0) sign.find('.text').html(text);
+			else{
+				sign=$('<div id="signBar"></div>').appendTo('body');
+				$('<span></span>').html(text).appendTo(sign);
+			}//end if
+		}//end if
 	}//end func
 	
 	//打印object数据
 	com.objectPrint=function(data){
-		console.log("-----------------------------------------------------------------------------");
-		var info="";
-		for(var i in data) info+=i+":"+data[i]+"  "
-		console.log(info);
-		console.log("-----------------------------------------------------------------------------");
+		if(data){
+			console.log("-----------------------------------------------------------------------------");
+			var info="";
+			for(var i in data) info+=i+":"+data[i]+"  "
+			console.log(info);
+			console.log("-----------------------------------------------------------------------------");
+		}//end if
 	}//end func
 	
 	//打印json数据
 	com.jsonPrint=function(data){
-		console.log("----------------------------------------------------------------------------------------------------------------------------------------------------------");
-		for(var i=0; i<data.length; i++) com.objectPrint(data[i]);
-		console.log("----------------------------------------------------------------------------------------------------------------------------------------------------------");
+		if(data){
+			console.log("----------------------------------------------------------------------------------------------------------------------------------------------------------");
+			for(var i=0; i<data.length; i++) com.objectPrint(data[i]);
+			console.log("----------------------------------------------------------------------------------------------------------------------------------------------------------");
+		}//end if
 	}//end func
 	
 	//常用正则
 	com.checkStr=function(str,type){
-		type=type||0;
-		switch(type){
-			case 0:
-				var reg= new RegExp(/^1[3-9]\d{9}$/);//手机号码验证
-				break;
-			case 1:
-				var reg= new RegExp(/\w+@\w+/);//匹配EMAIL
-				break;
-			case 2:
-				var reg= new RegExp(/^\d+$/);//是否为0-9的数字
-				break;
-			case 3:
-				var reg= new RegExp(/^[a-zA-Z\u0391-\uFFE5]*[\w\u0391-\uFFE5]*$/);//不能以数字或符号开头
-				break;
-			case 4:
-				var reg= new RegExp(/^\w+$/);//匹配由数字、26个英文字母或者下划线组成的字符串
-				break;
-			case 5:
-				var reg= new RegExp(/^[\u0391-\uFFE5]+$/);//匹配中文
-				break;
-			case 6:
-				var reg= new RegExp(/^[a-zA-Z\u0391-\uFFE5]+$/);//不能包含数字和符号
-				break;
-		}//end switch
-		if(reg.exec($.trim(str))) return true;
+		if(str && str!=''){
+			type=type||0;
+			switch(type){
+				case 0:
+					var reg= new RegExp(/^1[3-9]\d{9}$/);//手机号码验证
+					break;
+				case 1:
+					var reg= new RegExp(/\w+@\w+/);//匹配EMAIL
+					break;
+				case 2:
+					var reg= new RegExp(/^\d+$/);//是否为0-9的数字
+					break;
+				case 3:
+					var reg= new RegExp(/^[a-zA-Z\u0391-\uFFE5]*[\w\u0391-\uFFE5]*$/);//不能以数字或符号开头
+					break;
+				case 4:
+					var reg= new RegExp(/^\w+$/);//匹配由数字、26个英文字母或者下划线组成的字符串
+					break;
+				case 5:
+					var reg= new RegExp(/^[\u0391-\uFFE5]+$/);//匹配中文
+					break;
+				case 6:
+					var reg= new RegExp(/^[a-zA-Z\u0391-\uFFE5]+$/);//不能包含数字和符号
+					break;
+			}//end switch
+			if(reg.exec($.trim(str))) return true;
+			else return false;
+		}//end if
 		else return false;
 	}//end func
 	
@@ -251,7 +267,7 @@ function importCom(){
 }//end import
 
 //------------------------------------------------------------------------------兼容性HACK------------------------------------------------------------------------------
-//安卓部分浏览器不支持原生requestAnimationFrame，这里做兼容性处理
+//安卓版微信目前还不支持原生requestAnimationFrame，这里做兼容性处理
 if(os.android){
 	(function() {
 		var lastTime = 0;
