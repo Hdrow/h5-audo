@@ -95,9 +95,9 @@ a.btnVideo video,#btnVideo video,a.btnVideo iframe,#btnVideo iframe{ position:ab
 
 /* 标签 */
 body{ background:#fff; color:#000;}
-article{ width:100%; height:100%; position:relative; overflow: hidden;}
 a,a:visited{ color:#000;}
 input::-webkit-input-placeholder,input:focus::-webkit-input-placeholder{color:#000;}
+article{ width:100%; height:100%; position:relative; overflow: hidden;}
 
 
 /* ---------------------------------------- css content 内容部分 ----------------------------------------*/
