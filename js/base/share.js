@@ -1,4 +1,4 @@
-//2015.6.13
+//2015.6.17
 var ishare=importShare();
 
 function importShare(){
@@ -148,13 +148,13 @@ function importShare(){
 		if(shareBtn.length>0){
 			if(os.weixin){
 				if(shareBox.length==0) shareBox=$('<aside class="shareBox"><img src="images/common/share.png"></aside>').appendTo($('body'));
-				shareBtn.off().one('touchend',shareBtn_click);
+				shareBtn.off().on('touchend',shareBtn_click);
 			}//end if
 			else if(!os.weibo) ishare.wbShare({ obj: shareBtn, url: ishare.content.link, text: ishare.content.weibo, image: ishare.content.image });
 		}//end if
 		function shareBtn_click(e){
-			if(shareBox.length>0) shareBox.show().one('touchend',function(e){
-				$(this).hide().one('touchend',shareBtn_click);
+			shareBox.show().one('touchend',function(e){
+				$(this).hide();
 			});
 		}//end func
 	}//end func
