@@ -103,7 +103,7 @@ function importMath(){
 	}//end func
 	
 	//把一个数组转成数字
-	math.aryToInt=function(ary){
+	math.arrayToInt=function(ary){
 		var num=0;
 		for(var i=0; i<ary.length; i++){
 			num+=ary[i]*Math.pow(10,(ary.length-1-i));
