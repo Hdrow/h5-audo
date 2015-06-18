@@ -102,5 +102,14 @@ function importMath(){
 		else return false;
 	}//end func
 	
+	//把一个数组转成数字
+	math.aryToInt=function(ary){
+		var num=0;
+		for(var i=0; i<ary.length; i++){
+			num+=ary[i]*Math.pow(10,(ary.length-1-i));
+		}//end for
+		return num;
+	}//end func
+	
 	return math;
 }//end import
