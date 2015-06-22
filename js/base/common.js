@@ -21,7 +21,8 @@ $(document).ready(function(e) {
 	
 	function init(){
 		window_resize_orientation();//一进入页面判断是否横屏
-		$(window).on('resize',window_orientation);//横屏提示
+		if(os.ios) $(window).on('resize',window_resize_orientation);
+		else $(window).on('resize',window_orientation);
 	}//end func
 	
 	//---------------------------横屏提示
