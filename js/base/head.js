@@ -27,5 +27,5 @@ function importOS() {
 	return os;
 }//end func
 //写入loadBox
-document.write('<aside class="loadBox" id="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><b></b></aside>');
+document.write('<aside class="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><b></b></aside>');
 
