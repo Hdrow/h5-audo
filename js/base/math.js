@@ -1,4 +1,4 @@
-//2015.6.16
+//2015.6.28
 var imath=importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath(){
@@ -109,6 +109,15 @@ function importMath(){
 			num+=ary[i]*Math.pow(10,(ary.length-1-i));
 		}//end for
 		return num;
+	}//end func
+	
+	//对array和object对象的深度复制
+	math.deepClone=function(data){
+		var clone;
+		if(toString.apply(data) === '[object Array]') clone=[];
+		else if(toString.apply(data) === '[object Object]') clone={};
+		if(clone) for(var i in data) clone[i]=data[i];
+		return clone;
 	}//end func
 	
 	return math;
