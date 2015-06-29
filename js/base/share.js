@@ -1,4 +1,4 @@
-//2015.6.23
+//2015.6.29
 var ishare=importShare();
 
 function importShare(){
@@ -78,35 +78,39 @@ function importShare(){
 	//-------------------------------------------------------微信分享函数
 	share.wxShare=function(){
 		if(share.wxSigned){
-			wx.onMenuShareTimeline({
-				title: share.content.timeline, // 分享标题
-				link: share.content.link, // 分享链接
-				imgUrl: share.content.image, // 分享图标
-				success: function () { 
-					// 用户确认分享后执行的回调函数
-					if(imonitor.add) imonitor.add({label:'分享到朋友圈'});
-					if(share.wxShareCallback) share.wxShareCallback();
-				},
-				cancel: function () { 
-					// 用户取消分享后执行的回调函数
-				}
-			});
-			wx.onMenuShareAppMessage({
-				title: share.content.title, // 分享标题
-				desc: share.content.friend, // 分享描述
-				link: share.content.link, // 分享链接
-				imgUrl: share.content.image, // 分享图标
-				type: 'link', // 分享类型,music、video或link，不填默认为link
-				dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-				success: function () { 
-					// 用户确认分享后执行的回调函数
-					if(imonitor.add) imonitor.add({label:'分享给朋友'});
-					if(share.wxShareCallback) share.wxShareCallback();
-				},
-				cancel: function () { 
-					// 用户取消分享后执行的回调函数
-				}
-			});
+			var sharelink = share.content.link;
+	        if (localStorage.openid) {
+	            sharelink = sharelink + (sharelink.indexOf('?') > 0 ? '&' : '?') + 'from_openid=' + localStorage.openid;
+	        }
+	        wx.onMenuShareTimeline({
+	            title: share.content.timeline, // 分享标题
+	            link: sharelink, // 分享链接
+	            imgUrl: share.content.image, // 分享图标
+	            success: function () {
+	                // 用户确认分享后执行的回调函数
+	                if (imonitor.add) imonitor.add({ label: '分享到朋友圈' });
+	                if (share.wxShareCallback) share.wxShareCallback();
+	            },
+	            cancel: function () {
+	                // 用户取消分享后执行的回调函数
+	            }
+	        });
+	        wx.onMenuShareAppMessage({
+	            title: share.content.title, // 分享标题
+	            desc: share.content.friend, // 分享描述
+	            link: sharelink, // 分享链接
+	            imgUrl: share.content.image, // 分享图标
+	            type: 'link', // 分享类型,music、video或link，不填默认为link
+	            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	            success: function () {
+	                // 用户确认分享后执行的回调函数
+	                if (imonitor.add) imonitor.add({ label: '分享给朋友' });
+	                if (share.wxShareCallback) share.wxShareCallback();
+	            },
+	            cancel: function () {
+	                // 用户取消分享后执行的回调函数
+	            }
+	        });
 		}//end if
 		else setTimeout(share.wxShare,250,content);
 	}//end func
