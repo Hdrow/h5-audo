@@ -1,4 +1,4 @@
-//2015.6.14
+//2015.6.30
 //平台检测，判断浏览器、操作系统、机型、环境
 var os=importOS();
 function importOS() {
@@ -18,10 +18,10 @@ function importOS() {
 	os.chrome = userAgent.match(/Chrome/) ? true : false;
 	os.firefox = userAgent.match(/Firefox/) ? true : false;
 	os.ie = document.documentMode;
-	os.iphone6Plus=os.ios && screen.width==414 && screen.height==736 && window.devicePixelRatio==3;
-	os.iphone6==os.ios && screen.width==375 && screen.height==667;
-	os.iphone5=os.ios && screen.width==320 && screen.height==568;
-	os.iphone4=os.ios && screen.width==320 && screen.height==480;
+	os.iphone6Plus=os.ios && ( (screen.width==414 && screen.height==736) || (screen.width==736 && screen.height==414) && window.devicePixelRatio==3 );
+	os.iphone6=os.ios && ( (screen.width==375 && screen.height==667) || (screen.width==667 && screen.height==375) );
+	os.iphone5=os.ios && ( (screen.width==320 && screen.height==568) || (screen.width==568 && screen.height==320) );
+	os.iphone4=os.ios && ( (screen.width==320 && screen.height==480) || (screen.width==480 && screen.height==320) );
 	os.android169=os.android && (screen.width/screen.height==9/16 || screen.height/screen.width==9/16);
 	os.androidHD=os.android && (screen.width>=1080 && window.devicePixelRatio>=3);
 	return os;
