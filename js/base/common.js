@@ -1,23 +1,27 @@
 //2015.7.6
 var icom=importCom();
 
-$(document).ready(function(e) {
+//横屏提示
+icom.orientation();
+
+/*
+ * screenTo169(iphone4,androidVirtualKey)：默认把article作为页面的根容器，如果屏幕高宽比不是16：9，则强制拉伸到16:9
+	 * 参数：
+	 * iphone4：让iphone4下的article标签高度拉伸到与iphone5一致，默认值true
+	 * androidVirtualKey：让使用虚拟系统按键安卓机的article标签高度拉伸到与使用物理系统按键的安卓机一致，默认值false
+ *如果页面是自动高度的，则可以注释掉这个方法，这样页面就可以滑动滚动 
+*/ 
+icom.screenTo169(true,false);
+
+//测试版页面统一添加顶部提示条
+//icom.addSignBar('本页面为测试版本,抽奖结果无效!');
+
+
+//------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
+function importCom(){
+	var com={};
 	
-	/*
-	 * screenTo169(iphone4,androidVirtualKey)：默认把article作为页面的根容器，如果屏幕高宽比不是16：9，则强制拉伸到16:9
-		 * 参数：
-		 * iphone4：让iphone4下的article标签高度拉伸到与iphone5一致，默认值true
-		 * androidVirtualKey：让使用虚拟系统按键安卓机的article标签高度拉伸到与使用物理系统按键的安卓机一致，默认值false
-	 *如果页面是自动高度的，则可以注释掉这个方法，这样页面就可以滑动滚动 
-	*/ 
-	icom.screenTo169(true,false);
-	
-	//测试版页面统一添加顶部提示条
-	//icom.addSignBar('本页面为测试版本,抽奖结果无效!');
-	
-	init();
-	
-	function init(){
+	com.orientation=function(){
 		window_resize_orientation();//一进入页面判断是否横屏
 		if(os.ios) $(window).on('resize',window_resize_orientation);
 		else $(window).on('resize',window_orientation);
@@ -48,12 +52,6 @@ $(document).ready(function(e) {
 		}//edn else
 		console.log('mobile orientation:'+os.orientation);
 	}//end func
-
-});//end docuemnt ready
-
-//------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
-function importCom(){
-	var com={};
 
 	//--------------------------------iphone4 article标签适配到iphone5高度
 	com.screenTo169=function(iphone4,androidVirtualKey){
