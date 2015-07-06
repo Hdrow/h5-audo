@@ -1,5 +1,14 @@
-//2015.6.29
+//2015.7.6
 var ishare=importShare();
+
+init();
+
+function init(){
+	if(os.ios){
+		document.write('<script type="text/javascript" src="js/base/jweixin.js"></script>');
+		ishare.wxSign();
+	};//end if
+}//end
 
 function importShare(){
 	var share={};
@@ -20,7 +29,7 @@ function importShare(){
 	share.wxShareCallback=undefined;
 	
 	//-------------------------------------------------------微信SDK验证
-	function wxSign(){
+	share.wxSign=function(){
 		$.getJSON("http://s.gumutianqi.com/jssdk/get_sign?callback=?&key="+share.wxKey+"&url="+ encodeURIComponent(window.location.href), function(data){
 			if(data  && data.errcode == "0") {
 				wx.config({
@@ -112,7 +121,7 @@ function importShare(){
 	            }
 	        });
 		}//end if
-		else setTimeout(share.wxShare,250,content);
+		else setTimeout(share.wxShare,250);
 	}//end func
 	
 	//-------------------------------------------------------微博站外分享函数
@@ -138,11 +147,6 @@ function importShare(){
 			btn.attr({target:'_blank',href:'http://service.weibo.com/share/share.php?url=' + url + '&title=' + txt + imgHtml });
 		}//end if
 	}//end func
-	
-	if(os.weixin){
-		document.write('<script type="text/javascript" src="js/base/jweixin.js"></script>');
-		wxSign();
-	}//end if
 	
 	share.btnShare=function(btn,box){
 		if(btn) var shareBtn=btn;
