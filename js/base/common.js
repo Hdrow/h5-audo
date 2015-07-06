@@ -1,4 +1,4 @@
-//2015.6.16
+//2015.7.6
 var icom=importCom();
 
 $(document).ready(function(e) {
@@ -14,8 +14,6 @@ $(document).ready(function(e) {
 	
 	//测试版页面统一添加顶部提示条
 	//icom.addSignBar('本页面为测试版本,抽奖结果无效!');
-	
-	var os=window.os||{};
 	
 	init();
 	
@@ -41,11 +39,11 @@ $(document).ready(function(e) {
 		//翻转提示浮层
 		var turnBox=$('#turnBox');
 		if (orientation=='landscape') {
-			os.orientation = 'landscape';		
+			if(os) os.orientation = 'landscape';		
 			if(turnBox.length==0) turnBox=$('<aside class="turnBox" id="turnBox"><img src="images/common/turn.gif" class="turn"><p>请将手机调至竖屏状态，获得最佳浏览体验！</p></aside>').appendTo($('body'));
 		}//end if
 		else if (orientation=='portrait'){
-			os.orientation='portrait';
+			if(os) os.orientation='portrait';
 			if(turnBox.length>0) turnBox.remove();
 		}//edn else
 		console.log('mobile orientation:'+os.orientation);
