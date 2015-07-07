@@ -1,14 +1,10 @@
-//2015.7.6
+//2015.7.7
 var ishare=importShare();
 
-init();
-
-function init(){
-	if(os.ios){
-		document.write('<script type="text/javascript" src="js/base/jweixin.js"></script>');
-		ishare.wxSign();
-	};//end if
-}//end
+if(os.weixin){
+	document.write('<script type="text/javascript" src="js/base/jweixin.js"></script>');
+	ishare.wxSign();
+};//end if
 
 function importShare(){
 	var share={};

@@ -1,6 +1,4 @@
-//按钮统计添加方法
-//imonitor.add({obj:$('#btnTest'),action:'touchend',category:'首页',label:'测试按钮'});
-
+//2015.07.07
 var _hmt = _hmt || [];
 var imonitor=importMonitor();
 
@@ -34,5 +32,3 @@ function importMonitor(){
 	
 	return monitor;
 }//end import
-
-<!--------------------------------PM提供的百度统计代码贴在这里---------------------------------->
