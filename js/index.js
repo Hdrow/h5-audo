@@ -5,11 +5,14 @@ $(document).ready(function(){
 	
 	//----------------------------------------加载页面图片----------------------------------------
 	
-	/*
+	icom.screenTo169(true,false);
+	//icom.addSignBar('本页面为测试版本,抽奖结果无效!');
+	
+	
 	loadFunc();
 	
 	function loadFunc(){
-		loadBox.show();
+		//loadBox.show();
 		var loader = new PxLoader();
 		loader.addImage('images/common/turn.gif');
 		
@@ -19,22 +22,18 @@ $(document).ready(function(){
 
 		loader.addCompletionListener(function() {
 			console.log('Load page images is completed!');
-			icom.fadeOut(loadBox,500);
+			//icom.fadeOut(loadBox,500);
 			init();
 			loader=null;
 		});
 		loader.start();	
 	}//end func	
-	*/
+	
 	
 	//----------------------------------------页面逻辑代码----------------------------------------
 	
-	init();
-	
 	function init(){
-		icom.screenTo169(true,false);
-		//icom.addSignBar('本页面为测试版本,抽奖结果无效!');
-		//add_monitor();
+		add_monitor();
 	}//end func
 	
 	//----------------------------------------页面监测代码----------------------------------------
