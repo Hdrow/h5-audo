@@ -5,7 +5,7 @@ $(document).ready(function(){
 	
 	//----------------------------------------加载页面图片----------------------------------------
 	
-	icom.screenTo169(true,false);
+	icom.screenTo169(true);//article标签在iphone4下面拉伸到iphone5高度
 	//icom.addSignBar('本页面为测试版本,抽奖结果无效!');
 	
 	
