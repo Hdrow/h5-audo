@@ -1,54 +1,19 @@
-//2015.7.7
+//2015.7.13
 var icom=importCom();
-
-icom.orientation();
 
 //------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
 function importCom(){
 	var com={};
 	
-	com.orientation=function(){
-		window_resize_orientation();//一进入页面判断是否横屏
-		if(os.ios) $(window).on('resize',window_resize_orientation);
-		else $(window).on('resize',window_orientation);
-	}//end func
-	
-	//---------------------------横屏提示
-	function window_resize_orientation(e){
-		if($(window).width()>$(window).height()) orientationHandler('landscape');
-		else orientationHandler('portrait');
-		console.log('window size:'+$(window).width()+'/'+$(window).height());
-	}//end func
-	
-	function window_orientation(e) {
-		if (window.orientation == 90 || window.orientation == -90) orientationHandler('landscape');
-		else if (window.orientation == 0 || window.orientation == 180) orientationHandler('portrait');
-	}//end if
-	
-	function orientationHandler(orientation){
-		//翻转提示浮层
-		var turnBox=$('#turnBox');
-		if (orientation=='landscape') {
-			if(os) os.orientation = 'landscape';		
-			if(turnBox.length==0) turnBox=$('<aside class="turnBox" id="turnBox"><img src="images/common/turn.gif" class="turn"><p>请将手机调至竖屏状态，获得最佳浏览体验！</p></aside>').appendTo($('body'));
-		}//end if
-		else if (orientation=='portrait'){
-			if(os) os.orientation='portrait';
-			if(turnBox.length>0) turnBox.remove();
-		}//edn else
-		console.log('mobile orientation:'+os.orientation);
-	}//end func
-	
-	//--------------------------------iphone4 article标签适配到iphone5高度
 	/*
-	 * screenTo169(iphone4,androidVirtualKey)：把article作为页面的根容器，如果屏幕高宽比不是16：9，则强制拉伸到16:9
+	 * screenTo169(iphone4,androidCompress)：把article作为页面的根容器，如果屏幕高宽比不是16：9，则强制拉伸到16:9
 		 * iphone4：让iphone4下的article标签高度拉伸到与iphone5一致，默认值true
-		 * androidVirtualKey：让使用虚拟系统按键安卓机的article标签高度拉伸到与使用物理系统按键的安卓机一致，默认值false
+		 * androidCompress：让使用虚拟系统按键安卓机的article标签非等比压缩至一屏高度，图像比例会略有失真，默认值true
 	 	 * 如果页面是长页面，则注释掉这个方法
 	*/ 
-	com.screenTo169=function(iphone4,androidVirtualKey){
-		iphone4=iphone4||false;
-		androidVirtualKey=androidVirtualKey||false;
+	com.screenTo169=function(iphone4,androidCompress){
+		iphone4=iphone4!=null?iphone4:true;
+		androidCompress=androidCompress!=null?androidCompress:true;
 		var article=$('article');
 		if(article.length>0){
 			if(os.ios){
@@ -58,27 +23,14 @@ function importCom(){
 						if(os.weixin) article.css({height:'121.2%'});
 						else article.css({height:'123.6%'});
 					}//end if
-					else{
-						$(document).on('touchmove',noScroll);
-						article.css({height:'100%'});
-					}//end else
+					else $(document).on('touchmove',noScroll);
 				}//end if
 				else $(document).on('touchmove',noScroll);
 			}//end if
-			else if(os.android){
-				if(!os.android169){
-					if(androidVirtualKey){
-						$(document).off('touchmove',noScroll);
-						article.css({height:'109%'});
-					}//end if
-					else{
-						$(document).on('touchmove',noScroll);
-						article.css({height:'100%'});
-					}//end else
-				}//end if
-				else $(document).on('touchmove',noScroll);
+			else{
+				if(!os.android169 && androidCompress) article.css({height:'109%','-webkit-transform-origin':'0 0 0',scaleY:0.917});
+				$(document).on('touchmove',noScroll);
 			}//end else if
-			else $(document).on('touchmove',noScroll);
 		}//end if
 		else $(document).on('touchmove',noScroll);
 	}//end func
@@ -147,7 +99,6 @@ function importCom(){
 		}//end if
 	}//end func
 	
-	
 	//获得http url参数
 	com.getQueryString=function(name) {
 		if(name && name!=''){
@@ -159,7 +110,7 @@ function importCom(){
 	}//end func
 	
 	//获得http url文件名末尾的数字
-	com.getQueryId=function(len){
+	com.getQueryInt=function(len){
 		len=len!=null?len:1;
 		var path=window.location.pathname.split('/');
 		var file=path[path.length-1];
@@ -206,15 +157,6 @@ function importCom(){
 			for(var i in data) info+=i+":"+data[i]+"  "
 			console.log(info);
 			console.log("-----------------------------------------------------------------------------");
-		}//end if
-	}//end func
-	
-	//打印json数据
-	com.jsonPrint=function(data){
-		if(data){
-			console.log("----------------------------------------------------------------------------------------------------------------------------------------------------------");
-			for(var i=0; i<data.length; i++) com.objectPrint(data[i]);
-			console.log("----------------------------------------------------------------------------------------------------------------------------------------------------------");
 		}//end if
 	}//end func
 	
