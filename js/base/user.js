@@ -1,5 +1,5 @@
 //2015.7.16
-var loop = new Loop({ keyname: 'littlesheep-hotpot-h5', appkey: '', link: '' });
+var loop = new Loop({ keyname: 'loop_test', appkey: '', link: '' });
 var iuser=importUser();
 
 function importUser(){
