@@ -28,7 +28,7 @@ function importCom(){
 				else $(document).on('touchmove',noScroll);
 			}//end if
 			else{
-				if(!os.android169 && androidCompress) article.css({height:'109%','-webkit-transform-origin':'0 0 0',scaleY:0.917});
+				if(!os.android169 && androidCompress) article.css({height:'109%','-webkit-transform-origin':'0 0 0',scaleY:0.9174});
 				$(document).on('touchmove',noScroll);
 			}//end else if
 		}//end if
@@ -147,6 +147,27 @@ function importCom(){
 				$('<span></span>').html(text).appendTo(sign);
 			}//end if
 		}//end if
+	}//end func
+	
+	//打印object数据
+	com.hover=function(btn,delay){
+		delay=delay||0;
+		delay=Math.abs(delay);
+		if(btn && btn.length>0){
+			btn.one('touchstart',btn_touchstart);
+		}//end if
+		function btn_touchstart(e){
+			$(this).addClass('active');
+			if(delay==0) $(this).one('touchend',btn_touchend);
+			else setTimeout(function(){
+				$(this).removeClass('active');
+				$(this).one('touchstart',btn_touchstart);
+			},delay);
+		}//end func
+		function btn_touchend(e){
+			$(this).removeClass('active');
+			$(this).one('touchstart',btn_touchstart);
+		}//end func
 	}//end func
 	
 	//打印object数据
