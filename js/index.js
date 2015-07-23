@@ -19,9 +19,9 @@ $(document).ready(function(){
 	
 	//----------------------------------------加载页面图片----------------------------------------
 	
-	loadFunc();
+	load_handler();
 	
-	function loadFunc(){
+	function load_handler(){
 		//loadBox.show();
 		var loader = new PxLoader();
 		loader.addImage('images/common/turn.gif');
@@ -33,7 +33,7 @@ $(document).ready(function(){
 		loader.addCompletionListener(function() {
 			console.log('页面图片加载完毕');
 			//icom.fadeOut(loadBox,500);
-			init();
+			init_handler();
 			loader=null;
 		});
 		loader.start();	
@@ -42,12 +42,12 @@ $(document).ready(function(){
 	
 	//----------------------------------------页面逻辑代码----------------------------------------
 	
-	function init(){
-		
+	function init_handler(){
+		monitor_handler();
 	}//end func
 	
 	//----------------------------------------页面监测代码----------------------------------------
-	monitor_handler();
+	
 	function monitor_handler(){
 		//imonitor.add({obj:$('a.btnTest'),action:'touchend',category:'首页',label:'测试按钮'});
 	}//end func
