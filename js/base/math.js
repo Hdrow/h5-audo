@@ -120,8 +120,6 @@ function importMath(){
 		return clone;
 	}//end func
 	
-	return math;
-	
 	//获得Object的长度
 	math.objectLength=function(obj){
 		return Object.keys(obj).length;
