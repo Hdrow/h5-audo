@@ -1,4 +1,4 @@
-//2015.7.22
+//2015.7.24
 var imath=importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath(){
@@ -121,6 +121,14 @@ function importMath(){
 	}//end func
 	
 	return math;
+	
+	//获得Object的长度
+	math.objectLength=function(obj){
+		return Object.keys(obj).length;
+	}//end func
+	
+	return math;
+	
 }//end import
 
 //为Array添加Contains方法
