@@ -1,4 +1,4 @@
-//2015.7.24
+//2015.7.28
 var imath=importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath(){
@@ -84,19 +84,23 @@ function importMath(){
 	}//end func
 	
 	//碰撞函数，测试2个DOM对象是否碰撞
-	math.hitTest=function(source,target){
+	math.hitTest=function(source,target,scaleX,scaleY){
+		scaleX=scaleX!=null?scaleX:1;
+		scaleY=scaleY!=null?scaleY:1;
 		if(source && target){
 			if($.isArray(source)){
-				var area=[target.offset().left,target.offset().left+target.width(),target.offset().top,target.offset().top+target.height()];
+				var area=[target.offset().left,target.offset().left+target.outerWidth()*scaleX,target.offset().top,target.offset().top+target.outerHeight()*scaleY];
 				if(source[0]>=area[0] && source[0]<=area[1] && source[1]>=area[2] && source[1]<=area[3]) return true;
 				else return false;
 			}//end if
 			else{
-				var pos1=[source.offset().left+source.outerWidth()/2,source.offset().top+source.outerHeight()/2];
-				var pos2=[target.offset().left+target.outerWidth()/2,target.offset().top+target.outerHeight()/2];
+				var pos1=[source.offset().left+source.outerWidth()*scaleX/2,source.offset().top+source.outerHeight()*scaleY/2];
+				var pos2=[target.offset().left+target.outerWidth()*scaleX/2,target.offset().top+target.outerHeight()*scaleY/2];
 				var disX=Math.abs(pos2[0]-pos1[0]);
 				var disY=Math.abs(pos2[1]-pos1[1]);
-				if(disX<=source.outerWidth()/2+target.outerWidth()/2 && disY<=source.outerHeight()/2+target.outerHeight()/2) return true;
+				var disXMin=(source.outerWidth()+target.outerWidth())*scaleX/2;
+				var disYMin=(source.outerWidth()+target.outerWidth())*scaleY/2;
+				if(disX<=disXMin && disY<=disYMin) return true;
 			}//end else
 		}//end if
 		else return false;
