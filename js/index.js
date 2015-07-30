@@ -14,7 +14,7 @@ $(document).ready(function(){
 //	function userGetted(data){
 //		console.log('用户头像：'+data.headimage);
 //		console.log('用户昵称：'+data.nickname);
-//		loadFunc();
+//		load_handler();
 //	}//end func
 	
 	//----------------------------------------加载页面图片----------------------------------------
