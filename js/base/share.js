@@ -18,7 +18,7 @@ var ishare=importShare();
 	ishare.wxKey='dd8h3gbidsb9';//老古生成的key
 	
 	if(os.weixin){
-		document.write('<script type="text/javascript" src="'+ishare.url+'js/base/jweixin.js"></script>');
+		document.write('<script type="text/javascript" src="js/base/jweixin.js"></script>');
 		ishare.wxSign();
 	}//end if
 	
