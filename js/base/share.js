@@ -1,14 +1,14 @@
-//2015.7.8
+//2015.7.30
 
 var ishare=importShare();
 
 (function() {
 	
 	//-------------------------------------------------------定义当前站点的分享设置
-	ishare.url='http://t.cloud.be-xx.com/framework/iphone/';
+	ishare.url='http://t.cloud.be-xx.com/framework/iphone';
 	ishare.content={
 		link:ishare.url,
-		image:ishare.url+"images/share.jpg",
+		image:ishare.url+(ishare.url.substr(ishare.url.length-1)=='/'?'images/share.jpg':'/images/share.jpg'),
 		title:'分享给朋友的标题文字',
 		friend:'分享给朋友的内容文字',
 		timeline:'分享到朋友圈的内容文字',
@@ -18,7 +18,7 @@ var ishare=importShare();
 	ishare.wxKey='dd8h3gbidsb9';//老古生成的key
 	
 	if(os.weixin){
-		document.write('<script type="text/javascript" src="js/base/jweixin.js"></script>');
+		document.write('<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>');
 		ishare.wxSign();
 	}//end if
 	
