@@ -1,4 +1,4 @@
-//2015.7.30
+//2015.7.31
 var icom=importCom();
 
 //------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
@@ -6,14 +6,14 @@ function importCom(){
 	var com={};
 	
 	/*
-	 * screenTo169(iphone4,androidCompress)：把article作为页面的根容器，如果屏幕高宽比不是16：9，则强制拉伸到16:9
+	 * screenTo169(iphone4,android)：把article作为页面的根容器，如果屏幕高宽比不是16：9，则强制拉伸到16:9
 		 * iphone4：让iphone4下的article标签高度拉伸到与iphone5一致，默认值true
-		 * androidCompress：让使用虚拟系统按键安卓机的article标签非等比压缩至一屏高度，图像比例会略有失真，默认值true
+		 * android：让使用虚拟系统按键安卓机的article标签非等比压缩至一屏高度，图像比例会略有失真，默认值true
 	 	 * 如果页面是长页面，则注释掉这个方法
 	*/ 
-	com.screenTo169=function(iphone4,androidCompress){
+	com.screenTo169=function(iphone4,android){
 		iphone4=iphone4!=null?iphone4:true;
-		androidCompress=androidCompress!=null?androidCompress:true;
+		android=android!=null?android:true;
 		var article=$('article');
 		if(article.length>0){
 			if(os.ios){
@@ -31,7 +31,7 @@ function importCom(){
 				else com.screenScrollUnable();
 			}//end if
 			else if(os.andoird){
-				if(!os.android169 && androidCompress) article.css({height:'109%','-webkit-transform-origin':'0 0 0',scaleY:0.9174});
+				if(!os.screen169 && android) article.css({height:'109%','-webkit-transform-origin':'0 0 0',scaleY:0.9174});
 				com.screenScrollUnable();
 			}//end else if
 		}//end if
