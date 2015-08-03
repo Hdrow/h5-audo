@@ -1,4 +1,4 @@
-//2015.7.28
+//2015.8.3
 var imath=importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath(){
@@ -99,7 +99,7 @@ function importMath(){
 				var disX=Math.abs(pos2[0]-pos1[0]);
 				var disY=Math.abs(pos2[1]-pos1[1]);
 				var disXMin=(source.outerWidth()+target.outerWidth())*scaleX/2;
-				var disYMin=(source.outerWidth()+target.outerWidth())*scaleY/2;
+				var disYMin=(source.outerHeight()+target.outerHeight())*scaleY/2;
 				if(disX<=disXMin && disY<=disYMin) return true;
 			}//end else
 		}//end if
