@@ -4,6 +4,10 @@ $(document).ready(function(){
 	var loadBox=$('aside.loadBox');
 	var articleBox=$('article');
 	
+	//sound
+	var soundList={},soundMax=0,soundLoaded=0;
+	var btnSound=$('a.btnSound');
+	
 	//----------------------------------------页面初始化----------------------------------------
 	icom.screenTo169(true);//article标签高度适配，把iphone4拉伸至iphone5，默认值true
 	//loadBox.show();
@@ -31,10 +35,44 @@ $(document).ready(function(){
 		loader.addCompletionListener(function() {
 			console.log('页面图片加载完毕');
 			//icom.fadeOut(loadBox,500);
+			//sound_handler();
 			init_handler();
 			loader=null;
 		});
 		loader.start();	
+	}//end func	
+	
+	//----------------------------------------加载声音及处理----------------------------------------
+	function sound_handler(){
+		//新SDK自动播放背景音乐
+		if(os.weixin) wx.ready(sound_creat);
+		else sound_creat();
+	}//end func
+	
+	function sound_creat(){	
+		soundList.bgm=iaudio.on({src:'sound/bgm.mp3',loop:true,onLoaded:bgm_play});
+		soundMax=imath.objectLength(sound);
+		console.log('sound length:'+soundMax);
+	}//end func
+	
+	function sound_loaded(){
+		soundLoaded++;
+		console.log('soundLoaded:'+soundLoaded);
+		if(soundLoaded==soundMax){
+			console.log('all sounds loaded');
+			//icom.fadeOut(loadBox,500);
+			//init_handler();
+		}//end if
+	}//end func
+	
+	function bgm_play(){
+		soundList.bgm.play();
+		if(btnSound.length>0) btnSound.show().removeClass('stop').addClass('play').one('touchend',bgm_stop);
+	}//end func
+	
+	function bgm_stop(){
+		soundList.bgm.pause();
+		if(btnSound.length>0) btnSound.removeClass('play').addClass('stop').one('touchend',bgm_play);
 	}//end func	
 	
 	
