@@ -1,4 +1,4 @@
-//2015.8.3
+//2015.8.11
 var icom=importCom();
 
 //------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
@@ -30,12 +30,11 @@ function importCom(){
 				}//end if
 				else com.screenScrollUnable();
 			}//end if
-			else if(os.andoird){
+			else{
 				com.screenScrollUnable();
 				if(!os.screen169) article.css({height:'109%','-webkit-transform-origin':'0 0 0',scaleY:0.9174});
 			}//end else if
 		}//end if
-		else com.screenUnscroll();
 	}//end func
 	
 	com.screenScrollEnable=function(){
