@@ -10,12 +10,12 @@ function importVideo(){
 		if(option && option.btn){
 			btn=option.btn;
 			if(option.ios) ios=option.ios;
-			if(!os.ios || (os.ios && ios!='system')) btn.on('touchend',popPlay);
-			else iosPlay();
+			if(!os.ios || (os.ios && ios!='system')) btn.on('touchend',android_play);
+			else ios_play();
 		}//end if
 	}//end func
 
-	function iosPlay(){
+	function ios_play(){
 		btn.each(function(i) {
 			var vid=$(this).data('vid');
 			if(vid && vid!=''){
@@ -27,7 +27,7 @@ function importVideo(){
 		});
 	}//end func
 	
-	function popPlay(e){
+	function android_play(e){
 		var container;
 		var box=$("<aside class='videoBox' id='videoBox'><a class='close'></a></aside>").show().appendTo($('body'));
 		var vid=$(this).data('vid');
