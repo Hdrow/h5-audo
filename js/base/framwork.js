@@ -41,8 +41,5 @@ var ivideo=importVideo();function importVideo(){function f(){b.each(function(a){
 //-----------------------------------shake.js
 var ishake=importShake();function importShake(){function g(a){var d=(new Date).getTime();if(d-h>p){var g=d-h;h=d;a=a.accelerationIncludingGravity;if(Math.abs(a.x+a.y+a.z-q-r-t)/g*1E4>=u){c++;e++;k&&k(e);if(1==e&&l)l();else if(1==b&&c==f||2==b&&e==f||3==b&&c==f&&e==f)m&&m(),v.shakeOff();clearTimeout(w);w=setTimeout(y,x)}else c--,c=0>c?0:c;q=a.x;r=a.y;t=a.z;n&&n(c)}}function y(){d&&d()}var p=50,u=100,f=10,c=0,e=0,b=1,l,k,n,m,d,h=0,q,r,t,w,x=750,v={shakeOn:function(a){a&&(l=a.onStart,k=a.onCount,n=a.onLevel,m=a.onComplete,d=a.onStop,u=null!=a.hold?a.hold:100,f=null!=a.max?a.max:10,p=null!=a.delay?a.delay:50,x=null!=a.stopDelay?a.stopDelay:750,b=null!=a.type?a.type:1,b=1>b?1:b,b=3<b?3:b);window.addEventListener("devicemotion",g,!1)},shakeOff:function(){window.removeEventListener("devicemotion",g)}};return v};
 
-//-----------------------------------scrollbar.js
-
-
 //-----------------------------------写入loadBox
 document.write('<aside class="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><b></b></aside>');

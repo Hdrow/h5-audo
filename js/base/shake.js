@@ -1,4 +1,4 @@
-//2015.8.3
+//2015.8.11
 
 var ishake=importShake();
 
@@ -26,14 +26,14 @@ function importShake(){
 			_type=_type<1?1:_type;
 			_type=_type>3?3:_type;
 		}//end option
-		window.addEventListener('devicemotion',deviceMotionHandler,false);		
+		window.addEventListener('devicemotion',devicemotion_handler,false);		
 	}//end func
 
 	shake.shakeOff=function(){
-		window.removeEventListener('devicemotion',deviceMotionHandler);
+		window.removeEventListener('devicemotion',devicemotion_handler);
 	}//end func
 	
-	function deviceMotionHandler(event) {
+	function devicemotion_handler(event) {
 		var curTime = new Date().getTime();
 		if ((curTime-_lastTime)>_delay) {
 			var diffTime = curTime -_lastTime;
