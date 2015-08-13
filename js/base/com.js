@@ -1,4 +1,4 @@
-//2015.8.11
+//2015.8.13
 var icom=importCom();
 
 //------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
@@ -222,6 +222,17 @@ function importCom(){
 			else return false;
 		}//end if
 		else return false;
+	}//end func
+	
+	//发送数据
+	com.post=function(url,data,succ,error){
+		if(url && data){
+			if($.isPlainObject(data)) data=JSON.stringify(data);			
+			$.post("./http/httpPost.php",{api_url:url,post_data:data},function(resp){
+				if(resp.errcode=='0') if(succ) succ(resp.result);
+				else if(error) error(resp.errcode);
+			}, "json");
+		}//end if
 	}//end func
 	
 	return com;
