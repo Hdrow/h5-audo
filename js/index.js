@@ -5,7 +5,7 @@ $(document).ready(function(){
 	var articleBox=$('article');
 	
 	//sound
-	var soundList={},soundMax=0,soundLoaded=0;
+	var soundList={},soundLoaded=0;
 	var btnSound=$('a.btnSound');
 	
 	//----------------------------------------页面初始化----------------------------------------
@@ -51,14 +51,13 @@ $(document).ready(function(){
 	
 	function sound_creat(){	
 		soundList.bgm=iaudio.on({src:'sound/bgm.mp3',loop:true,onLoaded:bgm_play});
-		soundMax=imath.objectLength(sound);
 		console.log('sound length:'+soundMax);
 	}//end func
 	
 	function sound_loaded(){
 		soundLoaded++;
 		console.log('soundLoaded:'+soundLoaded);
-		if(soundLoaded==soundMax){
+		if(soundLoaded==soundList.length){
 			console.log('all sounds loaded');
 			//icom.fadeOut(loadBox,500);
 			//init_handler();

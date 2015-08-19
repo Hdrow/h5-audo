@@ -5,7 +5,7 @@ var ishare=importShare();
 (function() {
 	
 	//-------------------------------------------------------定义当前站点的分享设置
-	ishare.url='http://t.cloud.be-xx.com/framework/iphone';
+	ishare.url='http://t.cloud.be-xx.com/framework/iphone/';
 	ishare.content={
 		link:ishare.url,
 		image:ishare.url+(ishare.url.substr(ishare.url.length-1)=='/'?'images/share.jpg':'/images/share.jpg'),
