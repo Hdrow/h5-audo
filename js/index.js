@@ -11,10 +11,11 @@ $(document).ready(function(){
 	//----------------------------------------页面初始化----------------------------------------
 	icom.screenTo169(true);//article标签高度适配，把iphone4拉伸至iphone5，默认值true
 	//loadBox.show();
+	//iuser.init(userGetted);
+	//load_handler();
+	init_handler();
 	
-	//----------------------------------------微信用户登录验证----------------------------------------
-	iuser.init(userGetted);
-	
+	//----------------------------------------微信用户登录验证----------------------------------------	
 	function userGetted(data){
 		console.log('用户头像：'+data.headimage);
 		console.log('用户昵称：'+data.nickname);
@@ -22,7 +23,6 @@ $(document).ready(function(){
 	}//end func
 	
 	//----------------------------------------加载页面图片----------------------------------------
-	
 	function load_handler(){
 		//loadBox.show();
 		var loader = new PxLoader();
