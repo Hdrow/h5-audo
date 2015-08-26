@@ -4,6 +4,8 @@ $(document).ready(function(){
 	var loadBox=$('aside.loadBox');
 	var articleBox=$('article');
 	
+	var windowWd=$(window).width(),windowHt=$(window).height();
+	
 	//sound
 	var soundList={},soundLoaded=0;
 	var btnSound=$('a.btnSound');
