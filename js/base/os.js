@@ -1,4 +1,4 @@
-//2015.7.31
+//2015.8.27
 var os=importOS();
 function importOS() {
 	var	userAgent=navigator.userAgent;
@@ -13,6 +13,7 @@ function importOS() {
 	else os.iosVer=0;
 	os.weixin = userAgent.match(/MicroMessenger/) ? true : false;
 	os.weibo = userAgent.match(/Weibo/) || userAgent.match(/weibo/) ? true : false;
+	os.netease = userAgent.indexOf("NewsApp")>=0 ? true : false;
 	os.safari = os.ios && userAgent.match(/Safari/) ? true : false;
 	os.chrome = userAgent.match(/Chrome/) ? true : false;
 	os.firefox = userAgent.match(/Firefox/) ? true : false;
