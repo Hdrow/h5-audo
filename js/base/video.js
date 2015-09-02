@@ -1,4 +1,4 @@
-//2015.9.1
+//2015.9.2
 
 var ivideo=importVideo();
 
@@ -19,8 +19,7 @@ function importVideo(){
 				type=type||'youku';
 				if(type=='youku') btn_play($(this));
 				else if(type=='qq'){
-					if(os.iphone4 || os.iphone5) btn_play($(this));
-					else $(this).on('touchend',pop_play);
+					$(this).on('touchend',pop_play);
 				}//end if
 				else if(type=='mp4') btn_play($(this));
 			}//end if
