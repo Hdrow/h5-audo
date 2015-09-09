@@ -1,4 +1,4 @@
-//2015.8.3
+//2015.9.9
 var imath=importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath(){
@@ -83,28 +83,48 @@ function importMath(){
 		return deg;
 	}//end func
 	
-	//碰撞函数，测试2个DOM对象是否碰撞
+	//测试2个jquery对象是否重合
 	math.hitTest=function(source,target,scaleX,scaleY){
 		scaleX=scaleX!=null?scaleX:1;
 		scaleY=scaleY!=null?scaleY:1;
 		if(source && target){
-			if($.isArray(source)){
-				var area=[target.offset().left,target.offset().left+target.outerWidth()*scaleX,target.offset().top,target.offset().top+target.outerHeight()*scaleY];
-				if(source[0]>=area[0] && source[0]<=area[1] && source[1]>=area[2] && source[1]<=area[3]) return true;
-				else return false;
-			}//end if
-			else{
-				var pos1=[source.offset().left+source.outerWidth()*scaleX/2,source.offset().top+source.outerHeight()*scaleY/2];
-				var pos2=[target.offset().left+target.outerWidth()*scaleX/2,target.offset().top+target.outerHeight()*scaleY/2];
-				var disX=Math.abs(pos2[0]-pos1[0]);
-				var disY=Math.abs(pos2[1]-pos1[1]);
-				var disXMin=(source.outerWidth()+target.outerWidth())*scaleX/2;
-				var disYMin=(source.outerHeight()+target.outerHeight())*scaleY/2;
-				if(disX<=disXMin && disY<=disYMin) return true;
-			}//end else
+			var pos1=[source.offset().left+source.outerWidth()*scaleX/2,source.offset().top+source.outerHeight()*scaleY/2];
+			var pos2=[target.offset().left+target.outerWidth()*scaleX/2,target.offset().top+target.outerHeight()*scaleY/2];
+			var disX=Math.abs(pos2[0]-pos1[0]);
+			var disY=Math.abs(pos2[1]-pos1[1]);
+			var disXMin=(source.outerWidth()+target.outerWidth())*scaleX/2;
+			var disYMin=(source.outerHeight()+target.outerHeight())*scaleY/2;
+			if(disX<=disXMin && disY<=disYMin) return true;
 		}//end if
 		else return false;
 	}//end func
+	
+	//测试2个带data().x,data().y的jquery对象是否重合
+	math.hitObject=function(source,target){
+		if(source && target){
+			var pos1=[source.data().x+source.outerWidth()/2,source.data().y+source.outerHeight()/2];
+			var pos2=[target.data().x+target.outerWidth()/2,target.data().y+target.outerHeight()/2];
+			var disX=Math.abs(pos2[0]-pos1[0]);
+			var disY=Math.abs(pos2[1]-pos1[1]);
+			var disXMin=(source.outerWidth()+target.outerWidth())/2;
+			var disYMin=(source.outerHeight()+target.outerHeight())/2;
+			if(disX<=disXMin && disY<=disYMin) return true;
+		}//end if
+		else return false;
+	}//end func
+	
+	//测试一个点和一个DOM对象是否重合
+	math.hitPoint=function(source,target,scaleX,scaleY){
+		scaleX=scaleX!=null?scaleX:1;
+		scaleY=scaleY!=null?scaleY:1;
+		if(source && target){
+			var area=[target.offset().left,target.offset().left+target.outerWidth()*scaleX,target.offset().top,target.offset().top+target.outerHeight()*scaleY];
+			if(source[0]>=area[0] && source[0]<=area[1] && source[1]>=area[2] && source[1]<=area[3]) return true;
+			else return false;
+		}//end if
+		else return false;
+	}//end func
+	
 	
 	//把一个数组转成数字
 	math.arrayToInt=function(ary){
