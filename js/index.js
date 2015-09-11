@@ -52,7 +52,7 @@ $(document).ready(function(){
 	}//end func
 	
 	function sound_creat(){	
-		soundList.bgm=iaudio.on({src:'sound/bgm.mp3',loop:true,onLoaded:bgm_play});
+		soundList.bgm=iaudio.on({src:'sound/bgm.mp3',loop:true,onLoaded:soundLoaded});
 		soundMax=Object.keys(soundList).length;
 		console.log('sound length:'+soundMax);
 	}//end func
@@ -62,6 +62,7 @@ $(document).ready(function(){
 		console.log('soundLoaded:'+soundLoaded);
 		if(soundLoaded==soundMax){
 			console.log('all sounds loaded');
+			//bgm_play();
 			//icom.fadeOut(loadBox,500);
 			//init_handler();
 		}//end if
