@@ -1,4 +1,4 @@
-//2015.8.13
+//2015.9.15
 var icom=importCom();
 
 //------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
@@ -229,8 +229,8 @@ function importCom(){
 		if(url && data){
 			if($.isPlainObject(data)) data=JSON.stringify(data);			
 			$.post("./http/httpPost.php",{api_url:url,post_data:data},function(resp){
-				if(resp.errcode=='0') if(succ) succ(resp.result);
-				else if(error) error(resp.errcode);
+				if(resp.errcode=='0' && succ) succ(resp);
+				else if(error) error(resp.errmsg);
 			}, "json");
 		}//end if
 	}//end func
