@@ -1,16 +1,8 @@
-/* ---------------------------------------- css content 内容部分（针对16:9标准屏）----------------------------------------*/
-
-/* 分享浮层 */
-aside.shareBox{position:fixed; left:0; top:0; width:100%; height:100%; text-align:center; background:rgba(0,0,0,0.85); z-index:997; display:none;}
-aside.shareBox>img{ width:80%; margin:2rem auto 0;}
-
-/* 根级标签 */
 body{ background-color:#fff; color:#000;}
 a,a:visited{ color:#000;}
 input::-webkit-input-placeholder,input:focus::-webkit-input-placeholder{color:#000;}
-article{ width:100%; height:100%; position:relative; overflow: hidden; }
 
-
+/* ---------------------------------------- css content 内容部分（针对16:9标准屏）----------------------------------------*/
 
 
 /*---------------------------------------- css media 适配部分（针对iphone4） ----------------------------------------------*/
