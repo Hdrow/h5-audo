@@ -21,8 +21,8 @@ function importOS() {
 	os.iphone6Plus=os.ios && ( (screen.width==414 && screen.height==736) || (screen.width==736 && screen.height==414) && window.devicePixelRatio==3 );
 	os.iphone6=os.ios && ( (screen.width==375 && screen.height==667) || (screen.width==667 && screen.height==375) );
 	os.iphone5=os.ios && ( (screen.width==320 && screen.height==568) || (screen.width==568 && screen.height==320) );
-	os.iphone4=(os.ios && ( (screen.width==320 && screen.height==480) || (screen.width==480 && screen.height==320) ) ) || (screen.width==540 && screen.height==702);
-	os.screen169=screen.width/screen.height==9/16 || screen.height/screen.width==9/16 || (window.innerWidth==540 && window.innerHeight==850) ;
+	os.iphone4=(os.ios && ( (screen.width==320 && screen.height==480) || (screen.width==480 && screen.height==320) ) ) || (screen.width==1080 && screen.height==1400);
+	os.screen169=screen.width/screen.height==9/16 || screen.height/screen.width==9/16 || (window.innerWidth==1080 && window.innerHeight==1700) ;
 	return os;
 }//end func
 
