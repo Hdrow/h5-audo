@@ -19,8 +19,8 @@
 /*iphone6:750x1118(375x559) */
 /*iphone6 plus:1242×1884（414x628）*/
 /*android 540P:540×780* /
-/*android 720P:720×1040 */
-/*android 1080P:1080×1560 */
+/*android 720P:720×1054 */
+/*android 1080P:1080×1575 */
 /* android 480P not 16：9 screen:480x800/weixin:480x620 */
 /* android 540P not 16：9 screen:540x906/weixin:540x716 */
 /* android 720P not 16：9 screen:720x1208/weixin:540x955 */
