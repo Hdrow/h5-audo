@@ -1,8 +1,3 @@
-/* 分享浮层 */
-aside.shareBox{position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:997; display:none;}
-aside.shareBox>img{ width:100%;}
-
-/* 标签 */
 body{ background-color:#fff; color:#000;}
 a,a:visited{ color:#000;}
 input::-webkit-input-placeholder,input:focus::-webkit-input-placeholder{color:#000;}
