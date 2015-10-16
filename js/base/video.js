@@ -21,9 +21,7 @@ function importVideo(){
 			var onPlay=option.onPlay;
 			var onPause=option.onPause;
 			var onTimeupdate=option.onTimeupdate;
-			vid=$('<video webkit-playsinline="true" type="video/mp4">').attr({src:src,autoplay:autoplay,controls:controls,poster:poster}).appendTo(shell);
-			if(classname) vid.addClass(classname);
-			if(controls) vid.attr({controls:controls});
+			vid=$('<video webkit-playsinline="true" type="video/mp4">').attr({src:src,autoplay:autoplay,controls:controls,poster:poster}).addClass(classname).appendTo(shell);
 			if(onLoadstart) vid[0].addEventListener('loadstart',onLoadstart,false);
 			if(onLoaded) vid[0].addEventListener('loadeddata',onLoaded,false);
 			if(onEnded) vid[0].addEventListener('ended',onEnded,false);
