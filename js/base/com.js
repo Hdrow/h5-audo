@@ -1,4 +1,4 @@
-//2015.9.15
+//2015.10.19
 var icom=importCom();
 
 //------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
@@ -233,6 +233,16 @@ function importCom(){
 				else if(error) error(resp.errmsg);
 			}, "json");
 		}//end if
+	}//end func
+	
+	//修改微信浏览器的标题文字
+	com.title=function(value){
+		$('title').html(value);
+		var iframe = $('<iframe src="images/share.jpg"></iframe>').appendTo($('body')).one('load', function() {
+			setTimeout(function(){
+				iframe.remove();
+			},0);
+		});
 	}//end func
 	
 	return com;
