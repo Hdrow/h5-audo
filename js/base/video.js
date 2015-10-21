@@ -1,4 +1,4 @@
-//2015.10.16
+//2015.10.20
 
 var ivideo=importVideo();
 
@@ -60,7 +60,7 @@ function importVideo(){
 			if(type=='youku') $('<iframe src="http://player.youku.com/embed/'+vid+'" frameborder=0 allowfullscreen></iframe>').appendTo(btn);
 			else if(type=='qq') $('<iframe src="http://v.qq.com/iframe/player.html?vid='+vid+'&tiny=0&auto=0" frameborder="0" allowfullscreen></iframe>').appendTo(btn);
 			else if(type=='mp4'){
-				container=$('<video type="video/mp4">').attr({src:vid}).appendTo(btn);
+				container=$('<video type="video/mp4" controls>').attr({src:vid}).appendTo(btn);
 				console.log(container[0]);
 				if(callback){
 					if(callback.onEnded) container[0].addEventListener('ended',callback.onEnded,false);
