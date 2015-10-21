@@ -52,7 +52,7 @@ $(document).ready(function(){
 	}//end func
 	
 	function sound_creat(){	
-		soundList.bgm=iaudio.on({src:'sound/bgm.mp3',loop:true,onLoaded:soundLoaded});
+		soundList.bgm=iaudio.on({src:'sound/bgm.mp3',loop:true,onLoaded:sound_loaded});
 		soundMax=Object.keys(soundList).length;
 		console.log('sound length:'+soundMax);
 	}//end func
