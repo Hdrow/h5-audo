@@ -1,4 +1,4 @@
-//2015.7.30
+//2015.10.22
 
 var ishare=importShare();
 
@@ -158,7 +158,7 @@ function importShare(){
 		if(shareBtn.length>0){
 			if(os.weixin){
 				if(shareBox.length==0) shareBox=$('<aside class="shareBox"><img src="images/common/share.png"></aside>').appendTo($('body'));
-				shareBtn.off().on('touchend',shareBtn_click);
+				shareBtn.on('touchend',shareBtn_click);
 			}//end if
 			else if(!os.weibo && shareBtn.length>0) ishare.wbShare({ obj: shareBtn, url: ishare.content.link, text: ishare.content.weibo, image: ishare.content.image });
 		}//end if
