@@ -1,4 +1,4 @@
-//2015.9.23
+//2015.10.28
 (function() {
 	$.event.special.swipe = {
 		setup: function() {
@@ -9,8 +9,7 @@
 				var data = e.originalEvent.touches[0];
 				_start = {
 					time: (new Date).getTime(),
-					coords: [data.pageX, data.pageY],
-					origin: $(e.target)
+					coords: [data.pageX, data.pageY]
 				};
 				_this.on("touchmove", _this_touchmove).one("touchend",_this_touchend);
 			}//end func
@@ -31,10 +30,10 @@
 				if (_start && _stop) {
 					if (_stop.time - _start.time < 1000) {
 						if (Math.abs(_start.coords[1] - _stop.coords[1]) > 20 && Math.abs(_start.coords[0] - _stop.coords[0]) < 75) {
-							_start.origin.trigger("swipe").trigger(_start.coords[1] > _stop.coords[1] ? "swipeup" : "swipedown")
+							_this.trigger("swipe").trigger(_start.coords[1] > _stop.coords[1] ? "swipeup" : "swipedown")
 						} else {
 							if (Math.abs(_start.coords[0] - _stop.coords[0]) > 30 && Math.abs(_start.coords[1] - _stop.coords[1]) < 75) {
-								_start.origin.trigger("swipe").trigger(_start.coords[0] > _stop.coords[0] ? "swipeleft" : "swiperight")
+								_this.trigger("swipe").trigger(_start.coords[0] > _stop.coords[0] ? "swipeleft" : "swiperight")
 							}
 						}
 					}
