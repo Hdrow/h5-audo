@@ -10,24 +10,19 @@ input::-webkit-input-placeholder,input:focus::-webkit-input-placeholder{color:#0
 
 }
 
-/*---------------------------------------- css media 适配部分（针对iphone5）----------------------------------------*/
-@media screen and (device-width:320px) and (device-height:568px){
-
-}
-
 /*---------------------------------------- css media 适配部分（针对iphone6） ----------------------------------------*/
-@media screen and (device-width:375px) and (device-height:667px){
+@media screen and (device-width:375px) and (device-height:667px), screen and (device-width:800px) and (device-height:1286px){
 
 }
 
 /*---------------------------------------- css media 适配部分（针对iphone6 plus） -----------------------------------*/
-@media screen and (device-width:414px) and (device-height:736px) and (-webkit-min-device-pixel-ratio:3){
+@media screen and (device-width:414px) and (device-height:736px) and (-webkit-min-device-pixel-ratio:3), screen and (device-width:800px) and (device-height:1298px){
 
 }
 
 /*---------------------------------------- css media 适配部分（针对android机）----------------------*/
 @media screen and (min-width:480px){
-	
+
 }
 
 /*---------------------------------------- css media 适配部分（针对使用虚拟系统按键的android机）----------------------*/

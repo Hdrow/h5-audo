@@ -1,4 +1,4 @@
-//2015.10.19
+//2015.10.29
 var os=importOS();
 function importOS() {
 	var	userAgent=navigator.userAgent;
@@ -18,11 +18,10 @@ function importOS() {
 	os.chrome = userAgent.match(/Chrome/) ? true : false;
 	os.firefox = userAgent.match(/Firefox/) ? true : false;
 	os.ie = document.documentMode;
-	os.iphone6Plus=os.ios && ( (screen.width==414 && screen.height==736) || (screen.width==736 && screen.height==414) && window.devicePixelRatio==3 );
-	os.iphone6=os.ios && ( (screen.width==375 && screen.height==667) || (screen.width==667 && screen.height==375) );
+	os.iphone6Plus=(os.ios && ( (screen.width==414 && screen.height==736) || (screen.width==736 && screen.height==414) && window.devicePixelRatio==3 ))  || (screen.width==800 && screen.height==1298);
+	os.iphone6=(os.ios && ( (screen.width==375 && screen.height==667) || (screen.width==667 && screen.height==375) ))  || (screen.width==800 && screen.height==1286);
 	os.iphone5=os.ios && ( (screen.width==320 && screen.height==568) || (screen.width==568 && screen.height==320) );
 	os.iphone4=(os.ios && ( (screen.width==320 && screen.height==480) || (screen.width==480 && screen.height==320) ) ) || (screen.width==800 && screen.height==1040);
 	os.screen169=screen.width/screen.height==9/16 || screen.height/screen.width==9/16 || (window.innerWidth==800 && window.innerHeight==1260) ;
 	return os;
 }//end func
-
