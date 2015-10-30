@@ -69,7 +69,7 @@ aside.loadBox b{ display:block; position:absolute; left:0; top:50%; width:100%; 
 /* 翻转提示浮层 */
 aside.turnBox{ position:fixed; left:0; top:0; width:100%; height:100%; background:#000; z-index:999;}
 aside.turnBox img.turn{ display:block; padding-top:7%; margin:0 auto 5%; height:58%;}
-aside.turnBox p{ text-align:center; font-size:2rem; color:#fff;}
+aside.turnBox p{ text-align:center; font-size:0.2rem; color:#fff;}
 
 /* 取代系统alert的警告提示弹窗 */
 aside.alertBox{ position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:998; display:none;}
