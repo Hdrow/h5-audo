@@ -1,8 +1,10 @@
 body{ background-color:#fff; color:#000;}
 a,a:visited{ color:#000;}
-input::-webkit-input-placeholder,input:focus::-webkit-input-placeholder{color:#000;}
+
 
 /* ---------------------------------------- css content 内容部分（针对16:9标准屏）----------------------------------------*/
+
+article.index{}
 
 
 /*---------------------------------------- css media 适配部分（针对iphone4） ----------------------------------------------*/
