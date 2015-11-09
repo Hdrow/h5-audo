@@ -1,4 +1,4 @@
-//2015.10.22
+//2015.11.9
 
 var ishare=importShare();
 
@@ -28,7 +28,6 @@ function importShare(){
 	var imonitor=window.imonitor||{};
 	var share={};
 	share.wxSigned=false;
-	share.wxShareCallback=undefined;
 	
 	//-------------------------------------------------------微信SDK验证
 	share.wxSign=function(){
@@ -100,10 +99,11 @@ function importShare(){
 	            success: function () {
 	                // 用户确认分享后执行的回调函数
 	                if (imonitor.add) imonitor.add({ label: '分享到朋友圈' });
-	                if (share.wxShareCallback) share.wxShareCallback();
+	                if (share.wxShareSuccess) share.wxShareSuccess();
 	            },
 	            cancel: function () {
 	                // 用户取消分享后执行的回调函数
+	                if (share.wxShareCancel) share.wxShareCancel();
 	            }
 	        });
 	        wx.onMenuShareAppMessage({
@@ -116,10 +116,11 @@ function importShare(){
 	            success: function () {
 	                // 用户确认分享后执行的回调函数
 	                if (imonitor.add) imonitor.add({ label: '分享给朋友' });
-	                if (share.wxShareCallback) share.wxShareCallback();
+	                if (share.wxShareSuccess) share.wxShareSuccess();
 	            },
 	            cancel: function () {
 	                // 用户取消分享后执行的回调函数
+	                if (share.wxShareCancel) share.wxShareCancel();
 	            }
 	        });
 		}//end if
