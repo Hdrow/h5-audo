@@ -26,7 +26,6 @@ $(document).ready(function(){
 	
 	//----------------------------------------加载页面图片----------------------------------------
 	function load_handler(){
-		//loadBox.show();
 		var loader = new PxLoader();
 		loader.addImage('images/common/turn.gif');
 		
@@ -36,7 +35,6 @@ $(document).ready(function(){
 
 		loader.addCompletionListener(function() {
 			console.log('页面图片加载完毕');
-			//icom.fadeOut(loadBox,500);
 			//sound_handler();
 			init_handler();
 			loader=null;
@@ -46,7 +44,6 @@ $(document).ready(function(){
 	
 	//----------------------------------------加载声音及处理----------------------------------------
 	function sound_handler(){
-		//新SDK自动播放背景音乐
 		if(os.weixin) wx.ready(sound_creat);
 		else sound_creat();
 	}//end func
@@ -62,9 +59,8 @@ $(document).ready(function(){
 		console.log('soundLoaded:'+soundLoaded);
 		if(soundLoaded==soundMax){
 			console.log('all sounds loaded');
-			//bgm_play();
-			//icom.fadeOut(loadBox,500);
-			//init_handler();
+			if(soundList.bgm) bgm_play();
+			init_handler();
 		}//end if
 	}//end func
 	
