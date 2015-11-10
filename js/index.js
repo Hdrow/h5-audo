@@ -11,7 +11,7 @@ $(document).ready(function(){
 	var btnSound=$('a.btnSound');
 	
 	//----------------------------------------页面初始化----------------------------------------
-	icom.screenTo169(true);//article标签高度适配，把iphone4拉伸至iphone5，默认值true
+	icom.screenTo169();//article标签高度适配，把iphone4拉伸至iphone5，默认值true
 	//loadBox.show();
 	//iuser.init(userGetted);
 	//load_handler();
