@@ -1,4 +1,4 @@
-//2015.11.10
+//2015.11.11
 var icom=importCom();
 
 //------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
@@ -6,11 +6,14 @@ function importCom(){
 	var com={};
 	
 	/*
-	 * screenTo169(iphone4)：把article作为页面的根容器，如果屏幕高宽比不是16：9，则强制拉伸到16:9。如果页面是长页面，则注释掉这个方法
+	 * screenTo169(iphone4,android)：把article作为页面的根容器，如果屏幕高宽比不是16：9，则强制拉伸到16:9
 		 * iphone4：让iphone4下的article标签高度拉伸到与iphone5一致，默认值true
+		 * android：让使用虚拟系统按键安卓机的article标签非等比压缩至一屏高度，图像比例会略有失真，默认值true
+	 	 * 如果页面是长页面，则注释掉这个方法
 	*/ 
-	com.screenTo169=function(iphone4){
+	com.screenTo169=function(iphone4,android){
 		iphone4=iphone4!=null?iphone4:true;
+		android=android!=null?android:true;
 		var article=$('article');
 		if(article.length>0){
 			if(os.iphone4){
@@ -19,7 +22,10 @@ function importCom(){
 					if(os.weixin) article.css({height:'121.2%'});
 					else article.css({height:'123.6%'});
 				}//end if
-				else com.screenScrollUnable();
+				else{
+					com.screenScrollUnable();
+					article.css({height:'100%'});
+				}//end else
 			}//end if
 			else{
 				com.screenScrollUnable();
@@ -67,7 +73,6 @@ function importCom(){
 			var _obj=option.obj;
 			var _fade=option.fade;
 			var _text=option.text;
-			var onOpen=option.onOpen;
 			var onClose=option.onClose;
 			var _remove=option.remove;
 			var _closeEvent=option.closeEvent||'touchend';
@@ -76,9 +81,9 @@ function importCom(){
 			if(_text) _obj.find('.text').html(_text);
 			if(_fade) com.fadeIn(_obj,_fade);
 			else _obj.show();
-			if(onOpen) onOpen();
 			if(_closeBtn.length>0 && _closeType=='button') _closeBtn.one(_closeEvent,obj_close);
 			else _obj.one(_closeEvent,obj_close);
+			_obj.on('close',obj_close);
 		}//end if
 		function obj_close(e){
 			if(_closeBtn.length>0 && _closeType=='button') _closeBtn.off(_closeEvent,obj_close);
@@ -88,8 +93,13 @@ function importCom(){
 			});
 			else if(_remove) _obj.remove();
 			else _obj.hide();
+			_obj.off('close',obj_close);
 			if(onClose) onClose();
 		}//end func
+	}//end func
+	
+	com.popOff=function(obj){
+		if(obj) obj.trigger('close');
 	}//end func
 	
 	//取代系统alert
