@@ -78,6 +78,7 @@ $(document).ready(function(){
 	//----------------------------------------页面逻辑代码----------------------------------------
 	function init_handler(){
 		//icom.fadeOut(loadBox,500);
+		console.log('page init');
 		monitor_handler();
 	}//end func
 	
