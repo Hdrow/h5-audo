@@ -5,6 +5,7 @@ $(document).ready(function(){
 	var articleBox=$('article');
 	
 	var windowWd=$(window).width(),windowHt=$(window).height();
+	console.log('window size:'+windowWd+'/'+windowHt);
 	
 	//sound
 	var soundList={},soundMax=0,soundLoaded=0;
@@ -77,8 +78,8 @@ $(document).ready(function(){
 	
 	//----------------------------------------页面逻辑代码----------------------------------------
 	function init_handler(){
+		console.log('init handler');
 		//icom.fadeOut(loadBox,500);
-		console.log('page init');
 		monitor_handler();
 	}//end func
 	
