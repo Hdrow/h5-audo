@@ -1,14 +1,12 @@
-//2015.10.23
-
+//2015.11.16
 var ivideo=importVideo();
 
 function importVideo(){
 	var video={};
 	
-	video.add=function(option){
-		if(option.src && option.src!=''){
-			var src=option.src;
-			var shell=option.shell||$('body');
+	video.add=function(src,option){
+		if(src && src!=''){
+			var shell=option.shell!=null?option.shell:$('body');
 			var classname=option.classname;
 			var controls=option.controls!=null?option.controls:false;
 			if(os.iphone4) controls=true;
@@ -27,7 +25,6 @@ function importVideo(){
 			if(onTimeupdate) container[0].addEventListener('timeupdate',onTimeupdate,false);
 			if(onPlay) container[0].addEventListener('play',onPlay,false);
 			if(onPause) container[0].addEventListener('pause',onPause,false);
-//			container[0].play();
 			return container;
 		}//end if
 	}//end func
