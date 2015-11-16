@@ -81,7 +81,7 @@ $(document).ready(function(){
 	function init_handler(){
 		console.log('init handler');
 		//icom.fadeOut(loadBox,500);
-		monitor_handler();		
+		monitor_handler();
 	}//end func
 	
 	//----------------------------------------页面监测代码----------------------------------------

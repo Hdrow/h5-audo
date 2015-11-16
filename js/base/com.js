@@ -1,4 +1,4 @@
-//2015.11.11
+//2015.11.16
 var icom=importCom();
 
 //------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ function importCom(){
 			}//end if
 			else{
 				com.screenScrollUnable();
-				if(os.android && !os.screen169) article.css({height:'109%','-webkit-transform-origin':'0 0 0',scaleY:0.9174});
+				if(os.android && !os.screen169 && android) article.css({height:'109%','-webkit-transform-origin':'0 0 0',scaleY:0.9174});
 			}//end if
 		}//end if
 	}//end func
@@ -68,45 +68,39 @@ function importCom(){
 	}//end func
 	
 	//简易版popOn
-	com.popOn=function(option){
-		if(option && option.obj){
-			var _obj=option.obj;
-			var _fade=option.fade;
-			var _text=option.text;
-			var onClose=option.onClose;
-			var _remove=option.remove;
-			var _closeEvent=option.closeEvent||'touchend';
-			var _closeType=option.closeType||'button';
-			var _closeBtn=_obj.find('a.close');
-			if(_text) _obj.find('.text').html(_text);
-			if(_fade) com.fadeIn(_obj,_fade);
-			else _obj.show();
-			if(_closeBtn.length>0 && _closeType=='button') _closeBtn.one(_closeEvent,obj_close);
-			else _obj.one(_closeEvent,obj_close);
-			_obj.on('close',obj_close);
+	com.popOn=function(obj,options){
+		if(obj && obj.length>0){
+			var defaults = {closeEvent:'touchend',closeType:'button',closeBtn:obj.find('a.close'),remove:false};
+			var opts = $.extend(defaults, options);
+			if(opts.text) obj.find('.text').html(opts.text);
+			if(opts.fade) com.fadeIn(obj,opts.fade);
+			else obj.show();
+			if(opts.closeBtn.length>0 && opts.closeType=='button') opts.closeBtn.one(opts.closeEvent,obj_close);
+			else obj.one(opts.closeEvent,obj_close);
+			obj.on('close',obj_close);
 		}//end if
 		function obj_close(e){
-			if(_closeBtn.length>0 && _closeType=='button') _closeBtn.off(_closeEvent,obj_close);
-			else _obj.off(_closeEvent,obj_close);
-			if(_fade) com.fadeOut(_obj,_fade,function(){
-				if(_remove) _obj.remove();
+			if(opts.closeBtn.length>0 && opts.closeType=='button') opts.closeBtn.off(opts.closeEvent,obj_close);
+			else obj.off(opts.closeEvent,obj_close);
+			if(opts.fade) com.fadeOut(obj,opts.fade,function(){
+				if(opts.remove) obj.remove();
 			});
-			else if(_remove) _obj.remove();
-			else _obj.hide();
-			_obj.off('close',obj_close);
-			if(onClose) onClose();
+			else if(opts.remove) obj.remove();
+			else obj.hide();
+			obj.off('close',obj_close);
+			if(opts.onClose) opts.onClose();
 		}//end func
 	}//end func
 	
 	com.popOff=function(obj){
-		if(obj) obj.trigger('close');
+		if(obj && obj.length>0) obj.trigger('close');
 	}//end func
 	
 	//取代系统alert
 	com.alert=function(text,callback){
 		if(text && text!=''){
 			var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a class="close">确认</a></p></div></aside>').appendTo($('body'));
-			com.popOn({obj:box,text:text,onClose:callback,remove:true,closeEvent:'click'});
+			com.popOn(box,{text:text,onClose:callback,remove:true,closeEvent:'click'});
 		}//end if
 	}//end func
 	
