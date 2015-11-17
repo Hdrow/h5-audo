@@ -16,7 +16,6 @@
 			}//end func
 			
 			function _this_touchmove(e) {
-				e.preventDefault();
 				e.stopPropagation();
 				var data = e.originalEvent.changedTouches[0];
 				_stop = {
