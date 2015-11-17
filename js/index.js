@@ -67,6 +67,9 @@ $(document).ready(function(){
 	}//end func
 	
 	function bgm_play(){
+		var currentTime=Number(icom.getQueryString('currentTime'));
+		currentTime=currentTime||0;
+		soundList.bgm.currentTime=currentTime;
 		soundList.bgm.play();
 		if(btnSound.length>0) btnSound.show().removeClass('stop').addClass('play').one('touchend',bgm_stop);
 	}//end func
