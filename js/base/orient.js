@@ -1,4 +1,4 @@
-//2015.11.12
+//2015.11.18
 var iOrient=importOrient();
 
 function importOrient(){
@@ -40,17 +40,18 @@ function importOrient(){
 	function window_orientation(e){
 		var orientation=orient.get();
 		console.log('orientation:'+orientation);
+		var turnBox=$('#turnBox');
 		if(orient.dir=='portrait'){
 			if (orientation=='landscape') {
-				$('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.gif" class="turn"><p>请将手机调至竖屏状态...</p></aside>').appendTo($('body'));
+				if(turnBox.length==0) turnBox=$('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.gif" class="turn"><p>请将手机调至竖屏状态...</p></aside>').appendTo($('body'));
 			}//end if
-			else if (orientation=='portrait') $('#turnBox').remove();
+			else if(turnBox.length>0) turnBox.remove();
 		}//end if
 		else{
 			if (orientation=='portrait') {
-				turnBox=$('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" class="turn"><p>请将手机调至横屏状态...</p></aside>').appendTo($('body'));
+				if(turnBox.length==0) turnBox=$('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" class="turn"><p>请将手机调至横屏状态...</p></aside>').appendTo($('body'));
 			}//end if
-			else if (orientation=='landscape') $('#turnBox').remove();
+			else if(turnBox.length>0) turnBox.remove();
 		}//end else
 	}//end func
 	
