@@ -1,4 +1,4 @@
-//2015.11.16
+//2015.11.19
 var icom=importCom();
 
 //------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
@@ -220,9 +220,20 @@ function importCom(){
 	
 	//使用php中间件通讯
 	com.post=function(url,data,succ,error){
-		if(url && data){
-			if($.isPlainObject(data)) data=JSON.stringify(data);			
+		if(url && url!=''){
+			if(data && $.isPlainObject(data)) data=JSON.stringify(data);
 			$.post("./http/httpPost.php",{api_url:url,post_data:data},function(resp){
+				if(resp.errcode=='0' && succ) succ(resp);
+				else if(error) error(resp.errmsg);
+			}, "json");
+		}//end if
+	}//end func
+	
+	//使用php中间件通讯
+	com.get=function(url,data,succ,error){
+		if(url && url!=''){
+			if(data && $.isPlainObject(data)) data=JSON.stringify(data);		
+			$.get("./http/httpPost.php",{api_url:url,post_data:data},function(resp){
 				if(resp.errcode=='0' && succ) succ(resp);
 				else if(error) error(resp.errmsg);
 			}, "json");
