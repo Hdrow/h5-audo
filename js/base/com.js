@@ -218,27 +218,32 @@ function importCom(){
 		else return false;
 	}//end func
 	
-	//使用php中间件通讯
+	//使用post方法进行php中间件通讯
 	com.post=function(url,data,succ,error){
-		if(url && url!=''){
-			if(data && $.isPlainObject(data)) data=JSON.stringify(data);
-			$.post("./http/httpPost.php",{api_url:url,post_data:data},function(resp){
-				if(resp.errcode=='0' && succ) succ(resp);
-				else if(error) error(resp.errmsg);
-			}, "json");
-		}//end if
+		if(url && url!='') ajax_handler(url,data,succ,error,'post');
 	}//end func
 	
-	//使用php中间件通讯
+	//使用get方法进行php中间件通讯
 	com.get=function(url,data,succ,error){
-		if(url && url!=''){
-			if(data && $.isPlainObject(data)) data=JSON.stringify(data);		
-			$.get("./http/httpPost.php",{api_url:url,post_data:data},function(resp){
-				if(resp.errcode=='0' && succ) succ(resp);
-				else if(error) error(resp.errmsg);
-			}, "json");
-		}//end if
+		if(url && url!='') ajax_handler(url,data,succ,error,'get');
 	}//end func
+	
+	function ajax_handler(url,data,succ,error,type){
+		if(data && $.isPlainObject(data)) data=JSON.stringify(data);
+		$.ajax({
+		   	type: type,
+		   	url: url,
+		   	data: data,
+		   	dataType:"json",
+		   	success: function(resp){
+		   		if(resp.errcode=='0' && succ) succ(resp);
+				else if(error) error(resp.errmsg);
+		   	},
+		   	error:function(){
+		   		if(error) com.alert('数据通讯出现问题');
+		   	}
+		});
+	}//edn func
 	
 	//修改微信浏览器的标题文字
 	com.title=function(value){
