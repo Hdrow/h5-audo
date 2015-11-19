@@ -231,8 +231,7 @@ function importCom(){
 	function post_handler(url,data,succ,error,action){
 		if(data && $.isPlainObject(data)) data=JSON.stringify(data);
 		$.post("./http/httpPost.php",{api_url:url,post_data:data,action:action},function(resp){
-			if(resp.errcode=='0' && succ) succ(resp);
-			else if(error) error(resp.errmsg);
+			if(succ) succ(resp);
 		}, "json");
 	}//edn func
 	
