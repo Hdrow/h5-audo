@@ -41,7 +41,6 @@ function importOrient(){
 	
 	function window_orientation(e){
 		var orientation=orient.get();
-		alert('orientation:'+orientation);
 		var turnBox=$('#turnBox');
 		if(orient.dir=='portrait'){
 			if (orientation=='landscape') {
