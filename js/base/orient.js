@@ -3,42 +3,45 @@ var iOrient=importOrient();
 
 function importOrient(){
 	var orient={};
+	var first=true;
 	
 	orient.init=function(dir){
 		orient.dir=dir||'portrait';
 		window_orientation();
-		$(window).on('resize',window_orientation);
-		if( orient.dir!= orient.get()) $(window).one('resize',function(){location.reload();});
+		first=false;
+		$(window).on('orientationchange',window_orientation);
+		if( orient.dir!= orient.get()) $(window).one('orientationchange',function(){location.reload();});
 	}//end func
 	
 	orient.lock=function(dir,callback){
 		orient.dir=dir||'portrait';
 		orient.callback=callback;
 		window_orientation();
-		if(callback && orient.dir!= orient.get() ) $(window).on('resize',callback_handler);
+		if(callback && orient.dir!= orient.get() ) $(window).on('orientationchange',callback_handler);
 	}//end func
 	
 	function callback_handler(e){
 		if(orient.dir== orient.get() ){
 			orient.callback();
 			orient.callback=undefined;
-			$(window).off('resize',callback_handler);
+			$(window).off('orientationchange',callback_handler);
 		}//end if
 	}//end func
 	
 	orient.unlock=function(){
-		$(window).off('resize',window_orientation);
-		if(orient.callback) $(window).off('resize',callback_handler);
+		$(window).off('orientationchange',window_orientation);
+		if(orient.callback) $(window).off('orientationchange',callback_handler);
 		$('#turnBox').remove();
 	}//end func
 	
 	orient.get=function(){
-		return window.orientation == 90 || window.orientation == -90?'landscape':'portrait';
+		if(first && os.android) return $(window).width()>$(window).height()?'landscape':'portrait';
+		else return window.orientation == 90 || window.orientation == -90?'landscape':'portrait';
 	}//end func
 	
 	function window_orientation(e){
 		var orientation=orient.get();
-		console.log('orientation:'+orientation);
+		alert('orientation:'+orientation);
 		var turnBox=$('#turnBox');
 		if(orient.dir=='portrait'){
 			if (orientation=='landscape') {
