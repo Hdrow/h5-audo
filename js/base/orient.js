@@ -1,4 +1,4 @@
-//2015.11.18
+//2015.11.20
 var iOrient=importOrient();
 
 function importOrient(){
@@ -33,8 +33,7 @@ function importOrient(){
 	}//end func
 	
 	orient.get=function(){
-		if(window.orientation) return window.orientation == 90 || window.orientation == -90?'landscape':'portrait';
-		else return $(window).width()>$(window).height()?'landscape':'portrait';
+		return window.orientation == 90 || window.orientation == -90?'landscape':'portrait';
 	}//end func
 	
 	function window_orientation(e){
