@@ -1,4 +1,4 @@
-//2015.10.28
+//2015.11.16
 (function() {
 	$.event.special.swipe = {
 		setup: function() {
@@ -6,6 +6,7 @@
 			var _start,_stop;
 			_this.on("touchstart", _this_touchstart);
 			function _this_touchstart(e){
+				e.stopPropagation();
 				var data = e.originalEvent.touches[0];
 				_start = {
 					time: (new Date).getTime(),
@@ -15,8 +16,7 @@
 			}//end func
 			
 			function _this_touchmove(e) {
-				e.preventDefault();
-				e.stopImmediatePropagation();
+				e.stopPropagation();
 				var data = e.originalEvent.changedTouches[0];
 				_stop = {
 					time: (new Date).getTime(),
@@ -26,6 +26,7 @@
 			}//end func
 			
 			function _this_touchend(e) {
+				e.stopPropagation();
 				_this.off("touchmove", _this_touchmove);
 				if (_start && _stop) {
 					if (_stop.time - _start.time < 1000) {

@@ -8,7 +8,7 @@ $(document).ready(function(){
 	console.log('window size:'+windowWd+'/'+windowHt);
 	
 	//sound
-	var soundList={},soundMax=0,soundLoaded=0;
+	var soundList={},soundMax=0,soundLoaded=0,soundBgm=1;
 	var btnSound=$('a.btnSound');
 	
 	//----------------------------------------页面初始化----------------------------------------
@@ -61,17 +61,28 @@ $(document).ready(function(){
 		console.log('soundLoaded:'+soundLoaded);
 		if(soundLoaded==soundMax){
 			console.log('all sounds loaded');
-			if(soundList.bgm) bgm_play();
+			if(soundList.bgm){
+				soundBgm=icom.getQueryString('bgm');
+				soundBgm=soundBgm!=null?parseInt(soundBgm):1;
+				console.log('bgm:'+soundBgm);
+				if(soundBgm) bgm_play();
+				else bgm_stop();
+			}//end if
 			init_handler();
 		}//end if
 	}//end func
 	
 	function bgm_play(){
+		soundBgm=1;
+		var currentTime=Number(icom.getQueryString('currentTime'));
+		currentTime=currentTime||0;
+		soundList.bgm.currentTime=currentTime;
 		soundList.bgm.play();
 		if(btnSound.length>0) btnSound.show().removeClass('stop').addClass('play').one('touchend',bgm_stop);
 	}//end func
 	
 	function bgm_stop(){
+		soundBgm=0;
 		soundList.bgm.pause();
 		if(btnSound.length>0) btnSound.removeClass('play').addClass('stop').one('touchend',bgm_play);
 	}//end func	

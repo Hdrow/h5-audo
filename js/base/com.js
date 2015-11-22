@@ -1,4 +1,4 @@
-//2015.11.16
+//2015.11.19
 var icom=importCom();
 
 //------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
@@ -67,11 +67,10 @@ function importCom(){
 		}//end if
 	}//end func
 	
-	//简易版popOn
 	com.popOn=function(obj,options){
 		if(obj && obj.length>0){
 			var defaults = {closeEvent:'touchend',closeType:'button',closeBtn:obj.find('a.close'),remove:false};
-			var opts = $.extend(defaults, options);
+			var opts = $.extend(defaults,options);
 			if(opts.text) obj.find('.text').html(opts.text);
 			if(opts.fade) com.fadeIn(obj,opts.fade);
 			else obj.show();
@@ -123,7 +122,7 @@ function importCom(){
 		return parseInt(str[0].substr(str[0].length-len));
 	}//end func
 	
-	//带Loading的载入图片函数
+	//载入图片函数
 	com.imageLoad=function(src,callback){
 		if(src && src!=''){
 			var loader = new PxLoader();
@@ -154,7 +153,7 @@ function importCom(){
 		}//end if
 	}//end func
 	
-	//打印object数据
+	//仿hover效果
 	com.hover=function(btn,delay){
 		delay=delay||0;
 		delay=Math.abs(delay);
@@ -219,16 +218,22 @@ function importCom(){
 		else return false;
 	}//end func
 	
-	//发送数据
+	//使用post方法进行php中间件通讯
 	com.post=function(url,data,succ,error){
-		if(url && data){
-			if($.isPlainObject(data)) data=JSON.stringify(data);			
-			$.post("./http/httpPost.php",{api_url:url,post_data:data},function(resp){
-				if(resp.errcode=='0' && succ) succ(resp);
-				else if(error) error(resp.errmsg);
-			}, "json");
-		}//end if
+		if(url && url!='') post_handler(url,data,succ,error,'post');
 	}//end func
+	
+	//使用get方法进行php中间件通讯
+	com.get=function(url,data,succ,error){
+		if(url && url!='') post_handler(url,data,succ,error,'get');
+	}//end func
+	
+	function post_handler(url,data,succ,error,action){
+		if(data && $.isPlainObject(data)) data=JSON.stringify(data);
+		$.post("./http/httpPost.php",{api_url:url,post_data:data,action:action},function(resp){
+			if(succ) succ(resp);
+		}, "json");
+	}//edn func
 	
 	//修改微信浏览器的标题文字
 	com.title=function(value){

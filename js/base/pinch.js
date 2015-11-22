@@ -1,4 +1,4 @@
-//2015.10.28
+//2015.11.16
 (function() {
 	$.event.special.pinch = {
 		setup: function() {
@@ -12,6 +12,7 @@
 			//单指双指触控
 			function this_touchstart(e){
 				e.preventDefault();
+				e.stopPropagation();
 				$(this).on('touchmove',this_touchmove).one('touchend',this_touchend);
 				if(e.originalEvent.touches.length==1){
 					mutiTouch=false;
@@ -28,7 +29,7 @@
 			
 			function this_touchmove(e){
 				e.preventDefault();
-				e.stopImmediatePropagation();
+				e.stopPropagation();
 				if(!mutiTouch && e.originalEvent.touches.length==1){
 					var pos1=[e.originalEvent.touches[0].clientX,e.originalEvent.touches[0].clientY];
 					_this.trigger("pinch").trigger('pinchmove',[pos1[0]-posLast1[0],pos1[1]-posLast1[1]]);
@@ -54,6 +55,8 @@
 			}//end func
 		
 			function this_touchend(e){
+				e.preventDefault();
+				e.stopPropagation();
 				$(this).off('touchmove');
 				if(e.originalEvent.touches.length>=1) mutiTouch=true;
 				else mutiTouch=false;
