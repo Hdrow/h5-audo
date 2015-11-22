@@ -1,48 +1,41 @@
-//2015.11.16
+//2015.11.22
 var iaudio=importAudio();
 
 function importAudio(){
 	var audio={};
 	
-	audio.on=function(src,option){
+	audio.on=function(src,options){
 		if(src && src!=''){
 			var sound=new Audio();
+			var defaults = {loop:false,volume:1,currentTime:0,autoplay:false};
+			var opts = $.extend(defaults,options);
 			sound.src=src;
-			sound.loop=option.loop!=null?option.loop:false;//如果loop设置成true就无法正确获得ended事件
-			var volume=option.volume!=null?option.volume:1;
-			var currentTime=option.currentTime!=null?option.currentTime:0;
-			var autoplay=option.autoplay!=null?option.autoplay:false;
-			var onLoadstart=option.onLoadstart;
-			var onLoaded=option.onLoaded;
-			var onEnded=option.onEnded;
-			var onPlay=option.onPlay;
-			var onPause=option.onPause;
-			var onTimeupdate=option.onTimeupdate;
+			sound.loop=opts.loop;//如果loop设置成true就无法正确获得ended事件
 			sound.load();
-			if(onLoadstart) sound.addEventListener('loadstart',onLoadstart,false);
+			if(opts.onLoadstart) sound.addEventListener('loadstart',opts.onLoadstart,false);
 			sound.addEventListener('loadeddata',sound_onloadeddata,false);
-			if(onEnded) sound.addEventListener('ended',onEnded,false);
-			if(onTimeupdate) sound.addEventListener('timeupdate',onTimeupdate,false);
-			if(onPlay) sound.addEventListener('play',onPlay,false);
-			if(onPause) sound.addEventListener('pause',onPause,false);
+			if(opts.onEnded) sound.addEventListener('ended',opts.onEnded,false);
+			if(opts.onTimeupdate) sound.addEventListener('timeupdate',opts.onTimeupdate,false);
+			if(opts.onPlay) sound.addEventListener('play',opts.onPlay,false);
+			if(opts.onPause) sound.addEventListener('pause',opts.onPause,false);
 			return sound;
 		}//end if
 		
 		function sound_onloadeddata(event){
 			var src=get_src(this.src);
 			console.log(src+' loaded');
-			if(onLoaded) onLoaded(this);
-			if(autoplay) audio.play(this,{volume:volume,currentTime:currentTime}); 
+			if(opts.onLoaded) opts.onLoaded(this);
+			if(opts.autoplay) audio.play(this,{volume:opts.volume,currentTime:opts.currentTime}); 
 		}//end func
 				
 	}//end func
 	
-	audio.play=function(sound,option){
+	audio.play=function(sound,options){
 		if(sound){
-			var volume=option.volume!=null?option.volume:1;
-			var currentTime=option.currentTime!=null?option.currentTime:0;
-			sound.volume=volume;
-			sound.currentTime=currentTime;
+			var defaults = {volume:1,currentTime:0,autoplay:false};
+			var opts = $.extend(defaults,options);
+			sound.volume=opts.volume;
+			sound.currentTime=opts.currentTime;
 			sound.play();
 		}//end if
 	}//end func

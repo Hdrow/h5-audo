@@ -1,42 +1,29 @@
-//2015.11.16
+//2015.11.22
 var ivideo=importVideo();
 
 function importVideo(){
 	var video={};
 	
-	video.add=function(src,option){
+	video.add=function(src,options){
 		if(src && src!=''){
-			var shell=option.shell!=null?option.shell:$('body');
-			var classname=option.classname;
-			var controls=option.controls!=null?option.controls:false;
-			if(os.iphone4) controls=true;
-			var autoplay=option.autoplay!=null?option.autoplay:true;
-			var poster=option.poster;
-			var onLoadstart=option.onLoadstart;
-			var onLoaded=option.onLoaded;
-			var onEnded=option.onEnded;
-			var onPlay=option.onPlay;
-			var onPause=option.onPause;
-			var onTimeupdate=option.onTimeupdate;
-			var container=$('<video webkit-playsinline="true" type="video/mp4">').attr({src:src,autoplay:autoplay,controls:controls,poster:poster}).addClass(classname).appendTo(shell);
-			if(onLoadstart) container[0].addEventListener('loadstart',onLoadstart,false);
-			if(onLoaded) container[0].addEventListener('loadeddata',onLoaded,false);
-			if(onEnded) container[0].addEventListener('ended',onEnded,false);
-			if(onTimeupdate) container[0].addEventListener('timeupdate',onTimeupdate,false);
-			if(onPlay) container[0].addEventListener('play',onPlay,false);
-			if(onPause) container[0].addEventListener('pause',onPause,false);
+			var defaults = {shell:$('body'),controls:false,autoplay:true};
+			var opts = $.extend(defaults,options);
+			if(os.iphone4) opts.controls=true;
+			var container=$('<video webkit-playsinline="true" type="video/mp4">').attr({src:src,autoplay:opts.autoplay,controls:opts.controls,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
+			if(opts.onLoadstart) container[0].addEventListener('loadstart',opts.onLoadstart,false);
+			if(opts.onLoaded) container[0].addEventListener('loadeddata',opts.onLoaded,false);
+			if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
+			if(opts.onTimeupdate) container[0].addEventListener('timeupdate',opts.onTimeupdate,false);
+			if(opts.onPlay) container[0].addEventListener('play',opts.onPlay,false);
+			if(opts.onPause) container[0].addEventListener('pause',opts.onPause,false);
 			return container;
 		}//end if
 	}//end func
 	
-	video.on=function(option){
-		if(option){
-			var btn=option.btn||$('a.btnVideo,#btnVideo');
-			var controls=option.controls!=null?option.controls:true;
-			var autoplay=option.autoplay!=null?option.autoplay:true;
-			var onEnded=option.onEnded;
-			if(btn.length>0) btn.on('touchend',{onEnded:onEnded,controls:controls,autoplay:autoplay},video_play);
-		}//end if
+	video.on=function(options){
+		var defaults = {btn:$('a.btnVideo,#btnVideo'),controls:true,autoplay:true};
+		var opts = $.extend(defaults,options);
+		if(opts.btn.length>0) opts.btn.on('touchend',opts,video_play);
 	}//end func
 	
 	function video_play(e){
