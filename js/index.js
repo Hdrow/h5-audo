@@ -8,8 +8,8 @@ $(document).ready(function(){
 	console.log('window size:'+windowWd+'/'+windowHt);
 	
 	//sound
-	var soundList={},soundMax=0,soundLoaded=0,soundBgm=1;
-	var btnSound=$('a.btnSound');
+	var soundList={},soundMax=0,soundLoaded=0;
+	var bgmTime,bgmPlay,bgmBtn;
 	
 	//----------------------------------------页面初始化----------------------------------------
 	iOrient.init();//屏幕翻转锁定，默认锁定竖屏，横屏提示
@@ -61,32 +61,37 @@ $(document).ready(function(){
 		console.log('soundLoaded:'+soundLoaded);
 		if(soundLoaded==soundMax){
 			console.log('all sounds loaded');
-			if(soundList.bgm){
-				soundBgm=icom.getQueryString('bgm');
-				soundBgm=soundBgm!=null?parseInt(soundBgm):1;
-				console.log('bgm:'+soundBgm);
-				if(soundBgm) bgm_play();
-				else bgm_stop();
-			}//end if
+			bgm_init();
 			init_handler();
 		}//end if
 	}//end func
 	
+	function bgm_init(){
+		if(soundList.bgm){
+			bgmPlay=icom.getQueryString('bgmPlay');
+			bgmPlay=bgmPlay!=null?parseInt(bgmPlay):1;
+			bgmTime=Number(icom.getQueryString('bgmTime'));
+			bgmTime=bgmTime||0;
+			bgmBtn=$('a.bgmBtn');
+			if(bgmBtn.length>0) bgmBtn.show();
+			if(bgmPlay==1) bgm_play();
+			else bgm_stop();
+		}//end if
+	}//end func
+	
 	function bgm_play(){
-		soundBgm=1;
-		var currentTime=Number(icom.getQueryString('currentTime'));
-		currentTime=currentTime||0;
-		soundList.bgm.currentTime=currentTime;
+		bgmPlay=1;
+		soundList.bgm.currentTime=bgmTime;
 		soundList.bgm.play();
-		if(btnSound.length>0) btnSound.show().removeClass('stop').addClass('play').one('touchend',bgm_stop);
+		if(bgmBtn.length>0) bgmBtn.removeClass('bgmStop').addClass('bgmPlay').one('touchend',bgm_stop);
 	}//end func
 	
 	function bgm_stop(){
-		soundBgm=0;
+		bgmPlay=0;
+		bgmTime=soundList.bgm.currentTime;
 		soundList.bgm.pause();
-		if(btnSound.length>0) btnSound.removeClass('play').addClass('stop').one('touchend',bgm_play);
-	}//end func	
-	
+		if(bgmBtn.length>0) bgmBtn.removeClass('bgmPlay').addClass('bgmStop').one('touchend',bgm_play);
+	}//end func
 	
 	//----------------------------------------页面逻辑代码----------------------------------------
 	function init_handler(){
