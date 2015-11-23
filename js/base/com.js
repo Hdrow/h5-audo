@@ -1,4 +1,4 @@
-//2015.11.19
+//2015.11.23
 var icom=importCom();
 
 //------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
@@ -219,19 +219,19 @@ function importCom(){
 	}//end func
 	
 	//使用post方法进行php中间件通讯
-	com.post=function(url,data,succ,error){
-		if(url && url!='') post_handler(url,data,succ,error,'post');
+	com.post=function(url,data,callback){
+		if(url && url!='') post_handler(url,data,callback,'post');
 	}//end func
 	
 	//使用get方法进行php中间件通讯
-	com.get=function(url,data,succ,error){
-		if(url && url!='') post_handler(url,data,succ,error,'get');
+	com.get=function(url,data,callback){
+		if(url && url!='') post_handler(url,data,callback,'get');
 	}//end func
 	
-	function post_handler(url,data,succ,error,action){
+	function post_handler(url,data,callback,action){
 		if(data && $.isPlainObject(data)) data=JSON.stringify(data);
 		$.post("./http/httpPost.php",{api_url:url,post_data:data,action:action},function(resp){
-			if(succ) succ(resp);
+			if(callback) callback(resp);
 		}, "json");
 	}//edn func
 	
