@@ -51,8 +51,8 @@ a>img{ width:100%;}
 
 /* load浮层 */
 aside.loadBox{ position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:996; display: none;}
-aside.loadBox span{ display:block; position:absolute; left:50%; top:50%; margin-left:-0.1rem; margin-top:-0.2rem; -webkit-transform:scale(0.36); -webkit-transform-origin: 50% 50%;}
-aside.loadBox span i{ display:block; position:absolute; left:0; top:0; width:0.4rem; height:0.08rem; border-radius:0.08rem; background:rgba(255,255,255,0.5); box-shadow:0 0 0.1rem rgba(255,255,255,1);}
+aside.loadBox span{ display:block; position:absolute; left:50%; top:50%; margin-left:-0.1rem; margin-top:-0.2rem; -webkit-transform:scale(0.4); -webkit-transform-origin: 50% 50%;}
+aside.loadBox span i{ display:block; position:absolute; left:0; top:0; width:0.4rem; height:0.1rem; border-radius:0.08rem; background:rgba(255,255,255,0.5); box-shadow:0 0 0.1rem rgba(255,255,255,1);}
 aside.loadBox span i:nth-child(1){ -webkit-transform:translate(0.6rem, 0) rotate(0deg); -webkit-animation:loadCircle 2.4s 0s linear infinite;}
 aside.loadBox span i:nth-child(2){ -webkit-transform:translate(0.5196rem, 0.3rem) rotate(30deg); -webkit-animation:loadCircle 2.4s 0.2s linear infinite;}
 aside.loadBox span i:nth-child(3){ -webkit-transform:translate(0.3rem, 0.5196rem) rotate(60deg); -webkit-animation:loadCircle 2.4s 0.4s linear infinite;}

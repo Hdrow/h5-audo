@@ -68,10 +68,15 @@ $(document).ready(function(){
 	
 	function bgm_init(){
 		if(soundList.bgm){
-			bgmPlay=icom.getQueryString('bgmPlay');
-			bgmPlay=bgmPlay!=null?parseInt(bgmPlay):1;
-			bgmTime=Number(icom.getQueryString('bgmTime'));
+			bgmPlay=sessionStorage.bgmPlay;
+			bgmPlay=bgmPlay||1;
+			bgmPlay=parseInt(bgmPlay);
+//			console.log('bgmPlay:'+bgmPlay);
+			bgmTime=sessionStorage.bgmTime;
+			console.log('bgmTime:'+bgmTime);
 			bgmTime=bgmTime||0;
+			bgmTime=Number(bgmTime);
+//			console.log('bgmTime:'+bgmTime);
 			bgmBtn=$('a.bgmBtn');
 			if(bgmBtn.length>0) bgmBtn.show();
 			if(bgmPlay==1) bgm_play();
@@ -80,17 +85,25 @@ $(document).ready(function(){
 	}//end func
 	
 	function bgm_play(){
-		bgmPlay=1;
 		soundList.bgm.currentTime=bgmTime;
 		soundList.bgm.play();
+		bgmPlay=1;
 		if(bgmBtn.length>0) bgmBtn.removeClass('bgmStop').addClass('bgmPlay').one('touchend',bgm_stop);
 	}//end func
 	
 	function bgm_stop(){
-		bgmPlay=0;
-		bgmTime=soundList.bgm.currentTime;
+		bgmTime=bgmPlay?soundList.bgm.currentTime:bgmTime;
 		soundList.bgm.pause();
+		bgmPlay=0;
 		if(bgmBtn.length>0) bgmBtn.removeClass('bgmPlay').addClass('bgmStop').one('touchend',bgm_play);
+	}//end func
+	
+	function init_handler(){
+		$('a.btnNext').one('touchend',function(e){
+			sessionStorage.bgmPlay=bgmPlay;
+			sessionStorage.bgmTime=bgmPlay?soundList.bgm.currentTime.toFixed(2):bgmTime.toFixed(2);
+			location.href='index.html';
+		});
 	}//end func
 	
 	//----------------------------------------页面逻辑代码----------------------------------------
