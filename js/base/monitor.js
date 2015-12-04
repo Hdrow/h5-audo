@@ -13,7 +13,6 @@ function importMonitor(){
 			var category=option.category||'';
 			var action=option.action||'click';
 			var label=option.label||'';
-			console.log(category)
 			if(obj && obj.length>0){
 				obj.each(function(i) {
 					$(this).on(action,{category:category,action:action,label:obj.length==1?label:label+(i+1)},event_bind);}
