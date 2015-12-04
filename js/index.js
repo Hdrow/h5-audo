@@ -71,12 +71,10 @@ $(document).ready(function(){
 			bgmPlay=sessionStorage.bgmPlay;
 			bgmPlay=bgmPlay||1;
 			bgmPlay=parseInt(bgmPlay);
-//			console.log('bgmPlay:'+bgmPlay);
 			bgmTime=sessionStorage.bgmTime;
 			console.log('bgmTime:'+bgmTime);
 			bgmTime=bgmTime||0;
 			bgmTime=Number(bgmTime);
-//			console.log('bgmTime:'+bgmTime);
 			bgmBtn=$('a.bgmBtn');
 			if(bgmBtn.length>0) bgmBtn.show();
 			if(bgmPlay==1) bgm_play();
@@ -96,14 +94,6 @@ $(document).ready(function(){
 		soundList.bgm.pause();
 		bgmPlay=0;
 		if(bgmBtn.length>0) bgmBtn.removeClass('bgmPlay').addClass('bgmStop').one('touchend',bgm_play);
-	}//end func
-	
-	function init_handler(){
-		$('a.btnNext').one('touchend',function(e){
-			sessionStorage.bgmPlay=bgmPlay;
-			sessionStorage.bgmTime=bgmPlay?soundList.bgm.currentTime.toFixed(2):bgmTime.toFixed(2);
-			location.href='index.html';
-		});
 	}//end func
 	
 	//----------------------------------------页面逻辑代码----------------------------------------
