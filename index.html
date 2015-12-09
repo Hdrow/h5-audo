@@ -12,9 +12,9 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
-<script>function _load_file(f){var s=f.split('.');var filetype=s[s.length-1];f+='?v='+Math.random();if(filetype=="js")document.write('<script src="'+f+'"><\/script>');else if(filetype=="css")document.write('<link rel="stylesheet" type="text/css" href="'+f+'" />')}</script>
+<script>var iload=importLoad();function importLoad(){var load={};load.css=function(f){var file=get_filetype(f);if(file.type=="css")document.write('<link rel="stylesheet" type="text/css" href="'+file.src+'" />')}load.js=function(f){var file=get_filetype(f);if(file.type=="js")document.write('<script src="'+file.src+'"><\/script>')}function get_filetype(f){var tmp=f.split('.');var type=tmp[tmp.length-1];var src=f+'?v='+Math.random();return{type:type,src:src}}return load}</script>
 <link rel="stylesheet" type="text/css" href="css/common.css" />
-<link rel="stylesheet" type="text/css" href="css/index.css" />
+<script>iload.css('css/index.css')</script>
 </head>
 <body>
 <!--------------------------------------------------------------html区域-------------------------------------------------------------------------------------------->
@@ -22,11 +22,11 @@
 </article>
 <!--------------------------------------------------------------javascript区域-------------------------------------------------------------------------------------->
 <script type="text/javascript" src="js/base/framwork.js"></script>
-<script type="text/javascript" src="js/base/monitor.js"></script>
-<script type="text/javascript" src="js/base/share.js"></script>
-<script src="http://bamboo.api.be-xx.com/js/loop_api.js"></script>
-<script type="text/javascript" src="js/base/user.js"></script>
 <script type="text/javascript" src="js/base/audio.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
-</body>
+<script src="http://bamboo.api.be-xx.com/js/loop_api.js"></script>
+<script>iload.js('js/base/monitor.js')</script>
+<script>iload.js('js/base/share.js')</script>
+<script>iload.js('js/base/user.js')</script>
+<script>iload.js('js/base/user.js')</script>
+<script>iload.js('js/index.js')</script>
 </html>
