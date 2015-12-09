@@ -12,7 +12,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
-<script>var iload=importLoad();function importLoad(){var load={};load.css=function(f){var file=get_filetype(f);if(file.type=="css")document.write('<link rel="stylesheet" type="text/css" href="'+file.src+'" />')}load.js=function(f){var file=get_filetype(f);if(file.type=="js")document.write('<script src="'+file.src+'"><\/script>')}function get_filetype(f){var tmp=f.split('.');var type=tmp[tmp.length-1];var src=f+'?v='+Math.random();return{type:type,src:src}}return load}</script>
+<script>var iload=importLoad();function importLoad(){function b(a){var b=a.split(".");return{type:b[b.length-1],src:a+"?v="+Math.random()}}return{css:function(a){a=b(a);"css"==a.type&&document.write('<link rel="stylesheet" type="text/css" href="'+a.src+'" />')},js:function(a){a=b(a);"js"==a.type&&document.write('<script src="'+a.src+'">\x3c/script>')}}};</script>
 <link rel="stylesheet" type="text/css" href="css/common.css" />
 <script>iload.css('css/index.css')</script>
 </head>
