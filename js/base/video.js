@@ -1,4 +1,4 @@
-//2015.11.23
+//2015.12.14
 var ivideo=importVideo();
 
 function importVideo(){
@@ -27,6 +27,7 @@ function importVideo(){
 	}//end func
 	
 	function video_play(e){
+		e.stopPropagation();
 		var autoplay=e.data.autoplay;
 		var controls=e.data.controls;
 		var onEnded=e.data.onEnded;
