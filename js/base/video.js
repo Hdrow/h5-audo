@@ -1,4 +1,4 @@
-//2015.12.14
+//2015.12.18
 var ivideo=importVideo();
 
 function importVideo(){
@@ -31,6 +31,7 @@ function importVideo(){
 		var autoplay=e.data.autoplay;
 		var controls=e.data.controls;
 		var onEnded=e.data.onEnded;
+		var onClose=e.data.onClose;
 		var box=$("<aside class='videoBox' id='videoBox'></aside>").appendTo($('body')).show();
 		var vid=$(this).data('vid');
 		if(vid && vid!=''){
@@ -46,7 +47,10 @@ function importVideo(){
 				if(onEnded) container[0].addEventListener('ended',onEnded,false);
 			}//end else
 		}//end if
-		var close=$("<a class='close'></a>").appendTo(box).one('touchend',function(e){box.remove();});
+		var close=$("<a class='close'></a>").appendTo(box).one('touchend',function(e){
+			box.remove();
+			if(onClose) onClose();
+		});
 	}//end event
 	
 	return video;
