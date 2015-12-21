@@ -1,4 +1,4 @@
-//2015.12.11
+//2015.12.21
 var icom=importCom();
 
 //------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
@@ -30,6 +30,24 @@ function importCom(){
 			else{
 				com.screenScrollUnable();
 				if(os.android && !os.screen169 && android) article.css({height:'109%','-webkit-transform-origin':'0 0 0',scaleY:0.9174});
+			}//end if
+		}//end if
+	}//end func
+	
+	com.screenToPx=function(wd,ht,iphone4){
+		if(wd && wd>0){
+			iphone4=iphone4!=null?iphone4:true;
+			var article=$('article');
+			if(article.length>0){
+				article.css({'-webkit-transform-origin':'0 0 0'});
+				if(ht && ht>0){
+					com.screenScrollUnable();
+					var zoomX=$(window).width()/wd;
+					var zoomY=$(window).height()/ht;
+					if(os.iphone4 && iphone4) article.css({scale:zoomY,x:($(window).width()-wd*zoomY)*0.5/zoomY});
+					else article.css({scaleX:zoomX,scaleY:zoomY});
+				}//end if
+				else article.css({scale:$(window).width()/wd});
 			}//end if
 		}//end if
 	}//end func

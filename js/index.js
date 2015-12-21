@@ -13,7 +13,8 @@ $(document).ready(function(){
 	
 	//----------------------------------------页面初始化----------------------------------------
 	iOrient.init();//屏幕翻转锁定，默认锁定竖屏，横屏提示
-	icom.screenTo169();//article标签高度适配，把iphone4拉伸至iphone5
+	icom.screenTo169(true,true);//把article标签拉伸至iphone5的高宽比例
+	//icom.screenToPx(320,504,true);//把以px为单位的article标签拉伸到适应屏幕的高宽比例，iphone4默认等比压缩左右留白
 	//loadBox.show();
 	//iuser.init(userGetted);
 	//load_handler();
