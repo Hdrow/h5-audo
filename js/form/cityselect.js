@@ -16,56 +16,77 @@ settings 参数说明
 				dist:'区县'
 			},settings);
 			var $this=$(this);
-			var provBox=$this.find("select.prov");
-			var cityBox=$this.find("select.city");
-			var distBox=$this.find("select.dist");
+			var provShell=$this.children("span.prov");
+			var cityShell=$this.children("span.city");
+			var distShell=$this.children("span.dist");
+			var provSelete=provShell.children("select");
+			var citySelete=cityShell.children("select");
+			var distSelete=distShell.children("select");
+			var provTxt=provShell.children("i");
+			var cityTxt=cityShell.children("i");
+			var distTxt=distShell.children("i");
+			var provId=-1,cityId=-1,distId=-1;
 			init();
 		}//end if
 		
 		
 		function init(){
-			provStart();
-			provBox.on("change",cityStart);
-			cityBox.bind("change",distStart);
-		}//end func
-		
-		function provStart(){
-			var temp="<option value=''>"+settings.prov+"</option>";
+			var temp="";
 			$.each(cityData.citylist,function(i,prov){
 				temp+="<option value='"+prov.p+"'>"+prov.p+"</option>";
 			});
-			provBox.html(temp);
-			cityBox.html("<option value=''>"+settings.city+"</option>");
-			distBox.html("<option value=''>"+settings.dist+"</option>");
+			provTxt.html(settings.prov);
+			provSelete.html(temp);
+			cityTxt.html(settings.city);
+			citySelete.empty().attr("disabled",true);
+			distTxt.html(settings.dist);
+			distSelete.empty().attr("disabled",true);
+			provSelete.one("touchend",prov_handler);
 		}//end func
 
-		function cityStart(){
-			var provId=provBox.get(0).selectedIndex-1;
-			cityBox.empty().attr("disabled",true);
-			distBox.empty().attr("disabled",true);
-			if( !(provId<0 || typeof(cityData.citylist[provId].c)=="undefined") ){
-				var temp="<option value=''>"+settings.city+"</option>";
-				distBox.html("<option value=''>"+settings.dist+"</option>");
-				$.each(cityData.citylist[provId].c,function(i,city){
-					temp+="<option value='"+city.n+"'>"+city.n+"</option>";
-				});
-				cityBox.html(temp).attr("disabled",false);
-				
-			}//end if
-			else provStart();
+		function prov_handler(){
+			var selected=provSelete.children('option:selected');
+			provTxt.html(selected.val());
+			citySelete.empty().attr("disabled",true);
+			distSelete.empty().attr("disabled",true);
+			provId=selected.index();
+			console.log('provId:'+provId);
+			var temp="";
+			$.each(cityData.citylist[provId].c,function(i,city){
+				temp+="<option value='"+city.n+"'>"+city.n+"</option>";
+			});
+			cityTxt.html(settings.city);
+			citySelete.html(temp).attr("disabled",false);
+			cityId=-1;
+			distTxt.html(settings.dist);
+			distSelete.empty().attr("disabled",true);
+			distId=-1;
+			provSelete.one("change",prov_handler);
+			citySelete.one("touchend",city_handler);
+			distSelete.off();
 		}//end func
 
-		function distStart(){
-			var provId=provBox.get(0).selectedIndex-1;
-			var cityId=cityBox.get(0).selectedIndex-1;
-			distBox.empty().attr("disabled",true);
-			if( !(provId<0 || cityId<0 || typeof(cityData.citylist[provId].c[cityId].a)=="undefined") ){
-				var temp="<option value=''>"+settings.dist+"</option>";
-				$.each(cityData.citylist[provId].c[cityId].a,function(i,dist){
-					temp+="<option value='"+dist.s+"'>"+dist.s+"</option>";
-				});
-				distBox.html(temp).attr("disabled",false);
-			}//end if
+		function city_handler(){
+			var selected=citySelete.children('option:selected');
+			cityTxt.html(selected.val());
+			cityId=selected.index();
+			distSelete.empty().attr("disabled",true);
+			var temp="";
+			$.each(cityData.citylist[provId].c[cityId].a,function(i,dist){
+				temp+="<option value='"+dist.s+"'>"+dist.s+"</option>";
+			});
+			distTxt.html(settings.dist);
+			distSelete.html(temp).attr("disabled",false);
+			distId=-1;
+			citySelete.one("change",city_handler);
+			distSelete.one("touchend",dist_handler);
+		}//end func
+		
+		function dist_handler(){
+			var selected=distSelete.children('option:selected');
+			distId=selected.index();
+			distTxt.html(selected.val());
+			distSelete.one("change",dist_handler);
 		}//end func
 	};
 })(jQuery);
