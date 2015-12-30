@@ -1,5 +1,5 @@
 /*
-2015.12.29
+2015.12.30
 settings 参数说明
 	prov:选择省份提示文字
 	city:选择城市提示文字
@@ -16,15 +16,15 @@ settings 参数说明
 				dist:'区县'
 			},settings);
 			var $this=$(this);
-			var provShell=$this.children("span.prov");
-			var cityShell=$this.children("span.city");
-			var distShell=$this.children("span.dist");
+			var provShell=$this.find(".prov");
+			var cityShell=$this.find(".city");
+			var distShell=$this.find(".dist");
 			var provSelete=provShell.children("select");
 			var citySelete=cityShell.children("select");
 			var distSelete=distShell.children("select");
-			var provTxt=provShell.children("i");
-			var cityTxt=cityShell.children("i");
-			var distTxt=distShell.children("i");
+			var provTxt=provSelete.siblings();
+			var cityTxt=citySelete.siblings();
+			var distTxt=distSelete.siblings();
 			var provId=-1,cityId=-1,distId=-1;
 			init();
 		}//end if
