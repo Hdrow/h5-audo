@@ -1,4 +1,4 @@
-//2015.12.29
+//2016.1.6
 var icom=importCom();
 
 //------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ function importCom(){
 	com.fadeIn=function(obj,dur,callback){
 		if(obj){
 			dur=dur||500;
-			obj.show().css({opacity:0}).transition({opacity:1},dur,function(){
+			obj.css({opacity:0}).show().transition({opacity:1},dur,function(){
 				if(callback) callback($(this));
 			});
 		}//end if
@@ -79,7 +79,7 @@ function importCom(){
 		if(obj){
 			dur=dur||500;
 			obj.transition({opacity:0},dur,function(){
-				$(this).hide();
+				$(this).css({opacity:1}).hide();
 				if(callback) callback($(this));
 			});
 		}//end if
