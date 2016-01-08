@@ -268,7 +268,7 @@ function importCom(){
 		if(os.android){
 			var defaults = {percent:1};
 			var opts = $.extend(defaults,options);
-			var windowHt=com.oneScreen?$(window).height():$(document).height();
+			var windowHt=$(window).height();
 			$(window).on('resize',function(e){
 				if( window.orientation == 0 || window.orientation == 180 ){
 					if($(window).height()<windowHt){
