@@ -1,7 +1,6 @@
 //2016.1.8
 var icom=importCom();
 
-//------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
 function importCom(){
 	var com={};
 	
@@ -14,6 +13,7 @@ function importCom(){
 	com.screenTo169=function(iphone4,android){
 		iphone4=iphone4!=null?iphone4:true;
 		android=android!=null?android:true;
+		com.oneScreen=true;
 		var article=$('article');
 		if(article.length>0){
 			if(os.iphone4){
@@ -264,14 +264,24 @@ function importCom(){
 	}//end func
 	
 	//安卓键盘压缩页面高度处理
-	com.androidKeyboard=function(callback){
-		var windowHt=$(window).height();
-		if(os.android) $(window).on('resize',function(e){
-			if( window.orientation == 0 || window.orientation == 180 ){
-				if($(window).height()<windowHt) callback(true);
-				else callback(false);
-			}//end fi
-		});
+	com.keyboard=function(options){
+		if(os.android){
+			var defaults = {percent:1};
+			var opts = $.extend(defaults,options);
+			var windowHt=com.oneScreen?$(window).height():$(document).height();
+			$(window).on('resize',function(e){
+				if( window.orientation == 0 || window.orientation == 180 ){
+					if($(window).height()<windowHt){
+						if(opts.box && opts.box.length>0) opts.box.css({y:-(windowHt-$(window).height())*opts.percent });
+						if(opts.callback) opts.callback(true);
+					}//end if
+					else{
+						if(opts.box && opts.box.length>0) opts.box.css({y:0});
+						if(opts.callback) opts.callback(false);
+					}//end lese
+				}//end fi
+			});
+		}//end if
 	}//end func
 	
 	return com;
