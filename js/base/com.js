@@ -1,4 +1,4 @@
-//2016.1.6
+//2016.1.8
 var icom=importCom();
 
 //------------------------------------------------------------------------------公共方法------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ function importCom(){
 	com.fadeIn=function(obj,dur,callback){
 		if(obj){
 			dur=dur||500;
-			obj.css({opacity:0}).show().transition({opacity:1},dur,function(){
+			obj.show().css({opacity:0}).transition({opacity:1},dur,function(){
 				if(callback) callback($(this));
 			});
 		}//end if
@@ -79,7 +79,7 @@ function importCom(){
 		if(obj){
 			dur=dur||500;
 			obj.transition({opacity:0},dur,function(){
-				$(this).css({opacity:1}).hide();
+				$(this).hide();
 				if(callback) callback($(this));
 			});
 		}//end if
@@ -87,7 +87,7 @@ function importCom(){
 	
 	com.popOn=function(obj,options){
 		if(obj && obj.length>0){
-			var defaults = {closeEvent:'click',closeType:'button',closeBtn:obj.find('a.close'),remove:false};
+			var defaults = {closeEvent:'touchend',closeType:'button',closeBtn:obj.find('a.close'),remove:false};
 			var opts = $.extend(defaults,options);
 			if(opts.text) obj.find('.text').html(opts.text);
 			if(opts.fade) com.fadeIn(obj,opts.fade);
@@ -117,7 +117,7 @@ function importCom(){
 	com.alert=function(text,callback){
 		if(text && text!=''){
 			var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a class="close">确认</a></p></div></aside>').appendTo($('body'));
-			com.popOn(box,{text:text,onClose:callback,remove:true});
+			com.popOn(box,{text:text,onClose:callback,remove:true,closeEvent:'click'});
 		}//end if
 	}//end func
 	
@@ -159,7 +159,7 @@ function importCom(){
 		}//end if
 	}//end func	
 	
-	//测试版提示信息
+	//新增测试版提示信息
 	com.addSignBar=function(text){
 		if(text && text!=''){
 			var sign=$('#signBar');
@@ -260,6 +260,17 @@ function importCom(){
 			setTimeout(function(){
 				iframe.remove();
 			},0);
+		});
+	}//end func
+	
+	//安卓键盘压缩页面高度处理
+	com.androidKeyboard=function(callback){
+		var windowHt=$(window).height();
+		if(os.android) $(window).on('resize',function(e){
+			if( window.orientation == 0 || window.orientation == 180 ){
+				if($(window).height()<windowHt) callback(true);
+				else callback(false);
+			}//end fi
 		});
 	}//end func
 	
