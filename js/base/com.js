@@ -1,4 +1,4 @@
-//2016.1.8
+//2016.1.11
 var icom=importCom();
 
 function importCom(){
@@ -250,7 +250,7 @@ function importCom(){
 		if(data && $.isPlainObject(data)) data=JSON.stringify(data);
 		$.post("./http/httpPost.php",{api_url:url,post_data:data,action:action},function(resp){
 			if(callback) callback(resp);
-		}, "json");
+		});
 	}//edn func
 	
 	//修改微信浏览器的标题文字
