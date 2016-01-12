@@ -9,7 +9,7 @@ $(document).ready(function(){
 	
 	//sound
 	var soundList={},soundMax=0,soundLoaded=0;
-	var bgmTime,bgmPlay,bgmBtn;
+	var bgmTime,bgmPlay,bgmBtn=$('a.bgmBtn');
 	
 	//----------------------------------------页面初始化----------------------------------------
 	iOrient.init();//屏幕翻转锁定，默认锁定竖屏，横屏提示
@@ -75,7 +75,6 @@ $(document).ready(function(){
 			console.log('bgmTime:'+bgmTime);
 			bgmTime=bgmTime||0;
 			bgmTime=Number(bgmTime);
-			bgmBtn=$('a.bgmBtn');
 			if(bgmBtn.length>0) bgmBtn.show();
 			if(bgmPlay==1) bgm_play();
 			else bgm_stop();
