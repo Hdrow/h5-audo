@@ -1,14 +1,14 @@
-//2015.11.9
+//2016.1.18
 
 var ishare=importShare();
 
 (function() {
 	
 	//-------------------------------------------------------定义当前站点的分享设置
-	ishare.url='http://t.cloud.be-xx.com/framework/iphone/';
+	ishare.url=location.href.substr(0, location.href.lastIndexOf('/')+1);
 	ishare.content={
 		link:ishare.url,
-		image:ishare.url+(ishare.url.substr(ishare.url.length-1)=='/'?'images/share.jpg':'/images/share.jpg')+'?v='+Math.random(),
+		image:ishare.url+'images/share.jpg'+'?v='+Math.random(),
 		title:'分享给朋友的标题文字',
 		friend:'分享给朋友的内容文字',
 		timeline:'分享到朋友圈的内容文字',
@@ -31,7 +31,7 @@ function importShare(){
 	
 	//-------------------------------------------------------微信SDK验证
 	share.wxSign=function(){
-		$.getJSON("http://s.gumutianqi.com/jssdk/get_sign?callback=?&key="+share.wxKey+"&url="+ encodeURIComponent(window.location.href), function(data){
+		$.getJSON("http://s.gumutianqi.com/jssdk/get_sign?callback=?&key="+share.wxKey+"&url="+ encodeURIComponent(location.href), function(data){
 			if(data  && data.errcode == "0") {
 				wx.config({
 					debug: false,
