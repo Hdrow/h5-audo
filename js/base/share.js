@@ -8,7 +8,7 @@ var ishare=importShare();
 	ishare.url=location.href.substr(0, location.href.lastIndexOf('/')+1);
 	ishare.content={
 		link:ishare.url,
-		image:ishare.url+'images/share.jpg'+'?v='+Math.random(),
+		image:ishare.url+(ishare.url.substr(ishare.url.length-1)=='/'?'images/share.jpg':'/images/share.jpg')+'?v='+Math.random(),
 		title:'分享给朋友的标题文字',
 		friend:'分享给朋友的内容文字',
 		timeline:'分享到朋友圈的内容文字',
