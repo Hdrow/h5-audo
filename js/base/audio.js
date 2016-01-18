@@ -22,7 +22,6 @@ function importAudio(){
 		}//end if
 		
 		function sound_onloadeddata(event){
-			console.log(this)
 			var src=get_src(this.src);
 			console.log(src+' loaded');
 			if(opts.onLoaded) opts.onLoaded(this);

@@ -18,6 +18,7 @@ $(document).ready(function(){
 	loadBox.show();
 	//iuser.init(userGetted);
 	load_handler();
+//	sound_handler();
 	
 	//----------------------------------------微信用户登录验证----------------------------------------	
 	function userGetted(data){
@@ -37,7 +38,6 @@ $(document).ready(function(){
 
 		loader.addCompletionListener(function() {
 			console.log('页面图片加载完毕');
-			//sound_handler();
 			init_handler();
 			loader=null;
 		});
@@ -47,7 +47,10 @@ $(document).ready(function(){
 	//----------------------------------------加载声音及处理----------------------------------------
 	function sound_handler(){
 		if(os.weixin) wx.ready(sound_creat);
-		else sound_creat();
+		else{
+			if(os.chrome) sound_creat();//chrome测试环境
+			else if(bgmBtn.length>0) bgmBtn.addClass('bgmStop').one('touchend',sound_creat);//手机非微信环境
+		}//end else
 	}//end func
 	
 	function sound_creat(){	
@@ -61,24 +64,21 @@ $(document).ready(function(){
 		console.log('soundLoaded:'+soundLoaded);
 		if(soundLoaded==soundMax){
 			console.log('all sounds loaded');
-			bgm_init();
-			init_handler();
+			if(soundList.bgm) bgm_init();
 		}//end if
 	}//end func
 	
 	function bgm_init(){
-		if(soundList.bgm){
-			bgmPlay=sessionStorage.bgmPlay;
-			bgmPlay=bgmPlay||1;
-			bgmPlay=parseInt(bgmPlay);
-			bgmTime=sessionStorage.bgmTime;
-			console.log('bgmTime:'+bgmTime);
-			bgmTime=bgmTime||0;
-			bgmTime=Number(bgmTime);
-			if(bgmBtn.length>0) bgmBtn.show();
-			if(bgmPlay==1) bgm_play();
-			else bgm_stop();
-		}//end if
+		bgmPlay=sessionStorage.bgmPlay;
+		bgmPlay=bgmPlay||1;
+		bgmPlay=parseInt(bgmPlay);
+		bgmTime=sessionStorage.bgmTime;
+		console.log('bgmTime:'+bgmTime);
+		bgmTime=bgmTime||0;
+		bgmTime=Number(bgmTime);
+		if(bgmBtn.length>0) bgmBtn.show();
+		if(bgmPlay==1) bgm_play();
+		else bgm_stop();
 	}//end func
 	
 	function bgm_play(){

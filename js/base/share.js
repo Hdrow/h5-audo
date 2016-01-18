@@ -9,10 +9,10 @@ var ishare=importShare();
 	ishare.content={
 		link:ishare.url,
 		image:ishare.url+(ishare.url.substr(ishare.url.length-1)=='/'?'images/share.jpg':'/images/share.jpg')+'?v='+Math.random(),
-		title:'分享给朋友的标题文字',
+		title:$('title').html(),
 		friend:'分享给朋友的内容文字',
 		timeline:'分享到朋友圈的内容文字',
-		weibo:'分享到新浪微博的内容文字'
+		other:'分享到非微信环境的内容文字'
 	};
 	ishare.wxId='wxebba976e487ba7d7';//微信 appid
 	ishare.wxKey='dd8h3gbidsb9';//老古生成的key
@@ -131,7 +131,7 @@ function importShare(){
 	share.wbShare=function(option){
 		var url,txt,img,imgHtml='';
 		if(option.obj) var btn=option.obj;
-		else var btn=$('a.btnShare,#btnShare');
+		else var btn=$('a.btnShareWb');
 		if(option && btn.length>0){
 			url=option.url||window.location.href;
 			txt=option.text||"";
@@ -151,6 +151,29 @@ function importShare(){
 		}//end if
 	}//end func
 	
+	//-------------------------------------------------------qq空间站外分享函数
+	share.qqShare=function(option){
+		var url,txt,img,imgHtml='';
+		if(option.obj) var btn=option.obj;
+		else var btn=$('a.btnShareQq');
+		if(option && btn.length>0){
+			url=option.url||window.location.href;
+			txt=option.text||"";
+			img=option.image;
+			txt=encodeURIComponent(txt);
+			url=encodeURIComponent(url);
+			if(img && img.length>0){
+				imgHtml="&pics=";
+				if($.type(img) === "string") imgHtml+=img;
+				else for(var i=0; i<img.length; i++){
+					imgHtml+=img[i];
+					if(i<img.length-1) imgHtml+='||'
+				}//end for
+			}//end for
+			btn.attr({target:'_blank',href:'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + ishare.content.link + '&title=' + txt + imgHtml + '&summary='});
+		}//end if
+	}//end func
+	
 	share.btnShare=function(btn,box){
 		if(btn) var shareBtn=btn;
 		else var shareBtn=$('a.btnShare,#btnShare');
@@ -161,7 +184,13 @@ function importShare(){
 				if(shareBox.length==0) shareBox=$('<aside class="shareBox"><img src="images/common/share.png"></aside>').appendTo($('body'));
 				shareBtn.on('touchend',shareBtn_click);
 			}//end if
-			else if(!os.weibo && shareBtn.length>0) ishare.wbShare({ obj: shareBtn, url: ishare.content.link, text: ishare.content.weibo, image: ishare.content.image });
+			else{
+				if(!os.weibo) ishare.wbShare({ obj: shareBtn, url: ishare.content.link, text: ishare.content.other, image: ishare.content.image });
+				var btnWb=$('a.btnShareWb');
+				if(btnWb.length>0) ishare.wbShare({ obj: btnWb, url: ishare.content.link, text: ishare.content.other, image: ishare.content.image });
+				var btnQq=$('a.btnShareQq');
+				if(btnQq.length>0) ishare.qqShare({ obj: btnQq, url: ishare.content.link, text: ishare.content.other, image: ishare.content.image });
+			}//end if
 		}//end if
 		function shareBtn_click(e){
 			shareBox.show().one('touchend',function(e){
