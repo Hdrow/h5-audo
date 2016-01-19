@@ -48,7 +48,7 @@ $(document).ready(function(){
 	function sound_handler(){
 		if(os.weixin) wx.ready(sound_creat);
 		else{
-			if(os.chrome) sound_creat();//chrome测试环境
+			if(os.test) sound_creat();//chrome测试环境
 			else if(bgmBtn.length>0) bgmBtn.addClass('bgmStop').one('touchend',sound_creat);//手机非微信环境
 		}//end else
 	}//end func
