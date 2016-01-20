@@ -1,4 +1,4 @@
-//2015.9.9
+//2016.1.20
 var imath=importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath(){
@@ -10,19 +10,10 @@ function importMath(){
 		randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 		return randomNumber;
 	}//end func 
-	
+
 	//随机打乱一个数组
 	math.randomSort=function(ary) {
-		if(ary && ary.length>1){
-			var len=ary.length;
-			var rnd = [];
-			for (var i=0; i<=len-1; i++) {
-				var ran = Math.floor(Math.random()*ary.length);//从数组shu中随机选一个元素（第k个）
-				rnd.push(ary[ran]);//把数组shu中选出的元素的值赋给数组myArry第i个元素；
-				ary.splice(ran,1);//把数组shu中第k个元素删掉（保证下一次选的一定不会重复)
-			}//end for
-			for (i=0; i<=len-1; i++) ary[i]=rnd[i];
-		}//end if
+		if(ary && ary.length>1) ary.sort(function () { return 0.5 - Math.random() });
 	}//end func 
 	
 	//随机正负
