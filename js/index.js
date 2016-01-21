@@ -15,7 +15,7 @@ $(document).ready(function(){
 	iOrient.init();//屏幕翻转锁定，默认锁定竖屏，横屏提示
 	icom.screenTo169(true,true);//把article标签拉伸至iphone5的高宽比例
 	//icom.screenToPx(320,504,true);//把以px为单位的article标签拉伸到适应屏幕的高宽比例，iphone4默认等比压缩左右留白
-	loadBox.show();
+//	loadBox.show();
 	//iuser.init(userGetted);
 	load_handler();
 //	sound_handler();
@@ -54,6 +54,7 @@ $(document).ready(function(){
 	}//end func
 	
 	function sound_creat(){	
+		if(!os.weixin && bgmBtn.length>0) bgmBtn.off('touchend',sound_creat);
 		soundList.bgm=iaudio.on('sound/bgm.mp3',{loop:true,onLoaded:sound_loaded});
 		soundMax=Object.keys(soundList).length;
 		console.log('sound length:'+soundMax);

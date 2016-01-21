@@ -1,4 +1,4 @@
-//2016.1.18
+//2016.1.21
 
 var ishare=importShare();
 
@@ -18,7 +18,7 @@ var ishare=importShare();
 	ishare.wxKey='dd8h3gbidsb9';//老古生成的key
 	
 	if(os.weixin){
-		document.write('<script type="text/javascript" src="http://a.cdn.be-xxx.com/public/wechat/jweixin-1.0.0.js"></script>');
+		document.write('<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>');
 		ishare.wxSign();
 	}//end if
 	
@@ -170,7 +170,7 @@ function importShare(){
 					if(i<img.length-1) imgHtml+='||'
 				}//end for
 			}//end for
-			btn.attr({target:'_blank',href:'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + ishare.content.link + '&title=' + txt + imgHtml + '&summary='});
+			btn.attr({target:'_blank',href:'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + share.content.link + '&title=' + txt + imgHtml + '&summary='});
 		}//end if
 	}//end func
 	
@@ -185,11 +185,11 @@ function importShare(){
 				shareBtn.on('touchend',shareBtn_click);
 			}//end if
 			else{
-				if(!os.weibo) ishare.wbShare({ obj: shareBtn, url: ishare.content.link, text: ishare.content.other, image: ishare.content.image });
+				if(!os.weibo) share.wbShare({ obj: shareBtn, url: share.content.link, text: share.content.other, image: share.content.image });
 				var btnWb=$('a.btnShareWb');
-				if(btnWb.length>0) ishare.wbShare({ obj: btnWb, url: ishare.content.link, text: ishare.content.other, image: ishare.content.image });
+				if(btnWb.length>0) share.wbShare({ obj: btnWb, url: share.content.link, text: share.content.other, image: share.content.image });
 				var btnQq=$('a.btnShareQq');
-				if(btnQq.length>0) ishare.qqShare({ obj: btnQq, url: ishare.content.link, text: ishare.content.other, image: ishare.content.image });
+				if(btnQq.length>0) share.qqShare({ obj: btnQq, url: share.content.link, text: share.content.other, image: share.content.image });
 			}//end if
 		}//end if
 		function shareBtn_click(e){
