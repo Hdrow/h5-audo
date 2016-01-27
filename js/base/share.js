@@ -1,9 +1,8 @@
-//2016.1.21
-
+//2016.1.27
 var ishare=importShare();
 
 (function() {
-	
+	ishare.wxId='wxebba976e487ba7d7';//微信 appid
 	//-------------------------------------------------------定义当前站点的分享设置
 	ishare.url=location.href.substr(0, location.href.lastIndexOf('/')+1);
 	ishare.content={
@@ -14,9 +13,6 @@ var ishare=importShare();
 		timeline:'分享到朋友圈的内容文字',
 		other:'分享到非微信环境的内容文字'
 	};
-	ishare.wxId='wxebba976e487ba7d7';//微信 appid
-	ishare.wxKey='dd8h3gbidsb9';//老古生成的key
-	
 	if(os.weixin){
 		document.write('<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>');
 		ishare.wxSign();
@@ -31,57 +27,55 @@ function importShare(){
 	
 	//-------------------------------------------------------微信SDK验证
 	share.wxSign=function(){
-		$.getJSON("http://s.gumutianqi.com/jssdk/get_sign?callback=?&key="+share.wxKey+"&url="+ encodeURIComponent(location.href), function(data){
-			if(data  && data.errcode == "0") {
-				wx.config({
-					debug: false,
-					appId: share.wxId,
-					timestamp: data.result.timestamp,
-					nonceStr: data.result.noncestr,
-					signature: data.result.signature,
-					jsApiList: [
-						'checkJsApi',
-						'onMenuShareTimeline',
-						'onMenuShareAppMessage',
-						'onMenuShareQQ',
-						'onMenuShareWeibo',
-						'hideMenuItems',
-						'showMenuItems',
-						'hideAllNonBaseMenuItem',
-						'showAllNonBaseMenuItem',
-						'translateVoice',
-						'startRecord',
-						'stopRecord',
-						'onRecordEnd',
-						'playVoice',
-						'pauseVoice',
-						'stopVoice',
-						'uploadVoice',
-						'downloadVoice',
-						'chooseImage',
-						'previewImage',
-						'uploadImage',
-						'downloadImage',
-						'getNetworkType',
-						'openLocation',
-						'getLocation',
-						'hideOptionMenu',
-						'showOptionMenu',
-						'closeWindow',
-						'scanQRCode',
-						'chooseWXPay',
-						'openProductSpecificView',
-						'addCard',
-						'chooseCard',
-						'openCard'
-					]
-				});//end wx.config
-				share.wxSigned=true;//通过微信新SDK验证
-				wx.ready(function(){
-					wx.showOptionMenu();//用微信“扫一扫”打开，optionMenu是off状态，默认开启
-					share.wxShare();
-				});//end wx.ready
-			}//end if(data)
+		$.getJSON("http://grazesheep.be-xx.com/api/jssdk/sign?callback=?&appid="+share.wxId+"&url="+ encodeURIComponent(location.href), function(data){
+			wx.config({
+				debug: false,
+				appId: data.appid,
+				timestamp: data.timestamp,
+				nonceStr: data.noncestr,
+				signature: data.signature,
+				jsApiList: [
+					'checkJsApi',
+					'onMenuShareTimeline',
+					'onMenuShareAppMessage',
+					'onMenuShareQQ',
+					'onMenuShareWeibo',
+					'hideMenuItems',
+					'showMenuItems',
+					'hideAllNonBaseMenuItem',
+					'showAllNonBaseMenuItem',
+					'translateVoice',
+					'startRecord',
+					'stopRecord',
+					'onRecordEnd',
+					'playVoice',
+					'pauseVoice',
+					'stopVoice',
+					'uploadVoice',
+					'downloadVoice',
+					'chooseImage',
+					'previewImage',
+					'uploadImage',
+					'downloadImage',
+					'getNetworkType',
+					'openLocation',
+					'getLocation',
+					'hideOptionMenu',
+					'showOptionMenu',
+					'closeWindow',
+					'scanQRCode',
+					'chooseWXPay',
+					'openProductSpecificView',
+					'addCard',
+					'chooseCard',
+					'openCard'
+				]
+			});//end wx.config
+			share.wxSigned=true;//通过微信新SDK验证
+			wx.ready(function(){
+				wx.showOptionMenu();//用微信“扫一扫”打开，optionMenu是off状态，默认开启
+				share.wxShare();
+			});//end wx.ready
 		});//end ajax
 	}//end func
 	

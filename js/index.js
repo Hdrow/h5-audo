@@ -7,14 +7,10 @@ $(document).ready(function(){
 	var windowWd=$(window).width(),windowHt=$(window).height();
 	console.log('window size:'+windowWd+'/'+windowHt);
 	
-	//sound
-	var soundList={},soundMax=0,soundLoaded=0;
-	var bgmTime,bgmPlay,bgmBtn=$('a.bgmBtn');
-	
 	//----------------------------------------页面初始化----------------------------------------
 	iOrient.init();//屏幕翻转锁定，默认锁定竖屏，横屏提示
 	icom.screenTo169(true,true);//把article标签拉伸至iphone5的高宽比例
-	//icom.screenToPx(320,504,true);//把以px为单位的article标签拉伸到适应屏幕的高宽比例，iphone4默认等比压缩左右留白
+//	icom.screenToPx(320,504,true);//把以px为单位的article标签拉伸到适应屏幕的高宽比例，iphone4默认等比压缩左右留白
 //	loadBox.show();
 	//iuser.init(userGetted);
 	load_handler();
@@ -32,12 +28,11 @@ $(document).ready(function(){
 		var loader = new PxLoader();
 		loader.addImage('images/common/turn.gif');
 		
-		loader.addProgressListener(function(e) {
-			//var per=Math.round(e.completedCount/e.totalCount*100);
-		}); 	
+//		loader.addProgressListener(function(e) {
+//			var per=Math.round(e.completedCount/e.totalCount*100);
+//		}); 	
 
 		loader.addCompletionListener(function() {
-			console.log('页面图片加载完毕');
 			init_handler();
 			loader=null;
 		});
@@ -45,6 +40,9 @@ $(document).ready(function(){
 	}//end func	
 	
 	//----------------------------------------加载声音及处理----------------------------------------
+	var soundList={},soundMax=0,soundLoaded=0;
+	var bgmTime,bgmPlay,bgmBtn=$('a.bgmBtn');
+	
 	function sound_handler(){
 		if(os.weixin) wx.ready(sound_creat);
 		else{
@@ -60,11 +58,11 @@ $(document).ready(function(){
 		console.log('sound length:'+soundMax);
 	}//end func
 	
-	function sound_loaded(){
+	function sound_loaded(sound){
 		soundLoaded++;
-		console.log('soundLoaded:'+soundLoaded);
+//		console.log('soundLoaded:'+soundLoaded);
 		if(soundLoaded==soundMax){
-			console.log('all sounds loaded');
+			console.log(soundLoaded+' sounds loaded');
 			if(soundList.bgm) bgm_init();
 		}//end if
 	}//end func
