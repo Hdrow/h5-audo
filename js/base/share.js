@@ -164,7 +164,7 @@ function importShare(){
 					if(i<img.length-1) imgHtml+='||'
 				}//end for
 			}//end for
-			btn.attr({target:'_blank',href:'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + share.content.link + '&title=' + txt + imgHtml + '&summary='});
+			btn.attr({target:'_blank',href:'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + url + '&title=' + txt + imgHtml + '&summary='});
 		}//end if
 	}//end func
 	
