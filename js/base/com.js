@@ -265,7 +265,8 @@ function importCom(){
 	
 	//安卓键盘压缩页面高度处理
 	com.keyboard=function(box,options){
-		if(box.length>0 && os.android){
+		if(os.android){
+			box=box||$('section');
 			var defaults = {percent:1};
 			var opts = $.extend(defaults,options);
 			var windowHt=$(window).height();
