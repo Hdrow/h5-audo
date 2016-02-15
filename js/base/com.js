@@ -1,4 +1,4 @@
-//2016.2.14
+//2016.2.15
 var icom=importCom();
 
 function importCom(){
@@ -79,7 +79,7 @@ function importCom(){
 		if(obj){
 			dur=dur||500;
 			obj.transition({opacity:0},dur,function(){
-				$(this).hide();
+				$(this).hide().css({opacity:1});
 				if(callback) callback($(this));
 			});
 		}//end if
