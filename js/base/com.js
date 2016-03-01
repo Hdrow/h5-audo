@@ -1,13 +1,13 @@
-//2016.2.15
+//2016.3.1
 var icom=importCom();
 
 function importCom(){
 	var com={};
 	
 	/*
-	 * screenTo169(iphone4,android)：把article作为页面的根容器，如果屏幕高宽比不是16：9，则强制拉伸到16:9
+	 * screenTo169(iphone4,android)：把article作为页面的根容器，如果屏幕高宽比不是16：9，则拉伸到16:9
 		 * iphone4：让iphone4下的article标签高度拉伸到与iphone5一致，默认值true
-		 * android：让使用虚拟系统按键安卓机的article标签非等比压缩至一屏高度，图像比例会略有失真，默认值true
+		 * android：把article作为页面的根容器，使用虚拟系统按键安卓机的拉升至16:9，默认值true
 	 	 * 如果页面是长页面，则注释掉这个方法
 	*/ 
 	com.screenTo169=function(iphone4,android){
@@ -18,18 +18,14 @@ function importCom(){
 		if(article.length>0){
 			if(os.iphone4){
 				if(iphone4){
-					com.screenScrollEnable();
 					if(os.weixin) article.css({height:'121.2%'});
 					else article.css({height:'123.6%'});
 				}//end if
-				else{
-					com.screenScrollUnable();
-					article.css({height:'100%'});
-				}//end else
+				else com.screenScrollUnable();
 			}//end if
 			else{
-				com.screenScrollUnable();
-				if(os.android && !os.screen169 && android) article.css({height:'109%','-webkit-transform-origin':'0 0 0',scaleY:0.9174});
+				if(os.android && !os.screen169 && android) article.css({height:'109%'});
+				else com.screenScrollUnable();
 			}//end if
 		}//end if
 	}//end func
