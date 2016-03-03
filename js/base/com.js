@@ -1,4 +1,4 @@
-//2016.3.1
+//2016.3.3
 var icom=importCom();
 
 function importCom(){
@@ -277,6 +277,22 @@ function importCom(){
 					}//end lese
 				}//end fi
 			});
+		}//end if
+	}//end func
+	
+	//物体抖动
+	com.shake=function(box,options){
+		if(box && box.length>0){
+			var defaults = {rx:0,ry:0,delay:33,now:0,max:10};
+			var opts = $.extend(defaults,options);
+			var x=imath.randomRange(-opts.rx,opts.rx);
+			var y=imath.randomRange(-opts.ry,opts.ry);
+			box.css({x:x,y:y});
+			opts.now++;
+			if(opts.now>opts.max){
+				if(opts.onComplete) opts.onComplete();
+			}//end if
+			else setTimeout(com.shake,opts.delay,box,opts);
 		}//end if
 	}//end func
 	
