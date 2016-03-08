@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="author" content="LOOP-BEATS">
+	<meta name="keywords" content="HTML5,WEIXIN,WECHAT,LOOP-BEATS">
+	<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="format-detection" content="email=no" />
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<script>var iload=importLoad();function importLoad(){function b(a){var b=a.split(".");return{type:b[b.length-1],src:a+"?v="+Math.random()}}return{css:function(a){a=b(a);"css"==a.type&&document.write('<link rel="stylesheet" type="text/css" href="'+a.src+'" />')},js:function(a){a=b(a);"js"==a.type&&document.write('<script src="'+a.src+'">\x3c/script>')}}};</script>
+	<link rel="stylesheet" type="text/css" href="css/common.css" />
+	<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+	<script>iload.css('css/index.css')</script>
+</head>
+<body ontouchstart>
+	<!--------------------------------------------------------------html区域-------------------------------------------------------------------------------------------->
+	<article class="detail">
+		<header class="header2 clearFix">
+			<div class="logo1"></div>
+			<div class="logo2"></div>
+		</header>
+		<div class="txtcont">
+			<div class="txt">>>了解活动详情 <<</div>
+			<a class="btn " href="#">奥迪助梦</a>
+		</div>
+
+		<aside class="tips rulebox hide">
+			<div class="content">
+				<a class="close"></a>
+				<div class="scroll">
+					<div class="cont">
+						<h2><strong>奥迪A6L 助你圆·梦 无憾未来</strong>未来属于创造它的人</h2>
+						<h4>活动时间：</h4>
+						<p>2016年3月15日至4月8日（截止投票时间）</p>
+						<h4>活动规则：</h4>
+						<p>1、填写你的梦想；<br>
+							2、输入准确的个人信息；<br>
+							3、选择是否参与线下互动大赛，选择参与者必须准确完善个人信息，否则视为无效参与；<br>
+							4、成功提交后，分享你的梦想至朋友圈，让朋友一起助力你的梦想！获得投票最多者将获得梦想助力大奖！<br>
+							5、奖项公布时间：4月9日（敬请关注本活动页面）。
+						</p>
+						<h4>奖项设置：<br>
+							• 线上梦想征集：
+						</h4>
+						<p>梦想助力大奖 1名 奥迪助力梦想基金</p>
+						<h4>• 线下互动大赛：</h4>
+						<p>一等奖：1名，国内旅游大奖（国内热门旅游线路精品双人游）<br>
+							二等奖：1名，Land of Quattro 之旅名额（奥迪专属线路精品远程自驾游名额）<br>
+							三等奖：1名，智能家电（智能家电套装）<br>
+							<i>*具体奖项设置请咨询报名当地经销商</i>
+						</p>
+					</div>
+					<div class="panel"><i></i></div>
+				</div>
+
+			</div>
+		</aside>
+
+	</article>
+	<!--------------------------------------------------------------javascript区域-------------------------------------------------------------------------------------->
+	<script type="text/javascript" src="js/base/framwork.js"></script>
+	<script type="text/javascript" src="js/base/audio.js"></script>
+	<script type="text/javascript" src="js/base/monitor.js"></script>
+	<script type="text/javascript" src="js/base/share.js"></script>
+	<script type="text/javascript" src="http://bamboo.api.be-xx.com/js/loop_api.js"></script>
+	<script type="text/javascript" src="js/base/user.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$('.txt').on("touchend",function(){
+			icom.popOn($('.rulebox'),{fade:300})
+		})
+		monitor_handler()
+	})
+	function monitor_handler(){
+		imonitor.add({obj:$('.txt'),action:'touchend',category:'活动详情页面',label:'活动详情'});
+		imonitor.add({obj:$('.btn'),action:'touchend',category:'活动详情页面',label:'奥迪助梦'});
+	}//end func
+	</script>
+	</html>

@@ -98,6 +98,20 @@ $(document).ready(function(){
 	function init_handler(){
 		console.log('init handler');
 		icom.fadeOut(loadBox,500);
+
+		var swiper = new Swiper('.user_list', {
+				loop:true,
+				nextButton: '.user_list .swiper-button-next',
+        prevButton: '.user_list .swiper-button-prev',
+        slidesPerView: 'auto',
+        paginationClickable: true,
+        direction: 'vertical'
+    });
+
+
+
+
+
 		monitor_handler();
 	}//end func
 	
