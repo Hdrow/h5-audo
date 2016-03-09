@@ -1,79 +1,9 @@
 /* ---------------------------------------- css content 内容部分（针对16:9标准屏）----------------------------------------*/
 body{ background-color:#fff; color:#000;}
 a,a:visited{ color:#000;}
-article.index{background: url(../images/index/bg.jpg) repeat;background-size: .25rem .25rem}
-
-.header1{padding: .2rem .26rem .36rem;}
-.header1 .logo1{background-image: url(../images/index/logo1.png);width: .97rem;height: .39rem;float: left;}
-.header1 .logo2{background-image: url(../images/index/logo2.png);width: 2.08rem;height: .39rem;float: right;}
-.index .txt1{color: #fff;text-align: center;font-size: .36rem;line-height: .4rem;}
-.index .txt1 span{font-size: .3rem;line-height: .4rem;}
-.table{display: table;width: 100%;table-layout: fixed;}
-.cell{display: table-cell;}
-
-.index .user_list{color: #fff;background-image: url(../images/index/listbg.png);width: 5.77rem;height: 5.82rem;margin:.1rem auto 0;}
-.index .user_list .swiper-slide{padding: .24rem .2rem;-webkit-box-sizing:border-box;height: auto;border-bottom: rgba(191,191,191,.05) 1px solid;}
-.index .user_list .pic{width: .92rem;}
-.index .user_list .pic img{width: 100%;}
-.index .user_list .name{padding-bottom: .15rem;}
-.index .user_list .name .fl{font-size: .24rem;color: #a0a0a0;}
-.index .user_list .name .fr{font-size: .14rem;color: #cc0033;}
-.index .user_list .txtcont{padding-left: .15rem;}
-.index .user_list .desp{font-size: .14rem;color: #909092;line-height: .24rem;}
-
-.index .bar{position: relative;padding: 0 .34rem;margin-top: .3rem;text-align: center;}
-.index .bar .car{position: absolute;left: 50%;width: 2.71rem;margin-left: -1.35rem;}
-.index .bar .btn{background: #cd0033;color: #fff;font-size: .36rem;line-height: .5rem;padding: 0 .18rem;margin-top: .5rem;}
-.index .user_list .arr{width: .12rem;height: .12rem;border-top: #fff 1px solid;border-right: #fff 1px solid;;position: absolute;right:.1rem;}
-.index .user_list .swiper-button-prev{top: .1rem;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);left: auto;margin-top: 0}
-.index .user_list .swiper-button-next{bottom: .1rem;-webkit-transform:rotate(135deg);transform:rotate(135deg);top:auto;}
-
-.index .list1{height: 6.62rem;}
-
-.header2{padding: .2rem .26rem .36rem;}
-.header2 .logo1{background-image: url(../images/index/logo3.png);width: 1.06rem;height: .32rem;float: left;}
-.header2 .logo2{background-image: url(../images/index/logo4.png);width: 2.08rem;height: .32rem;float: right;}
-.detail{background-image: url(../images/index/bgp1.jpg);}
-.detail .txtcont{padding-left: 1.72rem;padding-top: 3.47rem;}
-.detail .txt{font-size: .18rem;line-height: .78rem;color: #fff;}
-.detail .btn{background: #cd0033;color: #fff;font-size: .36rem;line-height: .5rem;padding: 0 .18rem;}
-
-.rulebox{display: none;}
-.tips .content{width: 5.1rem;height: 8.28rem;background: #000;position: absolute;left: 50%;top:50%;-webkit-transform:translate(-50%,-50%)}
-.tips .content h2{color: #fff;font-size: .3rem;line-height: .34rem;}
-.tips .content h2 strong{font-size: .3rem;display: block;}
-.tips .content h4{color: #cd0033;font-size: .19rem;line-height: .34rem;text-decoration: underline;}
-.tips .content p{color: #fff;font-size: .19rem;line-height: .34rem;}
-.tips .content p i{font-size: .19rem;font-style: italic;}
-.tips .content .close{right: .2rem;top:.2rem;background-image: url(../images/index/close.jpg);width: .36rem;height: .36rem;position: absolute;}
-.rulebox .scroll { overflow:hidden;position: absolute;left:.2rem; top: .6rem; width:4.7rem; height: 7.4rem;}
-/*.rulebox .scroll  .panel{position:absolute; top:0; right:0; width:.1rem; height:100%;background: rgba(255,255,255,.1);border-radius: .1rem}
-.rulebox .scroll  .panel i{ position:absolute; left:0; top:0; display:block; width:100%; background: rgba(255,255,255,.3);; border-radius: 0.1rem;}*/
-.rulebox .scroll  .cont{ overflow:hidden;width: 4.7rem}
-.info .txtcont2{background-image: url(../images/index/txtbg2.png);width: 5.37rem;height: 1.82rem;padding: .2rem;margin: .1rem auto 0;}
-.info .txtcont2 .tx{width: .92rem;float: left;margin-right: .15rem;}
-.info .txtarea{width: 4.1rem;padding:.05rem;height: 1.5rem;font-size: .24rem;color: #a0a0a0 }
-
-.form ul{padding-left: 1.56rem;padding-top: .2rem;}
-.form li{padding-top: .17rem;color: #fff;line-height: .38rem}
-.form li .lab{font-size: .2rem;line-height: .38rem;width: .98rem;float: left;}
-.form li .input1{background: #fff;width: 2.32rem;padding:0 .05rem;line-height: .38rem;height: .38rem;border-radius: .05rem;}
-.select {position: relative;width: 2.7rem;display: inline-block; margin-left:.3rem;background: #000;height: 0.45rem;padding-left: .1rem;}
-.select i{font-size: 0.21rem;width: 2.4rem;display: block;;white-space: nowrap;overflow: hidden;text-overflow:ellipsis;color: #fff;line-height: 0.45rem;height: 0.45rem;}
-.select  select{width: 100%;background: #000;font-size: 0.21rem;color: #fff;opacity: 0; line-height: 0.45rem;height: 0.45rem;position: absolute;left: 0;top:0; }
-.select:after{content: "";width: .12rem;height: .12rem;border-top: #fff 1px solid;border-right: #fff 1px solid;;position: absolute;right:.1rem;top: .1rem;-webkit-transform:rotate(135deg);transform:rotate(135deg);}
-.form li .car2{width: 2.81rem;height: 1.56rem;}
-.radio label i{background-image: url(../images/index/radios.png);width: .19rem;height: .19rem;display: inline-block;margin:0 .2rem ; }
-.form li label input{margin: 0 .2rem;}
-.form .btn{background: #cd0033;color: #fff;font-size: .36rem;line-height: .5rem;padding: 0 .18rem;}
-.form .carcont{padding-left: .15rem;}
-.form .btncont{padding-left: .8rem;}
-.form li.hei{height: 1rem;}
-.hide{display: none;}
+article.index{}
 
 
-
-.center{text-align: center;}
 /*---------------------------------------- css media 适配部分（针对iphone4） ----------------------------------------------*/
 @media screen and (device-width:320px) and (device-height:480px), screen and (device-width:540px) and (device-height:702px){
 

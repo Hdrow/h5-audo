@@ -1,39 +1,36 @@
-//2015.07.07
+//2016.1.27
 var _hmt = _hmt || [];
 var imonitor=importMonitor();
 
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?042a4e9e62901a6a3b36e6ef079324ce";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
+//pm给的监测代码贴在这里
+
 
 function importMonitor(){
 	var monitor={};
-	monitor.monitorHandler = monitorHandler;
+	
 	monitor.add=function(option){
 		if(option){
 			var obj=option.obj;
-			var category=option.category||'页面监测';
-			var action=option.action||'click';
+			var category=option.category||'';
+			var action=option.action||'touchend';
 			var label=option.label||'';
 			if(obj && obj.length>0){
 				obj.each(function(i) {
-					$(this).on(action,{category:category,action:action,label:obj.length==1?label:label+(i+1)},monitorEvent);}
+					$(this).on(action,{category:category,action:action,label:obj.length==1?label:label+(i+1)},event_bind);}
 				);
 			}//end if
-			else if(label && label!='') monitorHandler({category:category,action:'JS程序触发',label:label});
+			else event_bind(null,{category:category,action:'程序触发',label:label});
 		}//end if
 	}//end func
 	
-	function monitorEvent(e){
-		var data=e.data;
-		monitorHandler(data);
+	function event_bind(e,data){
+		if(e) event_handler(e.data);
+		else event_handler(data);
 	}//end func
 	
-	function monitorHandler(data){
-		_hmt.push(['_trackEvent', data.category, data.action, data.category+'——'+data.label]);
+	function event_handler(data){
+		_hmt.push(['_trackEvent', data.category, data.action, data.label]);
+//		ga('send', 'event', data.category, data.action, data.label);
 		console.log('项目类别：'+data.category+' | '+'交互行为：'+data.action+' | '+'项目说明：'+data.category+'——'+data.label);
 	}//end func
 	
