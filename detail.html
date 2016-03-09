@@ -25,7 +25,7 @@
 		</header>
 		<div class="txtcont">
 			<div class="txt">>>了解活动详情 <<</div>
-			<a class="btn " href="#">奥迪助梦</a>
+			<a class="btn " href="info.html">奥迪助梦</a>
 		</div>
 
 		<aside class="tips rulebox hide">
@@ -70,6 +70,7 @@
 	<script type="text/javascript" src="js/base/user.js"></script>
 	<script type="text/javascript">
 	$(function(){
+		icom.screenTo169(true,true);
 		$('.txt').on("touchend",function(){
 			icom.popOn($('.rulebox'),{fade:300})
 		})

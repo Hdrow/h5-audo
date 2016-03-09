@@ -39,60 +39,6 @@ $(document).ready(function(){
 		loader.start();	
 	}//end func	
 	
-	//----------------------------------------加载声音及处理----------------------------------------
-	var soundList={},soundMax=0,soundLoaded=0;
-	var bgmTime,bgmPlay,bgmBtn=$('a.bgmBtn');
-	
-	function sound_handler(){
-		if(os.weixin) wx.ready(sound_creat);
-		else{
-			if(os.test) sound_creat();//测试环境
-			else if(bgmBtn.length>0) bgmBtn.addClass('bgmStop').one('touchend',sound_creat);//手机非微信环境
-		}//end else
-	}//end func
-	
-	function sound_creat(){	
-		if(!os.weixin && bgmBtn.length>0) bgmBtn.off('touchend',sound_creat);
-		soundList.bgm=iaudio.on('sound/bgm.mp3',{loop:true,onLoaded:sound_loaded});
-		soundMax=Object.keys(soundList).length;
-		console.log('sound length:'+soundMax);
-	}//end func
-	
-	function sound_loaded(sound){
-		soundLoaded++;
-//		console.log('soundLoaded:'+soundLoaded);
-		if(soundLoaded==soundMax){
-			console.log(soundLoaded+' sounds loaded');
-			if(soundList.bgm) bgm_init();
-		}//end if
-	}//end func
-	
-	function bgm_init(){
-		bgmPlay=sessionStorage.bgmPlay;
-		bgmPlay=bgmPlay||1;
-		bgmPlay=parseInt(bgmPlay);
-		bgmTime=sessionStorage.bgmTime;
-		console.log('bgmTime:'+bgmTime);
-		bgmTime=bgmTime||0;
-		bgmTime=Number(bgmTime);
-		if(bgmBtn.length>0) bgmBtn.show();
-		if(bgmPlay==1) bgm_play();
-		else bgm_stop();
-	}//end func
-	
-	function bgm_play(){
-		soundList.bgm.currentTime=bgmTime;
-		soundList.bgm.play();
-		bgmPlay=1;
-		if(bgmBtn.length>0) bgmBtn.removeClass('bgmStop').addClass('bgmPlay').one('touchend',bgm_stop);
-	}//end func
-	
-	function bgm_stop(){
-		bgmTime=bgmPlay?soundList.bgm.currentTime:bgmTime;
-		soundList.bgm.pause();
-		bgmPlay=0;
-		if(bgmBtn.length>0) bgmBtn.removeClass('bgmPlay').addClass('bgmStop').one('touchend',bgm_play);
-	}//end func
 	
 	//----------------------------------------页面逻辑代码----------------------------------------
 	function init_handler(){
@@ -108,16 +54,13 @@ $(document).ready(function(){
         direction: 'vertical'
     });
 
-
-
-
-
 		monitor_handler();
 	}//end func
 	
 	//----------------------------------------页面监测代码----------------------------------------
 	function monitor_handler(){
-		//imonitor.add({obj:$('a.btnTest'),action:'touchend',category:'首页',label:'测试按钮'});
+		imonitor.add({obj:$('.bar a.fl'),action:'touchend',category:'首页',label:'梦想排名'});
+		imonitor.add({obj:$('.bar a.fr'),action:'touchend',category:'首页',label:'参与活动'});
 	}//end func
 	
 });//end ready
