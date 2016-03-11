@@ -1,4 +1,4 @@
-//2016.1.5
+//2016.3.11
 var iaudio=importAudio();
 
 function importAudio(){
@@ -48,7 +48,7 @@ function importAudio(){
 			opts.volume+=opts.speed;
 			opts.volume=opts.volume>1?1:opts.volume;	
 			sound.volume=opts.volume;
-			if(opts.volume<1) setTimeout(audio.fadeIn,opts.delay,sound,opts);
+			if(opts.volume<1) setTimeout(this.fadeIn,opts.delay,sound,opts);
 			else if(opts.onComplete) opts.onComplete();
 		}//end if
 	}//end func
@@ -60,7 +60,7 @@ function importAudio(){
 			opts.volume-=opts.speed;
 			opts.volume=opts.volume<0?0:opts.volume;	
 			sound.volume=opts.volume;
-			if(opts.volume>0) setTimeout(audio.fadeOut,opts.delay,sound,opts);
+			if(opts.volume>0) setTimeout(this.fadeOut,opts.delay,sound,opts);
 			else{
 				sound.pause();
 				if(opts.onComplete) opts.onComplete();

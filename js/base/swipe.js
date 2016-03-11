@@ -1,4 +1,4 @@
-//2015.11.16
+//2016.3.11
 (function() {
 	$.event.special.swipe = {
 		setup: function() {
@@ -30,12 +30,10 @@
 				_this.off("touchmove", _this_touchmove);
 				if (_start && _stop) {
 					if (_stop.time - _start.time < 1000) {
-						if (Math.abs(_start.coords[1] - _stop.coords[1]) > 20 && Math.abs(_start.coords[0] - _stop.coords[0]) < 75) {
+						if (Math.abs(_start.coords[1] - _stop.coords[1]) > 10 && Math.abs(_start.coords[0] - _stop.coords[0]) < 50) {
 							_this.trigger("swipe").trigger(_start.coords[1] > _stop.coords[1] ? "swipeup" : "swipedown")
-						} else {
-							if (Math.abs(_start.coords[0] - _stop.coords[0]) > 30 && Math.abs(_start.coords[1] - _stop.coords[1]) < 75) {
-								_this.trigger("swipe").trigger(_start.coords[0] > _stop.coords[0] ? "swipeleft" : "swiperight")
-							}
+						} else if (Math.abs(_start.coords[0] - _stop.coords[0]) > 10 && Math.abs(_start.coords[1] - _stop.coords[1]) < 50) {
+							_this.trigger("swipe").trigger(_start.coords[0] > _stop.coords[0] ? "swipeleft" : "swiperight")
 						}
 					}
 				}

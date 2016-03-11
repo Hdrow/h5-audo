@@ -1,4 +1,4 @@
-//2016.1.27
+//2016.3.13
 var ishare=importShare();
 
 (function() {
@@ -125,7 +125,7 @@ function importShare(){
 	share.wbShare=function(option){
 		var url,txt,img,imgHtml='';
 		if(option.obj) var btn=option.obj;
-		else var btn=$('a.btnShareWb');
+		else var btn=$('a.btnShare');
 		if(option && btn.length>0){
 			url=option.url||window.location.href;
 			txt=option.text||"";
@@ -170,27 +170,23 @@ function importShare(){
 	
 	share.btnShare=function(btn,box){
 		if(btn) var shareBtn=btn;
-		else var shareBtn=$('a.btnShare,#btnShare');
+		else var shareBtn=$('a.btnShare');
 		if(box) var shareBox=box;
 		else var shareBox=$('#shareBox');
 		if(shareBtn.length>0){
 			if(os.weixin){
 				if(shareBox.length==0) shareBox=$('<aside class="shareBox"><img src="images/common/share.png"></aside>').appendTo($('body'));
-				shareBtn.on('touchend',shareBtn_click);
+				shareBtn.on('touchend',{box:shareBox},shareBtn_click);
 			}//end if
-			else{
-				if(!os.weibo) share.wbShare({ obj: shareBtn, url: share.content.link, text: share.content.other, image: share.content.image });
-				var btnWb=$('a.btnShareWb');
-				if(btnWb.length>0) share.wbShare({ obj: btnWb, url: share.content.link, text: share.content.other, image: share.content.image });
-				var btnQq=$('a.btnShareQq');
-				if(btnQq.length>0) share.qqShare({ obj: btnQq, url: share.content.link, text: share.content.other, image: share.content.image });
-			}//end if
+			else share.wbShare({ obj: shareBtn, url: share.content.link, text: share.content.other, image: share.content.image });
 		}//end if
-		function shareBtn_click(e){
-			shareBox.show().one('touchend',function(e){
-				$(this).hide();
-			});
-		}//end func
+	}//end func
+	
+	function shareBtn_click(e){
+		var shareBox=e.data.box;
+		shareBox.show().one('touchend',function(e){
+			$(this).hide();
+		});
 	}//end func
 	
 	return share;

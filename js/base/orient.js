@@ -1,4 +1,4 @@
-//2016.1.18
+//2016.3.11
 var iOrient=importOrient();
 
 function importOrient(){
@@ -6,21 +6,21 @@ function importOrient(){
 	var first=true;
 	
 	orient.init=function(dir){
-		orient.dir=dir||'portrait';
+		this.dir=dir||'portrait';
 		window_orientation();
 		first=false;
 		if(os.ios) $(window).on('resize',window_orientation);
 		else $(window).on('orientationchange',window_orientation);
-		if( orient.dir!= orient.get()){
+		if( this.dir!= this.get()){
 			if(os.ios) $(window).one('resize',window_reload);
 			else $(window).one('orientationchange',window_reload);
 		}//end if
 	}//end func
 	
 	orient.lock=function(dir,callback){
-		orient.dir=dir||'portrait';
+		this.dir=dir||'portrait';
 		window_orientation();
-		if(callback && orient.dir!= orient.get() ){
+		if(callback && this.dir!= this.get() ){
 			if(os.ios) $(window).one('resize',{callback:callback},callback_handler);
 			else $(window).one('orientationchange',{callback:callback},callback_handler);
 		}//end if
