@@ -283,16 +283,17 @@ function importCom(){
 	//物体抖动
 	com.shake=function(box,options){
 		if(box && box.length>0){
-			var defaults = {rx:0,ry:0,delay:33,now:0,max:10};
+			var defaults = {rx:0,ry:0,delay:33,now:0,max:10,restore:true};
 			var opts = $.extend(defaults,options);
 			var x=imath.randomRange(-opts.rx,opts.rx);
 			var y=imath.randomRange(-opts.ry,opts.ry);
 			box.css({x:x,y:y});
 			opts.now++;
 			if(opts.now>opts.max){
+				if(opts.restore) box.css({x:0,y:0});
 				if(opts.onComplete) opts.onComplete();
 			}//end if
-			else setTimeout(this.shake,opts.delay,box,opts);
+			else setTimeout(com.shake,opts.delay,box,opts);
 		}//end if
 	}//end func
 	

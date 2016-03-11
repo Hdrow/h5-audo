@@ -40,33 +40,33 @@ function importAudio(){
 		}//end if
 	}//end func
 	
-	audio.fadeIn=function(sound,options){
-		if(sound){
-			var defaults = {speed:0.1,delay:100,volume:0};
-			var opts = $.extend(defaults,options);
-			if(opts.volume==0) sound.play();
-			opts.volume+=opts.speed;
-			opts.volume=opts.volume>1?1:opts.volume;	
-			sound.volume=opts.volume;
-			if(opts.volume<1) setTimeout(this.fadeIn,opts.delay,sound,opts);
-			else if(opts.onComplete) opts.onComplete();
-		}//end if
-	}//end func
-	
-	audio.fadeOut=function(sound,options){
-		if(sound){
-			var defaults = {speed:0.1,delay:100,volume:1};
-			var opts = $.extend(defaults,options);
-			opts.volume-=opts.speed;
-			opts.volume=opts.volume<0?0:opts.volume;	
-			sound.volume=opts.volume;
-			if(opts.volume>0) setTimeout(this.fadeOut,opts.delay,sound,opts);
-			else{
-				sound.pause();
-				if(opts.onComplete) opts.onComplete();
-			}//end else
-		}//end if
-	}//end func
+//	audio.fadeIn=function(sound,options){
+//		if(sound){
+//			var defaults = {speed:0.1,delay:100,volume:0};
+//			var opts = $.extend(defaults,options);
+//			if(opts.volume==0) sound.play();
+//			opts.volume+=opts.speed;
+//			opts.volume=opts.volume>1?1:opts.volume;	
+//			sound.volume=opts.volume;
+//			if(opts.volume<1) setTimeout(audio.fadeIn,opts.delay,sound,opts);
+//			else if(opts.onComplete) opts.onComplete();
+//		}//end if
+//	}//end func
+//	
+//	audio.fadeOut=function(sound,options){
+//		if(sound){
+//			var defaults = {speed:0.1,delay:100,volume:1};
+//			var opts = $.extend(defaults,options);
+//			opts.volume-=opts.speed;
+//			opts.volume=opts.volume<0?0:opts.volume;	
+//			sound.volume=opts.volume;
+//			if(opts.volume>0) setTimeout(audio.fadeOut,opts.delay,sound,opts);
+//			else{
+//				sound.pause();
+//				if(opts.onComplete) opts.onComplete();
+//			}//end else
+//		}//end if
+//	}//end func
 	
 	function get_src(str){
 		var ary=str.split('/');
