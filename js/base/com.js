@@ -1,4 +1,4 @@
-//2016.3.11
+//2016.3.13
 var icom=importCom();
 
 function importCom(){
@@ -13,7 +13,6 @@ function importCom(){
 	com.screenTo169=function(iphone4,android){
 		iphone4=iphone4!=null?iphone4:true;
 		android=android!=null?android:true;
-		this.oneScreen=true;
 		var article=$('article');
 		if(article.length>0){
 			if(os.iphone4){
@@ -21,11 +20,11 @@ function importCom(){
 					if(os.weixin) article.css({height:'121.2%'});
 					else article.css({height:'123.6%'});
 				}//end if
-				else this.screenScrollUnable();
+				else com.screenScrollUnable();
 			}//end if
 			else{
 				if(os.android && !os.screen169 && android) article.css({height:'109%'});
-				else this.screenScrollUnable();
+				else com.screenScrollUnable();
 			}//end if
 		}//end if
 	}//end func
@@ -37,7 +36,7 @@ function importCom(){
 			if(article.length>0){
 				article.css({'-webkit-transform-origin':'0 0 0'});
 				if(ht && ht>0){
-					this.screenScrollUnable();
+					com.screenScrollUnable();
 					var zoomX=$(window).width()/wd;
 					var zoomY=$(window).height()/ht;
 					if(os.iphone4 && iphone4) article.css({scale:zoomY,x:($(window).width()-wd*zoomY)*0.5/zoomY});
@@ -86,7 +85,7 @@ function importCom(){
 			var defaults = {closeEvent:'touchend',closeType:'button',closeBtn:obj.find('a.close'),remove:false};
 			var opts = $.extend(defaults,options);
 			if(opts.text) obj.find('.text').html(opts.text);
-			if(opts.fade) this.fadeIn(obj,opts.fade);
+			if(opts.fade) com.fadeIn(obj,opts.fade);
 			else obj.show();
 			if(opts.closeBtn.length>0 && opts.closeType=='button') opts.closeBtn.one(opts.closeEvent,obj_close);
 			else obj.one(opts.closeEvent,obj_close);
@@ -95,7 +94,7 @@ function importCom(){
 		function obj_close(e){
 			if(opts.closeBtn.length>0 && opts.closeType=='button') opts.closeBtn.off(opts.closeEvent,obj_close);
 			else obj.off(opts.closeEvent,obj_close);
-			if(opts.fade) this.fadeOut(obj,opts.fade,function(){
+			if(opts.fade) com.fadeOut(obj,opts.fade,function(){
 				if(opts.remove) obj.remove();
 			});
 			else if(opts.remove) obj.remove();
@@ -113,7 +112,7 @@ function importCom(){
 	com.alert=function(text,callback){
 		if(text && text!=''){
 			var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a href="javascript:;" class="close">确定</a></p></div></aside>').appendTo($('body'));
-			this.popOn(box,{text:text,onClose:callback,remove:true,closeEvent:'click'});
+			com.popOn(box,{text:text,onClose:callback,remove:true,closeEvent:'click'});
 		}//end if
 	}//end func
 	
