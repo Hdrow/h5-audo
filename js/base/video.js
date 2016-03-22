@@ -39,7 +39,7 @@ function importVideo(){
 			type=type||'youku';
 			var ht=$(window).width()*9/16;
 			var top=$(window).height()/2-ht/2;
-			if(type=='youku') $('<iframe width="100%" height="'+ht+'" src="http://player.youku.com/embed/'+vid+'" frameborder="0" allowfullscreen></iframe>').css({top:top}).appendTo(box);
+			if(type=='youku') $('<iframe width="100%" height="'+ht+'" src="http://player.youku.com/embed/'+vid+'?autoplay=true" frameborder="0" allowfullscreen></iframe>').css({top:top}).appendTo(box);
 			else if(type=='qq') $('<iframe width="100%" height="'+ht+'" src="http://v.qq.com/iframe/player.html?vid='+vid+'&tiny=0&auto=1" frameborder="0" allowfullscreen></iframe>').css({top:top}).appendTo(box);
 			else if(type=='mp4'){
 				var container=$('<video type="video/mp4" webkit-playsinline>').attr({src:vid,poster:$(this).data('poster'),controls:controls,autoplay:autoplay}).css({height:ht,top:top}).appendTo(box);
