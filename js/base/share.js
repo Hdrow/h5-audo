@@ -1,4 +1,4 @@
-//2016.3.13
+//2016.3.23
 var ishare=importShare();
 
 (function() {
@@ -126,7 +126,7 @@ function importShare(){
 		var url,txt,img,imgHtml='';
 		if(option.obj) var btn=option.obj;
 		else var btn=$('a.btnShare');
-		if(option && btn.length>0){
+		if(btn.length>0){
 			url=option.url||window.location.href;
 			txt=option.text||"";
 			img=option.image;
@@ -150,7 +150,7 @@ function importShare(){
 		var url,txt,img,imgHtml='';
 		if(option.obj) var btn=option.obj;
 		else var btn=$('a.btnShareQq');
-		if(option && btn.length>0){
+		if(btn.length>0){
 			url=option.url||window.location.href;
 			txt=option.text||"";
 			img=option.image;
