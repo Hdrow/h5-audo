@@ -99,11 +99,6 @@ $(document).ready(function(){
 		console.log('init handler');
 		icom.fadeOut(loadBox,500);
 		monitor_handler();
-		
-		icom.alert('测试一下');
-		
-		icom.addSignBar('测试一下');
-		
 	}//end func
 	
 	//----------------------------------------页面监测代码----------------------------------------
