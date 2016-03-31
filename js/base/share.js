@@ -7,11 +7,11 @@ var ishare=importShare();
 	ishare.url=location.href.substr(0, location.href.lastIndexOf('/')+1);
 	ishare.content={
 		link:ishare.url,
-		image:ishare.url+(ishare.url.substr(ishare.url.length-1)=='/'?'images/share.jpg':'/images/share.jpg')+'?v='+Math.random(),
+		image:ishare.url+'images/share.jpg?v='+Math.random(),
 		title:$('title').html(),
-		friend:'你，来自哪个复古年代？',
-		timeline:'你，来自哪个复古年代？',
-		other:'你，来自哪个复古年代？'
+		friend:'发送给朋友的文字',
+		timeline:'分享到朋友圈的文字',
+		other:'未微信的分享文字'
 	};
 	if(os.weixin){
 		document.write('<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>');
@@ -192,9 +192,9 @@ function importShare(){
 	share.reset=function(opts){
 		if(opts){
 			if(opts.link) share.content.link=opts.link;
-			if(opts.image) share.content.image=share.url+opts.image;
+			if(opts.image) share.content.image=share.url+opts.image+'?v='+Math.random();
 			if(opts.title) share.content.title=opts.title;
-			if(opts.friend) share.content.other=opts.friend;
+			if(opts.friend) share.content.friend=opts.friend;
 			if(opts.timeline) share.content.timeline=opts.timeline;
 			if(opts.other) share.content.other=opts.other;
 			if(os.weixin) wx.ready(function(){
