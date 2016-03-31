@@ -192,7 +192,7 @@ function importShare(){
 	share.reset=function(opts){
 		if(opts){
 			if(opts.link) share.content.link=opts.link;
-			if(opts.image) share.content.image=share.url+opts.image+'?v='+Math.random();
+			if(opts.image) share.content.image=opts.image+'?v='+Math.random();
 			if(opts.title) share.content.title=opts.title;
 			if(opts.friend) share.content.friend=opts.friend;
 			if(opts.timeline) share.content.timeline=opts.timeline;
