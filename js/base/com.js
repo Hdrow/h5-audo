@@ -1,4 +1,4 @@
-//2016.3.13
+//2016.4.6
 var icom=importCom();
 
 function importCom(){
@@ -111,7 +111,7 @@ function importCom(){
 	//取代系统alert
 	com.alert=function(text,callback){
 		if(text && text!=''){
-			var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a href="javascript:;" class="close">确定</a></p></div></aside>').appendTo($('body'));
+			var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a href="javascript:;" class="close">确定</a></p></div></aside>').appendTo('body');
 			com.popOn(box,{text:text,onClose:callback,remove:true,closeEvent:'click'});
 		}//end if
 	}//end func
