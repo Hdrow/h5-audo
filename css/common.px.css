@@ -62,7 +62,7 @@ aside.alertBox>div>p.btn a:active{ background-color: #eeeeee;}
 
 /* 视频 */
 aside.videoBox{position:fixed; left:0; top:0; width:100%; height:100%; background:#000; z-index:996; display:none;}
-aside.videoBox>iframe{position:absolute; left:0;}
+aside.videoBox>iframe,aside.videoBox>video{position:absolute; left:0;}
 aside.videoBox>a.close{ position:absolute; right:40px; top:40px; width:60px; height:60px; background-image: url(../images/common/close_video.png);}
 
 /* 照片文件选择框*/
