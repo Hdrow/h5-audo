@@ -2,14 +2,12 @@
 var ishake=importShake();
 
 function importShake(){
-	var defaults = {hold:100,max:20,delay:50,stopDelay:500,type:1},opts;
+	var defaults = {hold:100,max:20,delay:50,stopDelay:500,type:0},opts;
 	var $lev=0,$now=0,$last,$lastX,$lastY,$lastZ,$stop;
 	var shake={};
 	
 	shake.on=function(options){
 		opts = $.extend(defaults,options);
-		opts.type=opts.type<1?1:opts.type;
-		opts.type=opts.type>3?3:opts.type;
 		window.addEventListener('devicemotion',devicemotion_handler,false);		
 	}//end func
 
@@ -31,7 +29,7 @@ function importShake(){
 					$now++;
 					if(opts.onCount) opts.onCount($now);
 					if($now==1 && opts.onStart) opts.onStart();
-					else if( (opts.type==1 && $lev==opts.max) || (opts.type==2 && $now==opts.max) || (opts.type==3 && $lev==opts.max && $now==opts.max) ){
+					else if( (!opts.type && $lev==opts.max) || (opts.type && $now==opts.max)  ){
 						if(opts.onComplete) opts.onComplete();
 						shake.off();
 					}//end if

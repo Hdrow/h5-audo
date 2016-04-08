@@ -14,11 +14,13 @@ a{ text-decoration:none; display:inline-block;}
 a>img{ width:100%;}
 .clearFix {display: block;}
 .clearFix:after {clear: both;content: ".";display: block;height: 0;visibility: hidden;}
-.fl{float:left;display:inline;}
-.fr{float:right;display:inline;}
-.noEvent{pointer-events:none;}/* 禁止触摸互动事件 */
-.noDefault{-webkit-touch-callout: none;}/* 禁止ios 长按时不触发系统的菜单，禁止ios&android长按时下载图片 */
+.fl,.flt{float:left;display:inline;}
+.fr,.frt{float:right;display:inline;}
+.noPointer{pointer-events:none;}/* 禁止触摸互动事件 */
+.noCallout{-webkit-touch-callout: none;}/* 禁止ios 长按时不触发系统的菜单，禁止ios&android长按时下载图片 */
 .noSelect{-webkit-user-select:none;}/* 禁止ios和android用户选中文字 */
+.gpuOpen{will-change:transform,opacity;}
+.gpuClose{will-change:auto;}
 
 
 @media screen{html{font-size:50px;}}
