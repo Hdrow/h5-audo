@@ -7,12 +7,25 @@ function importShake(){
 	var shake={};
 	
 	shake.on=function(options){
+		this.init();
 		opts = $.extend(defaults,options);
 		window.addEventListener('devicemotion',devicemotion_handler,false);		
 	}//end func
 
 	shake.off=function(){
+		this.init();
 		window.removeEventListener('devicemotion',devicemotion_handler);
+		if(opts.onOff) opts.onOff();
+	}//end func
+	
+	shake.init=function(options){
+		$lev=0;
+		$now=0;
+		$last=null;
+		$lastX=null;
+		$lastY=null;
+		$lastZ=null;
+		$stop=null;
 	}//end func
 	
 	function devicemotion_handler(event) {
