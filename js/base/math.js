@@ -1,4 +1,4 @@
-//2016.1.20
+//2016.4.9
 var imath=importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath(){
@@ -131,7 +131,12 @@ function importMath(){
 		var clone;
 		if(toString.apply(data) === '[object Array]') clone=[];
 		else if(toString.apply(data) === '[object Object]') clone={};
-		if(clone) for(var i in data) clone[i]=data[i];
+		else return data;
+		for(var i in data){
+			var copy=data[i];
+	        if(toString.apply(copy) === '[object Array]' || toString.apply(copy) === '[object Object]') clone[i]=arguments.callee(copy);
+	        else clone[i]=copy;
+		}//end for
 		return clone;
 	}//end func
 	
