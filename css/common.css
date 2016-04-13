@@ -70,6 +70,18 @@ aside.loadBox>span i:nth-child(12){ -webkit-transform:translate(0.5196rem, -0.3r
 aside.loadBox>b{ display:block; position:absolute; left:0; top:50%; width:100%; height:0.4rem; line-height:0.4rem; margin-left:-0.1rem; margin-top:-0.34rem; text-align:center; font-size:0.2rem; color:rgba(255,255,255,0.7);}
 @-webkit-keyframes loadCircle{0%{opacity:1}8.3%{opacity:0}50%{opacity:1}100%{opacity:1}}
 
+/* png sprite loading */
+.ui-loading-black {width:40px;height:40px;display:block;background:url(../images/common/loading_black.png);-webkit-background-size:auto 40px;-webkit-animation:am-loading-black 1s steps(12) infinite; -webkit-transform: scale(0.5);}
+.ui-loading-white {width:40px;height:40px;display:block;background-image:url(../images/common/loading_white.png);-webkit-background-size:auto 40px;-webkit-animation:am-loading-white 1s steps(12) infinite; -webkit-transform: scale(0.5);}
+@-webkit-keyframes am-loading-black {
+	from {background-position:0 0}
+	to {background-position:-480px 0}
+}
+@-webkit-keyframes am-loading-white {
+	from {background-position:0 0}
+	to {background-position:-480px 0}
+}
+
 /* 竖屏翻转提示浮层 */
 aside.turnBoxPortrait{ position:fixed; left:0; top:0; width:100%; height:100%; background:#000; z-index:999;}
 aside.turnBoxPortrait>img.turn{ display:block; padding-top:7%; margin:0 auto 5%; height:58%;}
