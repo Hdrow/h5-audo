@@ -1,5 +1,5 @@
 //2016.3.11
-var iOrient=importOrient();
+var iorient=importOrient();
 
 function importOrient(){
 	var orient={};
