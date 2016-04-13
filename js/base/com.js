@@ -1,4 +1,4 @@
-//2016.4.6
+//2016.4.13
 var icom=importCom();
 
 function importCom(){
@@ -259,19 +259,19 @@ function importCom(){
 	}//end func
 	
 	//安卓键盘压缩页面高度处理
-	com.keyboard=function(options){
+	com.keyboard=function(box,percent){
 		if(os.android){
-			var defaults = {box:$('section'),percent:1};
-			var opts = $.extend(defaults,options);
+			box=box||$('section');
+			percent=percent!=null?percent:1;
 			var windowHt=$(window).height();
 			$(window).on('resize',function(e){
 				if( window.orientation == 0 || window.orientation == 180 ){
 					if($(window).height()<windowHt){
-						if(opts.box && opts.box.length>0) opts.box.css({y:-(windowHt-$(window).height())*opts.percent });
+						if(box.length>0) box.css({y:-(windowHt-$(window).height())*percent });
 						if(opts.callback) opts.callback(true);
 					}//end if
 					else{
-						if(opts.box && opts.box.length>0) opts.box.css({y:0});
+						if(box.length>0) box.css({y:0});
 						if(opts.callback) opts.callback(false);
 					}//end lese
 				}//end fi
