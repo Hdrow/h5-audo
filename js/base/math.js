@@ -27,7 +27,7 @@ function importMath(){
 		var aryRate= aryNum[0]/aryNum[1];
 		aryNow[0] = aryMax[0];
 		aryNow[1] = Math.round(aryNow[0]/aryRate);
-		if(aryNow[1]<aryMax[1]){
+		if(aryNow[1]>aryMax[1]){
 			aryNow[1]=aryMax[1];
 			aryNow[0] = Math.round(aryNow[1]*aryRate);
 		}//end if				
