@@ -1,4 +1,4 @@
-//2016.4.13
+//2016.4.20
 var icom=importCom();
 
 function importCom(){
@@ -296,5 +296,22 @@ function importCom(){
 		}//end if
 	}//end func
 	
+	//获取textarea里的回车和空格
+	com.getTextarea=function(textarea){
+		var str=textarea.val();
+		if(str=='') return '';
+		else return str.replaceAll(" ","&nbsp;").replaceAll("\n","<br/>");
+	}//edn func
+	
+	//输入textarea里的回车和空格
+	com.setTextarea=function(textarea,str){
+		if(str=='') textarea.val('');
+		else textarea.val(str.replaceAll("&nbsp;"," ").replaceAll("<br/>","\n"))
+	}//edn func
+	
 	return com;
 }//end import
+
+String.prototype.replaceAll = function(s1,s2){
+	return this.replace(new RegExp(s1,"gm"),s2);
+}
