@@ -1,3 +1,4 @@
+//-----------------------------------com.js
 //2016.4.20
 var icom=importCom();
 
@@ -297,10 +298,23 @@ function importCom(){
 	}//end func
 	
 	//获取textarea里的回车和空格
-	com.getTextarea=function(textarea){
-		var str=textarea.val();
-		if(str=='') return '';
-		else return str.replaceAll(" ","&nbsp;").replaceAll("\n","<br/>");
+	com.getTextarea=function(textarea,row){
+		row=row||0;
+		var str1=textarea.val();
+		if(str1=='') return '';
+		else{
+			var str2=str1.replaceAll(" ","&nbsp;").replaceAll("\n","<br/>");
+			var str3=str2.split('<br/>');
+			if(row<=0 || str3.length<=row ) return str2;
+			else{
+				var str4='';
+				for(var i=0; i<row; i++){
+					str4+=str3[i];
+					if(i<row-1) str4+='<br/>';
+				}//edn for
+				return str4;
+			}//end else
+		}//end else
 	}//edn func
 	
 	//输入textarea里的回车和空格
