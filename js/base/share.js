@@ -18,6 +18,11 @@ var ishare=importShare();
 		ishare.wxSign();
 	}//end if
 	
+	ishare.from=icom.getQueryString('from');
+	ishare.from=ishare.from||'friend';
+	ishare.from= ishare.from=='groupmessage' || ishare.from=='singlemessage' ? 'friend' : ishare.from;
+	console.log('微信分享来源：'+ishare.from);
+	
 }());
 
 function importShare(){

@@ -303,7 +303,7 @@ function importCom(){
 		var str1=textarea.val();
 		if(str1=='') return '';
 		else{
-			var str2=str1.replaceAll(" ","&nbsp;").replaceAll("\n","<br/>");
+			var str2=str1.replaceAll("\n","<br/>");
 			return row_cut(str2,row);
 		}//end else
 	}//edn func
@@ -311,7 +311,7 @@ function importCom(){
 	//输入textarea里的回车和空格
 	com.textareaSet=function(textarea,str){
 		if(str=='') textarea.val('');
-		else textarea.val(str.replaceAll("&nbsp;"," ").replaceAll("<br/>","\n"));
+		else textarea.val(str.replaceAll("<br/>","\n"));
 	}//edn func
 	
 	//限制textarea输入文字的行数
