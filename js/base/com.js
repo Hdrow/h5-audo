@@ -1,5 +1,5 @@
 //-----------------------------------com.js
-//2016.4.20
+//2016.4.21
 var icom=importCom();
 
 function importCom(){
@@ -298,7 +298,7 @@ function importCom(){
 	}//end func
 	
 	//获取textarea里的回车和空格
-	com.getTextarea=function(textarea,row){
+	com.textareaGet=function(textarea,row){
 		row=row||0;
 		var str1=textarea.val();
 		if(str1=='') return '';
@@ -318,9 +318,38 @@ function importCom(){
 	}//edn func
 	
 	//输入textarea里的回车和空格
-	com.setTextarea=function(textarea,str){
+	com.textareaSet=function(textarea,str){
 		if(str=='') textarea.val('');
-		else textarea.val(str.replaceAll("&nbsp;"," ").replaceAll("<br/>","\n"))
+		else textarea.val(str.replaceAll("&nbsp;"," ").replaceAll("<br/>","\n"));
+	}//edn func
+	
+	//限制textarea输入文字的行数
+	com.textareaLock=function(textarea,row){
+		var textTimer;
+		textarea.off().one('focus',textarea_focus);
+		
+		function textarea_focus(e){
+			clearInterval(textTimer);
+			textTimer=setInterval(textarea_lock,100);
+			$(this).one('blur',textarea_blur);
+		}//edn func
+		
+		function textarea_blur(e){
+			clearInterval(textTimer);
+			$(this).one('focus',textarea_focus);
+		}//edn func
+		
+		function textarea_lock(){
+			var str1=com.textareaGet(textarea,row);
+			var str2=str1.replaceAll("&nbsp;"," ").replaceAll("<br/>","\n");
+			textarea.val(str2);
+		}//edn func
+		
+	}//edn func
+	
+	//限制textarea输入文字的行数
+	com.textareaUnlock=function(textarea){
+		textarea.off();	
 	}//edn func
 	
 	return com;
