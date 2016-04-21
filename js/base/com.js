@@ -304,16 +304,7 @@ function importCom(){
 		if(str1=='') return '';
 		else{
 			var str2=str1.replaceAll(" ","&nbsp;").replaceAll("\n","<br/>");
-			var str3=str2.split('<br/>');
-			if(row<=0 || str3.length<=row ) return str2;
-			else{
-				var str4='';
-				for(var i=0; i<row; i++){
-					str4+=str3[i];
-					if(i<row-1) str4+='<br/>';
-				}//edn for
-				return str4;
-			}//end else
+			return row_cut(str2,row);
 		}//end else
 	}//edn func
 	
@@ -324,9 +315,11 @@ function importCom(){
 	}//edn func
 	
 	//限制textarea输入文字的行数
-	com.textareaLock=function(textarea,row){
+	com.textareaLock=function(textarea,row,col){
+		row=row||0;
+		col=col||0;
 		var textTimer;
-		textarea.off().one('focus',textarea_focus);
+		if(row>0) textarea.off().one('focus',textarea_focus);
 		
 		function textarea_focus(e){
 			clearInterval(textTimer);
@@ -340,12 +333,51 @@ function importCom(){
 		}//edn func
 		
 		function textarea_lock(){
-			var str1=com.textareaGet(textarea,row);
-			var str2=str1.replaceAll("&nbsp;"," ").replaceAll("<br/>","\n");
-			textarea.val(str2);
+			var first=com.textareaGet(textarea,row);
+			if(col>0){
+				if(first.indexOf('<br/>')!=-1){
+					var str2=first.split('<br/>');
+					var str3='';
+					for(var i=0; i<str2.length-1; i++) str3+=str2[i]+'<br/>';
+					str3+=col_cut(str2[str2.length-1],col);
+					var str4=str3.split('<br/>');
+					if(str4.length>row) str3=row_cut(str3,row);
+				}//end if
+				else var str3=col_cut(first,col);
+			}//end if
+			else var str3=first;
+			var final=str3.replaceAll("&nbsp;"," ").replaceAll("<br/>","\n");
+			textarea.val(final);
 		}//edn func
-		
 	}//edn func
+	
+	function row_cut(str,row){
+		row=row||0;
+		var str2=str.split('<br/>');
+		if(row<=0 || str2.length<=row ) return str;
+		else{
+			var str3='';
+			for(var i=0; i<row; i++){
+				str3+=str2[i];
+				if(i<row-1) str3+='<br/>';
+			}//edn for
+			return str3;
+		}//end else
+	}//end func
+	
+	function col_cut(str,col){
+		var line=Math.ceil(str.length/col);
+		if(line==1) return str;
+		else{
+			var str1='';
+			for(var i=0; i<line; i++){
+				if(i==0) str1+=str.substr(0,col)+'<br/>';
+				else if(i<line-1) str1+=str.substr(i*col,col)+'<br/>';
+				else str1+=str.substr(i*col);
+			}//edn for
+			return str1;
+		}//end else
+	}//end func
 	
 	//限制textarea输入文字的行数
 	com.textareaUnlock=function(textarea){
