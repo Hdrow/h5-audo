@@ -1,5 +1,4 @@
-//-----------------------------------com.js
-//2016.4.21
+//2016.4.22
 var icom=importCom();
 
 function importCom(){
@@ -318,6 +317,7 @@ function importCom(){
 	com.textareaLock=function(textarea,row,col){
 		row=row||0;
 		col=col||0;
+		max=parseInt(textarea.attr('maxlength'));
 		var textTimer;
 		if(row>0) textarea.off().one('focus',textarea_focus);
 		
@@ -330,24 +330,24 @@ function importCom(){
 		function textarea_blur(e){
 			clearInterval(textTimer);
 			$(this).one('focus',textarea_focus);
+			var first=com.textareaGet(textarea,row);
+			if(col>0 && first.indexOf('<br/>')!=-1){
+				var str2=first.split('<br/>');
+				var str3='';
+				for(var i=0; i<str2.length; i++){
+					str3+=col_break(str2[i],col);
+					if(i<str2.length-1) str3+='<br/>';
+				}//end for
+				str3=row_cut(str3,row);
+				var final=str3.replaceAll("<br/>","\n");
+				textarea.val(final);
+			}//end if
 		}//edn func
 		
 		function textarea_lock(){
 			var first=com.textareaGet(textarea,row);
-			if(col>0){
-				if(first.indexOf('<br/>')!=-1){
-					var str2=first.split('<br/>');
-					var str3='';
-					for(var i=0; i<str2.length-1; i++) str3+=str2[i]+'<br/>';
-					str3+=col_cut(str2[str2.length-1],col);
-					var str4=str3.split('<br/>');
-					if(str4.length>row) str3=row_cut(str3,row);
-				}//end if
-				else var str3=col_cut(first,col);
-			}//end if
-			else var str3=first;
-			var final=str3.replaceAll("&nbsp;"," ").replaceAll("<br/>","\n");
-			textarea.val(final);
+			if(first.indexOf('<br/>')==-1) textarea.attr({maxlength:max});
+			else textarea.attr({maxlength:max+(first.split('<br/>').length-1)*2});
 		}//edn func
 	}//edn func
 	
@@ -365,7 +365,7 @@ function importCom(){
 		}//end else
 	}//end func
 	
-	function col_cut(str,col){
+	function col_break(str,col){
 		var line=Math.ceil(str.length/col);
 		if(line==1) return str;
 		else{
@@ -377,6 +377,11 @@ function importCom(){
 			}//edn for
 			return str1;
 		}//end else
+	}//end func
+	
+	function col_cut(str,col){
+		if(str.length>col) return str.substr(0,col);
+		else return str;
 	}//end func
 	
 	//限制textarea输入文字的行数
