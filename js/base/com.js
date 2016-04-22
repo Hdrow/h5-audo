@@ -166,27 +166,6 @@ function importCom(){
 		}//end if
 	}//end func
 	
-	//仿hover效果
-	com.hover=function(btn,delay){
-		delay=delay||0;
-		delay=Math.abs(delay);
-		if(btn && btn.length>0){
-			btn.one('touchstart',btn_touchstart);
-		}//end if
-		function btn_touchstart(e){
-			$(this).addClass('active');
-			if(delay==0) $(this).one('touchend',btn_touchend);
-			else setTimeout(function(){
-				$(this).removeClass('active');
-				$(this).one('touchstart',btn_touchstart);
-			},delay);
-		}//end func
-		function btn_touchend(e){
-			$(this).removeClass('active');
-			$(this).one('touchstart',btn_touchstart);
-		}//end func
-	}//end func
-	
 	//打印object数据
 	com.objectPrint=function(data){
 		if(data){
@@ -314,24 +293,27 @@ function importCom(){
 	}//edn func
 	
 	//限制textarea输入文字的行数
-	com.textareaLock=function(textarea,row,col){
-		row=row||0;
-		col=col||0;
-		max=parseInt(textarea.attr('maxlength'));
-		var textTimer;
-		if(row>0) textarea.off().one('focus',textarea_focus);
+	com.textareaLock=function(textarea){
+		if(textarea && textarea.length>0){
+			var timer;
+			var row=parseInt(textarea.attr('rows'))||0;
+			var col=parseInt(textarea.attr('cols'))||0;
+			var max=parseInt(textarea.attr('maxlength'))||0;
+			max=max==0?row*col:max;
+			if(row>0 && col>0 && max>0) textarea.one('focus',textarea_focus);
+		}//end if
 		
 		function textarea_focus(e){
-			clearInterval(textTimer);
-			textTimer=setInterval(textarea_lock,100);
+			clearInterval(timer);
+			timer=setInterval(textarea_lock,100);
 			$(this).one('blur',textarea_blur);
 		}//edn func
 		
 		function textarea_blur(e){
-			clearInterval(textTimer);
+			clearInterval(timer);
 			$(this).one('focus',textarea_focus);
 			var first=com.textareaGet(textarea,row);
-			if(col>0 && first.indexOf('<br/>')!=-1){
+			if(first.indexOf('<br/>')!=-1){
 				var str2=first.split('<br/>');
 				var str3='';
 				for(var i=0; i<str2.length; i++){
