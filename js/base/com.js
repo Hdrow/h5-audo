@@ -238,30 +238,34 @@ function importCom(){
 	}//end func
 	
 	//安卓键盘压缩页面高度处理
-	com.keyboard=function(input,box,percent){
+	com.keyboard=function(input,box,percent1,percent2){
 		input=input||$('input,textarea,[contenteditable="true"]');
 		box=box||$('section');
-		percent=percent!=null?percent:1;
+		percent=percent1!=null?percent1:1;
+		percent2=percent2||0.5;
 		if(os.ios){
 			input.on('focus',function(e){
-				console.log('input focus');
 				$(document).one('touchend',ios_keyboard);
 			});
 		}//end if
 		else{
 			var windowHt=$(window).height();
-			$(window).on('resize',window_resize);
-			if(input.length>0) input.on('click',android_keyboard);
+			input.on('focus',input_focus);
+			$(window).on('resize',android_keyboard);
 		}//edn if
 		
 		function ios_keyboard(e){
 			if(e.target!=input[0]) input.blur();
 		}//edn func
 		
-		function android_keyboard(){
+		function input_focus(e){
+			box.css({y:-windowHt*percent2 });
+		}//edn func
+		
+		function android_keyboard(e){
 			if( window.orientation == 0 || window.orientation == 180 ){
 				if($(window).height()<windowHt){
-					if(box.length>0) box.css({y:-(windowHt-$(window).height())*percent });
+					if(box.length>0) box.css({y:-(windowHt-$(window).height())*percent1 });
 					if(opts.callback) opts.callback(true);
 				}//end if
 				else{
