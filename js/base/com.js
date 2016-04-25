@@ -1,4 +1,4 @@
-//2016.4.22
+//2016.4.25
 var icom=importCom();
 
 function importCom(){
@@ -238,24 +238,39 @@ function importCom(){
 	}//end func
 	
 	//安卓键盘压缩页面高度处理
-	com.keyboard=function(box,percent){
-		if(os.android){
-			box=box||$('section');
-			percent=percent!=null?percent:1;
-			var windowHt=$(window).height();
-			$(window).on('resize',function(e){
-				if( window.orientation == 0 || window.orientation == 180 ){
-					if($(window).height()<windowHt){
-						if(box.length>0) box.css({y:-(windowHt-$(window).height())*percent });
-						if(opts.callback) opts.callback(true);
-					}//end if
-					else{
-						if(box.length>0) box.css({y:0});
-						if(opts.callback) opts.callback(false);
-					}//end lese
-				}//end fi
+	com.keyboard=function(input,box,percent){
+		input=input||$('input,textarea,[contenteditable="true"]');
+		box=box||$('section');
+		percent=percent!=null?percent:1;
+		if(os.ios){
+			input.on('focus',function(e){
+				console.log('input focus');
+				$(document).one('touchend',ios_keyboard);
 			});
 		}//end if
+		else{
+			var windowHt=$(window).height();
+			$(window).on('resize',window_resize);
+			if(input.length>0) input.on('click',android_keyboard);
+		}//edn if
+		
+		function ios_keyboard(e){
+			if(e.target!=input[0]) input.blur();
+		}//edn func
+		
+		function android_keyboard(){
+			if( window.orientation == 0 || window.orientation == 180 ){
+				if($(window).height()<windowHt){
+					if(box.length>0) box.css({y:-(windowHt-$(window).height())*percent });
+					if(opts.callback) opts.callback(true);
+				}//end if
+				else{
+					if(box.length>0) box.css({y:0});
+					if(opts.callback) opts.callback(false);
+				}//end lese
+			}//end if
+		}//edn func
+		
 	}//end func
 	
 	//物体抖动
