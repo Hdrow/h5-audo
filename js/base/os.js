@@ -1,4 +1,4 @@
-//2016.1.19
+//2016.4.26
 var os=importOS();
 function importOS() {
 	var	userAgent=navigator.userAgent;
@@ -19,7 +19,7 @@ function importOS() {
 	os.firefox = userAgent.match(/Firefox/) ? true : false;
 	os.ie = document.documentMode;
 	os.pc = !(os.android || os.ios || os.wp);
-	os.test= window.innerWidth==540 && os.ios;
+	os.test= window.innerWidth==540 && window.innerHeight==850;
 	os.iphone6Plus=(os.ios && ( (screen.width==414 && screen.height==736) || (screen.width==736 && screen.height==414) && window.devicePixelRatio==3 ))  || (screen.width==540 && screen.height==876);
 	os.iphone6=(os.ios && ( (screen.width==375 && screen.height==667) || (screen.width==667 && screen.height==375) ))  || (screen.width==540 && screen.height==868);
 	os.iphone5=os.ios && ( (screen.width==320 && screen.height==568) || (screen.width==568 && screen.height==320) );
