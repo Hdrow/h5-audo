@@ -1,4 +1,4 @@
-//2016.4.25
+//2016.4.26
 var icom=importCom();
 
 function importCom(){
@@ -240,8 +240,8 @@ function importCom(){
 	//安卓键盘压缩页面高度处理
 	com.keyboard=function(input,box,percent1,percent2){
 		input=input||$('input,textarea,[contenteditable="true"]');
-		box=box||$('section');
-		percent=percent1!=null?percent1:1;
+		box=box||input.parents('section');
+		percent1=percent1||0.8;
 		percent2=percent2||0.5;
 		if(os.ios){
 			input.on('focus',function(e){
