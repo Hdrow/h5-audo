@@ -1,4 +1,4 @@
-//2016.4.9
+//2016.5.10
 var imath=importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath(){
@@ -143,6 +143,16 @@ function importMath(){
 	//获得Object的长度
 	math.objectLength=function(obj){
 		return Object.keys(obj).length;
+	}//end func
+	
+	//将数字格式化
+	math.formatNumber=function(value){
+		value = value.toString(); 
+	    if (value.length <= 3) { 
+	        return value; 
+	    } else { 
+	        return this.formatNumber(value.substr(0, value.length - 3)) + ',' + value.substr(value.length - 3); 
+	    }
 	}//end func
 	
 	return math;
