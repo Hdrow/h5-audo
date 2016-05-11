@@ -49,6 +49,8 @@ function importCom(){
 	
 	com.screenScrollEnable=function(){
 		$(document).off('touchmove',noScroll);
+		var article=$('article');
+		if(article.length>0) article.css({height:'auto'});
 	}//end func
 	
 	com.screenScrollUnable=function(){
