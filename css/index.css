@@ -4,16 +4,6 @@ a,a:visited{ color:#000;}
 article.index{}
 
 
-/*---------------------------------------- css media 适配部分（针对android）----------------------*/
-@media screen and (min-width:480px), screen and (device-width:360px){
-
-}
-
-/*---------------------------------------- css media 适配部分（针对使用虚拟系统按键的android）----------------------*/
-@media screen and (min-width:480px) and (max-height:640px), screen and (min-width:540px) and (max-height:720px), screen and (min-width:720px) and (max-height:960px), screen and (min-width:1080px) and (max-height:1440px), screen and (min-width:1440px) and (max-height:1920px), screen and (min-width:2160px) and (max-height:2880px), screen and (device-width:360px) and (max-height:560px), screen and (device-width:540px) and (device-height:780px){
-
-}
-
 /*---------------------------------------- css media 适配部分（针对iphone4） ----------------------------------------------*/
 @media screen and (device-width:320px) and (device-height:480px), screen and (device-width:540px) and (device-height:702px){
 
@@ -29,7 +19,12 @@ article.index{}
 
 }
 
-/*---------------------------------------- css media 适配部分（针对wp8）----------------------*/
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
-   
+/*---------------------------------------- css media 适配部分（针对android）----------------------*/
+@media screen and (min-width:720px), screen and (device-width:360px){
+
+}
+
+/*---------------------------------------- css media 适配部分（针对使用虚拟系统按键的android）----------------------*/
+@media screen and (device-width:720px) and (max-height:960px), screen and (device-width:1080px) and (max-height:1440px), screen and (device-width:1440px) and (max-height:1920px), screen and (device-width:2160px) and (max-height:2880px), screen and (device-width:360px) and (max-height:560px), screen and (device-width:540px) and (device-height:780px){
+
 }

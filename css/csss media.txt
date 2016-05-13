@@ -20,6 +20,19 @@
 /* android not 16:9 1080p screen:360x604/weixin:360x492 */
 
 
+/* 安卓手机物理分辨率 /*
+/* android 480P screen:480x854 */
+/* android 540P screen:540x960 */
+/* android 720P screen:720x1280 */
+/* android 1080P screen:1080x1920 */
+/* android 2K screen:1440x2560 */
+/* android 4K screen:2160x3840 */
+/* android 480P not 16：9 screen:480x800 */
+/* android 540P not 16：9 screen:540x906 */
+/* android 720P not 16：9 screen:720x1184 */
+/* android 1080P not 16：9 screen:1080x1776 */
+
+
 /* 750 media 标准 /*
 @media screen{html{font-size:42.67px;}}
 @media screen and (min-width:320px){html{font-size:42.67px;}}
@@ -41,16 +54,3 @@
 @media screen and (min-width:2160px){html{font-size:288px;}}
 @media screen and (min-width:2560px){html{font-size:341.33px;}}
 @media screen and (min-width:3840px){html{font-size:512px;}}
-
-
-/* 安卓手机物理分辨率 /*
-/* android 480P screen:480x854 */
-/* android 540P screen:540x960 */
-/* android 720P screen:720x1280 */
-/* android 1080P screen:1080x1920 */
-/* android 2K screen:1440x2560 */
-/* android 4K screen:2160x3840 */
-/* android 480P not 16：9 screen:480x800 */
-/* android 540P not 16：9 screen:540x906 */
-/* android 720P not 16：9 screen:720x1184 */
-/* android 1080P not 16：9 screen:1080x1776 */
