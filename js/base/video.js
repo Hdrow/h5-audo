@@ -1,4 +1,4 @@
-//2016.5.15
+//2016.5.13
 var ivideo=importVideo();
 
 function importVideo(){
@@ -9,13 +9,14 @@ function importVideo(){
 			var defaults = {shell:$('body'),controls:false,autoplay:true};
 			var opts = $.extend(defaults,options);
 			if(os.iphone4) opts.controls=true;
-			var container=$('<video webkit-playsinline="true" type="video/mp4">').attr({src:src,autoplay:opts.autoplay,controls:opts.controls,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
+			var container=$('<video webkit-playsinline="true" type="video/mp4">').attr({src:src,controls:opts.controls,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
 			if(opts.onLoadstart) container[0].addEventListener('loadstart',opts.onLoadstart,false);
 			if(opts.onLoaded) container[0].addEventListener('loadeddata',opts.onLoaded,false);
 			if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
 			if(opts.onTimeupdate) container[0].addEventListener('timeupdate',opts.onTimeupdate,false);
 			if(opts.onPlay) container[0].addEventListener('play',opts.onPlay,false);
 			if(opts.onPause) container[0].addEventListener('pause',opts.onPause,false);
+			if(opts.autoplay) container[0].play();
 			return container;
 		}//end if
 	}//end func
