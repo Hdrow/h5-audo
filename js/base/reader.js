@@ -85,7 +85,8 @@ function importReader(){
                         if(_file.type=='image/jpeg') base64 = canvas.toDataURL('image/jpeg', 0.8);
                         else base64 = canvas.toDataURL();
                     }
-                    if (_callback)  _callback(base64,expectWidth,expectHeight);
+					//20160516 修复旋转过的宽高问题 
+                    if (_callback)  _callback(base64,canvas.width,canvas.height);
                 };//end image.onload
                 image.src = e.target.result;
             };//end oReader.onload
