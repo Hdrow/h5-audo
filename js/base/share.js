@@ -11,7 +11,7 @@ var ishare=importShare();
 		title:$('title').html(),
 		friend:'发送给朋友的文字',
 		timeline:'分享到朋友圈的文字',
-		other:'未微信的分享文字'
+		other:'非微信的分享文字'
 	};
 	if(os.weixin){
 		document.write('<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>');
