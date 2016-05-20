@@ -1,4 +1,4 @@
-//2016.3.11
+//2016.5.20
 var iaudio=importAudio();
 
 function importAudio(){
@@ -10,6 +10,7 @@ function importAudio(){
 			var defaults = {loop:false,volume:1,currentTime:0,autoplay:false};
 			var opts = $.extend(defaults,options);
 			sound.src=src;
+			sound.volume=opts.volume;
 			sound.loop=opts.loop;//如果loop设置成true就无法正确获得ended事件
 			sound.load();
 			if(opts.onLoadstart) sound.addEventListener('loadstart',opts.onLoadstart,false);
