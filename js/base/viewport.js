@@ -1,3 +1,4 @@
+//2016.5.20
 var iviewport=importViewport();
 function importViewport(){
 	var viewport={};
@@ -7,10 +8,14 @@ function importViewport(){
 			document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
 			document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
 		}//end if
-		else{
+		else if(unit=='px'){
 			document.write('<meta name="viewport" content="width=640, minimum-scale = '+window.screen.width/640+', maximum-scale = '+window.screen.width/640+', target-densitydpi=device-dpi">');
 			document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
 		}//edn else
+		else if(unit=='html2canvas'){
+			document.write('<meta name="viewport" content="width=640,target-densitydpi=device-dpi,user-scalable=no">');
+			document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
+		}//end else
 	}//edn func
 	return viewport;
 }//end func

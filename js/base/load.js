@@ -1,3 +1,4 @@
+//2016.5.20
 var iload=importLoad();
 function importLoad(){
 	var load={};
