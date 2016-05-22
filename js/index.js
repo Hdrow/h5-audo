@@ -52,7 +52,7 @@ $(document).ready(function(){
 	}//edn func
 	
 	//----------------------------------------加载声音及处理----------------------------------------
-	var soundList={},soundMax=0,soundLoaded=0;
+	var soundList={},soundMax=0,soundLoaded=0,soundCreated=false;
 	var bgmTime,bgmPlay,bgmBtn=$('a.bgmBtn');
 	
 	function sound_handler(){
@@ -63,7 +63,8 @@ $(document).ready(function(){
 		}//end else
 	}//end func
 	
-	function sound_creat(){	
+	function sound_creat(){
+		soundCreated=true;
 		if(!os.weixin && bgmBtn.length>0) bgmBtn.off('touchend',sound_creat);
 		soundList.bgm=iaudio.on('sound/bgm.mp3',{loop:true,onLoaded:sound_loaded});
 		soundMax=Object.keys(soundList).length;
