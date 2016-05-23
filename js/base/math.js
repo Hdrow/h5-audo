@@ -1,4 +1,4 @@
-//2016.5.10
+//2016.5.18
 var imath=importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath(){
@@ -21,16 +21,25 @@ function importMath(){
 		return Math.random()<0.5?-1:1;
 	}//end func 
 	
-	//等比缩放
-	math.autoSize=function(aryNum,aryMax){
+	//等比缩放,分cover模式和contain模式
+	math.autoSize=function(aryNum,aryMax,cover){
+		cover=cover||0;
 		var aryNow=new Array()
 		var aryRate= aryNum[0]/aryNum[1];
 		aryNow[0] = aryMax[0];
 		aryNow[1] = Math.round(aryNow[0]/aryRate);
-		if(aryNow[1]>aryMax[1]){
-			aryNow[1]=aryMax[1];
-			aryNow[0] = Math.round(aryNow[1]*aryRate);
-		}//end if				
+		if(cover){
+			if(aryNow[1]<aryMax[1]){
+				aryNow[1]=aryMax[1];
+				aryNow[0]=Math.round(aryNow[1]*aryRate);
+			}//end if
+		}//end if
+		else{
+			if(aryNow[1]>aryMax[1]){
+				aryNow[1]=aryMax[1];
+				aryNow[0]=Math.round(aryNow[1]*aryRate);
+			}//end if
+		}//end else
 		return aryNow;
 	}//end func
 	
