@@ -13,7 +13,6 @@ $(document).ready(function(){
 //	loadBox.show();
 	iuser.init(userGetted);
 //	load_handler();
-//	sound_handler();
 	
 	//----------------------------------------微信用户登录验证----------------------------------------	
 	function userGetted(data){
@@ -50,62 +49,6 @@ $(document).ready(function(){
 		if(per==100) setTimeout(init_handler,200);
 		else setTimeout(load_timer,33,per);
 	}//edn func
-	
-	//----------------------------------------加载声音及处理----------------------------------------
-	var soundList={},soundMax=0,soundLoaded=0,soundCreated=false;
-	var bgmTime,bgmPlay,bgmBtn=$('a.bgmBtn');
-	
-	function sound_handler(){
-		if(os.weixin) wx.ready(sound_creat);
-		else{
-			if(os.test) sound_creat();//测试环境
-			else if(bgmBtn.length>0) bgmBtn.addClass('bgmStop').one('touchend',sound_creat);//手机非微信环境
-		}//end else
-	}//end func
-	
-	function sound_creat(){
-		soundCreated=true;
-		if(!os.weixin && bgmBtn.length>0) bgmBtn.off('touchend',sound_creat);
-		soundList.bgm=iaudio.on('sound/bgm.mp3',{loop:true,onLoaded:sound_loaded});
-		soundMax=Object.keys(soundList).length;
-		console.log('sound length:'+soundMax);
-	}//end func
-	
-	function sound_loaded(sound){
-		soundLoaded++;
-//		console.log('soundLoaded:'+soundLoaded);
-		if(soundLoaded==soundMax){
-			console.log(soundLoaded+' sounds loaded');
-			if(soundList.bgm) bgm_init();
-		}//end if
-	}//end func
-	
-	function bgm_init(){
-		bgmPlay=sessionStorage.bgmPlay;
-		bgmPlay=bgmPlay||1;
-		bgmPlay=parseInt(bgmPlay);
-		bgmTime=sessionStorage.bgmTime;
-		console.log('bgmTime:'+bgmTime);
-		bgmTime=bgmTime||0;
-		bgmTime=Number(bgmTime);
-		if(bgmBtn.length>0) bgmBtn.show();
-		if(bgmPlay==1) bgm_play();
-		else bgm_stop();
-	}//end func
-	
-	function bgm_play(){
-		soundList.bgm.currentTime=bgmTime;
-		soundList.bgm.play();
-		bgmPlay=1;
-		if(bgmBtn.length>0) bgmBtn.removeClass('bgmStop').addClass('bgmPlay').one('touchend',bgm_stop);
-	}//end func
-	
-	function bgm_stop(){
-		bgmTime=bgmPlay?soundList.bgm.currentTime:bgmTime;
-		soundList.bgm.pause();
-		bgmPlay=0;
-		if(bgmBtn.length>0) bgmBtn.removeClass('bgmPlay').addClass('bgmStop').one('touchend',bgm_play);
-	}//end func
 	
 	//----------------------------------------页面逻辑代码----------------------------------------
 	function init_handler(){
