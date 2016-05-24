@@ -1,4 +1,4 @@
-//2015.11.23
+//2016.5.24
 var ishake=importShake();
 
 function importShake(){
@@ -67,4 +67,3 @@ function importShake(){
 	return shake;
 	
 }//end import
-
