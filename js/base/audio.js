@@ -36,11 +36,11 @@ function importAudio(){
 					console.log(this.webAudio?'web audio mode':'local audio mode');
 					if(this.webAudio) this.soundList[name]=new webAudio(option);
 					else this.soundList[name]=new localAudio(option);
-					
 				}//edn if
 			}//end for
 			this.soundMax=Object.keys(this.soundList).length;
 			console.log('sound length:'+this.soundMax);
+			return this.soundList;
 		}//edn if
 		
 	}//end func
@@ -51,7 +51,7 @@ function importAudio(){
 		if(_this) _this.onProgress(_this.soundLoaded/_this.soundMax);
 		if(_this.soundLoaded==_this.soundMax){
 			console.log(_this.soundLoaded+' sounds load complete');
-			if(_this.onComplete) _this.onComplete(_this.soundList);
+			if(_this.onComplete) _this.onComplete();
 		}//end if
 	}//end func
 	
@@ -200,16 +200,17 @@ function importAudio(){
 	audio.bgm=function(options){
 		var defaults = {src:'',btn:$('a.bgmBtn'),playClassName:'bgmPlay',stopClassName:'bgmStop'};
 		var opts = $.extend(defaults,options);
+		var bgm={};
 		if(opts.src!=''){
-			var bgmPlay=sessionStorage.bgmPlay;
-			bgmPlay=bgmPlay||1;
-			bgmPlay=parseInt(bgmPlay);
-			console.log('bgmPlay:'+bgmPlay);
-			var bgmTime=sessionStorage.bgmTime;
-			bgmTime=bgmTime||0;
-			bgmTime=Number(bgmTime);
-			console.log('bgmTime:'+bgmTime);
-			var currentTime = bgmTime; 
+			bgm.bgmPlay=sessionStorage.bgmPlay;
+			bgm.bgmPlay=bgm.bgmPlay||1;
+			bgm.bgmPlay=parseInt(bgm.bgmPlay);
+			console.log('bgmPlay:'+bgm.bgmPlay);
+			bgm.bgmTime=sessionStorage.bgmTime;
+			bgm.bgmTime=bgm.bgmTime||0;
+			bgm.bgmTime=Number(bgm.bgmTime);
+			console.log('bgmTime:'+bgm.bgmTime);
+			bgm.currentTime = bgm.bgmTime; 
 			var startTime = 0;
 			var context = new window.webkitAudioContext();
 			var source = null;
@@ -231,34 +232,35 @@ function importAudio(){
 		function init(arrayBuffer) {
 		    context.decodeAudioData(arrayBuffer, function(buf) { //解码成功时的回调函数
 		        buffer = buf;
-				if(bgmPlay) play();
-				else pause();
+				if(bgm.bgmPlay) bgm.play();
+				else bgm.pause();
 		    }, function(e) { //解码出错时的回调函数
 		        console.log('Error decoding file', e);
 		    });
 		}//end func
 		
-		function play(e){
-			bgmPlay=1;
+		bgm.play=function(e){
+			bgm.bgmPlay=1;
 			source = context.createBufferSource();
 		    source.buffer = buffer;
 		    source.loop = true;
 		    source.connect(context.destination);
-		    source.start(0,currentTime % buffer.duration);
+		    source.start(0,bgm.currentTime % buffer.duration);
 		    startTime = context.currentTime;
-			if(opts.btn.length>0) opts.btn.removeClass(opts.stopClassName).addClass(opts.playClassName).one('touchend',pause);
+			if(opts.btn.length>0) opts.btn.removeClass(opts.stopClassName).addClass(opts.playClassName).one('touchend',bgm.pause);
 		}//end func
 		
-		function pause(e){
+		bgm.pause=function(e){
 			if(source){
-				bgmPlay=0;
+				bgm.bgmPlay=0;
 				source.stop(0);
-		    	currentTime += context.currentTime - startTime;
-		    	bgmTime=currentTime;
+		    	bgm.currentTime += context.currentTime - startTime;
+		    	bgm.bgmTime=bgm.currentTime;
 			}//edn if
-			if(opts.btn.length>0) opts.btn.removeClass(opts.playClassName).addClass(opts.stopClassName).one('touchend',play);
+			if(opts.btn.length>0) opts.btn.removeClass(opts.playClassName).addClass(opts.stopClassName).one('touchend',bgm.play);
 		}//end func		
 		
+		return bgm;
 		
 	}//end func
 	
