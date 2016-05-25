@@ -200,69 +200,79 @@ function importAudio(){
 	audio.bgm=function(options){
 		var defaults = {src:'',btn:$('a.bgmBtn'),playClassName:'bgmPlay',stopClassName:'bgmStop'};
 		var opts = $.extend(defaults,options);
-		var bgm={};
 		if(opts.src!=''){
-			bgm.bgmPlay=sessionStorage.bgmPlay;
-			bgm.bgmPlay=bgm.bgmPlay||1;
-			bgm.bgmPlay=parseInt(bgm.bgmPlay);
-			console.log('bgmPlay:'+bgm.bgmPlay);
-			bgm.bgmTime=sessionStorage.bgmTime;
-			bgm.bgmTime=bgm.bgmTime||0;
-			bgm.bgmTime=Number(bgm.bgmTime);
-			console.log('bgmTime:'+bgm.bgmTime);
-			bgm.currentTime = bgm.bgmTime; 
-			var startTime = 0;
-			var context = new window.webkitAudioContext();
-			var source = null;
-			var buffer = null;
-			load();
+			var bgm=new bgmAudio(opts);
+			return bgm;
 		}//edn if
-		
-		function load(){
-			var xhr = new XMLHttpRequest(); //通过XHR下载音频文件
-		    xhr.open('GET', opts.src, true);
-		    xhr.responseType = 'arraybuffer';
-		    xhr.onload = function(e) { //下载完成
-		        init(this.response);
-		    };
-		    xhr.send();
-		    
-		}//edn func
-		
-		function init(arrayBuffer) {
-		    context.decodeAudioData(arrayBuffer, function(buf) { //解码成功时的回调函数
-		        buffer = buf;
-				if(bgm.bgmPlay) bgm.play();
-				else bgm.pause();
-		    }, function(e) { //解码出错时的回调函数
+	}//end func
+	
+	function bgmAudio(opts){
+		this.context=new window.webkitAudioContext();
+	    this.buffer=null;
+	    this.source=null;
+	    this.src=opts.src;
+	    this.startTime = 0;
+	    this.onLoaded=opts.onLoaded;
+	    this.bgmPlay=sessionStorage.bgmPlay;
+		this.bgmPlay=this.bgmPlay||1;
+		this.bgmPlay=parseInt(this.bgmPlay);
+		console.log('bgmPlay:'+this.bgmPlay);
+		this.bgmTime=sessionStorage.bgmTime;
+		this.bgmTime=this.bgmTime||0;
+		this.bgmTime=Number(this.bgmTime);
+		console.log('bgmTime:'+this.bgmTime);
+		this.currentTime = this.bgmTime;
+		this.btn=opts.btn;
+		this.playClassName=opts.playClassName;
+		this.stopClassName=opts.stopClassName;
+	    this.load();
+	}//end func
+	
+	bgmAudio.prototype.load=function(){
+		var _this=this;
+	    var xhr = new XMLHttpRequest(); //通过XHR下载音频文件
+	    xhr.open('GET', _this.src, true);
+	    xhr.responseType = 'arraybuffer';
+	    xhr.onload = function(e) { //下载完成
+	    	if(_this.onLoaded) _this.onLoaded();
+	        init(this.response);
+	    };
+	    xhr.send();
+	    
+	    function init(arrayBuffer){
+			_this.context.decodeAudioData(arrayBuffer, function(buffer) {
+				_this.buffer = buffer;
+				if(_this.bgmPlay) _this.play();
+				else _this.pause();
+		    }, function(e) {
 		        console.log('Error decoding file', e);
 		    });
-		}//end func
-		
-		bgm.play=function(e){
-			bgm.bgmPlay=1;
-			source = context.createBufferSource();
-		    source.buffer = buffer;
-		    source.loop = true;
-		    source.connect(context.destination);
-		    source.start(0,bgm.currentTime % buffer.duration);
-		    startTime = context.currentTime;
-			if(opts.btn.length>0) opts.btn.removeClass(opts.stopClassName).addClass(opts.playClassName).one('touchend',bgm.pause);
-		}//end func
-		
-		bgm.pause=function(e){
-			if(source){
-				bgm.bgmPlay=0;
-				source.stop(0);
-		    	bgm.currentTime += context.currentTime - startTime;
-		    	bgm.bgmTime=bgm.currentTime;
-			}//edn if
-			if(opts.btn.length>0) opts.btn.removeClass(opts.playClassName).addClass(opts.stopClassName).one('touchend',bgm.play);
-		}//end func		
-		
-		return bgm;
-		
-	}//end func
+	    }//edn func
+	}//edn prototype
+	
+	bgmAudio.prototype.play=function(e){
+		var _this=e?e.data.target:this;
+		_this.bgmPlay=1;
+		_this.source = _this.context.createBufferSource();
+	    _this.source.buffer = _this.buffer;
+	    _this.source.loop = true;
+	    _this.source.connect(_this.context.destination);
+	    _this.source.start(0,_this.currentTime % _this.buffer.duration);
+	    _this.startTime = _this.context.currentTime;
+		if(_this.btn.length>0) _this.btn.removeClass(_this.stopClassName).addClass(_this.playClassName).one('touchend',{target:_this},_this.pause);
+	}//end prototype
+	
+	bgmAudio.prototype.pause=function(e){
+		var _this=e?e.data.target:this;
+	    if(_this.source){
+			_this.bgmPlay=0;
+			_this.source.stop(0);
+	    	_this.currentTime += _this.context.currentTime - _this.startTime;
+	    	_this.bgmTime=_this.currentTime;
+		}//edn if
+		if(_this.btn.length>0) _this.btn.removeClass(_this.playClassName).addClass(_this.stopClassName).one('touchend',{target:_this},_this.play);
+	}//end prototype
+	
 	
 	function get_src(str){
 		var ary=str.split('/');
