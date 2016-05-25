@@ -1,6 +1,5 @@
 //2016.5.25
 var iaudio=importAudio();
-var ibgm=importBgm();
 
 function importAudio(){
 	var audio={};
@@ -198,88 +197,75 @@ function importAudio(){
 		}//edn if
 	}//end prototype
 	
+	audio.bgm=function(options){
+		var defaults = {src:'',btn:$('a.bgmBtn'),playClassName:'bgmPlay',stopClassName:'bgmStop'};
+		var opts = $.extend(defaults,options);
+		if(opts.src!=''){
+			var bgmPlay=sessionStorage.bgmPlay;
+			bgmPlay=bgmPlay||1;
+			bgmPlay=parseInt(bgmPlay);
+			console.log('bgmPlay:'+bgmPlay);
+			var bgmTime=sessionStorage.bgmTime;
+			bgmTime=bgmTime||0;
+			bgmTime=Number(bgmTime);
+			console.log('bgmTime:'+bgmTime);
+			var currentTime = bgmTime; 
+			var startTime = 0;
+			var context = new window.webkitAudioContext();
+			var source = null;
+			var buffer = null;
+			load();
+		}//edn if
+		
+		function load(){
+			var xhr = new XMLHttpRequest(); //通过XHR下载音频文件
+		    xhr.open('GET', opts.src, true);
+		    xhr.responseType = 'arraybuffer';
+		    xhr.onload = function(e) { //下载完成
+		        init(this.response);
+		    };
+		    xhr.send();
+		    
+		}//edn func
+		
+		function init(arrayBuffer) {
+		    context.decodeAudioData(arrayBuffer, function(buf) { //解码成功时的回调函数
+		        buffer = buf;
+				if(bgmPlay) play();
+				else pause();
+		    }, function(e) { //解码出错时的回调函数
+		        console.log('Error decoding file', e);
+		    });
+		}//end func
+		
+		function play(e){
+			bgmPlay=1;
+			source = context.createBufferSource();
+		    source.buffer = buffer;
+		    source.loop = true;
+		    source.connect(context.destination);
+		    source.start(0,currentTime % buffer.duration);
+		    startTime = context.currentTime;
+			if(opts.btn.length>0) opts.btn.removeClass(opts.stopClassName).addClass(opts.playClassName).one('touchend',pause);
+		}//end func
+		
+		function pause(e){
+			if(source){
+				bgmPlay=0;
+				source.stop(0);
+		    	currentTime += context.currentTime - startTime;
+		    	bgmTime=currentTime;
+			}//edn if
+			if(opts.btn.length>0) opts.btn.removeClass(opts.playClassName).addClass(opts.stopClassName).one('touchend',play);
+		}//end func		
+		
+		
+	}//end func
+	
 	function get_src(str){
 		var ary=str.split('/');
 		return ary[ary.length-1];
 	}//end func
 	
-	
 	return audio;
-}//end import
-
-function importBgm(){
-	var bgm={};
-	
-	bgm.on=function(options){
-		var defaults = {src:'',btn:$('a.bgmBtn'),playClassName:'bgmPlay',stopClassName:'bgmStop'};
-		var opts = $.extend(defaults,options);
-		if(opts.src!=''){
-			this.src=opts.src;
-			this.btn=opts.btn;
-			this.playClassName=opts.playClassName;
-			this.stopClassName=opts.stopClassName;
-			this.bgmPlay=sessionStorage.bgmPlay;
-			this.bgmPlay=this.bgmPlay||1;
-			this.bgmPlay=parseInt(this.bgmPlay);
-			console.log('bgmPlay:'+this.bgmPlay);
-			this.bgmTime=sessionStorage.bgmTime;
-			this.bgmTime=this.bgmTime||0;
-			this.bgmTime=Number(this.bgmTime);
-			console.log('bgmTime:'+this.bgmTime);
-			this.currentTime = this.bgmTime; 
-			this.startTime = 0;
-			this.context = new window.webkitAudioContext();
-			this.source = null;
-			this.buffer = null;
-			this.load();
-		}//edn if
-		
-	}//end func
-	
-	bgm.load=function(){
-		var _this=this;
-		var xhr = new XMLHttpRequest(); //通过XHR下载音频文件
-	    xhr.open('GET', this.src, true);
-	    xhr.responseType = 'arraybuffer';
-	    xhr.onload = function(e) { //下载完成
-	        init(this.response);
-	    };
-	    xhr.send();
-	    
-	    function init(arrayBuffer) {
-		    _this.context.decodeAudioData(arrayBuffer, function(buffer) { //解码成功时的回调函数
-		        _this.buffer = buffer;
-				if(_this.bgmPlay) _this.play();
-				else _this.pause();
-		    }, function(e) { //解码出错时的回调函数
-		        console.log('Error decoding file', e);
-		    });
-		}//end func
-	    
-	}//edn func
-	
-	bgm.play=function(e){
-		var _this=bgm;
-		_this.bgmPlay=1;
-		_this.source = _this.context.createBufferSource();
-	    _this.source.buffer = _this.buffer;
-	    _this.source.loop = true;
-	    _this.source.connect(_this.context.destination);
-	    _this.source.start(0,_this.currentTime % _this.buffer.duration);
-	    _this.startTime = _this.context.currentTime;
-		if(_this.btn.length>0) _this.btn.removeClass(_this.stopClassName).addClass(_this.playClassName).one('touchend',_this.pause);
-	}//end func
-	
-	bgm.pause=function(e){
-		var _this=bgm;
-		if(_this.source){
-			_this.bgmPlay=0;
-			_this.source.stop(0);
-	    	_this.currentTime += _this.context.currentTime - _this.startTime;
-	    	_this.bgmTime=_this.currentTime;
-		}//edn if
-		if(_this.btn.length>0) _this.btn.removeClass(_this.playClassName).addClass(_this.stopClassName).one('touchend',_this.play);
-	}//end func
-	
-	return bgm;
 }//end import
