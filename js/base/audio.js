@@ -1,4 +1,4 @@
-//2016.5.25
+//2016.5.26
 var iaudio=importAudio();
 
 function importAudio(){
@@ -13,6 +13,7 @@ function importAudio(){
 			this.onProgress=options.onProgress;
 			this.onComplete=options.onComplete;
 			this.webAudio=options.webAudio!=null?options.webAudio:1;
+			console.log(this.webAudio?'web audio mode':'local audio mode');
 			for(var i=0; i<list.length; i++){
 				var defaults = {src:'',volume:1,loop:0,autoPlay:0,continuePlay:0,currentTime:0,backgroundMusic:0};
 				var opts = $.extend(defaults,list[i]);
@@ -33,7 +34,6 @@ function importAudio(){
 						onPause:opts.onPause,
 						backgroundMusic:opts.backgroundMusic
 					};
-					console.log(this.webAudio?'web audio mode':'local audio mode');
 					if(this.webAudio) this.soundList[name]=new webAudio(option);
 					else this.soundList[name]=new localAudio(option);
 				}//edn if
@@ -72,17 +72,17 @@ function importAudio(){
 	    this.loaded=0;
 	    this.played=0;
 	    this.ended=0;
-		this.sound=new Audio();
-		this.sound.src=this.src;
-		this.sound.volume=this.volume;
-		this.sound.loop=this.loop;//如果loop设置成true就无法正确获得ended事件
-		this.sound.load();
-		this.sound.addEventListener('loadeddata',init,false);
-		this.sound.addEventListener('ended',onEnded,false);
-		if(this.onListLoaded) this.sound.addEventListener('loadeddata',this.onListLoaded,false);
-		if(this.onLoaded) this.sound.addEventListener('loadeddata',this.onLoaded,false);
-		if(this.onPlay) this.sound.addEventListener('play',this.onPlay,false);
-		if(this.onPause) this.sound.addEventListener('pause',this.onPause,false);
+		this.audio=new Audio();
+		this.audio.src=this.src;
+		this.audio.volume=this.volume;
+		this.audio.loop=this.loop;//如果loop设置成true就无法正确获得ended事件
+		this.audio.load();
+		this.audio.addEventListener('loadeddata',init,false);
+		this.audio.addEventListener('ended',onEnded,false);
+		if(this.onListLoaded) this.audio.addEventListener('loadeddata',this.onListLoaded,false);
+		if(this.onLoaded) this.audio.addEventListener('loadeddata',this.onLoaded,false);
+		if(this.onPlay) this.audio.addEventListener('play',this.onPlay,false);
+		if(this.onPause) this.audio.addEventListener('pause',this.onPause,false);
 		
 		function init(event){
 			_this.loaded=1;
@@ -101,9 +101,9 @@ function importAudio(){
 			console.log(get_src(this.src)+' play');
 			this.played=1;
 			this.ended=0;
-			this.sound.volume=this.volume;
-			this.sound.currentTime=this.continuePlay?this.currentTime:0;
-			this.sound.play();
+			this.audio.volume=this.volume;
+			this.audio.currentTime=this.continuePlay?this.currentTime:0;
+			this.audio.play();
 		}//edn if
 	}//end func
 	
@@ -111,13 +111,13 @@ function importAudio(){
 	    if(this.played && this.loaded){
 	    	console.log(get_src(this.src)+' pause');
 	    	this.played=0;
-	    	this.currentTime = this.sound.currentTime;
-	    	this.sound.pause();
+	    	this.currentTime = this.audio.currentTime;
+	    	this.audio.pause();
 		}//edn if
 	}//end func
 	
 	function webAudio(opts){
-		this.context=new window.webkitAudioContext();
+		this.context=new window.webkitAudioContext(); /* 创建一个 AudioContext */
 	    this.buffer=null;
 	    this.source=null;
 	    this.src=opts.src;
@@ -140,9 +140,9 @@ function importAudio(){
 	
 	webAudio.prototype.load=function(){
 		var _this=this;
-	    var xhr = new XMLHttpRequest();
-	    xhr.open('GET', this.src, true);
-	    xhr.responseType = 'arraybuffer';
+	    var xhr = new XMLHttpRequest(); /*一个新的 XHR 对象 */
+	    xhr.open('GET', this.src, true); /* 通过 GET 请连接到 .mp3 */
+	    xhr.responseType = 'arraybuffer'; /* 设置响应类型为字节流 arraybuffer */
 	    xhr.onload = function(e) {
 			console.log(get_src(_this.src)+' loaded');
 			_this.loaded=1;
@@ -154,7 +154,7 @@ function importAudio(){
 	    
 	    function init(arrayBuffer){
 			_this.context.decodeAudioData(arrayBuffer, function(buffer) {
-				_this.buffer = buffer;
+				_this.buffer = buffer;  /* 将 buffer 传入解码 AudioBuffer. */
 				if(_this.autoPlay) _this.play();
 		    }, function(e) {
 		        console.log('Error decoding file', e);
@@ -169,10 +169,10 @@ function importAudio(){
 			console.log(get_src(this.src)+' play');
 			this.played=1;
 			this.ended=0;
-			this.source = this.context.createBufferSource();
+			this.source = this.context.createBufferSource(); 
 		    this.source.buffer = this.buffer;
 		    this.source.loop = this.loop;
-		    this.source.connect(this.context.destination);
+		    this.source.connect(this.context.destination); /*连接 AudioBufferSourceNode 到 AudioContext */
 		    this.source.start(0,this.continuePlay?this.currentTime % this.buffer.duration:0); 
 		    this.startTime = this.context.currentTime;
 		    this.source.onended=function(){
