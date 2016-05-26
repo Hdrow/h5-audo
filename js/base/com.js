@@ -1,4 +1,4 @@
-//2016.5.16
+//2016.5.26
 var icom=importCom();
 
 function importCom(){
@@ -129,37 +129,12 @@ function importCom(){
 	}//end func
 	
 	//获得http url文件名末尾的数字
-	com.getQueryData=function(url){
-		var a = document.createElement('a');
-	    a.href = url;
-	    return {
-	        source: url,
-	        root: url.replace(a.search, "").replace(a.hash, ""),
-	        protocol: a.protocol.replace(':', ''),
-	        host: a.hostname,
-	        port: a.port,
-	        query: a.search,
-	        params: (function () {
-	            var ret = {},
-	                    seg = a.search.replace(/^\?/, '').split('&'),
-	                    len = seg.length,
-	                    i = 0,
-	                    s;
-	            for (; i < len; i++) {
-	                if (!seg[i]) {
-	                    continue;
-	                }
-	                s = seg[i].split('=');
-	                ret[s[0]] = decodeURIComponent(s[1]);
-	            }
-	            return ret;
-	        })(),
-	        file: (a.pathname.match(/\/([^\/?#]+)$/i) || [, ''])[1],
-	        hash: a.hash.replace('#', ''),
-	        path: a.pathname.replace(/^([^\/])/, '/$1'),
-	        relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [, ''])[1],
-	        segments: a.pathname.replace(/^\//, '').split('/')
-	    };
+	com.getQueryInt=function(len){
+		len=len!=null?len:1;
+		var path=window.location.pathname.split('/');
+		var file=path[path.length-1];
+		var str=file.split('.');
+		return parseInt(str[0].substr(str[0].length-len));
 	}//end func
 	
 	//载入图片函数
@@ -213,21 +188,24 @@ function importCom(){
 					var reg= new RegExp(/^1[3-9]\d{9}$/);//手机号码验证
 					break;
 				case 1:
-					var reg= new RegExp(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/);//匹配EMAIL
+					var reg= new RegExp(/^[1-9]\d{5}$/);//邮政编码验证
 					break;
 				case 2:
-					var reg= new RegExp(/^\d+$/);//是否为0-9的数字
+					var reg= new RegExp(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/);//匹配EMAIL
 					break;
 				case 3:
-					var reg= new RegExp(/^[a-zA-Z\u0391-\uFFE5]*[\w\u0391-\uFFE5]*$/);//不能以数字或符号开头
+					var reg= new RegExp(/^\d+$/);//是否为0-9的数字
 					break;
 				case 4:
-					var reg= new RegExp(/^\w+$/);//匹配由数字、26个英文字母或者下划线组成的字符串
+					var reg= new RegExp(/^[a-zA-Z\u0391-\uFFE5]*[\w\u0391-\uFFE5]*$/);//不能以数字或符号开头
 					break;
 				case 5:
-					var reg= new RegExp(/^[\u0391-\uFFE5]+$/);//匹配中文
+					var reg= new RegExp(/^\w+$/);//匹配由数字、26个英文字母或者下划线组成的字符串
 					break;
 				case 6:
+					var reg= new RegExp(/^[\u0391-\uFFE5]+$/);//匹配中文
+					break;
+				case 7:
 					var reg= new RegExp(/^[a-zA-Z\u0391-\uFFE5]+$/);//不能包含数字和符号
 					break;
 			}//end switch
