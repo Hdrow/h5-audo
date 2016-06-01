@@ -1,4 +1,4 @@
-//2016.5.13
+//2016.6.1
 var ivideo=importVideo();
 
 function importVideo(){
@@ -9,7 +9,7 @@ function importVideo(){
 			var defaults = {shell:$('body'),controls:false,autoplay:true};
 			var opts = $.extend(defaults,options);
 			if(os.iphone4) opts.controls=true;
-			var container=$('<video webkit-playsinline="true" type="video/mp4">').attr({src:src,controls:opts.controls,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
+			var container=$('<video x-webkit-airplay="true" webkit-playsinline="true" >').attr({src:src,controls:opts.controls,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
 			if(opts.onLoadstart) container[0].addEventListener('loadstart',opts.onLoadstart,false);
 			if(opts.onLoaded) container[0].addEventListener('loadeddata',opts.onLoaded,false);
 			if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
@@ -70,7 +70,8 @@ function importVideo(){
 			if(opts.type=='youku') $('<iframe width='+opts.width+' height='+opts.height+' src=http://player.youku.com/embed/'+opts.vid+ (opts.autoplay?'?autoplay=true':'') + ' frameborder=0 allowfullscreen></iframe>').appendTo(opts.box);
 			else if(opts.type=='qq') $('<iframe width='+opts.width+' height='+opts.height+' src=http://v.qq.com/iframe/player.html?vid='+opts.vid+'&tiny=0&auto='+(opts.autoplay?1:0)+' frameborder=0 allowfullscreen></iframe>').appendTo(opts.box);
 			else if(opts.type=='mp4'){
-				var container=$('<video type=video/mp4 webkit-playsinline>').attr({src:opts.vid,poster:opts.poster,controls:opts.controls,autoplay:opts.autoplay}).appendTo(opts.box);
+				var container=$('<video x-webkit-airplay="true" webkit-playsinline="true" >').attr({src:opts.vid,poster:opts.poster}).appendTo(opts.box);
+				if(opts.autoplay) container[0].play();
 				if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
 			}//end else
 		}//edn if
@@ -92,7 +93,8 @@ function importVideo(){
 			if(type=='youku') $('<iframe width=100% height='+ht+' src=http://player.youku.com/embed/'+vid+ (autoplay?'?autoplay=true':'') + ' frameborder=0 allowfullscreen></iframe>').css({top:top}).appendTo(box);
 			else if(type=='qq') $('<iframe width=100% height='+ht+' src=http://v.qq.com/iframe/player.html?vid='+vid+'&tiny=0&auto='+(autoplay?1:0)+' frameborder=0 allowfullscreen></iframe>').css({top:top}).appendTo(box);
 			else if(type=='mp4'){
-				var container=$('<video type=video/mp4 webkit-playsinline>').attr({src:vid,poster:$(this).data('poster'),controls:controls,autoplay:autoplay}).css({height:ht,top:top}).appendTo(box);
+				var container=$('<video x-webkit-airplay="true" webkit-playsinline="true" >').attr({src:vid,poster:$(this).data('poster')}).css({height:ht,top:top}).appendTo(box);
+				if(autoplay) container[0].play();
 				if(onEnded) container[0].addEventListener('ended',onEnded,false);
 			}//end else
 		}//end if
