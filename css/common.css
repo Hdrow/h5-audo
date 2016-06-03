@@ -21,6 +21,8 @@ a>img{ width:100%;}
 .noSelect{-webkit-user-select:none;}/* 禁止ios和android用户选中文字 */
 .gpuOpen{will-change:transform,opacity;}
 .gpuClose{will-change:auto;}
+.smoothSlide {-webkit-overflow-scrolling: touch;}/* ios设备平滑滚动 */
+
 
 /* 竖屏media: iphone5 width=640px */
 @media screen{html{font-size:50px;}}
