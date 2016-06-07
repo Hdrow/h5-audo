@@ -1,4 +1,4 @@
-//2016.6.1
+//2016.6.7
 var ivideo=importVideo();
 
 function importVideo(){
@@ -6,10 +6,12 @@ function importVideo(){
 	
 	video.add=function(src,options){
 		if(src && src!=''){
-			var defaults = {shell:$('body'),controls:false,autoplay:true};
+			var defaults = {shell:$('body'),controls:false,autoplay:true,playsinline:true};
 			var opts = $.extend(defaults,options);
-			if(os.iphone4) opts.controls=true;
-			var container=$('<video x-webkit-airplay="true" webkit-playsinline="true" >').attr({src:src,controls:opts.controls,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
+			if(!opts.playsinline) opts.controls=true;
+			var container=$('<video></video>').attr({src:src,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
+			if(opts.playsinline) container.attr({'webkit-playsinline':opts.playsinline});
+			if(opts.controls) container.attr({controls:true});
 			if(opts.onLoadstart) container[0].addEventListener('loadstart',opts.onLoadstart,false);
 			if(opts.onLoaded) container[0].addEventListener('loadeddata',opts.onLoaded,false);
 			if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
@@ -22,7 +24,7 @@ function importVideo(){
 	}//end func
 	
 	video.on=function(options){
-		var defaults = {btn:$('a.btnVideo,#btnVideo'),controls:true,autoplay:true};
+		var defaults = {btn:$('a.btnVideo,#btnVideo'),autoplay:true,playsinline:true};
 		var opts = $.extend(defaults,options);
 		if(opts.btn.length>0) opts.btn.on('touchend',opts,video_play);
 	}//end func
@@ -64,13 +66,16 @@ function importVideo(){
 	}//end func
 	
 	video.insert=function(options){
-		var defaults = {type:'youku',autoplay:false,controls:true,width:'100%',height:'100%'};
+		var defaults = {type:'youku',autoplay:false,controls:true,width:'100%',height:'100%',playsinline:true};
 		var opts = $.extend(defaults,options);
+		if(!opts.playsinline) opts.controls=true;
 		if(opts.box.length>0){
 			if(opts.type=='youku') $('<iframe width='+opts.width+' height='+opts.height+' src=http://player.youku.com/embed/'+opts.vid+ (opts.autoplay?'?autoplay=true':'') + ' frameborder=0 allowfullscreen></iframe>').appendTo(opts.box);
 			else if(opts.type=='qq') $('<iframe width='+opts.width+' height='+opts.height+' src=http://v.qq.com/iframe/player.html?vid='+opts.vid+'&tiny=0&auto='+(opts.autoplay?1:0)+' frameborder=0 allowfullscreen></iframe>').appendTo(opts.box);
 			else if(opts.type=='mp4'){
-				var container=$('<video x-webkit-airplay="true" webkit-playsinline="true" >').attr({src:opts.vid,poster:opts.poster}).appendTo(opts.box);
+				var container=$('<video></video>').attr({src:opts.vid,poster:opts.poster}).appendTo(opts.box);
+				if(opts.playsinline) container.attr({'webkit-playsinline':opts.playsinline});
+				if(opts.controls) container.attr({controls:true});
 				if(opts.autoplay) container[0].play();
 				if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
 			}//end else
@@ -80,7 +85,7 @@ function importVideo(){
 	function video_play(e){
 		e.stopPropagation();
 		var autoplay=e.data.autoplay;
-		var controls=e.data.controls;
+		var playsinline=e.data.playsinline;
 		var onEnded=e.data.onEnded;
 		var onClose=e.data.onClose;
 		var box=$("<aside class='videoBox' id='videoBox'></aside>").appendTo($('body')).show();
@@ -93,7 +98,8 @@ function importVideo(){
 			if(type=='youku') $('<iframe width=100% height='+ht+' src=http://player.youku.com/embed/'+vid+ (autoplay?'?autoplay=true':'') + ' frameborder=0 allowfullscreen></iframe>').css({top:top}).appendTo(box);
 			else if(type=='qq') $('<iframe width=100% height='+ht+' src=http://v.qq.com/iframe/player.html?vid='+vid+'&tiny=0&auto='+(autoplay?1:0)+' frameborder=0 allowfullscreen></iframe>').css({top:top}).appendTo(box);
 			else if(type=='mp4'){
-				var container=$('<video x-webkit-airplay="true" webkit-playsinline="true" >').attr({src:vid,poster:$(this).data('poster')}).css({height:ht,top:top}).appendTo(box);
+				var container=$('<video></video>').attr({src:vid,poster:$(this).data('poster'),controls:true}).css({height:ht,top:top}).appendTo(box);
+				if(playsinline) container.attr({'webkit-playsinline':playsinline});
 				if(autoplay) container[0].play();
 				if(onEnded) container[0].addEventListener('ended',onEnded,false);
 			}//end else
