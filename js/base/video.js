@@ -1,4 +1,4 @@
-//2016.6.7
+//2016.6.8
 var ivideo=importVideo();
 
 function importVideo(){
@@ -12,8 +12,7 @@ function importVideo(){
 			var container=$('<video></video>').attr({src:src,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
 			if(opts.playsinline) container.attr({'webkit-playsinline':opts.playsinline});
 			if(opts.controls) container.attr({controls:true});
-			if(opts.onLoadstart) container[0].addEventListener('loadstart',opts.onLoadstart,false);
-			if(opts.onLoaded) container[0].addEventListener('loadeddata',opts.onLoaded,false);
+			if(opts.onLoaded) container[0].addEventListener('canplaythrough',opts.onLoaded,false);
 			if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
 			if(opts.onTimeupdate) container[0].addEventListener('timeupdate',opts.onTimeupdate,false);
 			if(opts.onPlay) container[0].addEventListener('play',opts.onPlay,false);
