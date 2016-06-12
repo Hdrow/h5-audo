@@ -1,4 +1,4 @@
-//2016.5.26
+//2016.6.12
 var iaudio=importAudio();
 
 function importAudio(){
@@ -10,12 +10,15 @@ function importAudio(){
 			this.soundList={};
 			this.soundMax=0;
 			this.soundLoaded=0;
-			this.onProgress=options.onProgress;
-			this.onComplete=options.onComplete;
-			this.webAudio=options.webAudio!=null?options.webAudio:1;
+			this.webAudio=1;
+			if(options){
+				this.onProgress=options.onProgress;
+				this.onComplete=options.onComplete;
+				this.webAudio=options.webAudio!=null?options.webAudio:1;	
+			}//end if
 			console.log(this.webAudio?'web audio mode':'local audio mode');
 			for(var i=0; i<list.length; i++){
-				var defaults = {src:'',volume:1,loop:0,autoPlay:0,continuePlay:0,currentTime:0,backgroundMusic:0};
+				var defaults = {src:'',volume:1,loop:0,autoPlay:0,continuePlay:0,currentTime:0};
 				var opts = $.extend(defaults,list[i]);
 				if(opts.src!=''){
 					var str1=opts.src.split('/');
@@ -31,8 +34,7 @@ function importAudio(){
 						onLoaded:opts.onLoaded,
 						onEnded:opts.onEnded,
 						onPlay:opts.onPlay,
-						onPause:opts.onPause,
-						backgroundMusic:opts.backgroundMusic
+						onPause:opts.onPause
 					};
 					if(this.webAudio) this.soundList[name]=new webAudio(option);
 					else this.soundList[name]=new localAudio(option);
@@ -48,7 +50,7 @@ function importAudio(){
 	audio.onListLoaded=function(){
 		var _this=audio;
 		_this.soundLoaded++;
-		if(_this) _this.onProgress(_this.soundLoaded/_this.soundMax);
+		if(_this.onProgress) _this.onProgress(_this.soundLoaded/_this.soundMax);
 		if(_this.soundLoaded==_this.soundMax){
 			console.log(_this.soundLoaded+' sounds load complete');
 			if(_this.onComplete) _this.onComplete();
