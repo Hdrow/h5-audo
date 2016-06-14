@@ -1,4 +1,4 @@
-//2016.5.26
+//2016.6.14
 var icom=importCom();
 
 function importCom(){
@@ -246,7 +246,7 @@ function importCom(){
 	com.keyboard=function(input,box,classname,callback){
 		input=input||$('input,textarea,[contenteditable="true"]');
 		box=box||input.parents('section');
-		classname=classname||'keyboardSlideIn';
+		classname=classname||'keyboardIn';
 		if(input.length>0 && box.length>0){
 			if(os.ios){
 				input.on('focus',function(e){
@@ -264,16 +264,24 @@ function importCom(){
 		}//edn func
 		
 		function android_keyboard(e){
-			if( window.orientation == 0 || window.orientation == 180 ){
-				if($(window).height()<windowHt){
-					box.addClass(classname);
-					if(callback) opts.callback(true);
-				}//end if
-				else{
-					box.removeClass(classname);
-					if(callback) opts.callback(false);
-				}//end lese
-			}//end if
+			if(iorient.dir=='portrait' && (window.orientation == 0 || window.orientation == 180) ){
+				if($(window).height()<windowHt) slide_in();
+				else slide_out();
+			}//end portrait
+			else if( iorient.dir=='landscape' && (window.orientation == 90 || window.orientation == -90) ){
+				if($(window).height()<windowHt) slide_in();
+				else slide_out();
+			}//edn landscape
+		}//edn func
+		
+		function slide_in(){
+			box.addClass(classname);
+			if(callback) callback(true);
+		}//edn func
+		
+		function slide_out(){
+			box.removeClass(classname);
+			if(callback) callback(false);
 		}//edn func
 		
 	}//end func

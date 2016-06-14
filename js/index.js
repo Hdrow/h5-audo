@@ -8,7 +8,7 @@ $(document).ready(function(){
 	console.log('window size:'+windowWd+'/'+windowHt);
 	
 	//----------------------------------------页面初始化----------------------------------------
-	iorient.init();//屏幕翻转锁定，默认锁定竖屏，横屏提示
+	iorient.init();//屏幕翻转初始化
 	icom.screenTo169(true,true);//把article标签拉伸至iphone5的高宽比例
 //	loadBox.show();
 	iuser.init(userGetted);
@@ -30,7 +30,7 @@ $(document).ready(function(){
 //		loader.addProgressListener(function(e) {
 //			var per=Math.round(e.completedCount/e.totalCount*50);
 //			loadPer.html(per+'%');
-//		}); 	
+//		});
 		
 		loader.addCompletionListener(function() {
 			init_handler();

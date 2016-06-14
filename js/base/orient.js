@@ -1,12 +1,12 @@
-//2016.3.11
+//2016.6.14
 var iorient=importOrient();
 
 function importOrient(){
 	var orient={};
 	var first=true;
 	
-	orient.init=function(dir){
-		this.dir=dir||'portrait';
+	orient.init=function(){
+		this.dir=ibase.dir||'portrait';
 		window_orientation();
 		first=false;
 		if(os.ios) $(window).on('resize',window_orientation);
@@ -19,6 +19,8 @@ function importOrient(){
 	
 	orient.lock=function(dir,callback){
 		this.dir=dir||'portrait';
+		if(this.dir=='portrait') iload.css("css/portrait.css");
+		else iload.css("css/landscape.css");
 		window_orientation();
 		if(callback && this.dir!= this.get() ){
 			if(os.ios) $(window).one('resize',{callback:callback},callback_handler);

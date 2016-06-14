@@ -9,9 +9,14 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
-<script>var iviewport=importViewport();function importViewport(){var a={};a.set=function(b){b=b||"rem";if(b=="rem"||b=="em"){document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />')}else{if(b=="px"){document.write('<meta name="viewport" content="width=640, minimum-scale = '+window.screen.width/640+", maximum-scale = "+window.screen.width/640+', target-densitydpi=device-dpi">');document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />')}else{if(b=="html2canvas"){document.write('<meta name="viewport" content="width=640,target-densitydpi=device-dpi,user-scalable=no">');document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />')}}}};return a}var iload=importLoad();function importLoad(){var b={};b.css=function(d){var c=a(d);if(c.type=="css"){document.write('<link rel="stylesheet" type="text/css" href="'+c.src+'" />')}};b.js=function(d){var c=a(d);if(c.type=="js"){document.write('<script src="'+c.src+'"><\/script>')}};function a(e){var c=e.split(".");var d=c[c.length-1];var g=e+"?v="+Math.random();return{type:d,src:g}}return b};</script>
-<script>iviewport.set('em');//设定网页使用em单位还是px单位，默认值'em'</script>
-<script>iload.css('css/index.css')</script>
+<script>
+function importBase(){function b(a){var b=a.split("."),c=b[b.length-1],d=a+"?v="+Math.random();return{type:c,src:d}}var a={};return a.viewport=function(a,b,c){a=a||"rem",b=b||640,c=c||"css/px.css","rem"==a||"em"==a?(document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">'),document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />')):"px"==a?(document.write('<meta name="viewport" content="width='+b+", minimum-scale = "+window.screen.width/b+", maximum-scale = "+window.screen.width/b+', target-densitydpi=device-dpi">'),document.write('<link rel="stylesheet" type="text/css" href="'+c+'" />')):"html2canvas"==a&&(document.write('<meta name="viewport" content="width='+b+',target-densitydpi=device-dpi,user-scalable=no">'),document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />'))},a.load=function(a,c){var d,e;c=c||"head",d=b(a),"css"==d.type?(e=document.createElement("link"),e.setAttribute("rel","stylesheet"),e.setAttribute("type","text/css"),e.setAttribute("href",d.src),document.getElementsByTagName(c)[0].appendChild(e)):"js"==d.type&&(e=document.createElement("script"),e.setAttribute("type","text/javascript"),e.setAttribute("src",d.src),document.getElementsByTagName(c)[0].appendChild(e))},a.orient=function(a){this.dir=a||"portrait","portrait"==this.dir?this.load("css/portrait.css"):this.load("css/landscape.css")},a}var ibase=importBase();
+</script>
+<script>
+ibase.orient('portrait');//设定锁定横屏还是竖屏
+ibase.viewport('em');//设定css单位，默认值'em',可选值'px','html2canvas'
+ibase.load('css/index.css');//无缓存载入页面css
+</script>
 </head>
 <body ontouchstart>
 <!--------------------------------------------------------------html区域-------------------------------------------------------------------------------------------->
@@ -23,6 +28,6 @@
 <script src="js/base/share.js"></script>
 <script src="http://bamboo.api.be-xx.com/js/loop_api.js"></script>
 <script src="js/base/user.js"></script>
-<script>iload.js('js/index.js')</script>
+<script>ibase.load('js/index.js','body');//无缓存载入页面js</script>
 </body>
 </html>

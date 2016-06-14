@@ -1,8 +1,4 @@
 /* ---------------------------------------- css content 内容部分（针对16:9标准屏）----------------------------------------*/
-body{ background-color:#fff; color:#000;}
-a,a:visited{ color:#000;}
-article.index{}
-
 
 /*---------------------------------------- css media 适配部分（针对iphone4） ----------------------------------------------*/
 @media screen and (device-width:320px) and (device-height:480px), screen and (device-width:540px) and (device-height:702px){
