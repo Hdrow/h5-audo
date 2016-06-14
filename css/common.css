@@ -108,7 +108,7 @@ aside.alertBox>div{ position: absolute; left: 50%; top: 50%; width:85%; -webkit-
 /*aside.alertBox>div{width:50%;}*/
 aside.alertBox>div>p.text{font-size:0.28rem; line-height: 0.4rem; color:#888; padding: 0 0.4rem 0; margin-bottom: 0.4rem; text-align:center; }
 aside.alertBox>div>p.btn{ text-align: center; border-top: 1px solid #D5D5D6; position: relative; }
-aside.alertBox>div>p.btn a{ color:#0BB20C; font-size:0.34rem; line-height: 0.84rem;}
+aside.alertBox>div>p.btn a{ color:#0BB20C; font-size:0.34rem; line-height: 0.84rem;display: block;}
 aside.alertBox>div>p.btn a:active{ background-color: #eeeeee;}
 
 
