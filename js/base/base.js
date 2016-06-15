@@ -36,7 +36,7 @@ function importBase(){
 			var fileref = document.createElement('script');
 			fileref.setAttribute("type","text/javascript");
 	        fileref.setAttribute("src",file.src);
-			document.getElementsByTagName(shell)[0].appendChild(fileref);
+			document.getElementsByTagName('body')[0].appendChild(fileref);
 		}//end else
 	}//end func
 	
@@ -44,6 +44,18 @@ function importBase(){
 		this.dir = dir || "portrait";
     	if(this.dir=="portrait") this.load("css/portrait.css");
     	else this.load("css/landscape.css")
+	}//end func
+	
+	base.creatNode=function(nodeName,idName,className,innerHTML){
+		nodeName=nodeName||'div';
+		className=className||'';
+		idName=idName||'';
+		innerHTML=innerHTML||'';
+		var newNode = document.createElement(nodeName);
+		if(className!='') newNode.className=className;
+		if(idName!='') newNode.id=idName;
+  		if(innerHTML!='') newNode.innerHTML = innerHTML;
+  		document.getElementsByTagName('body')[0].appendChild(newNode);
 	}//end func
 	
 	function get_filetype(f){
