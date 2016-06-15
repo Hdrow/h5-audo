@@ -13,16 +13,11 @@ var ishare=importShare();
 		timeline:'分享到朋友圈的文字',
 		other:'非微信的分享文字'
 	};
-	if(os.weixin){
-		document.write('<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>');
-		ishare.wxSign();
-	}//end if
-	
 	ishare.from=icom.getQueryString('from');
 	ishare.from=ishare.from||'friend';
 	ishare.from= ishare.from=='groupmessage' || ishare.from=='singlemessage' ? 'friend' : ishare.from;
 	console.log('微信分享来源：'+ishare.from);
-	
+	if(os.weixin) ishare.wxSign();
 }());
 
 function importShare(){
