@@ -25,8 +25,16 @@ a>img{ width:100%;}
 
 /* css media */
 html{font-size:50px;}
+@media screen and (width:320px){html{font-size:50px;}}
+@media screen and (width:360px){html{font-size:56.25px;}}
+@media screen and (width:375px){html{font-size:58.59px;}}
+@media screen and (width:414px){html{font-size:64.6875px;}}
 @media screen and (width:540px){html{font-size:84.38px;}}
-@media screen and (width: 1136px) { html{font-size: 100px;}}
+@media screen and (width:568px) { html{font-size: 50px;}}
+@media screen and (width:640px) { html{font-size: 56.338px;}}
+@media screen and (width:667px) { html{font-size: 58.714px;}}
+@media screen and (width:736px) { html{font-size: 64.789px;}}
+@media screen and (width:1136px) { html{font-size: 100px;}}
 
 /* ---------------------------------------- css common 公共部分 ---------------------------------------- */
 
