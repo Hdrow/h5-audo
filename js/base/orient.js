@@ -1,4 +1,4 @@
-//2016.6.14
+//2016.6.16
 var iorient=importOrient();
 
 function importOrient(){
@@ -9,12 +9,7 @@ function importOrient(){
 		this.dir=ibase.dir||'portrait';
 		window_orientation();
 		first=false;
-		if(os.ios) $(window).on('resize',window_orientation);
-		else $(window).on('orientationchange',window_orientation);
-		if( this.dir!= this.get()){
-			if(os.ios) $(window).one('resize',window_reload);
-			else $(window).one('orientationchange',window_reload);
-		}//end if
+		$(window).on('orientationchange',window_orientation);
 	}//end func
 	
 	orient.lock=function(dir,callback){
@@ -23,14 +18,12 @@ function importOrient(){
 		else iload.css("css/landscape.css");
 		window_orientation();
 		if(callback && this.dir!= this.get() ){
-			if(os.ios) $(window).one('resize',{callback:callback},callback_handler);
-			else $(window).one('orientationchange',{callback:callback},callback_handler);
+			$(window).one('orientationchange',{callback:callback},callback_handler);
 		}//end if
 	}//end func
 	
 	orient.unlock=function(){
-		if(os.ios) $(window).off('resize',window_orientation).off('resize',callback_handler).off('resize',window_reload);
-		else $(window).off('orientationchange',window_orientation).off('orientationchange',callback_handler).off('orientationchange',window_reload);
+		$(window).off('orientationchange',window_orientation).off('orientationchange',callback_handler);
 		$('#turnBox').remove();
 	}//end func
 	
@@ -59,10 +52,6 @@ function importOrient(){
 	function callback_handler(e){
 		var callback=e.data.callback;
 		if(orient.dir== orient.get()) callback();
-	}//end func
-	
-	function window_reload(e){
-		location.reload();
 	}//end func
 	
 	return orient;
