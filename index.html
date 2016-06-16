@@ -20,7 +20,7 @@ ibase.load('css/index.css');//无缓存载入页面css
 </head>
 <body ontouchstart>
 <script>
-if(ibase.dir=="portrait"){document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.gif" class="turn"><p>请将手机调至竖屏状态...</p></aside>')}else{document.write('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" class="turn"><p>请将手机调至横屏状态...</p></aside>')}if(!ibase.dirCorrect){document.getElementById("turnBox").style.display="block"};
+(function(){if(ibase.dir=="portrait"){document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.gif" class="turn"><p>请将手机调至竖屏状态...</p></aside>')}else{document.write('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" class="turn"><p>请将手机调至横屏状态...</p></aside>')}var b=document.getElementById("turnBox");if(!ibase.dirCorrect){b.style.display="block";a()}function a(){if(ibase.dir==(window.innerWidth>window.innerHeight?"landscape":"portrait")){b.style.display="none"}else{requestAnimationFrame(a)}}})();
 </script>
 <!--------------------------------------------------------------html区域-------------------------------------------------------------------------------------------->
 <article class="index">
