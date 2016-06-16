@@ -24,7 +24,7 @@ $(document).ready(function(){
 	//----------------------------------------加载页面图片----------------------------------------
 	function load_handler(){
 		var loader = new PxLoader();
-		loader.addImage('images/common/turn.gif');
+		loader.addImage('images/common/turn.png');
 		
 		//实际加载进度
 //		loader.addProgressListener(function(e) {

@@ -20,7 +20,7 @@ ibase.load('css/index.css');//无缓存载入页面css
 </head>
 <body ontouchstart>
 <script>
-(function(){if(ibase.dir=="portrait"){document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.gif" class="turn"><p>请将手机调至竖屏状态...</p></aside>')}else{document.write('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" class="turn"><p>请将手机调至横屏状态...</p></aside>')}var a=document.getElementById("turnBox");if(!ibase.dirCorrect){a.style.display="block";window.addEventListener("resize",c,false)}function c(b){if(ibase.dir==(window.innerWidth>window.innerHeight?"landscape":"portrait")){a.style.display="none";window.removeEventListener("resize",c,false)}}})();
+(function(){if(ibase.dir=="portrait"){document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏状态...</p></aside>')}else{document.write('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" class="turn"><p>请将手机调至横屏状态...</p></aside>')}var a=document.getElementById("turnBox");if(!ibase.dirCorrect){a.style.display="block";window.addEventListener("resize",c,false)}function c(b){if(ibase.dir==(window.innerWidth>window.innerHeight?"landscape":"portrait")){a.style.display="none";window.removeEventListener("resize",c,false)}}})();
 </script>
 <!--------------------------------------------------------------html区域-------------------------------------------------------------------------------------------->
 <article class="index">
