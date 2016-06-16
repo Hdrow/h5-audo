@@ -52,10 +52,11 @@ function importBase(){
 		}//end else
 	}//edn func
 	
-	base.load=function(f,shell){
-		shell=shell||'head';
-		var file=get_filetype(f);
+	base.load=function(f,shell,nocache){
+		nocache=nocache!=null?nocache:true;
+		var file=get_filetype(f,nocache);
 		if (file.type == "css"){
+			shell=shell||'head';
 			var fileref = document.createElement('link');
 	        fileref.setAttribute("rel","stylesheet");
 	        fileref.setAttribute("type","text/css");
@@ -63,6 +64,7 @@ function importBase(){
 	        document.getElementsByTagName(shell)[0].appendChild(fileref);
 		}//end if
 		else if(file.type == "js"){
+			shell=shell||'body';
 			var fileref = document.createElement('script');
 			fileref.setAttribute("type","text/javascript");
 	        fileref.setAttribute("src",file.src);
@@ -72,22 +74,10 @@ function importBase(){
 	
 	base.orient=function(dir){
 		this.dir = dir || "portrait";
-    	if(this.dir=="portrait"){
-    		this.load("css/portrait.css");
-    	}//end if
-    	else{
-    		this.load("css/landscape.css");
-    	}//end else
-    	if(this.dir!=this.dirGet()){
-    		this.dirCorrect=false;
-    		window.addEventListener('orientationchange',function(){location.reload();},false);
-    	}//end if
+    	if(this.dir=="portrait") this.load("css/portrait.css");
+    	else this.load("css/landscape.css");
+    	if(this.dir!=(window.innerWidth > window.innerHeight ? "landscape" :"portrait")) this.dirCorrect=false;
     	else this.dirCorrect=true;
-	}//end func
-	
-	base.dirGet=function(){
-		if(os.ios) return window.innerWidth>window.innerHeight?'landscape':'portrait';
-		else return window.orientation == 90 || window.orientation == -90?'landscape':'portrait';
 	}//end func
 	
 	base.creatNode=function(nodeName,idName,className,innerHTML){
@@ -102,10 +92,11 @@ function importBase(){
   		document.getElementsByTagName('body')[0].appendChild(newNode);
 	}//end func
 	
-	function get_filetype(f){
+	function get_filetype(f,nocache){
+		nocache=nocache!=null?nocache:true;
 		var tmp = f.split('.');
 		var type = tmp[tmp.length - 1];
-		var src=f + '?v=' + Math.random();
+		var src=f + (nocache?'?v=' + Math.random():'');
 		return {type:type,src:src};
 	}//end func
 	
