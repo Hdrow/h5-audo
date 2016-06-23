@@ -1,9 +1,10 @@
-//2016.5.24
+//2016.6.23
 var ishake=importShake();
 
 function importShake(){
 	var defaults = {hold:100,max:20,delay:50,stopDelay:500,type:0},opts;
 	var $lev=0,$now=0,$last,$lastX,$lastY,$lastZ,$stop;
+	var $dirXLast=0,$dirYLast=0,$dirZLast=0;
 	var shake={};
 	
 	shake.on=function(options){
@@ -35,9 +36,17 @@ function importShake(){
 			if (diffTime>opts.delay) {
 				$last = curTime;
 				// 获取含重力的加速度
-				var acceleration = event.accelerationIncludingGravity; 
-				var speed = Math.abs(acceleration.x+acceleration.y+acceleration.z-$lastX-$lastY-$lastZ)/diffTime*10000;
-				if (speed >= opts.hold){
+				var acceleration = event.accelerationIncludingGravity;
+				var disX=acceleration.x-$lastX;
+				var disY=acceleration.y-$lastY;
+				var disZ=acceleration.z-$lastZ;
+				var dirX=disX>0?1:-1;
+				var dirY=disY>0?1:-1;
+				var dirZ=disZ>0?1:-1;
+				var speedX = Math.abs(disX)/diffTime*10000;
+				var speedY = Math.abs(disY)/diffTime*10000;
+				var speedZ = Math.abs(disZ)/diffTime*10000;
+				if ( (dirX!=$dirXLast && speedX>=opts.hold) || (dirY!=$dirYLast && speedY>=opts.hold) || (dirZ!=$dirZLast && speedZ>=opts.hold) ){
 					$lev++;
 					$now++;
 					if(opts.onCount) opts.onCount($now);
@@ -58,6 +67,9 @@ function importShake(){
 				$lastX=acceleration.x;
 				$lastY=acceleration.y;
 				$lastZ=acceleration.z;
+				$dirXLast=dirX;
+				$dirYLast=dirY;
+				$dirZLast=dirZ;
 				if(opts.onLevel) opts.onLevel($lev);
 			}//end if
 		}//end if
