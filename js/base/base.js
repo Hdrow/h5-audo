@@ -1,4 +1,4 @@
-//2016.6.16
+//2016.6.29
 //-----------------------------------os
 var os=importOS();
 function importOS() {
@@ -42,14 +42,14 @@ function importBase(){
 			document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
 			document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
 		}//end if
-		else if(unit=='px'){
-			document.write('<meta name="viewport" content="width='+wd+', minimum-scale = '+window.screen.width/wd+', maximum-scale = '+window.screen.width/wd+', target-densitydpi=device-dpi">');
-			document.write('<link rel="stylesheet" type="text/css" href="'+pxCss+'" />');
-		}//edn else
 		else if(unit=='html2canvas'){
 			document.write('<meta name="viewport" content="width='+wd+',target-densitydpi=device-dpi,user-scalable=no">');
 			document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
 		}//end else
+		else if(unit=='px'){
+			document.write('<meta name="viewport" content="width='+wd+', minimum-scale = '+window.screen.width/wd+', maximum-scale = '+window.screen.width/wd+', target-densitydpi=device-dpi">');
+			document.write('<link rel="stylesheet" type="text/css" href="'+pxCss+'" />');
+		}//edn else
 	}//edn func
 	
 	base.load=function(f,shell,nocache){
@@ -76,8 +76,19 @@ function importBase(){
 		this.dir = dir || "portrait";
     	if(this.dir=="portrait") this.load("css/portrait.css");
     	else this.load("css/landscape.css");
-    	if(this.dir!=(window.innerWidth > window.innerHeight ? "landscape" :"portrait")) this.dirCorrect=false;
-    	else this.dirCorrect=true;
+    	if (this.dir == "portrait")  document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏状态...</p></aside>');
+    	else document.write('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" class="turn"><p>请将手机调至横屏状态...</p></aside>');
+	    var turnBox = document.getElementById("turnBox");
+	    if (this.dir!=(window.innerWidth > window.innerHeight ? "landscape" :"portrait")) {
+	        turnBox.style.display = "block";
+	        window.addEventListener("resize", window_resize, false);
+	    }//end if
+	    function window_resize(event) {
+	        if (this.dir == (window.innerWidth > window.innerHeight ? "landscape" : "portrait")) {
+	            turnBox.style.display = "none";
+	            window.removeEventListener("resize", window_resize, false);
+	        }//end if
+	    }//edn func
 	}//end func
 	
 	base.creatNode=function(nodeName,idName,className,innerHTML){
