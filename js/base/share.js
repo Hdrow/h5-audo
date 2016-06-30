@@ -1,4 +1,4 @@
-//2016.3.31
+//2016.6.29
 var ishare=importShare();
 
 (function() {
@@ -10,8 +10,7 @@ var ishare=importShare();
 		image:ishare.url+'images/share.jpg?v='+Math.random(),
 		title:$('title').html(),
 		friend:'发送给朋友的文字',
-		timeline:'分享到朋友圈的文字',
-		other:'非微信的分享文字'
+		timeline:'分享到朋友圈的文字'
 	};
 	ishare.from=icom.getQueryString('from');
 	ishare.from=ishare.from||'friend';
@@ -178,7 +177,7 @@ function importShare(){
 				if(shareBox.length==0) shareBox=$('<aside class="shareBox"><img src="images/common/share.png"></aside>').appendTo($('body'));
 				shareBtn.on('touchend',{box:shareBox},shareBtn_click);
 			}//end if
-			else share.wbShare({ obj: shareBtn, url: share.content.link, text: share.content.other, image: share.content.image });
+			else share.wbShare({ obj: shareBtn, url: share.content.link, text: share.content.timeline, image: share.content.image });
 		}//end if
 	}//end func
 	
@@ -196,11 +195,10 @@ function importShare(){
 			if(opts.title) share.content.title=opts.title;
 			if(opts.friend) share.content.friend=opts.friend;
 			if(opts.timeline) share.content.timeline=opts.timeline;
-			if(opts.other) share.content.other=opts.other;
 			if(os.weixin) wx.ready(function(){
 				share.wxShare();
 			});//end wx.ready
-			else share.wbShare({ url: share.content.link, text: share.content.other, image: share.content.image });
+			else share.wbShare({ url: share.content.link, text: share.content.timeline, image: share.content.image });
 		}//end if
 	}//end func
 	

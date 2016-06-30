@@ -25,7 +25,7 @@ function importVideo(){
 	video.on=function(options){
 		var defaults = {btn:$('a.btnVideo,#btnVideo'),autoplay:true,playsinline:true};
 		var opts = $.extend(defaults,options);
-		if(opts.btn.length>0) opts.btn.on('touchend',opts,video_play);
+		if(opts.btn.length>0) opts.btn.on('click',opts,video_play);
 	}//end func
 	
 	video.getType=function(url){
