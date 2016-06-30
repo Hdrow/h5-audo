@@ -1,4 +1,4 @@
-//2016.6.14
+//2016.6.30
 var icom=importCom();
 
 function importCom(){
@@ -275,7 +275,7 @@ function importCom(){
 		}//edn func
 		
 		function slide_in(){
-			box.addClass(classname);
+			box.css({height:box.height()}).addClass(classname);
 			if(callback) callback(true);
 		}//edn func
 		
