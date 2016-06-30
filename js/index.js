@@ -3,19 +3,28 @@ $(document).ready(function(){
 	//-----------------------------------------定义和初始化变量----------------------------------------
 	var loadBox=$('aside.loadBox');
 	var articleBox=$('article');
-	
+	var loadPer = loadBox.children('b');
 	var windowWd=$(window).width(),windowHt=$(window).height();
 	console.log('window size:'+windowWd+'/'+windowHt);
-	
+	var btnHeart = $('.heart');
+	var username = '郭沐泽';
+	var headsrc = 'images/children/boy.png';
+	var usenam = icom.getQueryString('username');
+	var headsr = icom.getQueryString('headsrc');
+	console.log(usenam+'&&'+headsr);
+	$('.boy').attr({src:headsr});
+	$('.usetit').html(usenam);
+	var airplane = $('.airplan');
+	var btninvite = $('.btninvite');
 	//----------------------------------------页面初始化----------------------------------------
 	iorient.init();//屏幕翻转初始化
 	icom.screenTo169(true,true);//把article标签拉伸至iphone5的高宽比例
-//	loadBox.show();
+	loadBox.show();
 	iuser.init(userGetted);
-//	load_handler();
+	load_handler();
 	
 	//----------------------------------------微信用户登录验证----------------------------------------	
-	function userGetted(data){
+	function userGetted(data){ 
 		console.log('用户头像：'+data.headimage);
 		console.log('用户昵称：'+data.nickname);
 		load_handler();
@@ -24,17 +33,16 @@ $(document).ready(function(){
 	//----------------------------------------加载页面图片----------------------------------------
 	function load_handler(){
 		var loader = new PxLoader();
-		loader.addImage('images/common/turn.png');
-		
+		loader.addImage('images/common/turn.png');		
 		//实际加载进度
-//		loader.addProgressListener(function(e) {
-//			var per=Math.round(e.completedCount/e.totalCount*50);
-//			loadPer.html(per+'%');
-//		});
+		loader.addProgressListener(function(e) {
+			var per=Math.round(e.completedCount/e.totalCount*50);
+			loadPer.html(per+'%');
+		});
 		
 		loader.addCompletionListener(function() {
 			init_handler();
-//			load_timer(50);//模拟加载进度
+			load_timer(50);//模拟加载进度
 			loader=null;
 		});
 		loader.start();	
@@ -55,11 +63,34 @@ $(document).ready(function(){
 		console.log('init handler');
 		icom.fadeOut(loadBox,500);
 		monitor_handler();
+		share_init();
 	}//end func
 	
 	//----------------------------------------页面监测代码----------------------------------------
 	function monitor_handler(){
-//		imonitor.add({obj:$('a.btnTest'),action:'touchend',category:'首页',label:'测试按钮'});
+	//imonitor.add({obj:$('a.btnTest'),action:'touchend',category:'首页',label:'测试按钮'});
 	}//end func
-	
+	btnHeart.one('touchend',btn_Heart);
+	btnInvite.on('touchend',function(e){
+		alert(1);
+	});
+	airplane.transition({x:140,y:-170,rotate:0},1500); 
+	function btn_Heart(){
+		icom.fadeIn($('.one'),20,function(e){
+			$('.heart').attr({src:'images/children/heartb.png'});
+			$('.one').transition({y:-50,opacity:0},1000);
+		});
+	}
+	function btn_Invite(){
+		console.log(1);
+		icom.fadeIn($('.floor'),20);
+	}
+	function share_init(){   	 
+	    var share={};  	        
+	    share.link=ishare.url+'share.html?&headsrc='+headsrc+'&username='+username;
+	    share.image=ishare.url+'images/share.png';
+	    share.title='';
+	    share.friend=share.timeline=share.other='我正在参加青岛最洋气萌宝的评选点赞最多的小萌宝能够赢取“国际安全大奖”快帮我点赞吧！';
+	    ishare.reset(share);
+	}
 });//end ready

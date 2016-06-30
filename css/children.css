@@ -1,0 +1,23 @@
+/*angle.css*/
+.angle{background-image:url(../images/children/ball.png);}
+.txt2{left: 50%;margin-left: -1.01rem;}
+.txt3{left:50%;margin-left: -2.19rem;}
+.limb{width: 3.17rem;position: absolute;left: .8rem;top: .6rem;}
+.floor{background-image: url(../images/angle/gray.png);display: none;}
+.text3{width: 2.06rem;position: absolute;top: .43rem;right: .63rem;}
+.airplan{width: 1.08rem;position: absolute;top: 2rem;right: 2rem;transform:rotate(-70deg);}
+/*share.css*/
+.comport{width:100%;height:100%;position:absolute;left:0;top:0;}
+.children{background-image:url(../images/children/ball.png);}
+em{font-style:normal;}
+.fonta{font-size:.38rem;font-weight:bolder;color:#0c2751;line-height:.59rem;-webkit-text-stroke:1px #fff; }
+.boy,.boya{width:5.78rem;position:absolute;top:.4rem;left:.2rem;}
+.ustxt{width:2.02rem;height:.59rem;position:absolute;bottom:4.3rem;border-bottom:.05rem solid #0c2751;text-align:center;}
+.txt1{left:.55rem;}
+.shtxt{width:4.34rem;position:absolute;bottom:2.6rem;}
+.heart{width:1.37rem;position:absolute;bottom:2.4rem;right:.72rem;}
+.one{width:.49rem;position:absolute;bottom:3.48rem;right:.36rem;display:none;}
+.btncom{position:absolute;width:2.42rem;bottom:1.46rem;}
+.btnrank{left:.56rem;}
+.btnjion,.btninvite{right:.56rem;}
+.btnlook{width:5.18rem;left:.6rem;bottom:.47rem;position:absolute;}

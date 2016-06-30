@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>微信模板页</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="format-detection" content="email=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<script src="js/base/base.js"></script>
+<script>
+ibase.viewport('em');//设定css单位，默认值'em','html2canvas'，可选值'px'
+ibase.orient('portrait');//设定锁定横屏还是竖屏,竖屏：portrait，横屏：landscape
+ibase.load('css/index.css');//无缓存载入页面css
+ibase.load('css/children.css');//无缓存载入页面css
+</script>
+</head>
+<body ontouchstart>
+<!--html区域-->
+<article class="index">
+<section class="angle comport">
+	<img src="images/children/boy.png" class="boya">
+	<img src="images/angle/angle.png" class="limb">
+	<span class="ustxt txt2 fonta">我是<em class="usete fonta">郭沐泽</em></span>
+	<img src="images/angle/text2.png" class="shtxt txt3">
+	<img src="images/children/rank.png" class="btnrank btncom">
+	<img src="images/angle/btninvite.png" class="btninvite btncom">
+	<img src="images/children/look.png" class="btnlook">
+</section>
+<aside class="floor comport">
+	<img src="images/angle/text3.png" class="text3">
+	<img src="images/angle/airplan.png" class="airplan">
+</aside>
+</article>
+<!--javascript区域-->
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/base/framwork.js"></script>
+<script src="js/base/monitor.js"></script>
+<script src="js/base/share.js"></script>
+<script src="http://bamboo.api.be-xx.com/js/loop_api.js"></script>
+<script src="js/base/user.js"></script>
+<script>ibase.load('js/index.js');</script>
+</body>
+</html>
