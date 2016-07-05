@@ -4,8 +4,9 @@
 /* iphone5 screen:320x568/weixin:320x504 */
 /* iphone6 screen:375x667/weixin:375x603 */
 /* iphone6plus screen:414×736/weixin:414x672 */
-/* 安卓版微信已将不同分辨率的手机统一分辨率/*
+/* 安卓版微信/*
 /* android 16:9 screen:360x640/weixin:360x567 */
+/* android 16:9 2k screen:412x732/weibo:412x660 */
 /* android not 16:9 720p screen:360x592/weixin:360x519 */
 /* android not 16:9 1080p screen:360x604/weixin:360x531 */
 
@@ -14,7 +15,7 @@
 /*iphone5/5s:640x920(320x460) */
 /*iphone6:750x1118(375x559) */
 /*iphone6plus:1242×1884（414x628）*/
-/* 安卓版微博已将不同分辨率的手机统一分辨率/*
+/* 安卓版微博/*
 /* android 16:9 screen:360x640/weibo:360x528 */
 /* android not 16:9 720p screen:360x592/weibo:360x480 */
 /* android not 16:9 1080p screen:360x604/weixin:360x492 */
@@ -55,6 +56,7 @@
 /* iphone6 screen:667x375 /weixin:667x323 */
 /* iphone6plus screen:736x414 /weixin:736x362 */
 /* android 16:9 screen:640x360 /weixin:640x295 */
+/* android 16:9 2k screen:732x412/weibo:732x338 */
 /* android not 16:9 screen:598x360 /weixin:598x295 */
 
 
