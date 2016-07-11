@@ -1,4 +1,4 @@
-//2016.6.30
+//2016.7.11
 var icom=importCom();
 
 function importCom(){
@@ -55,6 +55,8 @@ function importCom(){
 	
 	com.screenScrollUnable=function(){
 		$(document).on('touchmove',noScroll);
+		var article=$('article');
+		if(article.length>0) article.css({height:'hidden'});
 	}//end func
 	
 	function noScroll(e){
@@ -255,6 +257,7 @@ function importCom(){
 			}//end if
 			else{
 				var windowHt=$(window).height();
+				var ht=box.height();
 				$(window).on('resize',android_keyboard);
 			}//edn if
 		}//end if
@@ -275,12 +278,15 @@ function importCom(){
 		}//edn func
 		
 		function slide_in(){
-			box.css({height:box.height()}).addClass(classname);
+			box.css({height:ht});
+			com.screenScrollEnable();
 			if(callback) callback(true);
 		}//edn func
 		
 		function slide_out(){
-			box.removeClass(classname);
+			setTimeout(function(){
+				com.screenScrollUnable();
+			},250);
 			if(callback) callback(false);
 		}//edn func
 		
@@ -400,8 +406,9 @@ function importCom(){
 	}//edn func
 	
 	return com;
+	
+	String.prototype.replaceAll = function(s1,s2){
+		return this.replace(new RegExp(s1,"gm"),s2);
+	}
+	
 }//end import
-
-String.prototype.replaceAll = function(s1,s2){
-	return this.replace(new RegExp(s1,"gm"),s2);
-}

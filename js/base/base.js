@@ -1,4 +1,4 @@
-//2016.6.29
+//2016.7.11
 //-----------------------------------os
 var os=importOS();
 function importOS() {
@@ -39,6 +39,7 @@ function importOS() {
 var ibase=importBase();
 function importBase(){
 	var base={}
+	base.dir='portrait';
 	
 	base.viewport=function(unit,wd,pxCss){
 		unit=unit||'rem';

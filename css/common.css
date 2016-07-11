@@ -105,9 +105,6 @@ a.bgmBtn{ position: absolute; right: 0.2rem; top: 0.2rem; width: 0.5rem; height:
 a.bgmPlay{ background-image: url(../images/common/bgm_on.png);}
 a.bgmStop{ background-image: url(../images/common/bgm_off.png);}
 
-/* 安卓键盘弹起*/
-.keyboardIn{ transform: translateY(-2rem);}
-
 /* 初始化标签*/
 body{ background-color:#fff; color:#000;}
 a,a:visited{ color:#000;}

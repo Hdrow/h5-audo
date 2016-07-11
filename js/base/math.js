@@ -1,4 +1,4 @@
-//2016.5.18
+//2016.7.11
 var imath=importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath(){
@@ -166,15 +166,15 @@ function importMath(){
 	
 	return math;
 	
+	//为Array添加Contains方法
+	Array.prototype.contains = function(obj) {
+	    var i = this.length;
+	    while (i--) {
+	        if (this[i] === obj) {
+	        return true;
+	        }
+	    }
+	    return false;
+	}//end func
+	
 }//end import
-
-//为Array添加Contains方法
-Array.prototype.contains = function(obj) {
-    var i = this.length;
-    while (i--) {
-        if (this[i] === obj) {
-        return true;
-        }
-    }
-    return false;
-}//end func
