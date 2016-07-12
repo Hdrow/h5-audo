@@ -1,4 +1,4 @@
-//2016.7.11
+//2016.7.12
 var icom=importCom();
 
 function importCom(){
@@ -50,13 +50,13 @@ function importCom(){
 	com.screenScrollEnable=function(){
 		$(document).off('touchmove',noScroll);
 		var article=$('article');
-		if(article.length>0) article.css({height:'auto'});
+		if(article.length>0) article.css({height:'auto',overflow:'auto'});
 	}//end func
 	
 	com.screenScrollUnable=function(){
 		$(document).on('touchmove',noScroll);
 		var article=$('article');
-		if(article.length>0) article.css({height:'hidden'});
+		if(article.length>0) article.css({height:'100%',overflow:'hidden'});
 	}//end func
 	
 	function noScroll(e){
