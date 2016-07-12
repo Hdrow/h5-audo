@@ -276,15 +276,14 @@ function importCom(){
 		}//edn func
 		
 		function slide_in(){
-			box.css({height:ht});
+			box.css({height:ht}).addClass(classname);
 			com.screenScrollEnable();
 			if(callback) callback(true);
 		}//edn func
 		
 		function slide_out(){
-			setTimeout(function(){
-				com.screenScrollUnable();
-			},250);
+			box.removeClass(classname);
+			com.screenScrollUnable();
 			if(callback) callback(false);
 		}//edn func
 		
