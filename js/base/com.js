@@ -55,8 +55,6 @@ function importCom(){
 	
 	com.screenScrollUnable=function(){
 		$(document).on('touchmove',noScroll);
-		var article=$('article');
-		if(article.length>0) article.css({height:'100%',overflow:'hidden'});
 	}//end func
 	
 	function noScroll(e){
