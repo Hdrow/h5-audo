@@ -243,11 +243,11 @@ function importCom(){
 	}//end func
 	
 	//安卓键盘压缩页面高度处理
-	com.keyboard=function(input,box,classname,callback){
+	com.keyboard=function(input,shell,box,classname,callback){
 		input=input||$('input,textarea,[contenteditable="true"]');
-		box=box||input.parents('section');
+		shell=shell||input.parents('section');
 		classname=classname||'keyboardIn';
-		if(input.length>0 && box.length>0){
+		if(input.length>0 && shell.length>0){
 			if(os.ios){
 				input.on('focus',function(e){
 					$(document).one('touchend',ios_keyboard);
@@ -255,7 +255,7 @@ function importCom(){
 			}//end if
 			else{
 				var windowHt=$(window).height();
-				var ht=box.height();
+				var ht=shell.height();
 				$(window).on('resize',android_keyboard);
 			}//edn if
 		}//end if
@@ -276,13 +276,14 @@ function importCom(){
 		}//edn func
 		
 		function slide_in(){
-			box.css({height:ht}).addClass(classname);
+			shell.css({height:ht});
+			if(box && box.length>0) box.addClass(classname);
 			com.screenScrollEnable();
 			if(callback) callback(true);
 		}//edn func
 		
 		function slide_out(){
-			box.removeClass(classname);
+			if(box && box.length>0) box.removeClass(classname);
 			com.screenScrollUnable();
 			if(callback) callback(false);
 		}//edn func
