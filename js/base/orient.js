@@ -1,46 +1,38 @@
-//2016.6.16
+//-----------------------------------orient.js
+//2016.7.21
 var iorient = importOrient();
 
 function importOrient() {
     var orient = {};
-    var turnBox = $("#turnBox");
 	
     orient.init = function(reload,callback) {
     	reload=reload||false;
         this.dir = ibase.dir || "portrait";
-        if(reload && this.dir!= this.get()) $(window).one("orientationchange", function(e){location.reload();});
-        if(os.ios) $(window).on("resize", window_orientation);
-        else $(window).on("orientationchange", window_orientation);
-    	$(window).on("orientationchange", {callback:callback}, callback_handler);
+        if(reload && this.dir!= this.get()) window.addEventListener("resize", function(event){location.reload();},false);
+        window.addEventListener("resize", window_orientation,false);
     };//end func
     
     orient.unlock = function() {
-    	if(os.ios) $(window).off("resize", window_orientation);
-        else $(window).off("orientationchange", window_orientation);
-        $(window).off("orientationchange", callback_handler);
-       	turnBox.hide();
+    	window.removeEventListener("resize", window_orientation,false);
+       	ibase.turnBox.style.display='none';
     };//end func
     
     orient.get = function() {
-        if (os.ios) return window.innerWidth > window.innerHeight ? "landscape" :"portrait"; 
-        else return window.orientation == 90 || window.orientation == -90 ? "landscape" :"portrait";
+        return window.innerWidth > window.innerHeight ? "landscape" :"portrait"; 
     };//end func
     
     function window_orientation(e) {
         var orientation = orient.get();
         if (orient.dir == "portrait") {
-            if (orientation == "landscape") turnBox.show();
-            else turnBox.hide();
+            if (orientation == "landscape") ibase.turnBox.style.display='block';
+            else ibase.turnBox.style.display='none';
         } else {
-            if (orientation == "portrait") turnBox.show(); 
-            else turnBox.hide();
+            if (orientation == "portrait") ibase.turnBox.style.display='block';
+            else ibase.turnBox.style.display='none';
         }
-    }//end func
-    
-    function callback_handler(e) {
-        var callback = e.data.callback;
         if (orient.dir == orient.get() && callback) callback();
     }//end func
+    
     
     return orient;
 }// end fnc

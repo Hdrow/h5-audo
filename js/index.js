@@ -8,7 +8,6 @@ $(document).ready(function(){
 	console.log('window size:'+windowWd+'/'+windowHt);
 	
 	//----------------------------------------页面初始化----------------------------------------
-	iorient.init();//屏幕翻转初始化
 	icom.screenTo169(true,true);//把article标签拉伸至iphone5的高宽比例
 //	loadBox.show();
 	iuser.init(userGetted);

@@ -1,4 +1,4 @@
-//2016.7.11
+//2016.7.21
 //-----------------------------------os
 var os=importOS();
 function importOS() {
@@ -83,20 +83,32 @@ function importBase(){
 		this.dir = dir || "portrait";
     	if(this.dir=="portrait") this.load("css/portrait.css");
     	else this.load("css/landscape.css");
-    	if (this.dir == "portrait")  document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏状态...</p></aside>');
-    	else document.write('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" class="turn"><p>请将手机调至横屏状态...</p></aside>');
-	    var turnBox = document.getElementById("turnBox");
-	    if (this.dir!=(window.innerWidth > window.innerHeight ? "landscape" :"portrait")) {
-	        turnBox.style.display = "block";
-	        window.addEventListener("resize", window_resize, false);
-	    }//end if
-	    function window_resize(event) {
-	        if (this.dir == (window.innerWidth > window.innerHeight ? "landscape" : "portrait")) {
-	            turnBox.style.display = "none";
-	            window.removeEventListener("resize", window_resize, false);
-	        }//end if
-	    }//edn func
+    	if (this.dir == "portrait")  document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏模式</p></aside>');
+    	else document.write('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" class="turn"><p>请将手机调至横屏模式</p></aside>');
+	    this.turnBox=document.getElementById("turnBox");
+	    if (this.dir!=(window.innerWidth > window.innerHeight ? "landscape" :"portrait")) this.turnBox.style.display = "block";
+        window.addEventListener("resize", window_orientation,false);
 	}//end func
+    
+    base.unlockOrient = function() {
+    	window.removeEventListener("resize", window_orientation,false);
+       	base.turnBox.style.display='none';
+    };//end func
+    
+    base.getOrient = function() {
+        return window.innerWidth > window.innerHeight ? "landscape" :"portrait"; 
+    };//end func
+    
+    function window_orientation(e) {
+        var orientation = base.getOrient();
+        if (base.dir == "portrait") {
+            if (orientation == "landscape") base.turnBox.style.display='block';
+            else base.turnBox.style.display='none';
+        } else {
+            if (orientation == "portrait") base.turnBox.style.display='block';
+            else base.turnBox.style.display='none';
+        }
+    }//end func
 	
 	base.creatNode=function(nodeName,idName,className,innerHTML){
 		nodeName=nodeName||'div';

@@ -1,4 +1,4 @@
-//2016.7.12
+//2016.7.21
 var icom=importCom();
 
 function importCom(){
@@ -265,11 +265,11 @@ function importCom(){
 		}//edn func
 		
 		function android_keyboard(e){
-			if(iorient.dir=='portrait' && (window.orientation == 0 || window.orientation == 180) ){
+			if(ibase.dir=='portrait' && (window.orientation == 0 || window.orientation == 180) ){
 				if($(window).height()<windowHt) slide_in();
 				else slide_out();
 			}//end portrait
-			else if( iorient.dir=='landscape' && (window.orientation == 90 || window.orientation == -90) ){
+			else if( ibase.dir=='landscape' && (window.orientation == 90 || window.orientation == -90) ){
 				if($(window).height()<windowHt) slide_in();
 				else slide_out();
 			}//edn landscape
