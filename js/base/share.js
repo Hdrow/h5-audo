@@ -10,7 +10,7 @@ var ishare=importShare();
 		image:ishare.url+'images/share.jpg?v='+Math.random(),
 		title:$('title').html(),
 		friend:'发送给朋友的文字',
-		timeline:'分享到朋友圈的文字'
+		timeline:'发送到朋友圈的文字'
 	};
 	ishare.from=icom.getQueryString('from');
 	ishare.from=ishare.from||'friend';
