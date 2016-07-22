@@ -1,4 +1,4 @@
-//2016.7.21
+//2016.7.22
 var icom=importCom();
 
 function importCom(){
@@ -402,6 +402,22 @@ function importCom(){
 	com.textareaUnlock=function(textarea){
 		textarea.off();	
 	}//edn func
+	
+	com.orient=function(){
+		if(os.android){
+			var input=$('input,textarea,[contenteditable="true"]');
+			if(input.length>0){
+				var turnBox=$(ibase.turnBox);
+				input.on('focus',input_focus).on('blur',input_blur);
+			}//edn if
+		}//edn if
+		function input_focus(e){
+			ibase.keyboard=true;
+		}//edn if
+		function input_blur(e){
+			ibase.keyboard=false;
+		}//edn if
+	}//edn fuc
 	
 	return com;
 	

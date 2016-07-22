@@ -1,4 +1,4 @@
-//2016.7.21
+//2016.7.22
 //-----------------------------------os
 var os=importOS();
 function importOS() {
@@ -40,6 +40,7 @@ var ibase=importBase();
 function importBase(){
 	var base={}
 	base.dir='portrait';
+	base.keyboard=false;
 	
 	base.viewport=function(unit,wd,pxCss){
 		unit=unit||'rem';
@@ -101,13 +102,16 @@ function importBase(){
     
     function window_orientation(e) {
         var orientation = base.getOrient();
-        if (base.dir == "portrait") {
-            if (orientation == "landscape") base.turnBox.style.display='block';
-            else base.turnBox.style.display='none';
-        } else {
-            if (orientation == "portrait") base.turnBox.style.display='block';
-            else base.turnBox.style.display='none';
-        }
+        if(!base.keyboard){
+        	if (base.dir == "portrait") {
+	            if (orientation == "landscape") base.turnBox.style.display='block';
+	            else base.turnBox.style.display='none';
+	        } //end if
+	        else{
+	            if (orientation == "portrait") base.turnBox.style.display='block';
+	            else base.turnBox.style.display='none';
+	        }//edn else
+        }//edn if
     }//end func
 	
 	base.creatNode=function(nodeName,idName,className,innerHTML){
