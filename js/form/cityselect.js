@@ -8,7 +8,7 @@ settings 参数说明
 (function($){
 	
 	$.fn.citySelect=function(cityData,settings){
-		cityData=cityData||window.chinaCityData;
+		cityData=cityData||window.cityData;
 		if(cityData){
 			settings=$.extend({
 				prov:'省份',
@@ -32,8 +32,8 @@ settings 参数说明
 		
 		function init(){
 			var temp="";
-			$.each(cityData.citylist,function(i,prov){
-				temp+="<option value='"+prov.p+"'>"+prov.p+"</option>";
+			$.each(cityData,function(i,prov){
+				temp+="<option value='"+prov.value+"'>"+prov.text+"</option>";
 			});
 			provTxt.html(settings.prov);
 			provSelete.html(temp);
@@ -46,14 +46,14 @@ settings 参数说明
 
 		function prov_handler(){
 			var selected=provSelete.children('option:selected');
-			provTxt.html(selected.val());
+			provTxt.html(selected.text());
 			citySelete.empty().attr("disabled",true);
 			distSelete.empty().attr("disabled",true);
 			provId=selected.index();
 			console.log('provId:'+provId);
 			var temp="";
-			$.each(cityData.citylist[provId].c,function(i,city){
-				temp+="<option value='"+city.n+"'>"+city.n+"</option>";
+			$.each(cityData[provId].children,function(i,city){
+				temp+="<option value='"+city.value+"'>"+city.text+"</option>";
 			});
 			cityTxt.html(settings.city);
 			citySelete.html(temp).attr("disabled",false);
@@ -68,12 +68,12 @@ settings 参数说明
 
 		function city_handler(){
 			var selected=citySelete.children('option:selected');
-			cityTxt.html(selected.val());
+			cityTxt.html(selected.text());
 			cityId=selected.index();
 			distSelete.empty().attr("disabled",true);
 			var temp="";
-			$.each(cityData.citylist[provId].c[cityId].a,function(i,dist){
-				temp+="<option value='"+dist.s+"'>"+dist.s+"</option>";
+			$.each(cityData[provId].children[cityId].children,function(i,dist){
+				temp+="<option value='"+dist.value+"'>"+dist.text+"</option>";
 			});
 			distTxt.html(settings.dist);
 			distSelete.html(temp).attr("disabled",false);
@@ -85,7 +85,7 @@ settings 参数说明
 		function dist_handler(){
 			var selected=distSelete.children('option:selected');
 			distId=selected.index();
-			distTxt.html(selected.val());
+			distTxt.html(selected.text());
 			distSelete.one("change",dist_handler);
 		}//end func
 	};
