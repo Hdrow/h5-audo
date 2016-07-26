@@ -1,4 +1,4 @@
-//2016.7.22
+//2016.7.26
 var icom=importCom();
 
 function importCom(){
@@ -49,8 +49,6 @@ function importCom(){
 	
 	com.screenScrollEnable=function(){
 		$(document).off('touchmove',noScroll);
-		var article=$('article');
-		if(article.length>0) article.css({height:'auto',overflow:'auto'});
 	}//end func
 	
 	com.screenScrollUnable=function(){
@@ -279,6 +277,8 @@ function importCom(){
 			shell.css({height:ht});
 			if(box && box.length>0) box.addClass(classname);
 			com.screenScrollEnable();
+			var article=$('article');
+			if(article.length>0) article.css({height:'auto'});
 			if(callback) callback(true);
 		}//edn func
 		
@@ -293,7 +293,7 @@ function importCom(){
 	//物体抖动
 	com.shake=function(box,options){
 		if(box && box.length>0){
-			var defaults = {rx:0,ry:0,delay:33,now:0,max:10,restore:true};
+			var defaults = {rx:5,ry:5,delay:33,now:0,max:5,restore:true};
 			var opts = $.extend(defaults,options);
 			var x=imath.randomRange(-opts.rx,opts.rx);
 			var y=imath.randomRange(-opts.ry,opts.ry);
