@@ -403,7 +403,8 @@ function importCom(){
 		textarea.off();	
 	}//edn func
 	
-	com.orient=function(){
+	com.orient=function(callback){
+		lock_dected();
 		if(os.android){
 			var input=$('input,textarea,[contenteditable="true"]');
 			if(input.length>0){
@@ -417,7 +418,12 @@ function importCom(){
 		function input_blur(e){
 			ibase.keyboard=false;
 		}//edn if
+		function lock_dected(){
+			if(ibase.lock) requestAnimationFrame(lock_dected);
+			else if(callback) callback();
+		}//edn func
 	}//edn fuc
+	
 	
 	return com;
 	

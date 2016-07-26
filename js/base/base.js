@@ -1,4 +1,4 @@
-//2016.7.22
+//2016.7.26
 //-----------------------------------os
 var os=importOS();
 function importOS() {
@@ -41,6 +41,7 @@ function importBase(){
 	var base={}
 	base.dir='portrait';
 	base.keyboard=false;
+	base.lock=false;
 	
 	base.viewport=function(unit,wd,pxCss){
 		unit=unit||'rem';
@@ -87,7 +88,10 @@ function importBase(){
     	if (this.dir == "portrait")  document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏模式</p></aside>');
     	else document.write('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" class="turn"><p>请将手机调至横屏模式</p></aside>');
 	    this.turnBox=document.getElementById("turnBox");
-	    if (this.dir!=(window.innerWidth > window.innerHeight ? "landscape" :"portrait")) this.turnBox.style.display = "block";
+	    if (this.dir!=(window.innerWidth > window.innerHeight ? "landscape" :"portrait")){
+	    	this.turnBox.style.display = "block";
+	    	this.lock=true;
+	    }//edn if
         window.addEventListener("resize", window_orientation,false);
 	}//end func
     
@@ -101,16 +105,15 @@ function importBase(){
     };//end func
     
     function window_orientation(e) {
-        var orientation = base.getOrient();
         if(!base.keyboard){
-        	if (base.dir == "portrait") {
-	            if (orientation == "landscape") base.turnBox.style.display='block';
-	            else base.turnBox.style.display='none';
-	        } //end if
-	        else{
-	            if (orientation == "portrait") base.turnBox.style.display='block';
-	            else base.turnBox.style.display='none';
-	        }//edn else
+        	if (base.dir != base.getOrient()){
+        		base.turnBox.style.display='block';
+        		base.lock=true;
+        	}//edn if
+        	else{
+            	base.turnBox.style.display='none';
+            	base.lock=false;
+            }//end else
         }//edn if
     }//end func
 	
