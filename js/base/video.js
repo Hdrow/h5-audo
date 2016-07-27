@@ -1,4 +1,4 @@
-//2016.6.8
+//2016.7.27
 var ivideo=importVideo();
 
 function importVideo(){
@@ -82,17 +82,18 @@ function importVideo(){
 	}//end func
 	
 	function video_play(e){
-		e.stopPropagation();
+		e.stopImmediatePropagation();
 		var autoplay=e.data.autoplay;
 		var playsinline=e.data.playsinline;
 		var onEnded=e.data.onEnded;
 		var onClose=e.data.onClose;
+		var bgm=e.data.bgm;
 		var box=$("<aside class='videoBox' id='videoBox'></aside>").appendTo($('body')).show();
 		var url=$(this).data('url');
 		var type=video.getType(url);
 		var vid=video.getVid(url,type);
 		if(vid && vid!=''){
-			var ht=$(window).width()*9/16;
+			var ht=$(window).width()*0.5;
 			var top=$(window).height()/2-ht/2;
 			if(type=='youku') $('<iframe width=100% height='+ht+' src=http://player.youku.com/embed/'+vid+ (autoplay?'?autoplay=true':'') + ' frameborder=0 allowfullscreen></iframe>').css({top:top}).appendTo(box);
 			else if(type=='qq') $('<iframe width=100% height='+ht+' src=http://v.qq.com/iframe/player.html?vid='+vid+'&tiny=0&auto='+(autoplay?1:0)+' frameborder=0 allowfullscreen></iframe>').css({top:top}).appendTo(box);
@@ -101,10 +102,12 @@ function importVideo(){
 				if(playsinline) container.attr({'webkit-playsinline':playsinline});
 				if(autoplay) container[0].play();
 				if(onEnded) container[0].addEventListener('ended',onEnded,false);
+				if(bgm) bgm.pause();
 			}//end else
 		}//end if
-		var close=$("<a class='close'></a>").appendTo(box).one('touchend',function(e){
+		var close=$("<a class='close'></a>").appendTo(box).one('click',function(e){
 			box.remove();
+			if(bgm) bgm.play();
 			if(onClose) onClose();
 		});
 	}//end event
