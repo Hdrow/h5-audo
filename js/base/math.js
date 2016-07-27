@@ -1,4 +1,4 @@
-//2016.7.11
+//2016.7.27
 var imath=importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath(){
@@ -163,6 +163,18 @@ function importMath(){
 	        return this.formatNumber(value.substr(0, value.length - 3)) + ',' + value.substr(value.length - 3); 
 	    }
 	}//end func
+	
+	//截取小数点后几位，非四舍五入
+	math.float=function(value,pt){
+		pt=pt||2;
+		value = value.toString();
+		if(value.indexOf('.')==-1) return value;
+		else{
+			var str1=value.split('.');
+			var str2=str1[0]+'.'+str1[1].substr(0,pt);
+			return Number(str2);
+		}//end else
+	}//edn func
 	
 	return math;
 	
