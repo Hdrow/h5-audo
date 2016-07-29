@@ -1,4 +1,4 @@
-//2016.7.27
+//2016.7.29
 var ivideo=importVideo();
 
 function importVideo(){
@@ -93,6 +93,7 @@ function importVideo(){
 		var type=video.getType(url);
 		var vid=video.getVid(url,type);
 		if(vid && vid!=''){
+			if(bgm) bgm.pause();
 			var ht=$(window).width()*0.5;
 			var top=$(window).height()/2-ht/2;
 			if(type=='youku') $('<iframe width=100% height='+ht+' src=http://player.youku.com/embed/'+vid+ (autoplay?'?autoplay=true':'') + ' frameborder=0 allowfullscreen></iframe>').css({top:top}).appendTo(box);
@@ -102,7 +103,6 @@ function importVideo(){
 				if(playsinline) container.attr({'webkit-playsinline':playsinline});
 				if(autoplay) container[0].play();
 				if(onEnded) container[0].addEventListener('ended',onEnded,false);
-				if(bgm) bgm.pause();
 			}//end else
 		}//end if
 		var close=$("<a class='close'></a>").appendTo(box).one('click',function(e){

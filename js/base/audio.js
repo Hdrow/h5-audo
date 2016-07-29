@@ -1,4 +1,4 @@
-//2016.6.12
+//2016.7.29
 var iaudio=importAudio();
 
 function importAudio(){
@@ -261,7 +261,7 @@ function importAudio(){
 	    _this.source.connect(_this.context.destination);
 	    _this.source.start(0,_this.currentTime % _this.buffer.duration);
 	    _this.startTime = _this.context.currentTime;
-		if(_this.btn.length>0) _this.btn.removeClass(_this.stopClassName).addClass(_this.playClassName).one('touchend',{target:_this},_this.pause);
+		if(_this.btn.length>0) _this.btn.removeClass(_this.stopClassName).addClass(_this.playClassName).one('click',{target:_this},_this.pause);
 	}//end prototype
 	
 	bgmAudio.prototype.pause=function(e){
@@ -272,7 +272,7 @@ function importAudio(){
 	    	_this.currentTime += _this.context.currentTime - _this.startTime;
 	    	_this.bgmTime=_this.currentTime;
 		}//edn if
-		if(_this.btn.length>0) _this.btn.removeClass(_this.playClassName).addClass(_this.stopClassName).one('touchend',{target:_this},_this.play);
+		if(_this.btn.length>0) _this.btn.removeClass(_this.playClassName).addClass(_this.stopClassName).one('click',{target:_this},_this.play);
 	}//end prototype
 	
 	
