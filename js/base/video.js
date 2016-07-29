@@ -85,15 +85,15 @@ function importVideo(){
 		e.stopImmediatePropagation();
 		var autoplay=e.data.autoplay;
 		var playsinline=e.data.playsinline;
+		var onOpen=e.data.onOpen;
 		var onEnded=e.data.onEnded;
 		var onClose=e.data.onClose;
-		var bgm=e.data.bgm;
 		var box=$("<aside class='videoBox' id='videoBox'></aside>").appendTo($('body')).show();
 		var url=$(this).data('url');
 		var type=video.getType(url);
 		var vid=video.getVid(url,type);
 		if(vid && vid!=''){
-			if(bgm) bgm.pause();
+			if(onOpen) onOpen();
 			var ht=$(window).width()*0.5;
 			var top=$(window).height()/2-ht/2;
 			if(type=='youku') $('<iframe width=100% height='+ht+' src=http://player.youku.com/embed/'+vid+ (autoplay?'?autoplay=true':'') + ' frameborder=0 allowfullscreen></iframe>').css({top:top}).appendTo(box);
@@ -107,7 +107,6 @@ function importVideo(){
 		}//end if
 		var close=$("<a class='close'></a>").appendTo(box).one('click',function(e){
 			box.remove();
-			if(bgm) bgm.play();
 			if(onClose) onClose();
 		});
 	}//end event
