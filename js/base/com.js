@@ -1,4 +1,4 @@
-//2016.7.26
+//2016.7.29
 var icom=importCom();
 
 function importCom(){
@@ -241,10 +241,9 @@ function importCom(){
 	}//end func
 	
 	//安卓键盘压缩页面高度处理
-	com.keyboard=function(input,shell,box,classname,callback){
+	com.keyboard=function(input,shell,callback){
 		input=input||$('input,textarea,[contenteditable="true"]');
 		shell=shell||input.parents('section');
-		classname=classname||'keyboardIn';
 		if(input.length>0 && shell.length>0){
 			if(os.ios){
 				input.on('focus',function(e){
@@ -275,16 +274,10 @@ function importCom(){
 		
 		function slide_in(){
 			shell.css({height:ht});
-			if(box && box.length>0) box.addClass(classname);
-			com.screenScrollEnable();
-			var article=$('article');
-			if(article.length>0) article.css({height:'auto'});
 			if(callback) callback(true);
 		}//edn func
 		
 		function slide_out(){
-			if(box && box.length>0) box.removeClass(classname);
-			com.screenScrollUnable();
 			if(callback) callback(false);
 		}//edn func
 		
