@@ -8,7 +8,7 @@ $(document).ready(function(){
 	console.log('window size:'+windowWd+'/'+windowHt);
 	
 	//----------------------------------------页面初始化----------------------------------------
-	icom.orient();//屏幕翻转初始化
+	icom.orient(init);//屏幕翻转初始化
 	icom.screenTo169(true,false);//把非16:9屏幕的article标签拉伸至16:9,第一个参数是iphone4，第二个参数是非物理系统按键的安卓
 	
 	function init(){
