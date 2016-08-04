@@ -88,7 +88,7 @@ function importAudio(){
 		
 		function init(event){
 			_this.loaded=1;
-			if(_this.autoPlay) this.play(); 
+			if(_this.autoPlay) _this.play(); 
 		}//end func
 		
 		function onEnded(event){
@@ -200,15 +200,70 @@ function importAudio(){
 	}//end prototype
 	
 	audio.bgm=function(options){
-		var defaults = {src:'',btn:$('a.bgmBtn'),playClassName:'bgmPlay',stopClassName:'bgmStop'};
+		var defaults = {src:'',btn:$('a.bgmBtn'),playClassName:'bgmPlay',stopClassName:'bgmStop',webAudio:true};
 		var opts = $.extend(defaults,options);
-		if(opts.src!=''){
-			var bgm=new bgmAudio(opts);
-			return bgm;
+		console.log(opts.webAudio?'bgm is at web audio mode':'bgm is at local audio mode');
+		if(opts.webAudio) var bgm=new webAudioBgm(opts);
+		else var bgm=new localAudioBgm(opts);
+		return bgm;
+	}//end func
+	
+	function localAudioBgm(opts){
+		var _this=this;
+		this.src=opts.src;
+	    this.onLoaded=opts.onLoaded;
+	    this.loaded=0;
+	    this.played=0;
+	    this.bgmPlay=sessionStorage.bgmPlay;
+		this.bgmPlay=this.bgmPlay||1;
+		this.bgmPlay=parseInt(this.bgmPlay);
+		console.log('bgmPlay:'+this.bgmPlay);
+		this.bgmTime=sessionStorage.bgmTime;
+		this.bgmTime=this.bgmTime||0;
+		this.bgmTime=Number(this.bgmTime);
+		console.log('bgmTime:'+this.bgmTime);
+		this.currentTime = this.bgmTime;
+		this.btn=opts.btn;
+		this.playClassName=opts.playClassName;
+		this.stopClassName=opts.stopClassName;
+		this.audio=new Audio();
+		this.audio.src=this.src;
+		this.audio.loop=true;
+		this.audio.load();
+		this.audio.addEventListener('loadeddata',init,false);
+		if(this.onLoaded) this.audio.addEventListener('loadeddata',this.onLoaded,false);
+		
+		function init(event){
+			_this.loaded=1;
+			if(_this.bgmPlay) _this.play();
+			else _this.pause();
+		}//end func
+		
+	}//end func
+	
+	localAudioBgm.prototype.play=function(e){
+		var _this=e?e.data.target:this;
+		if(!_this.played && _this.loaded){
+			_this.played=1;
+			_this.audio.currentTime=_this.currentTime;
+			_this.audio.play();
+			_this.bgmPlay=1;
+			if(_this.btn.length>0) _this.btn.removeClass(_this.stopClassName).addClass(_this.playClassName).one('click',{target:_this},_this.pause);
 		}//edn if
 	}//end func
 	
-	function bgmAudio(opts){
+	localAudioBgm.prototype.pause=function(e){
+		var _this=e?e.data.target:this;
+	    if(_this.played && _this.loaded){
+	    	_this.played=0;
+	    	_this.currentTime = _this.audio.currentTime;
+	    	_this.audio.pause();
+	    	_this.bgmPlay=0;
+		}//edn if
+		if(_this.btn.length>0) _this.btn.removeClass(_this.playClassName).addClass(_this.stopClassName).one('click',{target:_this},_this.play);
+	}//end func
+	
+	function webAudioBgm(opts){
 		this.context=new window.webkitAudioContext();
 	    this.buffer=null;
 	    this.source=null;
@@ -230,7 +285,7 @@ function importAudio(){
 	    this.load();
 	}//end func
 	
-	bgmAudio.prototype.load=function(){
+	webAudioBgm.prototype.load=function(){
 		var _this=this;
 	    var xhr = new XMLHttpRequest(); //通过XHR下载音频文件
 	    xhr.open('GET', _this.src, true);
@@ -252,7 +307,7 @@ function importAudio(){
 	    }//edn func
 	}//edn prototype
 	
-	bgmAudio.prototype.play=function(e){
+	webAudioBgm.prototype.play=function(e){
 		var _this=e?e.data.target:this;
 		_this.bgmPlay=1;
 		_this.source = _this.context.createBufferSource();
@@ -264,7 +319,7 @@ function importAudio(){
 		if(_this.btn.length>0) _this.btn.removeClass(_this.stopClassName).addClass(_this.playClassName).one('click',{target:_this},_this.pause);
 	}//end prototype
 	
-	bgmAudio.prototype.pause=function(e){
+	webAudioBgm.prototype.pause=function(e){
 		var _this=e?e.data.target:this;
 	    if(_this.source){
 			_this.bgmPlay=0;

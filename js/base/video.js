@@ -18,7 +18,7 @@ function importVideo(){
 			if(opts.onPlay) container[0].addEventListener('play',opts.onPlay,false);
 			if(opts.onPause) container[0].addEventListener('pause',opts.onPause,false);
 			if(opts.autoplay) container[0].play();
-			return container;
+			return container[0];
 		}//end if
 	}//end func
 	
