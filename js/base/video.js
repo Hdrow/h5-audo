@@ -1,4 +1,4 @@
-//2016.7.29
+//2016.8.4
 var ivideo=importVideo();
 
 function importVideo(){
@@ -10,7 +10,7 @@ function importVideo(){
 			var opts = $.extend(defaults,options);
 			if(!opts.playsinline) opts.controls=true;
 			var container=$('<video></video>').attr({src:src,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
-			if(opts.playsinline) container.attr({'webkit-playsinline':opts.playsinline});
+			if(opts.playsinline) container.attr({'webkit-playsinline':opts.playsinline,'x-webkit-airplay':true});
 			if(opts.controls) container.attr({controls:true});
 			if(opts.onLoaded) container[0].addEventListener('canplaythrough',opts.onLoaded,false);
 			if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
@@ -73,7 +73,7 @@ function importVideo(){
 			else if(opts.type=='qq') $('<iframe width='+opts.width+' height='+opts.height+' src=http://v.qq.com/iframe/player.html?vid='+opts.vid+'&tiny=0&auto='+(opts.autoplay?1:0)+' frameborder=0 allowfullscreen></iframe>').appendTo(opts.box);
 			else if(opts.type=='mp4'){
 				var container=$('<video></video>').attr({src:opts.vid,poster:opts.poster}).appendTo(opts.box);
-				if(opts.playsinline) container.attr({'webkit-playsinline':opts.playsinline});
+				if(opts.playsinline) container.attr({'webkit-playsinline':opts.playsinline,'x-webkit-airplay':true});
 				if(opts.controls) container.attr({controls:true});
 				if(opts.autoplay) container[0].play();
 				if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
