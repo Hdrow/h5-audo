@@ -119,7 +119,6 @@
 		show: function(callback) {
 			var self = this;
 			self.callback = callback;
-			console.log(self.mask)
 			if(self.mask) self.mask.show();
 			document.body.classList.add($.className('poppicker-active-for-page'));
 			self.panel.classList.add($.className('active'));
