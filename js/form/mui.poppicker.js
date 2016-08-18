@@ -55,7 +55,7 @@
 			self.ok = self.panel.querySelector('.mui-poppicker-btn-ok');
 			self.cancel = self.panel.querySelector('.mui-poppicker-btn-cancel');
 			self.body = self.panel.querySelector('.mui-poppicker-body');
-			self.mask = $.createMask();
+			self.mask=self.options.mask;
 			self.cancel.innerText = self.options.buttons[0];
 			self.ok.innerText = self.options.buttons[1];
 			self.cancel.addEventListener('tap', function(event) {
@@ -68,9 +68,6 @@
 						self.hide();
 					}
 				}
-			}, false);
-			self.mask[0].addEventListener('tap', function() {
-				self.hide();
 			}, false);
 			self._createPicker();
 			//防止滚动穿透
@@ -122,7 +119,8 @@
 		show: function(callback) {
 			var self = this;
 			self.callback = callback;
-			self.mask.show();
+			console.log(self.mask)
+			if(self.mask) self.mask.show();
 			document.body.classList.add($.className('poppicker-active-for-page'));
 			self.panel.classList.add($.className('active'));
 			//处理物理返回键
@@ -136,7 +134,7 @@
 			var self = this;
 			if (self.disposed) return;
 			self.panel.classList.remove($.className('active'));
-			self.mask.close();
+			if(self.mask) self.mask.hide();
 			document.body.classList.remove($.className('poppicker-active-for-page'));
 			//处理物理返回键
 			$.back=self.__back;
