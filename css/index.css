@@ -5,13 +5,13 @@
 
 }
 
-/*---------------------------------------- css media 适配部分（针对android）----------------------*/
-@media screen and (device-width:360px), screen and (device-width:412px) and (-webkit-min-device-pixel-ratio:3.5){
+/*---------------------------------------- css media 适配部分（针对iphone4） ----------------------------------------------*/
+@media screen and (device-width:320px) and (device-height:480px), screen and (device-width:540px) and (device-height:702px){
 
 }
 
-/*---------------------------------------- css media 适配部分（针对iphone4） ----------------------------------------------*/
-@media screen and (device-width:320px) and (device-height:480px), screen and (device-width:540px) and (device-height:702px){
+/*---------------------------------------- css media 适配部分（针对android）----------------------*/
+@media screen and (device-width:360px), screen and (device-width:412px) and (-webkit-min-device-pixel-ratio:3.5){
 
 }
 
