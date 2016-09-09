@@ -1,4 +1,4 @@
-//2016.7.26
+//2016.9.9
 (function() {
 	$.event.special.swipe = {
 		setup: function() {
@@ -15,6 +15,7 @@
 			}//end func
 			
 			function _this_touchmove(e) {
+				e.preventDefault();
 				e.stopImmediatePropagation();
 				var data = e.originalEvent.changedTouches[0];
 				_stop = {
