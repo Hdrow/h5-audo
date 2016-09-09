@@ -1,4 +1,4 @@
-//2016.8.15
+//2016.9.9
 var iaudio=importAudio();
 
 function importAudio(){
@@ -14,7 +14,7 @@ function importAudio(){
 			if(options){
 				this.onProgress=options.onProgress;
 				this.onComplete=options.onComplete;
-				this.webAudio=options.webAudio!=null?options.webAudio:1;	
+				this.webAudio=options.webAudio||0;	
 			}//end if
 			console.log(this.webAudio?'web audio mode':'local audio mode');
 			for(var i=0; i<list.length; i++){
@@ -350,7 +350,7 @@ function importBgm(){
 		opts = $.extend(defaults,options);
 		if(opts.src!=''){
 			ibase.creatNode('a',null,'bgmBtn',null);
-			bgm.audio=iaudio.bgm({src:opts.src,onLoaded:opts.onLoad,webAudio:opts.webAudio});
+			bgm.audio=iaudio.bgm({src:opts.src,onLoaded:opts.onLoaded,webAudio:opts.webAudio});
 		}//edn if
 	}//edn func
 	
