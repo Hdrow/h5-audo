@@ -10,7 +10,7 @@ function importAudio(){
 			this.soundList={};
 			this.soundMax=0;
 			this.soundLoaded=0;
-			this.webAudio=1;
+			this.webAudio=0;
 			if(options){
 				this.onProgress=options.onProgress;
 				this.onComplete=options.onComplete;
