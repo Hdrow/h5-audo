@@ -1,4 +1,4 @@
-//2015.8.24
+//2015.9.20
 var loop = new Loop({ keyname: 'loop_test', appkey: '', link: '' });
 var iuser=importUser();
 
@@ -17,7 +17,9 @@ function importUser(){
 	
 	function initCallback(data,callback){
 		console.log('获得微信用户数据');
-		icom.objectPrint(data);
+		setTimeout(function(){
+			icom.objectPrint(data);
+		},50);
 		user.info=data;
 		if(callback) callback(data);
 	}//end func
