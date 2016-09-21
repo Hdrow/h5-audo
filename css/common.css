@@ -41,7 +41,7 @@ html{font-size:50px;}
 /* ---------------------------------------- css common 公共部分 ---------------------------------------- */
 
 /* load浮层 */
-aside.loadBox{ position:fixed; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:996; display: none;}
+aside.loadBox{ position:absolute; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:996; display: none;}
 aside.loadBox>span{ display:block; position:absolute; left:50%; top:50%; margin-left:-0.1rem; margin-top:-0.2rem; -webkit-transform:scale(0.4); -webkit-transform-origin: 50% 50%;}
 aside.loadBox>span i{ display:block; position:absolute; left:0; top:0; width:0.4rem; height:0.1rem; border-radius:0.08rem; background-color:rgba(255,255,255,0.5); box-shadow:0 0 0.1rem rgba(255,255,255,1);}
 aside.loadBox>span i:nth-child(1){ -webkit-transform:translate(0.6rem, 0) rotate(0deg); -webkit-animation:loadCircle 2.4s 0s linear infinite;}
@@ -72,7 +72,7 @@ aside.loadBox>b{ display:block; position:absolute; left:0; top:50%; width:100%; 
 }
 
 /* 取代系统alert的警告提示弹窗 */
-aside.alertBox{ position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:998;}
+aside.alertBox{ position:absolute; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:998;}
 aside.alertBox>div{ position: absolute; left: 50%; top: 50%; width:85%; -webkit-transform: translate(-50%,-50%); background-color:#FAFAFC; border-radius:0.06rem; padding-top: 0.4rem;}
 aside.alertBox>div>p.text{font-size:0.28rem; line-height: 0.4rem; color:#888; padding: 0 0.4rem 0; margin-bottom: 0.4rem; text-align:center; }
 aside.alertBox>div>p.btn{ text-align: center; border-top: 1px solid #D5D5D6; position: relative; }
@@ -80,24 +80,24 @@ aside.alertBox>div>p.btn a{ color:#0BB20C; font-size:0.34rem; line-height: 0.84r
 aside.alertBox>div>p.btn a:active{ background-color: #eeeeee;}
 
 /* 视频 */
-aside.videoBox{position:fixed; left:0; top:0; width:100%; height:100%; background-color:#000; z-index:996; display:none;}
+aside.videoBox{position:absolute; left:0; top:0; width:100%; height:100%; background-color:#000; z-index:996; display:none;}
 aside.videoBox>iframe,aside.videoBox>video{position:absolute; left:0;}
 aside.videoBox>a.close{ position:absolute; right:0.4rem; top:0.4rem; width:0.6rem; height:0.6rem; background-image: url(../images/common/close_video.png);}
 
 /* 照片文件选择框*/
-#fileBox{ position:fixed; left:0; top:0; width:1px; height:1px; overflow:hidden; visibility: hidden;}
+#fileBox{ position:absolute; left:0; top:0; width:1px; height:1px; overflow:hidden; visibility: hidden;}
 
 /* 电子罗盘数据面板 */
-#compassPanel{ position:fixed; right:0; top:0; width:40%; background-color:rgba(0,0,0,0.5); z-index: 99; display:none;}
+#compassPanel{ position:absolute; right:0; top:0; width:40%; background-color:rgba(0,0,0,0.5); z-index: 99; display:none;}
 #compassPanel h3{color:#fff; background-color:rgba(255,255,255,0.2); padding:0.1rem 0.2rem; margin-bottom:0.1rem; font-size: 0.24rem;}
 #compassPanel p{ color:#fff; font-size:0.22rem; margin-bottom:0.1rem; margin-left:0.2rem;}
 
 /* 测试版本提示信息 */
-#signBar{position:fixed; top:0; left:0; width:100%; background-color:rgba(0,0,0,0.7); box-shadow:0 0.02rem 0.1rem #888; padding:0.1rem 0; text-align:center; pointer-events:none; z-index:99;}
+#signBar{position:absolute; top:0; left:0; width:100%; background-color:rgba(0,0,0,0.7); box-shadow:0 0.02rem 0.1rem #888; padding:0.1rem 0; text-align:center; pointer-events:none; z-index:99;}
 #signBar>span{font-size:0.32rem; text-shadow:0 0 0.02rem #000; color:rgba(255,255,255,0.9);}
 
 /* 分享浮层 */
-aside.shareBox{position:fixed; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.7); z-index:997; display:none;}
+aside.shareBox{position:absolute; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.7); z-index:997; display:none;}
 aside.shareBox>img{ width:100%;}
 
 /* 背景音乐按钮 */
