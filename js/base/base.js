@@ -1,4 +1,4 @@
-//2016.9.20
+//2016.9.21
 //-----------------------------------os
 var os=importOS();
 function importOS() {
@@ -10,14 +10,7 @@ function importOS() {
 	os.ios = os.ipad || os.iphone;
 	os.wp=userAgent.match(/Windows Phone/) || userAgent.match(/IEMobile/) ? true : false;
 	os.supportsTouch = ((window.DocumentTouch && document instanceof window.DocumentTouch) || 'ontouchstart' in window);
-	//这里有可能会报错 try
-	if(os.ios){
-		try{
-			os.iosVer = parseInt(userAgent.match(/OS \d_/)[0].match(/\d/)[0]);
-		}catch(e){
-			os.iosVer = 0;
-		}
-	}
+	if(os.ios) os.iosVer=userAgent.match(/OS \d+_/).length>0?parseInt(userAgent.match(/OS \d+_/)[0].match(/\d+/)[0]):0;
 	os.weixin = userAgent.match(/MicroMessenger/) ? true : false;
 	os.weibo = userAgent.match(/Weibo/) || userAgent.match(/weibo/) ? true : false;
 	os.netease = userAgent.indexOf("NewsApp")>=0 ? true : false;
