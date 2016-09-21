@@ -1,4 +1,4 @@
-//2016.6.29
+//2016.9.21
 var ishare=importShare();
 
 (function() {
@@ -9,8 +9,8 @@ var ishare=importShare();
 		link:ishare.url,
 		image:ishare.url+'images/share.jpg?v='+Math.random(),
 		title:$('title').html(),
-		friend:'发送给朋友的文字',
-		timeline:'发送到朋友圈的文字'
+		friend:'听明星讲宝贝天赋故事',
+		timeline:'听明星讲宝贝天赋故事'
 	};
 	ishare.from=icom.getQueryString('from');
 	ishare.from=ishare.from||'friend';
@@ -173,6 +173,7 @@ function importShare(){
 		if(box) var shareBox=box;
 		else var shareBox=$('#shareBox');
 		if(shareBtn.length>0){
+			share.shareBtn=shareBtn;
 			if(os.weixin){
 				if(shareBox.length==0) shareBox=$('<aside class="shareBox"><img src="images/common/share.png"></aside>').appendTo($('body'));
 				shareBtn.on('touchend',{box:shareBox},shareBtn_click);
@@ -198,7 +199,7 @@ function importShare(){
 			if(os.weixin) wx.ready(function(){
 				share.wxShare();
 			});//end wx.ready
-			else share.wbShare({ url: share.content.link, text: share.content.timeline, image: share.content.image });
+			else share.wbShare({ obj:share.shareBtn, url: share.content.link, text: share.content.timeline, image: share.content.image });
 		}//end if
 	}//end func
 	
