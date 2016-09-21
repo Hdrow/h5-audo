@@ -11,7 +11,7 @@ $(document).ready(function(){
 	function init(){
 //		loadBox.show();
 		iuser.init(userGetted);
-//		load_handler();		
+//		load_handler();
 	}//edn func
 
 	
