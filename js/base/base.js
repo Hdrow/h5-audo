@@ -130,16 +130,5 @@ function importBase(){
 		return {type:type,src:src};
 	}//end func
 	
-	base.getUrl = function(url,para) {
-		var now=-1;
-        for(var key in para){
-        	now++;
-        	if(now==0) url+='?';
-        	else url+='&';
-        	url+=key+'='+para[key]
-        }//end for
-        return url;
-    };//end func
-	
 	return base;
 }//end func

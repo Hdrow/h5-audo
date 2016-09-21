@@ -1,4 +1,4 @@
-//2016.7.29
+//2016.8.21
 var icom=importCom();
 
 function importCom(){
@@ -417,6 +417,16 @@ function importCom(){
 		}//edn func
 	}//edn fuc
 	
+	com.url = function(url,para) {
+		var now=-1;
+        for(var key in para){
+        	now++;
+        	if(now==0) url+='?';
+        	else url+='&';
+        	url+=key+'='+para[key]
+        }//end for
+        return url;
+    };//end func
 	
 	return com;
 	
