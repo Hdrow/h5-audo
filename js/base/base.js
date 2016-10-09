@@ -36,21 +36,27 @@ function importBase(){
 	base.dir='portrait';
 	base.keyboard=false;
 	base.lock=false;
+	base.cssMedia=750;
 	
-	base.viewport=function(unit,wd,pxCss){
+	base.width=function(wd){
+		wd=wd||750;
+		wd=wd!=750?640:wd;
+		base.cssMedia=wd;
+	}//edn func
+	
+	base.viewport=function(unit,pxCss){
 		unit=unit||'rem';
-		wd=wd||640;
 		pxCss=pxCss||'css/px.css';
 		if(unit=='rem' || unit=='em'){
 			document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
-			document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
+			document.write('<link rel="stylesheet" type="text/css" href="css/common'+(base.cssMedia==750?'':base.cssMedia)+'.css" />');
 		}//end if
 		else if(unit=='html2canvas'){
-			document.write('<meta name="viewport" content="width='+wd+',target-densitydpi=device-dpi,user-scalable=no">');
-			document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
+			document.write('<meta name="viewport" content="width='+base.cssMedia+',target-densitydpi=device-dpi,user-scalable=no">');
+			document.write('<link rel="stylesheet" type="text/css" href="css/common'+(base.cssMedia==750?'':base.cssMedia)+'.css" />');
 		}//end else
 		else if(unit=='px'){
-			document.write('<meta name="viewport" content="width='+wd+', minimum-scale = '+window.screen.width/wd+', maximum-scale = '+window.screen.width/wd+', target-densitydpi=device-dpi">');
+			document.write('<meta name="viewport" content="width='+base.cssMedia+', minimum-scale = '+window.screen.width/base.cssMedia+', maximum-scale = '+window.screen.width/base.cssMedia+', target-densitydpi=device-dpi">');
 			document.write('<link rel="stylesheet" type="text/css" href="'+pxCss+'" />');
 		}//edn else
 	}//edn func
@@ -76,13 +82,13 @@ function importBase(){
 	}//end func
 	
 	base.orient=function(dir){
-		this.dir = dir || "portrait";
-    	if(this.dir=="portrait") this.load("css/portrait.css");
-    	else this.load("css/landscape.css");
-    	if (this.dir == "portrait")  document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏模式</p></aside>');
+		this.dir = dir || 'portrait';
+    	if(this.dir=='portrait') this.load('css/portrait'+(base.cssMedia==750?'':base.cssMedia)+'.css');
+    	else this.load('css/landscape'+(base.cssMedia==750?'':base.cssMedia)+'.css');
+    	if (this.dir == 'portrait')  document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏模式</p></aside>');
     	else document.write('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" class="turn"><p>请将手机调至横屏模式</p></aside>');
 	    this.turnBox=document.getElementById("turnBox");
-	    if (this.dir!=(window.innerWidth > window.innerHeight ? "landscape" :"portrait")){
+	    if (this.dir!=(window.innerWidth > window.innerHeight ? 'landscape' :'portrait')){
 	    	this.turnBox.style.display = "block";
 	    	this.lock=true;
 	    }//edn if
