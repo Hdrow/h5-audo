@@ -1,5 +1,5 @@
 /* ---------------------------------------- css base 基础部分---------------------------------------- */
-* {margin:0;padding:0; border:0; word-break:break-word; font-family:'微软雅黑','Helvetica', 'arial', 'sans-serif'; background-size:100% 100%; -webkit-mask-size: 100% 100%; -webkit-tap-highlight-color: rgba(0,0,0,0); font-size: 0.2rem; line-height: 1; }
+* {margin:0;padding:0; border:0; word-break:break-word; font-family:'微软雅黑','Helvetica', 'arial', 'sans-serif'; background-size:100% 100%; -webkit-mask-size: 100% 100%; -webkit-tap-highlight-color: rgba(0,0,0,0); font-size: 0.234rem; line-height: 1; }
 html,body{ width:100%; height:100%;}
 table{border-collapse:collapse;border-spacing:0;}
 th,tr,td,h1,h2,h3,h4,h5,h6,i,b,em{font-style:normal;font-weight:normal;}
@@ -22,26 +22,26 @@ a>img{ width:100%;}
 .gpuOpen{will-change:transform,opacity;}
 .gpuClose{will-change:auto;}
 .smoothSlide {-webkit-overflow-scrolling: touch;}/* ios设备平滑滚动 */
-.txtShadow{text-shadow: 0.02rem 0 0 #fff, -0.02rem 0 0 #fff, 0 0.02rem 0 #000, 0 -0.02rem 0 #000; }
+.txtShadow{text-shadow: 0.0234rem 0 0 #fff, -0.0234rem 0 0 #fff, 0 0.0234rem 0 #000, 0 -0.0234rem 0 #000; }
 
 /* css media */
 html{font-size:50px;}
 /* 竖屏 */
-@media screen and (width:320px){html{font-size: 50px;}}
-@media screen and (width:360px){html{font-size: 56.25px;}}
-@media screen and (width:375px){html{font-size: 58.59px;}}
-@media screen and (width:412px){html{font-size: 64.375px;}}
-@media screen and (width:414px){html{font-size: 64.6875px;}}
-@media screen and (width:540px){html{font-size: 84.38px;}}
+@media screen and (width:320px){html{font-size: 42.667px;}}
+@media screen and (width:360px){html{font-size: 48px;}}
+@media screen and (width:375px){html{font-size: 50px;}}
+@media screen and (width:412px){html{font-size: 54.933px;}}
+@media screen and (width:414px){html{font-size: 55.2px;}}
+@media screen and (width:540px){html{font-size: 72px;}}
 /* 横屏 */
 @media screen and (width:480px){html{font-size: 35.982px;}}
-@media screen and (width:568px){html{font-size: 50px;}}
-@media screen and (width:598px) { html{font-size: 52.64px;}}
-@media screen and (width:640px){html{font-size: 56.338px;}}
-@media screen and (width:667px){html{font-size: 58.714px;}}
-@media screen and (width:732px){html{font-size: 64.437px;}}
-@media screen and (width:736px){html{font-size: 64.789px;}}
-@media screen and (width:1136px){html{font-size: 100px;}}
+@media screen and (width:568px){html{font-size: 42.579px;}}
+@media screen and (width:598px) { html{font-size: 44.827px;}}
+@media screen and (width:640px){html{font-size: 47.976px;}}
+@media screen and (width:667px){html{font-size: 50px;}}
+@media screen and (width:732px){html{font-size: 54.872px;}}
+@media screen and (width:736px){html{font-size: 55.172px;}}
+@media screen and (width:1136px){html{font-size: 85.157px;}}
 
 /* ---------------------------------------- css common 公共部分 ---------------------------------------- */
 
@@ -114,3 +114,68 @@ a.bgmStop{ background-image: url(../images/common/bgm_off.png);}
 body{ background-color:#fff; color:#000;}
 a,a:visited{ color:#000;}
 article{ width:100%; height: 100%; position:relative; }
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
+/* 竖屏media: iphone6 width=750px */
+@media screen and (min-width: 320px){html{font-size: 42.667px;}}
+@media screen and (min-width: 360px){html{font-size: 48px;}}
+@media screen and (min-width: 375px){html{font-size: 50px;}}
+@media screen and (min-width: 412px){html{font-size: 54.933px;}}
+@media screen and (min-width: 414px){html{font-size: 55.2px;}}
+@media screen and (min-width: 480px){html{font-size: 64px;}}
+@media screen and (min-width: 540px){html{font-size: 72px;}}
+@media screen and (min-width: 640px){html{font-size: 85.333px;}}
+@media screen and (min-width: 720px){html{font-size: 96px;}}
+@media screen and (min-width: 768px){html{font-size: 102.4px;}}
+@media screen and (min-width: 1080px){html{font-size: 144px;}}
+@media screen and (min-width: 1440px){html{font-size: 192px;}}
+@media screen and (min-width: 2160px){html{font-size: 288px;}}
+
+
+/* 竖屏翻转提示浮层 */
+aside.turnBoxPortrait{ position:fixed; left:0; top:0; width:100%; height:100%; background:#000; z-index:999; display: none;}
+aside.turnBoxPortrait>img.turn{ display:block; margin:0.4rem auto 0.2rem; height:58%;}
+aside.turnBoxPortrait>p{ text-align:center; font-size:0.24rem; color:#fff;}
+
+/* 取代系统alert的警告提示弹窗 */
+aside.alertBox>div{width:85%;}
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+/* 横屏media: iphone6 width=1344px */
+@media screen and (min-width: 480px) { html{font-size: 35.982px;}}
+@media screen and (min-width: 568px) { html{font-size: 42.579px;}}
+@media screen and (min-width: 598px) { html{font-size: 44.827px;}}
+@media screen and (min-width: 640px) { html{font-size: 47.976px;}}
+@media screen and (min-width: 667px) { html{font-size: 50px;}}
+@media screen and (min-width: 732px) {html{font-size: 54.872px;}}
+@media screen and (min-width: 736px) { html{font-size: 55.172px;}}
+@media screen and (min-width: 800px) { html{font-size: 59.97px;}}
+@media screen and (min-width: 854px) { html{font-size: 64.018px;}}
+@media screen and (min-width: 960px) { html{font-size: 71.964px;}}
+@media screen and (min-width: 1024px) { html{font-size: 76.762px;}}
+@media screen and (min-width: 1136px) { html{font-size: 85.157px;}}
+@media screen and (min-width: 1280px) { html{font-size: 95.952px;}}
+@media screen and (min-width: 1920px) { html{font-size: 143.928px;}}
+@media screen and (min-width: 2560px) { html{font-size: 191.904px;}}
+@media screen and (min-width: 3840px) { html{font-size: 287.856px;}}
+
+/* 横屏翻转提示浮层 */
+aside.turnBoxLandscape{ position:fixed; left:0; top:0; width:100%; height:100%; background:#000; z-index:999; display: none;}
+aside.turnBoxLandscape>img.turn{ display:block; padding-top: 3rem; margin:0 auto 0.4rem; width:50%;}
+aside.turnBoxLandscape>p{ text-align:center; font-size:0.3rem; color:#fff;}
+
+/* 取代系统alert的警告提示弹窗 */
+aside.alertBox>div{width:50%;}

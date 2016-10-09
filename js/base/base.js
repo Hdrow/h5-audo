@@ -1,9 +1,10 @@
-//2016.9.21
+//2016.10.9
 //-----------------------------------os
 var os=importOS();
 function importOS() {
 	var	userAgent=navigator.userAgent;
 	var os = {};
+	os.userAgent=userAgent;
 	os.android = userAgent.match(/(Android)\s+([\d.]+)/) || userAgent.match(/Silk-Accelerated/) ? true : false;
 	os.ipad = userAgent.match(/(iPad).*OS\s([\d_]+)/) ? true : false;
 	os.iphone = !os.ipad && userAgent.match(/(iPhone\sOS)\s([\d_]+)/) ? true : false;
