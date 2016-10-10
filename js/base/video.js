@@ -1,4 +1,4 @@
-//2016.8.4
+//2016.9.10
 var ivideo=importVideo();
 
 function importVideo(){
@@ -18,6 +18,10 @@ function importVideo(){
 			if(opts.onPlay) container[0].addEventListener('play',opts.onPlay,false);
 			if(opts.onPause) container[0].addEventListener('pause',opts.onPause,false);
 			if(opts.autoplay) container[0].play();
+			if(opts.autoSize && opts.videoSize){
+				var size=imath.autoSize(opts.videoSize,opts.autoSize,1);
+				container.css({width:size[0],height:size[1],marginLeft:(opts.autoSize[0]-size[0])*0.5,marginTop:(opts.autoSize[1]-size[1])*0.5});
+			}//edn if
 			return container[0];
 		}//end if
 	}//end func
@@ -44,7 +48,7 @@ function importVideo(){
 	video.getVid=function(url,type){
 		if(type=='youku'){
 			var str1=url.split('id_')[1];
-			var str2=str1.split('==')[0];
+			var str2=str1.split('.')[0];
 			return str2;
 		}//edn if
 		else if(type=='qq'){
@@ -94,12 +98,12 @@ function importVideo(){
 		var vid=video.getVid(url,type);
 		if(vid && vid!=''){
 			if(onOpen) onOpen();
-			var ht=$(window).width()*0.5;
-			var top=$(window).height()/2-ht/2;
+			var ht=window.innerWidth*9/16;
+			var top=window.innerHeight/2-ht/2;
 			if(type=='youku') $('<iframe width=100% height='+ht+' src=http://player.youku.com/embed/'+vid+ (autoplay?'?autoplay=true':'') + ' frameborder=0 allowfullscreen></iframe>').css({top:top}).appendTo(box);
 			else if(type=='qq') $('<iframe width=100% height='+ht+' src=http://v.qq.com/iframe/player.html?vid='+vid+'&tiny=0&auto='+(autoplay?1:0)+' frameborder=0 allowfullscreen></iframe>').css({top:top}).appendTo(box);
 			else if(type=='mp4'){
-				var container=$('<video></video>').attr({src:vid,poster:$(this).data('poster'),controls:true}).css({height:ht,top:top}).appendTo(box);
+				var container=$('<video></video>').attr({src:vid,poster:$(this).data('poster'),controls:true}).css({width:window.innerWidth,height:ht,top:top}).appendTo(box);
 				if(playsinline) container.attr({'webkit-playsinline':playsinline});
 				if(autoplay) container[0].play();
 				if(onEnded) container[0].addEventListener('ended',onEnded,false);
