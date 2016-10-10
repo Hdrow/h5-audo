@@ -9,7 +9,7 @@ $(document).ready(function(){
 	icom.screenTo169(true,false);//把非16:9屏幕的article标签拉伸至16:9,第一个参数是iphone4，第二个参数是非物理系统按键的安卓
 	
 	function init(){
-		loadBox.show();
+//		loadBox.show();
 		iuser.init(userGetted);
 //		load_handler();
 	}//edn func
@@ -56,7 +56,6 @@ $(document).ready(function(){
 		console.log('init handler');
 //		icom.fadeOut(loadBox,500);
 		monitor_handler();
-		icom.alert(os.userAgent);
 	}//end func
 	
 	//----------------------------------------页面监测代码----------------------------------------
