@@ -21,28 +21,29 @@ Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/602.1.50 (K
 
 //---------------------------------------------------- 安卓
 物理分辨率 ：
-android 480P screen:480x854
-android 540P screen:540x960
-android 720P screen:720x1280
-android 1080P screen:1080x1920
-android 2K screen:1440x2560
-android 4K screen:2160x3840
-android 480P not 16：9 screen:480x800
-android 540P not 16：9 screen:540x906
-android 720P not 16：9 screen:720x1184
-android 1080P not 16：9 screen:1080x1776
+android 480P :480x854
+android 540P :540x960
+android 720P :720x1280
+android 1080P :1080x1920
+android 2K :1440x2560
+android 4K :2160x3840
+android 480P not 16:9 :480x800
+android 540P not 16:9 :540x906
+android 720P not 16:9 :720x1184
+android 1080P not 16:9 :1080x1776
+android 2k not 16:9 :1440x2390
 
 微信竖屏：
-android 16:9 screen:360x640/weixin:360x567
+android 16:9 720p/1080p screen:360x640/weixin:360x567
 android 16:9 2k screen:412x732/weixin:412x660
-android not 16:9 720p screen:360x592/weixin:360x519
-android not 16:9 1080p screen:360x604/weixin:360x531
+android not 16:9 720p/1080p screen:360x592/weixin:360x520
 android not 16:9 2k screen:412x684/weixin:412x612
 
 微信横屏：
-android 16:9 screen:640x360 /weixin:640x295
+android 16:9 720p/1080p screen:640x360/weixin:640x295
 android 16:9 2k screen:732x412/weixin:732x338
-android not 16:9 screen:598x360 /weixin:598x295
+android not 16:9 720p/1080p screen:598x360/weixin:598x288
+android not 16:9 2k screen:684x412/weixin:684x340
 
 浏览器标识：
 Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36
