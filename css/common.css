@@ -36,7 +36,7 @@ html{font-size:50px;}
 /* 横屏 */
 @media screen and (width:480px){html{font-size: 35.982px;}}
 @media screen and (width:568px){html{font-size: 42.579px;}}
-@media screen and (width:598px) { html{font-size: 44.827px;}}
+@media screen and (width:598px){html{font-size: 44.827px;}}
 @media screen and (width:640px){html{font-size: 47.976px;}}
 @media screen and (width:667px){html{font-size: 50px;}}
 @media screen and (width:684px){html{font-size: 51.274px;}}
