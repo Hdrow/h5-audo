@@ -144,8 +144,7 @@ function importMath(){
 	                arguments.callee(clone[i],source[i]);
 	            }//end if
 	            else clone[i]=source[i];
-	        }//end fo
-			return clone;
+	        }//end for
 		}//end if
 		
 		function getType(o){
