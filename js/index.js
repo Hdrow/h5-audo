@@ -13,7 +13,6 @@ $(document).ready(function(){
 		iuser.init(userGetted);
 //		load_handler();
 	}//edn func
-
 	
 	//----------------------------------------微信用户登录验证----------------------------------------	
 	function userGetted(data){

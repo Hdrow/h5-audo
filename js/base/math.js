@@ -1,4 +1,4 @@
-//2016.9.12
+//2016.10.13
 var imath=importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath(){
@@ -136,20 +136,25 @@ function importMath(){
 	}//end func
 	
 	//对array和object对象的深度复制
-	math.deepClone=function(data){
-		if(data && typeof(data)==='object'){
-			if(Array == data.constructor){
-				var clone=[];
-				for(var i=0; i<data.length; i++) clone[i]=data[i];
-			}//edn if
-			else{
-				var clone={};
-				for(var i in data) clone[i]=data[i];
-			}//edn else
+	math.deepClone=function(clone,source){
+		if(getType(source)===getType(clone)){
+			for(var i in source){
+	            if(typeof(source[i])==='object'){
+	            	clone[i]=getType(source[i])=="array"?[]:{};
+	                arguments.callee(clone[i],source[i]);
+	            }//end if
+	            else clone[i]=source[i];
+	        }//end fo
 			return clone;
-		}//edn if
-		else return data;
+		}//end if
+		
+		function getType(o){
+			if(typeof(o)==='object') return Array == o.constructor?'array':'object';
+	    	else return null;
+		}//end func
+		
 	}//end func
+	
 	
 	//获得Object的长度
 	math.objectLength=function(obj){
