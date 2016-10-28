@@ -1,4 +1,4 @@
-//2016.9.9
+//2016.10.28
 var iaudio=importAudio();
 
 function importAudio(){
@@ -34,7 +34,8 @@ function importAudio(){
 						onLoaded:opts.onLoaded,
 						onEnded:opts.onEnded,
 						onPlay:opts.onPlay,
-						onPause:opts.onPause
+						onPause:opts.onPause,
+						onTimeupdate:opts.onTimeupdate
 					};
 					if(this.webAudio) this.soundList[name]=new webAudio(option);
 					else this.soundList[name]=new localAudio(option);
@@ -71,6 +72,7 @@ function importAudio(){
 	    this.onEnded=opts.onEnded;
 	    this.onPlay=opts.onPlay;
 	    this.onPause=opts.onPause;
+	    this.onTimeupdate=opts.onTimeupdate;
 	    this.loaded=0;
 	    this.played=0;
 	    this.ended=0;
@@ -85,6 +87,7 @@ function importAudio(){
 		if(this.onLoaded) this.audio.addEventListener('loadeddata',this.onLoaded,false);
 		if(this.onPlay) this.audio.addEventListener('play',this.onPlay,false);
 		if(this.onPause) this.audio.addEventListener('pause',this.onPause,false);
+		if(this.onTimeupdate) this.audio.addEventListener('timeupdate',this.onTimeupdate,false);
 		
 		function init(event){
 			_this.loaded=1;
@@ -134,6 +137,7 @@ function importAudio(){
 	    this.onEnded=opts.onEnded;
 	    this.onPlay=opts.onPlay;
 	    this.onPause=opts.onPause;
+	    this.onTimeupdate=opts.onTimeupdate;
 	    this.loaded=0;
 	    this.played=0;
 	    this.ended=0;
@@ -149,7 +153,7 @@ function importAudio(){
 			console.log(get_src(_this.src)+' loaded');
 			_this.loaded=1;
 			if(_this.onListLoaded) _this.onListLoaded();
-			if(_this.onLoaded) _this.onLoaded();
+			if(_this.onLoaded) _this.onLoaded(_this);
 	        init(this.response);
 	    };
 	    xhr.send();
@@ -182,10 +186,15 @@ function importAudio(){
 		    		console.log(get_src(_this.src)+' ended');
 		    		_this.played=0;
 		    		_this.ended=1;
-		    		if(_this.onEnded) _this.onEnded();
+		    		if(_this.onEnded) _this.onEnded(_this);
+		    		if(_this.onTimeupdate) clearInterval(_this.timeupdate);
 		    	}//edn if
 		    };
-		    if(this.onPlay) this.onPlay();
+		    if(this.onPlay) this.onPlay(this);
+		    if(this.onTimeupdate){
+		    	clearInterval(this.timeupdate);
+		    	this.timeupdate=setInterval(this.onTimeupdate,100,this);
+		    }//edn of
 		}//edn if
 	}//end prototype
 	
@@ -195,7 +204,8 @@ function importAudio(){
 	    	this.played=0;
 			this.source.stop(0);
 	    	this.currentTime += this.context.currentTime - this.startTime;
-	    	if(this.onPause) this.onPause();
+	    	if(this.onPause) this.onPause(_this);
+	    	if(this.onTimeupdate) clearInterval(this.timeupdate);
 		}//edn if
 	}//end prototype
 	
