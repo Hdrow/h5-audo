@@ -1,4 +1,4 @@
-//2016.9.10
+//2016.10.31
 var ivideo=importVideo();
 
 function importVideo(){
@@ -6,12 +6,10 @@ function importVideo(){
 	
 	video.add=function(src,options){
 		if(src && src!=''){
-			var defaults = {shell:$('body'),controls:false,autoplay:true,playsinline:true};
+			var defaults = {shell:$('body'),controls:false,autoplay:true};
 			var opts = $.extend(defaults,options);
-			if(!opts.playsinline) opts.controls=true;
-			var container=$('<video></video>').attr({src:src,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
-			if(opts.playsinline) container.attr({'webkit-playsinline':opts.playsinline,'x-webkit-airplay':true});
-			if(opts.controls) container.attr({controls:true});
+			var container=$('<video playsinline></video>').attr({src:src,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
+			if(opts.controls) container.attr({controls:''});
 			if(opts.onLoaded) container[0].addEventListener('canplaythrough',opts.onLoaded,false);
 			if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
 			if(opts.onTimeupdate) container[0].addEventListener('timeupdate',opts.onTimeupdate,false);
@@ -27,7 +25,7 @@ function importVideo(){
 	}//end func
 	
 	video.on=function(options){
-		var defaults = {btn:$('a.btnVideo,#btnVideo'),autoplay:true,playsinline:true};
+		var defaults = {btn:$('a.btnVideo,#btnVideo'),autoplay:true};
 		var opts = $.extend(defaults,options);
 		if(opts.btn.length>0) opts.btn.on('click',opts,video_play);
 	}//end func
@@ -69,16 +67,14 @@ function importVideo(){
 	}//end func
 	
 	video.insert=function(options){
-		var defaults = {type:'youku',autoplay:false,controls:true,width:'100%',height:'100%',playsinline:true};
+		var defaults = {type:'youku',autoplay:false,controls:true,width:'100%',height:'100%'};
 		var opts = $.extend(defaults,options);
-		if(!opts.playsinline) opts.controls=true;
 		if(opts.box.length>0){
 			if(opts.type=='youku') $('<iframe width='+opts.width+' height='+opts.height+' src=http://player.youku.com/embed/'+opts.vid+ (opts.autoplay?'?autoplay=true':'') + ' frameborder=0 allowfullscreen></iframe>').appendTo(opts.box);
 			else if(opts.type=='qq') $('<iframe width='+opts.width+' height='+opts.height+' src=http://v.qq.com/iframe/player.html?vid='+opts.vid+'&tiny=0&auto='+(opts.autoplay?1:0)+' frameborder=0 allowfullscreen></iframe>').appendTo(opts.box);
 			else if(opts.type=='mp4'){
-				var container=$('<video></video>').attr({src:opts.vid,poster:opts.poster}).appendTo(opts.box);
-				if(opts.playsinline) container.attr({'webkit-playsinline':opts.playsinline,'x-webkit-airplay':true});
-				if(opts.controls) container.attr({controls:true});
+				var container=$('<video playsinline></video>').attr({src:opts.vid,poster:opts.poster}).appendTo(opts.box);
+				if(opts.controls) container.attr({controls:''});
 				if(opts.autoplay) container[0].play();
 				if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
 			}//end else
@@ -88,7 +84,6 @@ function importVideo(){
 	function video_play(e){
 		e.stopImmediatePropagation();
 		var autoplay=e.data.autoplay;
-		var playsinline=e.data.playsinline;
 		var onOpen=e.data.onOpen;
 		var onEnded=e.data.onEnded;
 		var onClose=e.data.onClose;
@@ -103,8 +98,7 @@ function importVideo(){
 			if(type=='youku') $('<iframe width=100% height='+ht+' src=http://player.youku.com/embed/'+vid+ (autoplay?'?autoplay=true':'') + ' frameborder=0 allowfullscreen></iframe>').css({top:top}).appendTo(box);
 			else if(type=='qq') $('<iframe width=100% height='+ht+' src=http://v.qq.com/iframe/player.html?vid='+vid+'&tiny=0&auto='+(autoplay?1:0)+' frameborder=0 allowfullscreen></iframe>').css({top:top}).appendTo(box);
 			else if(type=='mp4'){
-				var container=$('<video></video>').attr({src:vid,poster:$(this).data('poster'),controls:true}).css({width:window.innerWidth,height:ht,top:top}).appendTo(box);
-				if(playsinline) container.attr({'webkit-playsinline':playsinline});
+				var container=$('<video controls playsinline></video>').attr({src:vid,poster:$(this).data('poster')}).css({width:window.innerWidth,height:ht,top:top}).appendTo(box);
 				if(autoplay) container[0].play();
 				if(onEnded) container[0].addEventListener('ended',onEnded,false);
 			}//end else
