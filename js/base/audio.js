@@ -1,4 +1,4 @@
-//2016.10.28
+//2016.10.31
 var iaudio=importAudio();
 
 function importAudio(){
@@ -361,6 +361,7 @@ function importBgm(){
 		if(opts.src!=''){
 			ibase.creatNode('a',null,'bgmBtn',null);
 			bgm.audio=iaudio.bgm({src:opts.src,onLoaded:opts.onLoaded,webAudio:opts.webAudio});
+			this.btn=$('a.bgmBtn');
 		}//edn if
 	}//edn func
 	
@@ -371,6 +372,26 @@ function importBgm(){
 			sessionStorage.bgmTime=ibgm.audio.bgmPlay?bgmTime:ibgm.audio.currentTime;
 			location.href=url;
 		}//edn func
+	}//edn func
+	
+	bgm.pause=function(){
+		bgm.audio.pause();
+	}//edn func
+	
+	bgm.resume=function(){
+		bgm.audio.resume();
+	}//edn func
+	
+	bgm.hide=function(pause){
+		pause=pause||0;
+		if(pause) this.pause();
+		this.btn.hide();
+	}//edn func
+	
+	bgm.show=function(resume){
+		resume=resume||0;
+		if(resume) this.resume();
+		this.btn.show();
 	}//edn func
 	
 	return bgm;
