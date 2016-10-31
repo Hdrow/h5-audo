@@ -8,7 +8,7 @@ function importVideo(){
 		if(src && src!=''){
 			var defaults = {shell:$('body'),controls:false,autoplay:true};
 			var opts = $.extend(defaults,options);
-			var container=$('<video playsinline></video>').attr({src:src,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
+			var container=$('<video playsinline webkit-playsinline></video>').attr({src:src,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
 			if(opts.controls) container.attr({controls:''});
 			if(opts.onLoaded) container[0].addEventListener('canplaythrough',opts.onLoaded,false);
 			if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
@@ -73,7 +73,7 @@ function importVideo(){
 			if(opts.type=='youku') $('<iframe width='+opts.width+' height='+opts.height+' src=http://player.youku.com/embed/'+opts.vid+ (opts.autoplay?'?autoplay=true':'') + ' frameborder=0 allowfullscreen></iframe>').appendTo(opts.box);
 			else if(opts.type=='qq') $('<iframe width='+opts.width+' height='+opts.height+' src=http://v.qq.com/iframe/player.html?vid='+opts.vid+'&tiny=0&auto='+(opts.autoplay?1:0)+' frameborder=0 allowfullscreen></iframe>').appendTo(opts.box);
 			else if(opts.type=='mp4'){
-				var container=$('<video playsinline></video>').attr({src:opts.vid,poster:opts.poster}).appendTo(opts.box);
+				var container=$('<video playsinline webkit-playsinline></video>').attr({src:opts.vid,poster:opts.poster}).appendTo(opts.box);
 				if(opts.controls) container.attr({controls:''});
 				if(opts.autoplay) container[0].play();
 				if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
@@ -98,7 +98,7 @@ function importVideo(){
 			if(type=='youku') $('<iframe width=100% height='+ht+' src=http://player.youku.com/embed/'+vid+ (autoplay?'?autoplay=true':'') + ' frameborder=0 allowfullscreen></iframe>').css({top:top}).appendTo(box);
 			else if(type=='qq') $('<iframe width=100% height='+ht+' src=http://v.qq.com/iframe/player.html?vid='+vid+'&tiny=0&auto='+(autoplay?1:0)+' frameborder=0 allowfullscreen></iframe>').css({top:top}).appendTo(box);
 			else if(type=='mp4'){
-				var container=$('<video controls playsinline></video>').attr({src:vid,poster:$(this).data('poster')}).css({width:window.innerWidth,height:ht,top:top}).appendTo(box);
+				var container=$('<video controls playsinline webkit-playsinline></video>').attr({src:vid,poster:$(this).data('poster')}).css({width:window.innerWidth,height:ht,top:top}).appendTo(box);
 				if(autoplay) container[0].play();
 				if(onEnded) container[0].addEventListener('ended',onEnded,false);
 			}//end else
