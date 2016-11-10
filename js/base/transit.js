@@ -22,7 +22,7 @@
 }(this, function($) {
 
   $.transit = {
-    version: "0.9.13",
+    version: "1.0.0",
 
     // Map of $.css() keys to values for 'transitionProperty'.
     // See https://developer.mozilla.org/en/CSS/CSS_transitions#Properties_that_can_be_animated
@@ -245,9 +245,8 @@
   registerCssHook('skewY');
   registerCssHook('x', true);
   registerCssHook('y', true);
-  registerCssHook('translateX', true);
-  registerCssHook('translateY', true);
-  registerCssHook('translateZ', true);
+  registerCssHook('z', true);
+
 
   // ## Transform class
   // This is the main class of a transformation property that powers
@@ -368,11 +367,15 @@
       //     .css({ y: 10 })      //=> "translate(4px, 10px)"
       //
       x: function(x) {
-        this.set('translate', x, null);
+        this.set('translate', x, null, null);
       },
 
       y: function(y) {
-        this.set('translate', null, y);
+        this.set('translate', null, y, null);
+      },
+      
+      z: function(z) {
+        this.set('translate',null,null,z);
       },
 
       // ### translate
@@ -380,15 +383,21 @@
       //
       //     .css({ translate: '2, 5' })    //=> "translate(2px, 5px)"
       //
-      translate: function(x, y) {
+      translate: function(x, y, z) {
         if (this._translateX === undefined) { this._translateX = 0; }
         if (this._translateY === undefined) { this._translateY = 0; }
-
         if (x !== null && x !== undefined) { this._translateX = unit(x, 'px'); }
         if (y !== null && y !== undefined) { this._translateY = unit(y, 'px'); }
-
-        this.translate = this._translateX + "," + this._translateY;
+		if (this._translateZ === null && this._translateZ === undefined){
+			this.translate = this._translateX + "," + this._translateY;
+		}//end if
+		else{
+			if (z !== null && z !== undefined) { this._translateZ = unit(z, 'px'); }
+			this.translate3d = this._translateX + "," + this._translateY + "," + this._translateZ;
+		}//end else
+        
       }
+      
     },
 
     getter: {
@@ -398,6 +407,9 @@
 
       y: function() {
         return this._translateY || 0;
+      },
+      z: function() {
+        return this._translateZ || 0;
       },
 
       scale: function() {
@@ -419,6 +431,7 @@
 
         return s;
       }
+      
     },
 
     // ### parse()
