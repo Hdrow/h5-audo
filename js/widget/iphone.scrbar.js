@@ -1,4 +1,4 @@
-﻿//2016.4.21
+﻿//2016.11.10
 (function($) {
 	$.fn.extend({
 		scrbar: function(options) {	
@@ -117,17 +117,17 @@
 			function this_touchend(e){
 				if($can){
 					if(opts.panelFade) $panel.transition({opacity:0},250);
-					$cont.css({willChange:'auto'});
-					$bar.css({willChange:'auto'});
+					$cont.css({willChange:''});
+					$bar.css({willChange:''});
 				}//end if
 			}//end func
 
 			function scroll_handler(){
 				$tar=$tar>$barSize?$barSize:$tar;
 				$tar=$tar<0?0:$tar;
-				$bar.css({y:$tar});
+				$bar[0].style.transform='translate3d(0,'+$tar+'px,0)';
 				var percent=$tar/$barSize;
-				$cont.css({y:-percent*($size-$this.height())});	
+				$cont[0].style.transform='translate3d(0,'+(-percent*($size-$this.height()))+'px,0)';
 				if(opts.onScroll) opts.onScroll(percent,$dir,$this);
 			}//end func
 			
