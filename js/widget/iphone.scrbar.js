@@ -125,8 +125,10 @@
 			function scroll_handler(){
 				$tar=$tar>$barSize?$barSize:$tar;
 				$tar=$tar<0?0:$tar;
+//				$bar.css({translate3d:[0,$tar,0]});
 				$bar[0].style.transform='translate3d(0,'+$tar+'px,0)';
 				var percent=$tar/$barSize;
+//				$cont.css({translate3d:[0,-percent*($size-$this.height()),0]});
 				$cont[0].style.transform='translate3d(0,'+(-percent*($size-$this.height()))+'px,0)';
 				if(opts.onScroll) opts.onScroll(percent,$dir,$this);
 			}//end func
