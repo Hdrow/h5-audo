@@ -29,7 +29,6 @@ settings 参数说明
 			init();
 		}//end if
 		
-		
 		function init(){
 			var temp="";
 			$.each(cityData,function(i,prov){
