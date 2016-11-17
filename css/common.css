@@ -103,6 +103,9 @@ aside.videoBox>a.close{ position:absolute; right:0.46rem; top:0.46rem; width:0.7
 aside.shareBox{position:absolute; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.7); z-index:997; display:none;}
 aside.shareBox>img{ width:100%;}
 
+/* 打开图片按钮 */
+input[name=imageInput]{ position:absolute; left:0; top:0; width:100%; height:100%; opacity: 0; overflow: hidden;}
+
 /* 背景音乐按钮 */
 a.bgmBtn{ position: absolute; right: 0.24rem; top: 0.24rem; width: 0.58rem; height: 0.58rem;}
 a.bgmPlay{ background-image: url(../images/common/bgm_on.png);}
