@@ -51,7 +51,7 @@ function importBase(){
 			document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
 			document.write('<link rel="stylesheet" type="text/css" href="css/common'+(base.cssMedia==750?'':base.cssMedia)+'.css" />');
 		}//end if
-		else(unit=='px'){
+		else{
 			document.write('<meta name="viewport" content="width='+base.cssMedia+', minimum-scale = '+window.screen.width/base.cssMedia+', maximum-scale = '+window.screen.width/base.cssMedia+', target-densitydpi=device-dpi">');
 			document.write('<link rel="stylesheet" type="text/css" href="'+pxCss+'" />');
 		}//edn else

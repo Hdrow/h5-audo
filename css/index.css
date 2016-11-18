@@ -1,5 +1,8 @@
 /* ---------------------------------------- css content 内容部分（针对16:9标准屏）----------------------------------------*/
 
+a.btn{ width: 6rem; height: 3rem; background-color: #ccc;}
+a.btn:active{ background-color: #fc0;}
+
 /*---------------------------------------- css media 适配部分（针对使用虚拟系统按键的android）----------------------*/
 @media screen and (device-width:360px) and (max-device-height:610px), screen and (device-width:412px) and (max-device-height:700px) and (-webkit-min-device-pixel-ratio:3.5), screen and (device-width:540px) and (device-height:780px){
 
