@@ -384,18 +384,18 @@
       //     .css({ translate: '2, 5' })    //=> "translate(2px, 5px)"
       //
       translate: function(x, y, z) {
-        if (this._translateX === undefined) { this._translateX = 0; }
-        if (this._translateY === undefined) { this._translateY = 0; }
-        if (x !== null && x !== undefined) { this._translateX = unit(x, 'px'); }
-        if (y !== null && y !== undefined) { this._translateY = unit(y, 'px'); }
+        if (this._translateX === undefined) this._translateX = 0;
+        if (this._translateY === undefined) this._translateY = 0;
+        if (x !== null && x !== undefined) this._translateX = unit(x, 'px');
+        if (y !== null && y !== undefined) this._translateY = unit(y, 'px');
+        if (z !== null && z !== undefined) this._translateZ = unit(z, 'px');
 		if (this._translateZ === null || this._translateZ === undefined){
 			this.translate = this._translateX + "," + this._translateY;
-		}//end if
+		}//edn if
 		else{
-			if (z !== null && z !== undefined) { this._translateZ = unit(z, 'px'); }
+			this.translate=0 + "," + 0;
 			this.translate3d = this._translateX + "," + this._translateY + "," + this._translateZ;
 		}//end else
-        
       }
       
     },
