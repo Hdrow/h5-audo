@@ -19,13 +19,3 @@
 @media screen and (device-width:320px), screen and (device-width:375px), screen and (device-width:414px){
 
 }
-
-/*---------------------------------------- css media 适配部分（针对iphone6） ----------------------------------------*/
-@media screen and (device-width:375px) and (device-height:667px), screen and (device-width:540px) and (device-height:868px){
-
-}
-
-/*---------------------------------------- css media 适配部分（针对iphone6 plus） -----------------------------------*/
-@media screen and (device-width:414px) and (device-height:736px) and (-webkit-min-device-pixel-ratio:3), screen and (device-width:540px) and (device-height:876px){
-
-}
