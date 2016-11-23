@@ -22,7 +22,7 @@
 }(this, function($) {
 
   $.transit = {
-    version: "1.0.0",
+    version: "1.0.1",
 
     // Map of $.css() keys to values for 'transitionProperty'.
     // See https://developer.mozilla.org/en/CSS/CSS_transitions#Properties_that_can_be_animated
@@ -234,6 +234,9 @@
   registerCssHook('scale');
   registerCssHook('scaleX');
   registerCssHook('scaleY');
+  registerCssHook('translateX');
+  registerCssHook('translateY');
+  registerCssHook('translateZ');
   registerCssHook('translate');
   registerCssHook('translate3d');
   registerCssHook('rotate');
@@ -366,6 +369,19 @@
       //     .css({ x: 4 })       //=> "translate(4px, 0)"
       //     .css({ y: 10 })      //=> "translate(4px, 10px)"
       //
+      
+      translateX: function(x) {
+        this.translateX = unit(x, 'px');
+      },
+      
+      translateY: function(y) {
+        this.translateY = unit(y, 'px');
+      },
+      
+      translateZ: function(z) {
+        this.translateZ = unit(z, 'px');
+      },
+      
       x: function(x) {
         this.set('translate', x, null, null);
       },
