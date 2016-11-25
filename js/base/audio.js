@@ -390,7 +390,7 @@ function importBgm(){
 	
 	bgm.show=function(resume){
 		resume=resume||0;
-		if(resume) this.resume();
+		if(resume) this.play();
 		this.btn.show();
 	}//edn func
 	
