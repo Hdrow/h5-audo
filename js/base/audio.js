@@ -1,4 +1,4 @@
-//2016.10.31
+//2016.11.25
 var iaudio=importAudio();
 
 function importAudio(){
@@ -378,8 +378,8 @@ function importBgm(){
 		bgm.audio.pause();
 	}//edn func
 	
-	bgm.resume=function(){
-		bgm.audio.resume();
+	bgm.play=function(){
+		bgm.audio.play();
 	}//edn func
 	
 	bgm.hide=function(pause){
