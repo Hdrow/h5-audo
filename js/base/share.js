@@ -1,4 +1,4 @@
-//2016.11.9
+//2016.12.5
 var ishare=importShare();
 
 (function() {
@@ -73,9 +73,6 @@ function importShare(){
 			share.wxSigned=true;//通过微信新SDK验证
 			wx.ready(function(){
 				wx.showOptionMenu();//用微信“扫一扫”打开，optionMenu是off状态，默认开启
-//				wx.hideMenuItems({
-//				    menuList: [ "menuItem:copyUrl"] // 要隐藏的菜单项
-//				});
 				share.wxShare();
 			});//end wx.ready
 		});//end ajax
@@ -204,6 +201,13 @@ function importShare(){
 			});//end wx.ready
 			else share.wbShare({ obj:share.shareBtn, url: share.content.link, text: share.content.timeline, image: share.content.image });
 		}//end if
+	}//end func
+	
+	share.hideMenu=function(menuList){
+		menuList=menuList||[ "menuItem:copyUrl"];
+		wx.hideMenuItems({
+		    menuList: [ "menuItem:copyUrl"] // 要隐藏的菜单项
+		});
 	}//end func
 	
 	return share;
