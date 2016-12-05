@@ -16,6 +16,6 @@
 }
 
 /*---------------------------------------- css media 适配部分（针对iphone） ----------------------------------------------*/
-@media screen and (device-width:320px), screen and (device-width:375px), screen and (device-width:414px){
+@media screen and (device-width:320px), screen and (device-width:375px), screen and (device-width:414px), screen and (device-width:540px) and (device-height:868px){
 
 }
