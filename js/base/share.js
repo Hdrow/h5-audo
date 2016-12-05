@@ -73,9 +73,9 @@ function importShare(){
 			share.wxSigned=true;//通过微信新SDK验证
 			wx.ready(function(){
 				wx.showOptionMenu();//用微信“扫一扫”打开，optionMenu是off状态，默认开启
-				wx.hideMenuItems({
-				    menuList: [ "menuItem:copyUrl"] // 要隐藏的菜单项
-				});
+//				wx.hideMenuItems({
+//				    menuList: [ "menuItem:copyUrl"] // 要隐藏的菜单项
+//				});
 				share.wxShare();
 			});//end wx.ready
 		});//end ajax
