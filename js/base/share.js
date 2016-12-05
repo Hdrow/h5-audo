@@ -204,10 +204,12 @@ function importShare(){
 	}//end func
 	
 	share.hideMenu=function(menuList){
-		menuList=menuList||[ "menuItem:copyUrl"];
-		wx.hideMenuItems({
-		    menuList: [ "menuItem:copyUrl"] // 要隐藏的菜单项
-		});
+		wx.ready(function(){
+			menuList=menuList||[ "menuItem:copyUrl"];
+			wx.hideMenuItems({
+			    menuList: [ "menuItem:copyUrl"] // 要隐藏的菜单项
+			});
+		});//end wx.ready
 	}//end func
 	
 	return share;
