@@ -1,12 +1,10 @@
-//2016.9.8
+//2016.12.19
 (function($) {	
 	jQuery.fn.extend({
 		gifOn: function($path,$num,options){
 			if($path && $path!='' && $num>1){
 				var $this=$(this);
-				var $now=-1,$timer;
-				var count=0;
-				var complete=0;
+				var $now=-1,$timer,$repeat=0;
 				var defaults = {type:'png',speed:100,repeat:-1,sprite:false,endStart:false,pause:false};
 				var opts = $.extend(defaults,options);
 				load_handler();
@@ -52,10 +50,8 @@
 			}//end func
 			
 			function this_goto(e,id){
-				if(id>=0){
-					$now=id;
-					this_switch($now);
-				}//end if
+				$now=id;
+				this_switch($now);
 			}//end func
 			
 			function this_speed(e,speed){
@@ -66,9 +62,10 @@
 			function this_play(){
 				$now++;
 				if($now>=$num){
+					$repeat++;
+					if(opts.onComplete) opts.onComplete($this,$repeat);
 					if(opts.repeat>=0){
-						count++;
-						if(count<=opts.repeat){
+						if($repeat<=opts.repeat){
 							$now=0;
 							this_switch($now);
 						}//end if
@@ -78,10 +75,6 @@
 						$now=0;
 						this_switch($now);
 					}//end else
-					if(!complete){
-						complete=1;
-						if(opts.onComplete) opts.onComplete($this);
-					}//edn if
 				}//end if
 				else this_switch($now);
 			}//end func
@@ -90,9 +83,9 @@
 				if(!opts.sprite) $this.attr({src:$path+(id+1)+'.'+opts.type});
 				else{
 					var y=-$this.height()*id;
-					$this.css({backgroundPosition:'0px '+ y+'px'})
+					$this.css({backgroundPosition:'0px '+ y+'px'});
 				}//end else
-				if(opts.onFrame) opts.onFrame(id+1);
+				if(opts.onFrame) opts.onFrame($this,id+1);
 			}//end func
 
 		},//end fn
@@ -103,7 +96,8 @@
 			$(this).triggerHandler('resume');
 		},//end fn
 		gifGoto: function(id) {
-			if(id>=0) $(this).triggerHandler('goto',[id]);
+			id=Math.abs(id);
+			$(this).triggerHandler('goto',[id]);
 		},//end fn
 		gifSpeed: function(speed) {
 			if(speed && speed>0) $(this).triggerHandler('speed',[speed]);
