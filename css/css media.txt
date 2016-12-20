@@ -36,7 +36,8 @@ android 2k not 16:9 :1440x2390
 微信竖屏：
 android 16:9 720p/1080p screen:360x640/weixin:360x567
 android 16:9 2k screen:412x732/weixin:412x660
-android not 16:9 720p/1080p screen:360x592/weixin:360x520
+android not 16:9 720p screen:360x592/weixin:360x520
+android not 16:9 1080p screen:360x598/weixin:360x526
 android not 16:9 2k screen:412x684/weixin:412x612
 
 微信横屏：
