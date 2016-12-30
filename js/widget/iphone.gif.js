@@ -1,10 +1,10 @@
-//2016.12.19
+//2016.12.30
 (function($) {	
 	jQuery.fn.extend({
 		gifOn: function($path,$num,options){
 			if($path && $path!='' && $num>1){
 				var $this=$(this);
-				var $now=-1,$timer,$repeat=0;
+				var $now=0,$last=0,$timer,$repeat=0;
 				var defaults = {type:'png',speed:100,repeat:-1,sprite:false,endStart:false,pause:false};
 				var opts = $.extend(defaults,options);
 				load_handler();
@@ -24,16 +24,20 @@
 			}//end func
 			
 			function init(){
-				if(opts.sprite) $this.css({backgroundImage:'url('+$path+')'});
+				if(opts.sprite) $this.css({backgroundImage:'url('+$path+')',backgroundPosition:'0px 0px'});
+				else{
+					for(var i=1; i<=$num; i++) $('<img>').attr({src:$path+i+'.'+opts.type}).appendTo($this);
+					$chd=$this.children();
+					$chd.eq(0).show();
+				}//edn else
 				$this.on('off',this_off).on('pause',this_pause).on('resume',this_resume).on('goto',this_goto).on('speed',this_speed);
-				this_play();
 				if(!opts.pause) $timer=setInterval(this_play,opts.speed);
 			}//end init
 			
 			function this_off(e){
 				$this.off('off pause resume goto speed');
 				clearInterval($timer);
-				if(opts.endStart) this_switch(1);
+				if(opts.endStart) this_switch(0);
 				if(opts.onOff) opts.onOff($this);
 			}//end if
 			
@@ -80,7 +84,11 @@
 			}//end func
 			
 			function this_switch(id){
-				if(!opts.sprite) $this.attr({src:$path+(id+1)+'.'+opts.type});
+				if(!opts.sprite){
+					$chd.eq(id).show();
+					$chd.eq($last).hide();
+					$last=id;
+				}//edn if
 				else{
 					var y=-$this.height()*id;
 					$this.css({backgroundPosition:'0px '+ y+'px'});
