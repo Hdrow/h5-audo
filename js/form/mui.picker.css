@@ -66,6 +66,7 @@
     overflow: hidden;
     box-sizing: border-box;
     font-size: 0.32rem;
+    line-height: 0.72rem;
     font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
     color: #888;
     padding: 0 0.16rem;
