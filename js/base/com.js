@@ -1,4 +1,4 @@
-//2016.8.21
+//2017.1.18
 var icom=importCom();
 
 function importCom(){
@@ -244,13 +244,13 @@ function importCom(){
 	com.keyboard=function(input,shell,callback){
 		input=input||$('input,textarea,[contenteditable="true"]');
 		shell=shell||input.parents('section');
-		if(input.length>0 && shell.length>0){
+		if(input.length>0){
 			if(os.ios){
 				input.on('focus',function(e){
 					$(document).one('touchend',ios_keyboard);
 				});
 			}//end if
-			else{
+			else if(shell.length>0){
 				var windowHt=$(window).height();
 				var ht=shell.height();
 				$(window).on('resize',android_keyboard);
