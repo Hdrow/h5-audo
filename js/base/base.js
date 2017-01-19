@@ -37,6 +37,16 @@ function importBase(){
 	base.keyboard=false;
 	base.lock=false;
 	base.cssMedia=750;
+	base.landscapeMode=false;
+	
+	base.landscapeLock=function(wd,ht,scale){
+		this.landscapeMode=true;
+		this.landscapeWidth=wd||1206;
+		this.landscapeHeight=ht||750;
+		this.landscapeScale=scale||'cover';
+		document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
+		document.write('<link rel="stylesheet" type="text/css" href="css/commonLandscape.css" />');
+	}//edn func
 	
 	base.width=function(wd){
 		wd=wd||750;
