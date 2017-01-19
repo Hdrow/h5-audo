@@ -451,31 +451,43 @@ function importCom(){
 		$(window).on('resize',window_resize);
 		
 		function window_resize(e){
+			console.log('window size:'+window.innerWidth+'/'+window.innerHeight);
+			console.log(ibase.landscapeScale);
 			if(window.innerWidth<window.innerHeight){
 				console.log('screen portait');
-				var size=imath.autoSize([ibase.landscapeHeight,ibase.landscapeWidth],[window.innerWidth,window.innerHeight],1);
-				console.log('window size:'+window.innerWidth+'/'+window.innerHeight);
-				console.log('auto size:'+size[0]+'/'+size[1]);
-				var scale=size[0]/ibase.landscapeHeight;
-				console.log('auto scale:'+scale);
-				console.log(ibase.landscapeScale);
 				if(ibase.landscapeScale=='cover'){
+					var size=imath.autoSize([ibase.landscapeHeight,ibase.landscapeWidth],[window.innerWidth,window.innerHeight],1);
+					console.log('auto size:'+size[0]+'/'+size[1]);
+					var scale=size[0]/ibase.landscapeHeight;
+					console.log('auto scale:'+scale);
 					article.css({x:window.innerWidth});
 					container.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,scale:scale,rotate:90,x:(window.innerHeight/scale-ibase.landscapeWidth)*0.5,y:(window.innerWidth/scale-ibase.landscapeHeight)*0.5});
 				}//edn if
+				else{
+					var scale=[window.innerWidth/ibase.landscapeHeight,window.innerHeight/ibase.landscapeWidth];
+					console.log('auto scale:'+scale);
+					article.css({x:window.innerWidth});
+					container.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,scaleX:scale[0],scaleY:scale[1],rotate:90});
+				}//end else
 			}//end if
 			else{
 				console.log('screen landscape');
-				var size=imath.autoSize([ibase.landscapeWidth,ibase.landscapeHeight],[window.innerWidth,window.innerHeight],1);
-				console.log('window size:'+window.innerWidth+'/'+window.innerHeight);
-				console.log('auto size:'+size[0]+'/'+size[1]);
-				var scale=size[0]/ibase.landscapeWidth;
-				console.log('auto scale:'+scale);
-				console.log(ibase.landscapeScale);
 				if(ibase.landscapeScale=='cover'){
+					var size=imath.autoSize([ibase.landscapeWidth,ibase.landscapeHeight],[window.innerWidth,window.innerHeight],1);
+					console.log('window size:'+window.innerWidth+'/'+window.innerHeight);
+					console.log('auto size:'+size[0]+'/'+size[1]);
+					var scale=size[0]/ibase.landscapeWidth;
+					console.log('auto scale:'+scale);
+					console.log(ibase.landscapeScale);
 					article.css({x:0});
 					container.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,scale:scale,rotate:0,x:(window.innerWidth/scale-ibase.landscapeWidth)*0.5,y:(window.innerHeight/scale-ibase.landscapeHeight)*0.5});
 				}//edn if
+				else{
+					var scale=[window.innerWidth/ibase.landscapeWidth,window.innerHeight/ibase.landscapeHeight];
+					console.log('auto scale:'+scale);
+					article.css({x:0});
+					container.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,scaleX:scale[0],scaleY:scale[1],rotate:0});
+				}//end else
 			}//end else 
 		}//edn func
 		
