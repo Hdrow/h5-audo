@@ -6,6 +6,7 @@ $(document).ready(function(){
 	
 	//----------------------------------------页面初始化----------------------------------------
 	icom.landscape(init);//屏幕翻转锁定
+	icom.screenScrollUnable();
 	
 	function init(){
 //		loadBox.show();

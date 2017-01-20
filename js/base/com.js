@@ -450,7 +450,7 @@ function importCom(){
 						var size=imath.autoSize([ibase.landscapeHeight,ibase.landscapeWidth],[window.innerWidth,window.innerHeight],1);
 						var scale=size[0]/ibase.landscapeHeight;
 						console.log('auto scale:'+scale);
-						article.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,scale:scale,rotate:90,x:(window.innerHeight/scale-ibase.landscapeWidth)*0.5,y:-ibase.landscapeHeight+(window.innerWidth/scale-ibase.landscapeHeight)*0.5});
+						article.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,scale:scale,rotate:90,x:(window.innerHeight/scale-ibase.landscapeWidth)*0.5,y:-ibase.landscapeHeight+(window.innerWidth/scale-ibase.landscapeHeight)*0.5+(os.iphone6Plus?4:0)});
 					}//edn if
 					else{
 						var scale=[window.innerWidth/ibase.landscapeHeight,window.innerHeight/ibase.landscapeWidth];
