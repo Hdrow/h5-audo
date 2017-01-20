@@ -48,3 +48,6 @@ android not 16:9 2k screen:684x412/weixin:684x340
 
 浏览器标识：
 Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36
+
+//---------------------------------------------------- 锁定横屏
+psd一律以Iphone6竖屏模式的横向窗口尺寸为标准：1206x750
