@@ -1,4 +1,4 @@
-//2017.1.18
+//2017.1.19
 var icom=importCom();
 
 function importCom(){
@@ -111,7 +111,7 @@ function importCom(){
 	//取代系统alert
 	com.alert=function(text,callback){
 		if(text && text!=''){
-			var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a href="javascript:;" class="close">确定</a></p></div></aside>').appendTo('body');
+			var box=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a href="javascript:;" class="close">确定</a></p></div></aside>').appendTo(ibase.landscapeMode?'article':'body');
 			com.popOn(box,{text:text,onClose:callback,remove:true,closeEvent:'click'});
 		}//end if
 	}//end func
@@ -233,7 +233,7 @@ function importCom(){
 	//修改微信浏览器的标题文字
 	com.title=function(value){
 		$('title').html(value);
-		var iframe = $('<iframe src="images/share.jpg"></iframe>').appendTo($('body')).one('load', function() {
+		var iframe = $('<iframe src="images/share.jpg"></iframe>').appendTo('body').one('load', function() {
 			setTimeout(function(){
 				iframe.remove();
 			},0);
@@ -400,10 +400,7 @@ function importCom(){
 		lock_dected();
 		if(os.android){
 			var input=$('input,textarea,[contenteditable="true"]');
-			if(input.length>0){
-				var turnBox=$(ibase.turnBox);
-				input.on('focus',input_focus).on('blur',input_blur);
-			}//edn if
+			if(input.length>0) input.on('focus',input_focus).on('blur',input_blur);
 		}//edn if
 		function input_focus(e){
 			ibase.keyboard=true;
@@ -426,6 +423,58 @@ function importCom(){
         	url+=key+'='+para[key]
         }//end for
         return url;
+    };//end func
+    
+    com.landscape=function(callback) {
+    	var article=$('article');
+		if(os.android){
+			var input=$('input,textarea,[contenteditable="true"]');
+			if(input.length>0) input.on('focus',input_focus).on('blur',input_blur);
+		}//edn if
+		window_resize();
+		$(window).on('resize',window_resize);
+		if(callback) callback();
+		
+		function input_focus(e){
+			ibase.keyboard=true;
+		}//edn if
+		function input_blur(e){
+			ibase.keyboard=false;
+		}//edn if
+		
+		function window_resize(e){
+			if(!ibase.keyboard){
+				if(window.innerWidth<window.innerHeight){
+					console.log('screen portait');
+					if(ibase.landscapeScale=='cover'){
+						var size=imath.autoSize([ibase.landscapeHeight,ibase.landscapeWidth],[window.innerWidth,window.innerHeight],1);
+						var scale=size[0]/ibase.landscapeHeight;
+						console.log('auto scale:'+scale);
+						article.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,scale:scale,rotate:90,x:(window.innerHeight/scale-ibase.landscapeWidth)*0.5,y:-ibase.landscapeHeight+(window.innerWidth/scale-ibase.landscapeHeight)*0.5});
+					}//edn if
+					else{
+						var scale=[window.innerWidth/ibase.landscapeHeight,window.innerHeight/ibase.landscapeWidth];
+						console.log('auto scale:'+scale);
+						article.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,scaleX:scale[0],scaleY:scale[1],rotate:90,y:-ibase.landscapeHeight});
+					}//end else
+				}//end if
+				else{
+					console.log('screen landscape');
+					if(ibase.landscapeScale=='cover'){
+						var size=imath.autoSize([ibase.landscapeWidth,ibase.landscapeHeight],[window.innerWidth,window.innerHeight],1);
+						console.log('window size:'+window.innerWidth+'/'+window.innerHeight);
+						console.log('auto size:'+size[0]+'/'+size[1]);
+						var scale=size[0]/ibase.landscapeWidth;
+						article.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,scale:scale,rotate:0,x:(window.innerWidth/scale-ibase.landscapeWidth)*0.5,y:(window.innerHeight/scale-ibase.landscapeHeight)*0.5});
+					}//edn if
+					else{
+						var scale=[window.innerWidth/ibase.landscapeWidth,window.innerHeight/ibase.landscapeHeight];
+						console.log('auto scale:'+scale);
+						article.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,scaleX:scale[0],scaleY:scale[1],rotate:0});
+					}//end else
+				}//end else
+			}//edn if
+		}//edn func
     };//end func
 	
 	return com;

@@ -175,7 +175,7 @@ function importShare(){
 		if(shareBtn.length>0){
 			share.shareBtn=shareBtn;
 			if(os.weixin){
-				if(shareBox.length==0) shareBox=$('<aside class="shareBox"><img src="images/common/share.png"></aside>').appendTo($('body'));
+				if(shareBox.length==0) shareBox=$('<aside class="shareBox"><img src="images/common/share.png"></aside>').appendTo(ibase.landscapeMode?'article':'body');
 				shareBtn.on('touchend',{box:shareBox},shareBtn_click);
 			}//end if
 			else share.wbShare({ obj: shareBtn, url: share.content.link, text: share.content.timeline, image: share.content.image });

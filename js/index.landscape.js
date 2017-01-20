@@ -9,6 +9,7 @@ $(document).ready(function(){
 	
 	function init(){
 //		loadBox.show();
+		articleBox.css({opacity:1}).show();
 		iuser.init(userGetted);
 //		load_handler();
 	}//edn func
@@ -44,6 +45,7 @@ $(document).ready(function(){
 		console.log('init handler');
 //		icom.fadeOut(loadBox,500);
 		monitor_handler();
+		icom.alert('锁定横屏模式开启')
 	}//end func
 	
 	//----------------------------------------页面监测代码----------------------------------------
