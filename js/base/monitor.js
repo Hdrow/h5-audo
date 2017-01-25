@@ -1,4 +1,4 @@
-//2017.1.6
+//2017.1.25
 var _hmt = _hmt || [];
 var imonitor=importMonitor();
 var hmsr=icom.getQueryString('hmsr');
@@ -31,9 +31,9 @@ function importMonitor(){
 	}//end func
 	
 	function event_handler(data){
-		_hmt.push(['_trackEvent', data.category, data.action, data.label]);
+		_hmt.push(['_trackEvent', hmsr?'来源：'+hmsr:'来源：默认', data.action, (data.category!=''?data.category+'-':'') + data.label]);
 //		ga('send', 'event', data.category, data.action, data.label);
-		console.log('项目类别：'+data.category+' | '+'交互行为：'+data.action+' | '+'项目说明：'+(hmsr?'来源:'+hmsr+'/':'')+'页面:'+data.category+'/'+'标题:'+data.label);
+		console.log('监测来源：'+(hmsr?hmsr:'默认')+' | '+'监测说明：'+(data.category!=''?data.category+'-':'') + data.label);
 	}//end func
 	
 	return monitor;
