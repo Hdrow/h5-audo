@@ -1,7 +1,7 @@
-//2017.1.25
+//2017.2.3
 var _hmt = _hmt || [];
-var imonitor=importMonitor();
 var hmsr=icom.getQueryString('hmsr');
+var imonitor=importMonitor();
 
 
 //pm给的监测代码贴在这里
