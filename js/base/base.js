@@ -1,4 +1,4 @@
-//2017.1.19
+//2017.2.4
 //-----------------------------------os
 var os=importOS();
 function importOS() {
@@ -26,6 +26,7 @@ function importOS() {
 	os.iphone5=os.ios && ( (screen.width==320 && screen.height==568) || (screen.width==568 && screen.height==320) );
 	os.iphone4=(os.ios && ( (screen.width==320 && screen.height==480) || (screen.width==480 && screen.height==320) ) ) || (screen.width==540 && screen.height==702);
 	os.screen169=screen.width/screen.height==9/16 || screen.height/screen.width==9/16 || (window.innerWidth==540 && window.innerHeight==850) ;
+	os.huawei=os.android && !os.screen169;
 	return os;
 }//end func
 
