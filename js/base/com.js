@@ -1,4 +1,4 @@
-//2017.1.22
+//2017.2.6
 var icom=importCom();
 
 function importCom(){
@@ -485,8 +485,8 @@ function importCom(){
 	
 	return com;
 	
-	String.prototype.replaceAll = function(s1,s2){
-		return this.replace(new RegExp(s1,"gm"),s2);
-	}
-	
 }//end import
+
+String.prototype.replaceAll = function(s1,s2){
+	return this.replace(new RegExp(s1,"gm"),s2);
+}
