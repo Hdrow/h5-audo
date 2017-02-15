@@ -1,4 +1,4 @@
-﻿//2016.11.10
+﻿//2017.2.15
 (function($) {
 	$.fn.extend({
 		scrbar: function(options) {	
@@ -6,9 +6,10 @@
 			var $cont=$this.children(".cont");
 			var $panel=$this.children(".panel");
 			var $bar=$panel.children(),$barSize=$this.height()-$bar.outerHeight();
-			var $tar=0,$can,$size=0,$sizeLastCont=0,$sizeLastThis=$this.height(),$timer,$posLast=[],$dir=0;
+			var $tar=0,$can,$size=0,$sizeLastCont=0,$sizeLastThis=$this.height(),$posLast=[],$dir=0;
 			var defaults = {static:false,speed:1,panelFade:false};
 			var opts = $.extend(defaults, options);
+			var $timerMax=15,$timerCan=true;
 			
 			init();	
 			
@@ -16,13 +17,20 @@
 				$this.on("off",this_off).on('goto',this_goto).on('offset',this_offset).on("top",this_top).on("bottom",this_bottom).on("pause",this_pause).on("resume",this_resume);
 				$this.on("touchstart",this_touchstart).on("touchmove",this_touchmove).on("touchend",this_touchend);
 				size_handler();
-				$timer=setInterval(size_handler,100);
+				icom.setTimeout($timerMax,timer_handler);
 			}//end func
+			
+			function timer_handler(){
+				if($timerCan){
+					size_handler();
+					icom.setTimeout($timerMax,timer_handler);
+				}//edn if
+			}//edn func
 			
 			function this_off(e){
 				$this.off("off goto offset top bottom pasue resume");
 				$this.off("touchstart",this_touchstart).off("touchmove",this_touchmove).off("touchend",this_touchend);
-				clearInterval($timer);
+				$timerCan=false;
 				if(opts.onOff) opts.onOff($this);
 			}//end func
 			

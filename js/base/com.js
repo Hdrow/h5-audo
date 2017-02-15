@@ -330,7 +330,7 @@ function importCom(){
 		
 		function textarea_focus(e){
 			clearInterval(timer);
-			timer=setInterval(textarea_lock,100);
+			timer=setInterval(textarea_lock,200);
 			$(this).one('blur',textarea_blur);
 		}//edn func
 		
@@ -482,6 +482,18 @@ function importCom(){
 			}//edn if
 		}//edn func
     };//end func
+    
+    com.setTimeout=function(max,callback){
+    	var now=0;
+    	if(max>0) timer_handler();
+    	function timer_handler(){
+    		now++;
+			if(now==max){
+				if(callback) callback();
+			}//end if
+			else requestAnimationFrame(timer_handler);
+    	}//end func
+    }//edn func
 	
 	return com;
 	
