@@ -1,4 +1,4 @@
-//2017.2.17
+//2017.3.8
 var icom=importCom();
 
 function importCom(){
@@ -483,23 +483,23 @@ function importCom(){
 		}//edn func
     };//end func
     
-    com.setTimeout=function(frame,callback){
-    	if(frame>0 && callback) return setTimer(frame,callback);
+    com.setTimeout=function(callback,frame){
+    	if(frame>0 && callback) return setTimer(callback,frame);
     }//edn func
     
     com.clearTimeout=function(timer){
     	if(timer && timer.timer) cancelAnimationFrame(timer.timer);
     }//edn func
     
-    com.setInterval=function(frame,callback){
-    	if(frame>0 && callback) return setTimer(frame,callback,true);
+    com.setInterval=function(callback,frame){
+    	if(frame>0 && callback) return setTimer(callback,frame,true);
     }//edn func
     
     com.clearInterval=function(timer){
     	if(timer && timer.timer) cancelAnimationFrame(timer.timer);
     }//edn func
     
-    function setTimer(frame,callback,interval){
+    function setTimer(callback,frame,interval){
     	interval=interval||0;
     	var timer={now:0,timer:null};
 		timer_handler();
