@@ -7,6 +7,7 @@ var imonitor=importMonitor();
 //pm给的监测代码贴在这里
 
 
+
 function importMonitor(){
 	var monitor={};
 	
@@ -33,7 +34,7 @@ function importMonitor(){
 	
 	function event_handler(data){
 		_hmt.push(['_trackEvent', hmsr?'来源：'+hmsr:'来源：默认', data.index, (data.category!=''?data.category+'-':'') + data.label]);
-//		ga('send', 'event', hmsr?'来源：'+hmsr:'来源：默认', data.index, (data.category!=''?data.category+'-':'') + data.label);
+		ga('send', 'event', hmsr?'来源：'+hmsr:'来源：默认', data.index, (data.category!=''?data.category+'-':'') + data.label);
 		console.log('监测来源：'+(hmsr?hmsr:'默认')+' | '+'监测说明：'+(data.index!=''?data.index+'-':'')+(data.category!=''?data.category+'-':'') + data.label);
 	}//end func
 	
