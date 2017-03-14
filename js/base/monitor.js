@@ -1,4 +1,4 @@
-//2017.2.3
+//2017.3.14
 var _hmt = _hmt || [];
 var hmsr=icom.getQueryString('hmsr');
 var imonitor=importMonitor();
@@ -16,7 +16,7 @@ function importMonitor(){
 			var category=option.category||'';
 			var action=option.action||'touchend';
 			var label=option.label||'';
-			var index=option.index||'';
+			var index=option.index||'0';
 			if(obj && obj.length>0){
 				obj.each(function(i) {
 					$(this).on(action,{category:category,label:obj.length==1?label:label+(i+1),index:index},event_bind);}
@@ -33,7 +33,7 @@ function importMonitor(){
 	
 	function event_handler(data){
 		_hmt.push(['_trackEvent', hmsr?'来源：'+hmsr:'来源：默认', data.index, (data.category!=''?data.category+'-':'') + data.label]);
-//		ga('send', 'event', data.category, data.action, data.label);
+//		ga('send', 'event', hmsr?'来源：'+hmsr:'来源：默认', data.index, (data.category!=''?data.category+'-':'') + data.label);
 		console.log('监测来源：'+(hmsr?hmsr:'默认')+' | '+'监测说明：'+(data.index!=''?data.index+'-':'')+(data.category!=''?data.category+'-':'') + data.label);
 	}//end func
 	
