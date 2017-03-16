@@ -1,4 +1,4 @@
-//2017.2.4
+//2017.3.16
 //-----------------------------------os
 var os=importOS();
 function importOS() {
@@ -39,6 +39,7 @@ function importBase(){
 	base.lock=false;
 	base.cssMedia=750;
 	base.landscapeMode=false;
+	base.scrollTop=-1;
 	
 	base.landscapeLock=function(wd,ht,scale){
 		this.landscapeMode=true;
@@ -107,6 +108,7 @@ function importBase(){
     base.unlockOrient = function() {
     	window.removeEventListener("resize", window_orientation,false);
        	base.turnBox.style.display='none';
+       	document.body.scrollTop=0;
     };//end func
     
     base.getOrient = function() {
@@ -118,10 +120,18 @@ function importBase(){
         	if (base.dir != base.getOrient()){
         		base.turnBox.style.display='block';
         		base.lock=true;
+        		if(base.scrollTop==-1){
+        			base.scrollTop=document.body.scrollTop;
+	        		document.body.scrollTop=0;
+        		}//edn if
         	}//edn if
         	else{
             	base.turnBox.style.display='none';
             	base.lock=false;
+            	if(base.scrollTop!=-1){
+        			document.body.scrollTop=base.scrollTop;
+            		base.scrollTop=-1;
+        		}//edn if
             }//end else
         }//edn if
     }//end func
@@ -137,6 +147,21 @@ function importBase(){
   		if(innerHTML!='') newNode.innerHTML = innerHTML;
   		document.getElementsByTagName('body')[0].appendChild(newNode);
 	}//end func
+	
+	base.getUrl=function(url,box,fade){
+		var hmsr=icom.getQueryString('hmsr');
+		hmsr=hmsr||'';
+		var utm_source=icom.getQueryString('utm_source');
+		utm_source=utm_source||'';
+		box=box||$('article');
+		fade=fade||500;
+		if(url && url!=''){
+			url+= (hmsr!=''? (url.indexOf('?')==-1?'?':'&')+'hmsr='+hmsr:'') + (utm_source!=''?'&utm_source='+utm_source:'') ;
+			icom.fadeOut(box,fade,function(){
+				location.href=url;
+			});
+		}//end if
+	}//edn func
 	
 	function get_filetype(f,nocache){
 		nocache=nocache!=null?nocache:true;
