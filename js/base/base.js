@@ -120,18 +120,22 @@ function importBase(){
         	if (base.dir != base.getOrient()){
         		base.turnBox.style.display='block';
         		base.lock=true;
-        		if(base.scrollTop==-1){
-        			base.scrollTop=document.body.scrollTop;
-	        		document.body.scrollTop=0;
-        		}//edn if
+        		if(os.ios){
+        			if(base.scrollTop==-1 && document.body.scrollTop>0){
+	        			base.scrollTop=document.body.scrollTop;
+		        		document.body.scrollTop=0;
+	        		}//edn if
+        		}//end if
         	}//edn if
         	else{
             	base.turnBox.style.display='none';
             	base.lock=false;
-            	if(base.scrollTop!=-1){
-        			document.body.scrollTop=base.scrollTop;
-            		base.scrollTop=-1;
-        		}//edn if
+            	if(os.ios){
+            		if(base.scrollTop!=-1){
+	        			document.body.scrollTop=base.scrollTop;
+	            		base.scrollTop=-1;
+	        		}//edn if
+            	}//edn if
             }//end else
         }//edn if
     }//end func
