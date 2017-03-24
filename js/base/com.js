@@ -522,7 +522,7 @@ function importCom(){
 			compress=compress||0.8;
 			if(type=='png') var base64=canvas.toDataURL('image/png').split(",")[1];
 			else var base64=canvas.toDataURL('image/jpeg', compress).split(",")[1];
-			base64_send(base64,callback,secretkey);
+			this.base64_send(base64,callback,secretkey);
     	}//edn if
 	}//end func
 	
