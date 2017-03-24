@@ -1,4 +1,4 @@
-//2017.3.8
+//2017.3.24
 var icom=importCom();
 
 function importCom(){
@@ -514,6 +514,26 @@ function importCom(){
     		if(interval || (!interval && !timeup)) timer.timer=requestAnimationFrame(timer_handler);
     	}//end func
     }//edn func
+    
+    com.canvas_send=function(canvas,callback,secretkey,type,compress){
+    	if(canvas){
+    		secretkey=secretkey||'test';
+			type=type||'jpg';
+			compress=compress||0.8;
+			if(type=='png') var base64=canvas.toDataURL('image/png').split(",")[1];
+			else var base64=canvas.toDataURL('image/jpeg', compress).split(",")[1];
+			base64_send(base64,callback,secretkey);
+    	}//edn if
+	}//end func
+	
+	com.base64_send=function(base64,callback,secretkey){
+		if(base64){
+    		secretkey=secretkey||'test';
+			$.post('http://upload.be-xx.com/upload', { data: base64, key: secretkey }, function (resp) {
+				if(callback) callback(resp);
+	        })
+    	}//edn if
+	}//end func
 	
 	return com;
 	

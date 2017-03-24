@@ -1,19 +1,18 @@
-//2016.12.30
+//2017.3.23
 (function($) {	
 	jQuery.fn.extend({
 		gifOn: function($path,$num,options){
 			if($path && $path!='' && $num>1){
 				var $this=$(this);
-				var $now=0,$last=0,$timer,$repeat=0;
-				var defaults = {type:'png',speed:100,repeat:-1,sprite:false,endStart:false,pause:false};
+				var defaults = {type:'png',speed:100,repeat:-1,endStart:false,pause:false,first:0};
 				var opts = $.extend(defaults,options);
+				var $now=opts.first,$last=-1,$timer,$repeat=0;
 				load_handler();
 			}//end if
 			
 			function load_handler(){
 				var loader = new PxLoader();
-				if(!opts.sprite) for(var i=0; i<$num; i++) loader.addImage($path+(i+1)+'.'+opts.type);				
-				else loader.addImage($path);		
+				for(var i=1; i<=$num; i++) loader.addImage($path+i+'.'+opts.type);				
 				loader.addCompletionListener(function() {
 					console.log('gif loaded');
 					loader=null;
@@ -24,28 +23,21 @@
 			}//end func
 			
 			function init(){
-				if(opts.sprite) $this.css({backgroundImage:'url('+$path+')',backgroundPosition:'0px 0px'});
-				else{
-					for(var i=1; i<=$num; i++) $('<img>').attr({src:$path+i+'.'+opts.type}).appendTo($this);
-					$chd=$this.children();
-					$chd.eq(0).show();
-				}//edn else
+				for(var i=1; i<=$num; i++) $('<img>').attr({src:$path+i+'.'+opts.type}).appendTo($this);
+				$chd=$this.children();
 				$this.on('off',this_off).on('pause',this_pause).on('resume',this_resume).on('goto',this_goto).on('speed',this_speed);
 				if(!opts.pause) $timer=setInterval(this_play,opts.speed);
+				this_switch();
 			}//end init
 			
 			function this_off(e){
 				$this.off('off pause resume goto speed');
 				clearInterval($timer);
-				if(opts.endStart) this_switch(0);
-				if(opts.onOff) opts.onOff($this);
 			}//end if
 			
 			function this_pause(e,id){
-				id=id!=null?id:$now;
-				console.log('pause:'+id)
-				this_goto(null,id);
 				clearInterval($timer);
+				if(id!=null && $now!=id) this_goto(null,id);
 			}//end func
 			
 			function this_resume(e){
@@ -54,8 +46,10 @@
 			}//end func
 			
 			function this_goto(e,id){
-				$now=id;
-				this_switch($now);
+				if(id!=null && $now!=id){
+					$now=id;
+					this_switch();
+				}//end if
 			}//end func
 			
 			function this_speed(e,speed){
@@ -71,28 +65,22 @@
 					if(opts.repeat>=0){
 						if($repeat<=opts.repeat){
 							$now=0;
-							this_switch($now);
+							this_switch();
 						}//end if
 						else this_off();
 					}//end if
 					else{
 						$now=0;
-						this_switch($now);
+						this_switch();
 					}//end else
 				}//end if
-				else this_switch($now);
+				else this_switch();
 			}//end func
 			
-			function this_switch(id){
-				if(!opts.sprite){
-					$chd.eq(id).show();
-					$chd.eq($last).hide();
-					$last=id;
-				}//edn if
-				else{
-					var y=-$this.height()*id;
-					$this.css({backgroundPosition:'0px '+ y+'px'});
-				}//end else
+			function this_switch(){
+				$chd.eq($now).show();
+				if($last!=-1 && $last!=$now) $chd.eq($last).hide();
+				$last=$now;
 				if(opts.onFrame) opts.onFrame($this,id+1);
 			}//end func
 
