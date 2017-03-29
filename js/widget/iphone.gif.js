@@ -1,10 +1,10 @@
-//2017.3.23
+//2017.3.29
 (function($) {	
 	jQuery.fn.extend({
 		gifOn: function($path,$num,options){
 			if($path && $path!='' && $num>1){
 				var $this=$(this);
-				var defaults = {type:'png',speed:100,repeat:-1,endStart:false,pause:false,first:0};
+				var defaults = {type:'png',speed:100,repeat:-1,endStart:false,pause:false,first:0,mode:1};
 				var opts = $.extend(defaults,options);
 				var $now=opts.first,$last=-1,$timer,$repeat=0;
 				load_handler();
@@ -12,7 +12,7 @@
 			
 			function load_handler(){
 				var loader = new PxLoader();
-				for(var i=1; i<=$num; i++) loader.addImage($path+i+'.'+opts.type);				
+				for(var i=1; i<=$num; i++) loader.addImage($path+i+'.'+opts.type);
 				loader.addCompletionListener(function() {
 					console.log('gif loaded');
 					loader=null;
@@ -23,8 +23,10 @@
 			}//end func
 			
 			function init(){
-				for(var i=1; i<=$num; i++) $('<img>').attr({src:$path+i+'.'+opts.type}).appendTo($this);
-				$chd=$this.children();
+				if(opts.mode==1){
+					for(var i=1; i<=$num; i++) $('<img>').attr({src:$path+i+'.'+opts.type}).appendTo($this);
+					$chd=$this.children();
+				}//edn if
 				$this.on('off',this_off).on('pause',this_pause).on('resume',this_resume).on('goto',this_goto).on('speed',this_speed);
 				if(!opts.pause) $timer=setInterval(this_play,opts.speed);
 				this_switch();
@@ -78,10 +80,15 @@
 			}//end func
 			
 			function this_switch(){
-				$chd.eq($now).show();
-				if($last!=-1 && $last!=$now) $chd.eq($last).hide();
+				if(opts.mode==1){
+					$chd.eq($now).show();
+					if($last!=-1 && $last!=$now) $chd.eq($last).hide();
+				}//edn if
+				else{
+					$this.attr({src:$path+($now+1)+'.'+opts.type});
+				}//edn else
 				$last=$now;
-				if(opts.onFrame) opts.onFrame($this,id+1);
+				if(opts.onFrame) opts.onFrame($this,$now+1);
 			}//end func
 
 		},//end fn
