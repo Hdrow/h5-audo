@@ -163,7 +163,7 @@
 				$bar[0].style.transform='translate3d(0,'+$tar+'px,0)';
 				var percent=$tar/$barSize;
 				$cont[0].style.transform='translate3d(0,'+(-percent*($size-$this.height()))+'px,0)';
-				if(opts.onScroll) opts.onScroll($tar,percent,$dir);
+				if(opts.onScroll) opts.onScroll(percent,$dir);
 			}//edn func
 			
 			function scroll_overback(){
