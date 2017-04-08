@@ -6,29 +6,28 @@
 			var $cont=$this.children(".cont");
 			var $panel=$this.children(".panel");
 			var $bar=$panel.children(),$barSize=$this.height()-$bar.outerHeight();
-			var $tar=0,$can,$size=0,$sizeLastCont=0,$sizeLastThis=$this.height(),$posLast=0,$dir=0;
+			var $tar=0,$tarLast=0,$tarBack=0,$can=true,$size=0,$sizeLastCont=0,$sizeLastThis=$this.height(),$posLast=0,$dir=0;
 			var defaults = {static:false,speed:1,panelFade:false,overback:true};
 			var opts = $.extend(defaults, options);
 			var $sizeTimer,$scrollTimer;
-			var $speed=0,$timeLast=0;
+			var $speed=0,$rate=45,$timeLast=0;
 			var $scale=$this.height()/$cont.height()*(os.ios?1:1.5);
 			var $ease=os.ios?26:12;
-			var $touch=false;
+			var $touched=false;
 			
 			init();	
 			
 			function init(){
 				$this.on("off",this_off).on('goto',this_goto).on('offset',this_offset).on("top",this_top).on("bottom",this_bottom).on("pause",this_pause).on("resume",this_resume);
-				$this.on("touchstart",this_touchstart).on("touchmove",this_touchmove).on("touchend",this_touchend);
+				$this.one("touchstart",this_touchstart);
 				size_handler();
-				$sizeTimer=icom.setInterval(100,size_handler);
 				$scrollTimer=requestAnimationFrame(scroll_handler);
 			}//end func
 			
 			function this_off(e){
 				$this.off("off goto offset top bottom pasue resume");
 				$this.off("touchstart",this_touchstart).off("touchmove",this_touchmove).off("touchend",this_touchend);
-				icom.clearInterval($sizeTimer);
+				clearTimeout($sizeTimer);
 				cancelAnimationFrame($scrollTimer);
 				if(opts.onOff) opts.onOff($this);
 			}//end func
@@ -45,34 +44,34 @@
 			
 			function this_goto(e,pos){
 				if(pos>0){
-					size_handler();
 					$dir=$tar<pos?1:-1;
 					$tar=pos;
-					scroll_handler();
+					$speed=0;
+					scroll_set();
 				}//end if
 			}//end func
 			
 			function this_offset(e,offset){
 				if(offset!=0){
-					size_handler();
 					$dir=offset>0?1:-1;
 					$tar+=offset;
-					scroll_handler();
+					$speed=0;
+					scroll_set();
 				}//end if
 			}//end func
 			
 			function this_top(e){
-				size_handler();
 				$tar=0;
-				$dir=0;
-				scroll_handler();
+				$dir=1;
+				$speed=0;
+				scroll_set();
 			}//end func
 			
 			function this_bottom(e){
-				size_handler();
 				$tar=$barSize;
 				$dir=-1;
-				scroll_handler();
+				$speed=0;
+				scroll_set();
 			}//end func
 			
 			function size_handler(){
@@ -99,53 +98,54 @@
 					$scale=$this.height()/$size*(os.ios?1:1.4);
 					$sizeLastCont=$size;//滚动内容上一次高
 					$sizeLastThis=$this.height();
-				}//end if			
+				}//end if
+				$sizeTimer=setTimeout(size_handler,250);
 			}//end func	
 			
 			function this_touchstart(e){
 				if($can && scrollEnable){
 					if(opts.panelFade) $panel.transition({opacity:1},250);
-					$touch=true;
+					$touched=true;
 					$speed=0;
 					$timeLast=new Date().getTime();
-					$posLast=e.originalEvent.touches[0].screenY;
+					$posLast=e.originalEvent.touches[0].clientY;
+					$(this).on("touchmove",this_touchmove).one("touchend",this_touchend);
 				}//edn if
+				else $(this).one("touchstart",this_touchstart);
 			}//end func
 			
 			function this_touchmove(e){
 				e.preventDefault();
-				if($can && scrollEnable){
-					var dis=e.originalEvent.touches[0].screenY-$posLast;
-					$dir=dis>0?-1:1;
-					var time=new Date().getTime()-$timeLast;
-					$speed=-dis/time*$scale*45;
-					$posLast=e.originalEvent.touches[0].screenY;
-					$timeLast=new Date().getTime();
-				}//edn if
+				var dis=e.originalEvent.touches[0].clientY-$posLast;
+				$dir=dis>0?-1:1;
+				var time=new Date().getTime()-$timeLast;
+				$speed=-dis/time*$scale*$rate;
+				$posLast=e.originalEvent.touches[0].clientY;
+				$timeLast=new Date().getTime();
 			}//end func
 			
 			function this_touchend(e){
-				if($can && scrollEnable){
-					$touch=false;
-					if(opts.panelFade) $panel.transition({opacity:0},250);
-					if(opts.overback){
-						if($tar<0 || $tar>$barSize){
-							$speed=0;
-							cancelAnimationFrame($scrollTimer);
-							$scrollTimer=requestAnimationFrame(scroll_overback);
-						}//edn if
+				$(this).off("touchmove",this_touchmove).one("touchstart",this_touchstart);
+				$touched=false;
+				if(opts.panelFade) $panel.transition({opacity:0},250);
+				if(opts.overback){
+					if($tar<0 || $tar>$barSize){
+						$speed=0;
+						$tarBack=$tar<0?0:$barSize;
+						$this.off("touchstart",this_touchstart).off("touchmove",this_touchmove).off("touchend",this_touchend);
+						cancelAnimationFrame($scrollTimer);
+						$scrollTimer=requestAnimationFrame(scroll_overback);
 					}//edn if
 				}//edn if
 			}//end func
 			
 			function scroll_handler(){
 				if($speed!=0 && scrollEnable){
-					if(!$touch) $speed=imath.ease($speed,0,$ease,0.1);
-					else $speed=imath.ease($speed,0,1.5,0.1);
+					if(!$touched) $speed=imath.ease($speed,0,$ease,0.1);
+					else $speed=imath.ease($speed,0,2,0.1);
 					if(opts.overback){
-						var tar=$tar;
-						tar+=$speed;
-						if((tar<0 && $dir==-1) || (tar>$barSize && $dir==1) ) $speed*=0.18;
+						var tar=$tar+$speed;
+						if((tar<0 && $dir==-1) || (tar>$barSize && $dir==1) ) $speed*=0.1;
 						$tar+=$speed;
 					}//edn if
 					else{
@@ -159,6 +159,9 @@
 			}//end func
 			
 			function scroll_set(){
+				if($tar==NaN || $tar==null || $tar==undefined) $tar=$tarLast;
+//				console.log('$tar:'+$tar);
+				$tarLast=$tar;
 				$bar[0].style.transform='translate3d(0,'+$tar+'px,0)';
 				var percent=$tar/$barSize;
 				var position=percent*($size-$this.height());
@@ -167,11 +170,13 @@
 			}//edn func
 			
 			function scroll_overback(){
-				var back=$tar<0?0:$barSize;
-				$tar=imath.ease($tar,back,5,0.1);
+				$tar=imath.ease($tar,$tarBack,4,0.1);
 				scroll_set();
-				if($tar!=back) $scrollTimer=requestAnimationFrame(scroll_overback);
-				else $scrollTimer=requestAnimationFrame(scroll_handler);
+				if($tar!=$tarBack) $scrollTimer=requestAnimationFrame(scroll_overback);
+				else{
+					$this.one("touchstart",this_touchstart);
+					$scrollTimer=requestAnimationFrame(scroll_handler);
+				}//end else
 			}//edn func
 			
 		},//end fn

@@ -1,51 +1,8 @@
-//2017.3.24
+//2017.4.9
 var icom=importCom();
 
 function importCom(){
 	var com={};
-	
-	/*
-	 * screenTo169(iphone4,android)：把article作为页面的根容器，如果屏幕高宽比不是16：9，则拉伸到16:9
-		 * iphone4：让iphone4下的article标签高度拉伸到与iphone5一致，默认值true
-		 * android：把article作为页面的根容器，使用虚拟系统按键安卓机的拉升至16:9，默认值true
-	 	 * 如果页面是长页面，则注释掉这个方法
-	*/ 
-	com.screenTo169=function(iphone4,android){
-		iphone4=iphone4!=null?iphone4:true;
-		android=android!=null?android:true;
-		var article=$('article');
-		if(article.length>0){
-			if(os.iphone4){
-				if(iphone4){
-					if(os.weixin) article.css({height:'121.2%'});
-					else article.css({height:'123.6%'});
-				}//end if
-				else com.screenScrollUnable();
-			}//end if
-			else{
-				if(os.android && !os.screen169 && android) article.css({height:'109%'});
-				else com.screenScrollUnable();
-			}//end if
-		}//end if
-	}//end func
-	
-	com.screenToPx=function(wd,ht,iphone4){
-		if(wd && wd>0){
-			iphone4=iphone4!=null?iphone4:true;
-			var article=$('article');
-			if(article.length>0){
-				article.css({'-webkit-transform-origin':'0 0 0'});
-				if(ht && ht>0){
-					com.screenScrollUnable();
-					var zoomX=$(window).width()/wd;
-					var zoomY=$(window).height()/ht;
-					if(os.iphone4 && iphone4) article.css({scale:zoomY,x:($(window).width()-wd*zoomY)*0.5/zoomY});
-					else article.css({scaleX:zoomX,scaleY:zoomY});
-				}//end if
-				else article.css({scale:$(window).width()/wd});
-			}//end if
-		}//end if
-	}//end func
 	
 	com.screenScrollEnable=function(){
 		$(document).off('touchmove',noScroll);
