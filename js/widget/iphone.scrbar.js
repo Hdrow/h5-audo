@@ -1,4 +1,4 @@
-﻿//2017.4.7
+﻿//2017.4.9
 (function($) {
 	$.fn.extend({
 		scrbar: function(options) {	
@@ -14,7 +14,6 @@
 			var $scale=$this.height()/$cont.height()*(os.ios?1:1.5);
 			var $ease=os.ios?26:12;
 			var $touch=false;
-			var $overbackTimer;
 			
 			init();	
 			
@@ -104,7 +103,7 @@
 			}//end func	
 			
 			function this_touchstart(e){
-				if($can){
+				if($can && scrollEnable){
 					if(opts.panelFade) $panel.transition({opacity:1},250);
 					$touch=true;
 					$speed=0;
@@ -115,7 +114,7 @@
 			
 			function this_touchmove(e){
 				e.preventDefault();
-				if($can){
+				if($can && scrollEnable){
 					var dis=e.originalEvent.touches[0].screenY-$posLast;
 					$dir=dis>0?-1:1;
 					var time=new Date().getTime()-$timeLast;
@@ -126,21 +125,21 @@
 			}//end func
 			
 			function this_touchend(e){
-				if($can){
+				if($can && scrollEnable){
 					$touch=false;
 					if(opts.panelFade) $panel.transition({opacity:0},250);
 					if(opts.overback){
 						if($tar<0 || $tar>$barSize){
 							$speed=0;
 							cancelAnimationFrame($scrollTimer);
-							$overbackTimer=requestAnimationFrame(scroll_overback);
+							$scrollTimer=requestAnimationFrame(scroll_overback);
 						}//edn if
 					}//edn if
 				}//edn if
 			}//end func
 			
 			function scroll_handler(){
-				if($speed!=0){
+				if($speed!=0 && scrollEnable){
 					if(!$touch) $speed=imath.ease($speed,0,$ease,0.1);
 					else $speed=imath.ease($speed,0,1.5,0.1);
 					if(opts.overback){
@@ -171,7 +170,7 @@
 				var back=$tar<0?0:$barSize;
 				$tar=imath.ease($tar,back,5,0.1);
 				scroll_set();
-				if($tar!=back) $overbackTimer=requestAnimationFrame(scroll_overback);
+				if($tar!=back) $scrollTimer=requestAnimationFrame(scroll_overback);
 				else $scrollTimer=requestAnimationFrame(scroll_handler);
 			}//edn func
 			
