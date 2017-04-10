@@ -13,7 +13,7 @@
 			var $speed=0,$rate=45,$timeLast=0;
 			var $scale=$this.height()/$cont.height()*(os.ios?1:1.5);
 			var $ease=os.ios?0.95:0.92;
-			var $touched=false,$touchMoving=false;
+			var $touched=false;
 			
 			init();	
 			
@@ -106,7 +106,6 @@
 				if($can){
 					if(opts.panelFade) $panel.transition({opacity:1},250);
 					$touched=true;
-					$touchMoving=false;
 					$speed=0;
 					$timeLast=new Date().getTime();
 					$posLast=e.originalEvent.touches[0].clientY;
@@ -117,7 +116,6 @@
 			
 			function this_touchmove(e){
 				e.preventDefault();
-				$touchMoving=true;
 				var dis=e.originalEvent.touches[0].clientY-$posLast;
 				$dir=dis>0?-1:1;
 				var time=new Date().getTime()-$timeLast;
@@ -127,8 +125,8 @@
 			}//end func
 			
 			function this_touchend(e){
+				$(this).off("touchmove",this_touchmove).one("touchstart",this_touchstart);
 				$touched=false;
-				$touchMoving=false;
 				if(opts.panelFade) $panel.transition({opacity:0},250);
 				if(opts.overback){
 					if($tar<0 || $tar>$barSize){
@@ -139,7 +137,6 @@
 						$scrollTimer=requestAnimationFrame(scroll_overback);
 					}//edn if
 				}//edn if
-				$(this).off("touchmove",this_touchmove).one("touchstart",this_touchstart);
 			}//end func
 			
 			function scroll_handler(){
@@ -149,12 +146,9 @@
 						$speed=Math.abs($speed)<=0.1?0:$speed;
 					}//edn if
 					else{
-						if($touchMoving){
-							$speed*=0.4;
-							$speed=Math.abs($speed)<=0.4?0:$speed;
-						}//edn if
-						else $speed=0;
-					}//end else
+						$speed*=0.4;
+						$speed=Math.abs($speed)<=0.4?0:$speed;
+					}//edn if
 					if(opts.overback){
 						var tar=$tar+$speed;
 						if((tar<0 && $dir==-1) || (tar>$barSize && $dir==1) ) $speed*=0.1;
