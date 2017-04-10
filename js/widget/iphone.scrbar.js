@@ -99,7 +99,7 @@
 					$sizeLastCont=$size;//滚动内容上一次高
 					$sizeLastThis=$this.height();
 				}//end if
-				$sizeTimer=setTimeout(size_handler,250);
+				$sizeTimer=icom.setTimeout(size_handler,15);
 			}//end func	
 			
 			function this_touchstart(e){
@@ -160,12 +160,14 @@
 			
 			function scroll_set(){
 				if($tar==NaN || $tar==null || $tar==undefined) $tar=$tarLast;
+				else $tarLast=$tar;
 //				console.log('$tar:'+$tar);
-				$tarLast=$tar;
-				$bar[0].style.transform='translate3d(0,'+$tar+'px,0)';
+//				$bar[0].style.transform='translate3d(0,'+$tar+'px,0)';
+				$bar[0].style.transform='translateY('+$tar+'px)';
 				var percent=$tar/$barSize;
 				var position=percent*($size-$this.height());
-				$cont[0].style.transform='translate3d(0,'+ (-position) +'px,0)';
+//				$cont[0].style.transform='translate3d(0,'+ (-position) +'px,0)';
+				$cont[0].style.transform='translateY('+ (-position) +'px)';
 				if(opts.onScroll) opts.onScroll(position,percent,$dir);
 			}//edn func
 			
