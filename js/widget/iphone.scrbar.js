@@ -1,4 +1,4 @@
-﻿//2017.4.9
+﻿//2017.4.10
 (function($) {
 	$.fn.extend({
 		scrbar: function(options) {	
@@ -132,7 +132,7 @@
 					if($tar<0 || $tar>$barSize){
 						$speed=0;
 						$tarBack=$tar<0?0:$barSize;
-						$this.off("touchstart",this_touchstart).off("touchmove",this_touchmove).off("touchend",this_touchend);
+						$(this).off("touchstart",this_touchstart);
 						cancelAnimationFrame($scrollTimer);
 						$scrollTimer=requestAnimationFrame(scroll_overback);
 					}//edn if
