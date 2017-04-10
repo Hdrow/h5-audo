@@ -103,7 +103,7 @@
 			}//end func	
 			
 			function this_touchstart(e){
-				if($can && scrollEnable){
+				if($can){
 					if(opts.panelFade) $panel.transition({opacity:1},250);
 					$touched=true;
 					$touchMoving=false;
@@ -143,7 +143,7 @@
 			}//end func
 			
 			function scroll_handler(){
-				if($speed!=0 && scrollEnable){
+				if($speed!=0){
 					if(!$touched){
 						$speed*=$ease;
 						$speed=Math.abs($speed)<=0.1?0:$speed;
