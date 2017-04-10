@@ -12,7 +12,7 @@
 			var $sizeTimer,$scrollTimer;
 			var $speed=0,$rate=45,$timeLast=0;
 			var $scale=$this.height()/$cont.height()*(os.ios?1:1.5);
-			var $ease=os.ios?26:12;
+			var $ease=os.ios?0.95:0.92;
 			var $touched=false;
 			
 			init();	
@@ -21,7 +21,7 @@
 				$this.on("off",this_off).on('goto',this_goto).on('offset',this_offset).on("top",this_top).on("bottom",this_bottom).on("pause",this_pause).on("resume",this_resume);
 				$this.one("touchstart",this_touchstart);
 				size_handler();
-				$scrollTimer=requestAnimationFrame(scroll_handler);
+				scroll_handler();
 			}//end func
 			
 			function this_off(e){
@@ -141,8 +141,15 @@
 			
 			function scroll_handler(){
 				if($speed!=0 && scrollEnable){
-					if(!$touched) $speed=imath.ease($speed,0,$ease,0.1);
-					else $speed=imath.ease($speed,0,2,0.1);
+					if(!$touched){
+						$speed*=$ease;
+						$speed=Math.abs($speed)<=0.1?0:$speed;
+					}//edn if
+					else{
+						$speed*=0.4;
+						$speed=Math.abs($speed)<=0.4?0:$speed;
+					}//edn if
+					$speed=Math.abs($speed)<=0.1?0:$speed;
 					if(opts.overback){
 						var tar=$tar+$speed;
 						if((tar<0 && $dir==-1) || (tar>$barSize && $dir==1) ) $speed*=0.1;
