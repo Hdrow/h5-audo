@@ -13,7 +13,7 @@
 			var $speed=0,$rate=45,$timeLast=0;
 			var $scale=$this.height()/$cont.height()*(os.ios?1:1.5);
 			var $ease=os.ios?0.95:0.92;
-			var $touched=false;
+			var $touched=false,$moving=false;
 			
 			init();	
 			
@@ -116,6 +116,10 @@
 			
 			function this_touchmove(e){
 				e.preventDefault();
+				if(!$moving){
+					$moving=true;
+					$cont.addClass('moving');
+				}//edn if
 				var dis=e.originalEvent.touches[0].clientY-$posLast;
 				$dir=dis>0?-1:1;
 				var time=new Date().getTime()-$timeLast;
@@ -161,6 +165,10 @@
 					}//end else
 					scroll_set();
 				}//edn if
+				else if($moving){
+					$moving=false;
+					$cont.removeClass('moving');
+				}//edn if
 				$scrollTimer=requestAnimationFrame(scroll_handler);
 			}//end func
 			
@@ -168,12 +176,10 @@
 				if($tar==NaN || $tar==null || $tar==undefined) $tar=$tarLast;
 				else $tarLast=$tar;
 //				console.log('$tar:'+$tar);
-//				$bar[0].style.transform='translate3d(0,'+$tar+'px,0)';
-				$bar[0].style.transform='translateY('+$tar+'px)';
+				$bar[0].style.transform='translate3d(0,'+$tar+'px,0)';
 				var percent=$tar/$barSize;
 				var position=percent*($size-$this.height());
-//				$cont[0].style.transform='translate3d(0,'+ (-position) +'px,0)';
-				$cont[0].style.transform='translateY('+ (-position) +'px)';
+				$cont[0].style.transform='translate3d(0,'+ (-position) +'px,0)';
 				if(opts.onScroll) opts.onScroll(position,percent,$dir);
 			}//edn func
 			
@@ -182,6 +188,8 @@
 				scroll_set();
 				if($tar!=$tarBack) $scrollTimer=requestAnimationFrame(scroll_overback);
 				else{
+					$moving=false;
+					$cont.removeClass('moving');
 					$this.one("touchstart",this_touchstart);
 					$scrollTimer=requestAnimationFrame(scroll_handler);
 				}//end else

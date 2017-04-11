@@ -21,6 +21,7 @@ a>img{ width:100%;}
 .noSelect{-webkit-user-select:none;}/* 禁止ios和android用户选中文字 */
 .gpuOpen{will-change:transform,opacity;}
 .gpuClose{will-change:auto;}
+.moving{ will-change:transform;}
 .smoothSlide {-webkit-overflow-scrolling: touch;}/* ios设备平滑滚动 */
 .txtShadow{text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000; }
 
