@@ -43,6 +43,7 @@
 			function this_goto(e,pos){
 				if(pos>0 && $enable){
 					$dir=$tar<pos?1:-1;
+					pos=pos/($cont.outerHeight()-$this.height())*($this.height()-$bar.outerHeight())
 					$tar=pos;
 					$tar=Math.max(0,Math.min($tar,$barSize));
 					$speed=0;
@@ -53,6 +54,7 @@
 			function this_offset(e,offset){
 				if(offset!=0 && $enable){
 					$dir=offset>0?1:-1;
+					offset=offset/($cont.outerHeight()-$this.height())*($this.height()-$bar.outerHeight())
 					$tar+=offset;
 					$tar=Math.max(0,Math.min($tar,$barSize));
 					$speed=0;
