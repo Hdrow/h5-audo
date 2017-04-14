@@ -1,4 +1,4 @@
-﻿//2017.4.10
+﻿//2017.4.14
 (function($) {
 	$.fn.extend({
 		scrbar: function(options) {	
@@ -6,7 +6,7 @@
 			var $cont=$this.children(".cont");
 			var $panel=$this.children(".panel");
 			var $bar=$panel.children(),$barSize=$this.height()-$bar.outerHeight();
-			var $tar=0,$tarLast=0,$tarBack=0,$can=true,$size=0,$sizeLastCont=0,$sizeLastThis=$this.height(),$posLast=0,$dir=0;
+			var $tar=0,$tarBack=0,$can=true,$size=0,$sizeLastCont=0,$sizeLastThis=$this.height(),$posLast=0,$dir=0,$enable=true;
 			var defaults = {static:false,speed:1,panelFade:false,overback:true};
 			var opts = $.extend(defaults, options);
 			var $sizeTimer,$scrollTimer;
@@ -33,28 +33,28 @@
 			}//end func
 			
 			function this_pause(e){
-				$this.off("touchstart touchmove touchend");
-				$bar.css({opacity:0.2});
+				$enable=false;
 			}//end func
 			
 			function this_resume(e){
-				$this.on("touchstart",this_touchstart).on("touchmove",this_touchmove).on("touchend",this_touchend);
-				$bar.css({opacity:1});
+				$enable=true;
 			}//end func
 			
 			function this_goto(e,pos){
-				if(pos>0){
+				if(pos>0 && $enable){
 					$dir=$tar<pos?1:-1;
 					$tar=pos;
+					$tar=Math.max(0,Math.min($tar,$barSize));
 					$speed=0;
 					scroll_set();
 				}//end if
 			}//end func
 			
 			function this_offset(e,offset){
-				if(offset!=0){
+				if(offset!=0 && $enable){
 					$dir=offset>0?1:-1;
 					$tar+=offset;
+					$tar=Math.max(0,Math.min($tar,$barSize));
 					$speed=0;
 					scroll_set();
 				}//end if
@@ -103,7 +103,7 @@
 			}//end func	
 			
 			function this_touchstart(e){
-				if($can){
+				if($can && $enable){
 					if(opts.panelFade) $panel.transition({opacity:1},250);
 					$touched=true;
 					$speed=0;
@@ -144,7 +144,7 @@
 			}//end func
 			
 			function scroll_handler(){
-				if($speed!=0){
+				if($speed!=0 && $can && $enable){
 					if(!$touched){
 						$speed*=$ease;
 						$speed=Math.abs($speed)<=0.1?0:$speed;
@@ -160,8 +160,7 @@
 					}//edn if
 					else{
 						$tar+=$speed;
-						$tar=$tar>$barSize?$barSize:$tar;
-						$tar=$tar<0?0:$tar;
+						$tar=Math.max(0,Math.min($tar,$barSize));
 					}//end else
 					scroll_set();
 				}//edn if
@@ -173,8 +172,6 @@
 			}//end func
 			
 			function scroll_set(){
-				if($tar==NaN || $tar==null || $tar==undefined) $tar=$tarLast;
-				else $tarLast=$tar;
 //				console.log('$tar:'+$tar);
 				$bar[0].style.transform='translate3d(0,'+$tar+'px,0)';
 				var percent=$tar/$barSize;
