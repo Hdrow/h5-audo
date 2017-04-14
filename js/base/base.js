@@ -1,4 +1,4 @@
-//2017.3.16
+//2017.4.12
 //-----------------------------------os
 var os=importOS();
 function importOS() {
@@ -157,13 +157,13 @@ function importBase(){
 		hmsr=hmsr||'';
 		var utm_source=icom.getQueryString('utm_source');
 		utm_source=utm_source||'';
-		box=box||$('article');
 		fade=fade||500;
 		if(url && url!=''){
 			url+= (hmsr!=''? (url.indexOf('?')==-1?'?':'&')+'hmsr='+hmsr:'') + (utm_source!=''?'&utm_source='+utm_source:'') ;
-			icom.fadeOut(box,fade,function(){
+			if(box && box.length>0) icom.fadeOut(box,fade,function(){
 				location.href=url;
 			});
+			else location.href=url;
 		}//end if
 	}//edn func
 	
