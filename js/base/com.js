@@ -1,4 +1,4 @@
-//2017.4.9
+//2017.4.14
 var icom=importCom();
 
 function importCom(){
@@ -83,15 +83,6 @@ function importCom(){
 		else return null;
 	}//end func
 	
-	//获得http url文件名末尾的数字
-	com.getQueryInt=function(len){
-		len=len!=null?len:1;
-		var path=window.location.pathname.split('/');
-		var file=path[path.length-1];
-		var str=file.split('.');
-		return parseInt(str[0].substr(str[0].length-len));
-	}//end func
-	
 	//载入图片函数
 	com.imageLoad=function(src,callback){
 		if(src && src!=''){
@@ -110,18 +101,6 @@ function importCom(){
 			loader.start();	
 		}//end if
 	}//end func	
-	
-	//新增测试版提示信息
-	com.addSignBar=function(text){
-		if(text && text!=''){
-			var sign=$('#signBar');
-			if(sign.length>0) sign.find('.text').html(text);
-			else{
-				sign=$('<div id="signBar"></div>').appendTo('body');
-				$('<span></span>').html(text).appendTo(sign);
-			}//end if
-		}//end if
-	}//end func
 	
 	//打印object数据
 	com.objectPrint=function(data){
@@ -186,16 +165,6 @@ function importCom(){
 			if(callback) callback(resp);
 		}, "json");
 	}//edn func
-	
-	//修改微信浏览器的标题文字
-	com.title=function(value){
-		$('title').html(value);
-		var iframe = $('<iframe src="images/share.jpg"></iframe>').appendTo('body').one('load', function() {
-			setTimeout(function(){
-				iframe.remove();
-			},0);
-		});
-	}//end func
 	
 	//安卓键盘压缩页面高度处理
 	com.keyboard=function(input,shell,callback){
@@ -286,13 +255,12 @@ function importCom(){
 		}//end if
 		
 		function textarea_focus(e){
-			clearInterval(timer);
-			timer=setInterval(textarea_lock,200);
+			timer=com.setInterval(textarea_lock,15);
 			$(this).one('blur',textarea_blur);
 		}//edn func
 		
 		function textarea_blur(e){
-			clearInterval(timer);
+			com.clearInterval(timer);
 			$(this).one('focus',textarea_focus);
 			var first=com.textareaGet(textarea,row);
 			if(first.indexOf('<br/>')!=-1){
