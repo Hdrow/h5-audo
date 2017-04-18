@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<title>锁定横屏页</title>
+<title>微信横屏模板页</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="format-detection" content="telephone=no" />
 <meta name="format-detection" content="email=no" />
@@ -10,7 +10,7 @@
 <meta http-equiv="Expires" content="0" />
 <script src="js/base/base.js"></script>
 <script>
-ibase.landscapeLock(1206,750,'cover');//设定锁定横屏
+ibase.init('landscape','px',1206,750,'cover');//第一个参数：锁定方向、第二个参数：css度量单位、第三个参数：设计宽度、第四个参数：设计高度、第五个参数：缩放模式
 ibase.load('css/index.landscape.css');//无缓存加载文件
 </script>
 </head>
@@ -31,7 +31,7 @@ ibase.load('css/index.landscape.css');//无缓存加载文件
 	</div>
 </article>
 <!--------------------------------------------------------------javascript区域-------------------------------------------------------------------------------------->
-<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script src="js/base/jquery.js"></script>
 <script src="js/base/framwork.js"></script>
 <script src="js/base/monitor.js"></script>

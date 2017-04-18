@@ -1,4 +1,4 @@
-﻿//2017.4.14
+﻿//2017.4.18
 (function($) {
 	$.fn.extend({
 		scrbar: function(options) {	
@@ -42,6 +42,8 @@
 			
 			function this_goto(e,pos){
 				if(pos>0 && $enable){
+					icom.clearTimeout($sizeTimer);
+					size_handler();
 					$dir=$tar<pos?1:-1;
 					pos=pos/($cont.outerHeight()-$this.height())*($this.height()-$bar.outerHeight())
 					$tar=pos;
@@ -53,6 +55,8 @@
 			
 			function this_offset(e,offset){
 				if(offset!=0 && $enable){
+					icom.clearTimeout($sizeTimer);
+					size_handler();
 					$dir=offset>0?1:-1;
 					offset=offset/($cont.outerHeight()-$this.height())*($this.height()-$bar.outerHeight())
 					$tar+=offset;
@@ -63,6 +67,8 @@
 			}//end func
 			
 			function this_top(e){
+				icom.clearTimeout($sizeTimer);
+				size_handler();
 				$tar=0;
 				$dir=1;
 				$speed=0;
@@ -70,6 +76,8 @@
 			}//end func
 			
 			function this_bottom(e){
+				icom.clearTimeout($sizeTimer);
+				size_handler();
 				$tar=$barSize;
 				$dir=-1;
 				$speed=0;

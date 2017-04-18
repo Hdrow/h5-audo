@@ -32,88 +32,59 @@ function importOS() {
 
 //-----------------------------------base
 var ibase=importBase();
+
 function importBase(){
 	var base={}
 	base.dir='portrait';
 	base.keyboard=false;
 	base.lock=false;
 	base.cssMedia=750;
-	base.landscapeMode=false;
 	base.scrollTop=-1;
 	
-	base.landscapeLock=function(wd,ht,scale){
-		this.landscapeMode=true;
-		console.log('screen landscapeMode:'+this.landscapeMode);
+	base.init=function(dir,unit,wd,ht,scale){
+		this.dir=dir||'portrait';
 		this.landscapeWidth=wd||1206;
 		this.landscapeHeight=ht||750;
 		this.landscapeScale=scale||'cover';
-		console.log('screen landscapeScale:'+this.landscapeScale);
-		document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
-		document.write('<link rel="stylesheet" type="text/css" href="css/common.landscape.css" />');
-	}//edn func
-	
-	base.width=function(wd){
-		wd=wd||750;
-		wd=wd!=750?640:wd;
-		base.cssMedia=wd;
-	}//edn func
-	
-	base.viewport=function(unit,pxCss){
-		unit=unit||'rem';
-		pxCss=pxCss||'css/px.css';
-		if(unit=='rem' || unit=='em'){
+		unit=this.dir=='landscape'?'px':(unit||'rem');
+		console.log('css unit:'+unit);
+		if(this.dir=='portrait'){
+			if(base.dir=='portrait'){
+				if(unit=='rem' || unit=='em'){
+					document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
+					document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
+				}//end if
+				else{
+					document.write('<meta name="viewport" content="width='+base.cssMedia+', minimum-scale = '+window.screen.width/base.cssMedia+', maximum-scale = '+window.screen.width/base.cssMedia+', target-densitydpi=device-dpi">');
+					document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
+				}//edn else
+			}//end if
+			document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏模式</p></aside>');
+		    this.turnBox=document.getElementById("turnBox");
+		    if (this.dir!=base.getOrient(true)){
+		    	this.turnBox.style.display = "block";
+		    	this.lock=true;
+		    }//edn if
+	        window.addEventListener("orientationchange", window_orientation,false);
+		}//edn if
+    	else{
 			document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
-			document.write('<link rel="stylesheet" type="text/css" href="css/common'+(base.cssMedia==750?'':'.'+base.cssMedia)+'.css" />');
-		}//end if
-		else{
-			document.write('<meta name="viewport" content="width='+base.cssMedia+', minimum-scale = '+window.screen.width/base.cssMedia+', maximum-scale = '+window.screen.width/base.cssMedia+', target-densitydpi=device-dpi">');
-			document.write('<link rel="stylesheet" type="text/css" href="'+pxCss+'" />');
-		}//edn else
-	}//edn func
-	
-	base.load=function(f,shell,nocache){
-		nocache=nocache!=null?nocache:true;
-		var file=get_filetype(f,nocache);
-		if (file.type == "css"){
-			shell=shell||'head';
-			var fileref = document.createElement('link');
-	        fileref.setAttribute("rel","stylesheet");
-	        fileref.setAttribute("type","text/css");
-	        fileref.setAttribute("href",file.src);
-	        document.getElementsByTagName(shell)[0].appendChild(fileref);
-		}//end if
-		else if(file.type == "js"){
-			shell=shell||'body';
-			var fileref = document.createElement('script');
-			fileref.setAttribute("type","text/javascript");
-	        fileref.setAttribute("src",file.src);
-			document.getElementsByTagName('body')[0].appendChild(fileref);
-		}//end else
+			document.write('<link rel="stylesheet" type="text/css" href="css/common.landscape.css" />');
+    	}//end else
 	}//end func
 	
-	base.orient=function(dir){
-		this.dir = dir || 'portrait';
-    	if(this.dir=='portrait') this.load('css/portrait'+(base.cssMedia==750?'':'.'+base.cssMedia)+'.css');
-    	else this.load('css/landscape'+(base.cssMedia==750?'':'.'+base.cssMedia)+'.css');
-    	if (this.dir == 'portrait')  document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏模式</p></aside>');
-    	else document.write('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" class="turn"><p>请将手机调至横屏模式</p></aside>');
-	    this.turnBox=document.getElementById("turnBox");
-	    if (this.dir!=(window.innerWidth > window.innerHeight ? 'landscape' :'portrait')){
-	    	this.turnBox.style.display = "block";
-	    	this.lock=true;
-	    }//edn if
-        window.addEventListener("orientationchange", window_orientation,false);
-	}//end func
-    
     base.unlockOrient = function() {
     	window.removeEventListener("orientationchange", window_orientation,false);
        	base.turnBox.style.display='none';
        	document.body.scrollTop=0;
     };//end func
     
-    base.getOrient = function() {
-    	if( window.orientation==90 || window.orientation==-90 ) return 'landscape';
-    	else return 'portrait';
+    base.getOrient = function(resize) {
+    	resize=resize||0;
+    	if(resize) var dir=window.innerWidth > window.innerHeight ? 'landscape' :'portrait';
+    	else var dir=window.orientation==90 || window.orientation==-90 ? 'landscape' :'portrait';
+    	console.log('window orientation:'+dir);
+    	return dir;
     };//end func
     
     function window_orientation(e) {
@@ -140,6 +111,26 @@ function importBase(){
             }//end else
         }//edn if
     }//end func
+	
+	base.load=function(f,shell,nocache){
+		nocache=nocache!=null?nocache:true;
+		var file=get_filetype(f,nocache);
+		if (file.type == "css"){
+			shell=shell||'head';
+			var fileref = document.createElement('link');
+	        fileref.setAttribute("rel","stylesheet");
+	        fileref.setAttribute("type","text/css");
+	        fileref.setAttribute("href",file.src);
+	        document.getElementsByTagName(shell)[0].appendChild(fileref);
+		}//end if
+		else if(file.type == "js"){
+			shell=shell||'body';
+			var fileref = document.createElement('script');
+			fileref.setAttribute("type","text/javascript");
+	        fileref.setAttribute("src",file.src);
+			document.getElementsByTagName('body')[0].appendChild(fileref);
+		}//end else
+	}//end func
 	
 	base.creatNode=function(nodeName,idName,className,innerHTML){
 		nodeName=nodeName||'div';

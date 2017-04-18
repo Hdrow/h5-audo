@@ -5,8 +5,8 @@ $(document).ready(function(){
 	var articleBox=$('article');
 	
 	//----------------------------------------页面初始化----------------------------------------
-	icom.landscape(init);//屏幕翻转锁定
-	if(os.ios) icom.screenScrollUnable();//如果是一屏高度项目且在ios下，阻止屏幕默认滑动行为
+	icom.orient(init);//屏幕翻转锁定
+	icom.screenScrollUnable();//如果是一屏高度项目且在ios下，阻止屏幕默认滑动行为
 	
 	function init(){
 //		loadBox.show();
@@ -46,7 +46,7 @@ $(document).ready(function(){
 		console.log('init handler');
 //		icom.fadeOut(loadBox,500);
 		monitor_handler();
-		icom.alert('锁定横屏模式开启')
+		icom.alert('锁定横屏模式开启');
 	}//end func
 	
 	//----------------------------------------页面监测代码----------------------------------------
