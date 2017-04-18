@@ -1,4 +1,4 @@
-//2017.4.12
+//2017.4.18
 //-----------------------------------os
 var os=importOS();
 function importOS() {
@@ -102,17 +102,18 @@ function importBase(){
 	    	this.turnBox.style.display = "block";
 	    	this.lock=true;
 	    }//edn if
-        window.addEventListener("resize", window_orientation,false);
+        window.addEventListener("orientationchange", window_orientation,false);
 	}//end func
     
     base.unlockOrient = function() {
-    	window.removeEventListener("resize", window_orientation,false);
+    	window.removeEventListener("orientationchange", window_orientation,false);
        	base.turnBox.style.display='none';
        	document.body.scrollTop=0;
     };//end func
     
     base.getOrient = function() {
-        return window.innerWidth > window.innerHeight ? "landscape" :"portrait"; 
+    	if( window.orientation==90 || window.orientation==-90 ) return 'landscape';
+    	else return 'portrait';
     };//end func
     
     function window_orientation(e) {
