@@ -5,7 +5,7 @@ $(document).ready(function(){
 	var articleBox=$('article');
 	
 	//----------------------------------------页面初始化----------------------------------------
-	icom.orient(init);//屏幕翻转锁定
+	icom.init(init);//初始化
 	icom.screenScrollUnable();//如果是一屏高度项目且在ios下，阻止屏幕默认滑动行为
 	
 	function init(){
