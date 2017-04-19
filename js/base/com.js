@@ -17,6 +17,7 @@ function importCom() {
 		} //edn if
 		if(ibase.dir == 'portrait') {
 			lock_dected();
+
 			function lock_dected() {
 				if(ibase.lock) requestAnimationFrame(lock_dected);
 				else if(callback) callback();
@@ -486,18 +487,18 @@ function importCom() {
 		return url;
 	}; //end func
 
-	com.setTimeout = function(callback, frame ,type) {
-		type=type||0;
-		if(frame > 0 && callback) return setTimer(callback, frame ,type);
+	com.setTimeout = function(callback, frame, type) {
+		type = type || 0;
+		if(frame > 0 && callback) return setTimer(callback, frame, type);
 	} //edn func
 
 	com.clearTimeout = function(timer) {
 		if(timer && timer.timer) cancelAnimationFrame(timer.timer);
 	} //edn func
 
-	com.setInterval = function(callback, frame ,type) {
-		type=type||0;
-		if(frame > 0 && callback) return setTimer(callback, frame ,type, true);
+	com.setInterval = function(callback, frame, type) {
+		type = type || 0;
+		if(frame > 0 && callback) return setTimer(callback, frame, type, true);
 	} //edn func
 
 	com.clearInterval = function(timer) {
@@ -516,11 +517,11 @@ function importCom() {
 
 		function timer_handler() {
 			if(type) timer.now++;
-			else timer.now=new Date().getTime()-timer.start;
-			var timeup = type?timer.now == frame:timer.now>=frame;
+			else timer.now = new Date().getTime() - timer.start;
+			var timeup = type ? timer.now == frame : timer.now >= frame;
 			if(timeup) {
 				timer.now = 0;
-				timer.start=new Date().getTime();
+				timer.start = new Date().getTime();
 				callback();
 			} //end if
 			if(interval || (!interval && !timeup)) timer.timer = requestAnimationFrame(timer_handler);
