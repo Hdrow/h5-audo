@@ -486,36 +486,41 @@ function importCom() {
 		return url;
 	}; //end func
 
-	com.setTimeout = function(callback, frame) {
-		if(frame > 0 && callback) return setTimer(callback, frame);
+	com.setTimeout = function(callback, frame ,type) {
+		type=type||0;
+		if(frame > 0 && callback) return setTimer(callback, frame ,type);
 	} //edn func
 
 	com.clearTimeout = function(timer) {
 		if(timer && timer.timer) cancelAnimationFrame(timer.timer);
 	} //edn func
 
-	com.setInterval = function(callback, frame) {
-		if(frame > 0 && callback) return setTimer(callback, frame, true);
+	com.setInterval = function(callback, frame ,type) {
+		type=type||0;
+		if(frame > 0 && callback) return setTimer(callback, frame ,type, true);
 	} //edn func
 
 	com.clearInterval = function(timer) {
 		if(timer && timer.timer) cancelAnimationFrame(timer.timer);
 	} //edn func
 
-	function setTimer(callback, frame, interval) {
+	function setTimer(callback, frame, type, interval) {
 		interval = interval || 0;
 		var timer = {
 			now: 0,
+			start: new Date().getTime(),
 			timer: null
 		};
 		timer_handler();
 		return timer;
 
 		function timer_handler() {
-			timer.now++;
-			var timeup = timer.now == frame;
+			if(type) timer.now++;
+			else timer.now=new Date().getTime()-timer.start;
+			var timeup = type?timer.now == frame:timer.now>=frame;
 			if(timeup) {
 				timer.now = 0;
+				timer.start=new Date().getTime();
 				callback();
 			} //end if
 			if(interval || (!interval && !timeup)) timer.timer = requestAnimationFrame(timer_handler);

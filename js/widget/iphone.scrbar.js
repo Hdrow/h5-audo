@@ -109,7 +109,7 @@
 					$sizeLastCont=$size;//滚动内容上一次高
 					$sizeLastThis=$this.height();
 				}//end if
-				$sizeTimer=icom.setTimeout(size_handler,15);
+				$sizeTimer=icom.setTimeout(size_handler,15,true);
 			}//end func	
 			
 			function this_touchstart(e){
