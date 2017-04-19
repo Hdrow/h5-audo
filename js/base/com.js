@@ -1,4 +1,4 @@
-//2017.4.18
+//2017.4.19
 var icom=importCom();
 
 function importCom(){
@@ -41,42 +41,36 @@ function importCom(){
 			if(!ibase.keyboard){
 				if(dir=='portrait'){
 					console.log('screen portrait');
-					var size=imath.autoSize([ibase.landscapeHeight,ibase.landscapeWidth],[window.innerWidth,window.innerHeight],1);
+					var size=imath.autoSize([ibase.landscapeHeight,ibase.landscapeWidth],[window.innerWidth,window.innerHeight],ibase.landscapeScale);
 					var scale=size[0]/ibase.landscapeHeight;
 					console.log('window size:'+window.innerHeight+'/'+window.innerWidth);
 					console.log('auto scale:'+scale);
-					if(ibase.landscapeScale=='cover'){
-						article.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,rotate:90});
+					article.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,rotate:90});
+					interface.css({scale:scale,x:0,y:-ibase.landscapeHeight,width:window.innerHeight/scale,height:window.innerWidth/scale});
+					if(ibase.landscapeScale=='cover' || ibase.landscapeScale=='contain' || ibase.landscapeScale=='width' || ibase.landscapeScale=='height'){
 						container.css({scale:scale,x:(window.innerHeight/scale-ibase.landscapeWidth)*0.5,y:-ibase.landscapeHeight+(window.innerWidth/scale-ibase.landscapeHeight)*0.5+(os.iphone6Plus?4:0)});
-						interface.css({scale:scale,x:0,y:-ibase.landscapeHeight,width:window.innerHeight/scale,height:window.innerWidth/scale});
 					}//edn if
 					else{
 						var scales=[window.innerWidth/ibase.landscapeHeight,window.innerHeight/ibase.landscapeWidth];
 						console.log('auto scales:'+scales);
-						article.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,rotate:90});
 						container.css({scaleX:scales[0],scaleY:scales[1],x:0,y:-ibase.landscapeHeight});
-						interface.css({scale:scale,x:0,y:-ibase.landscapeHeight,width:window.innerHeight/scale,height:window.innerWidth/scale});
-						
 					}//end else
 				}//end if
 				else{
 					console.log('screen landscape');
-					var size=imath.autoSize([ibase.landscapeWidth,ibase.landscapeHeight],[window.innerWidth,window.innerHeight],1);
+					var size=imath.autoSize([ibase.landscapeWidth,ibase.landscapeHeight],[window.innerWidth,window.innerHeight],ibase.landscapeScale);
 					var scale=size[0]/ibase.landscapeWidth;
 					console.log('window size:'+window.innerWidth+'/'+window.innerHeight);
 					console.log('auto scale:'+scale);
-					if(ibase.landscapeScale=='cover'){
-						article.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,rotate:0});
+					article.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,rotate:0});
+					interface.css({scale:scale,x:0,y:0,width:window.innerWidth/scale,height:window.innerHeight/scale});
+					if(ibase.landscapeScale=='cover' || ibase.landscapeScale=='contain' || ibase.landscapeScale=='width' || ibase.landscapeScale=='height'){
 						container.css({scale:scale,x:(window.innerWidth/scale-ibase.landscapeWidth)*0.5,y:(window.innerHeight/scale-ibase.landscapeHeight)*0.5});
-						interface.css({scale:scale,x:0,y:0,width:window.innerWidth/scale,height:window.innerHeight/scale});
 					}//edn if
 					else{
 						var scales=[window.innerWidth/ibase.landscapeWidth,window.innerHeight/ibase.landscapeHeight];
 						console.log('auto scales:'+scales);
-						article.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,rotate:0});
 						container.css({scaleX:scales[0],scaleY:scales[1],x:0,y:0});
-						interface.css({scale:scale,x:0,y:0,width:window.innerWidth/scale,height:window.innerHeight/scale});
-						
 					}//end else
 				}//end else
 			}//edn if

@@ -1,4 +1,4 @@
-//2016.11.9
+//2017.4.19
 var imath=importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath(){
@@ -22,24 +22,30 @@ function importMath(){
 	}//end func 
 	
 	//等比缩放,分cover模式和contain模式
-	math.autoSize=function(aryNum,aryMax,cover){
-		cover=cover||0;
-		var aryNow=new Array()
+	math.autoSize=function(aryNum,aryMax,scaleMode){
+		if(scaleMode===1 || scaleMode===0) scaleMode=scaleMode===1?'cover':'contain';
+		else scaleMode=scaleMode||'cover';
+		var aryNow=[];
 		var aryRate= aryNum[0]/aryNum[1];
 		aryNow[0] = aryMax[0];
 		aryNow[1] = Math.round(aryNow[0]/aryRate);
-		if(cover){
-			if(aryNow[1]<aryMax[1]){
-				aryNow[1]=aryMax[1];
-				aryNow[0]=Math.round(aryNow[1]*aryRate);
-			}//end if
-		}//end if
-		else{
+		if(scaleMode=='height'){
+			aryNow[1] = aryMax[1];
+			aryNow[0] = Math.round(aryNow[1]*aryRate);
+		}//edn else if
+		else if(scaleMode=='contain'){
 			if(aryNow[1]>aryMax[1]){
 				aryNow[1]=aryMax[1];
 				aryNow[0]=Math.round(aryNow[1]*aryRate);
 			}//end if
-		}//end else
+		}//edn else if
+		else if(scaleMode=='cover'){
+			if(aryNow[1]<aryMax[1]){
+				aryNow[1]=aryMax[1];
+				aryNow[0]=Math.round(aryNow[1]*aryRate);
+			}//end if
+		}//edn else if
+		else if(scaleMode=='full') aryNow=[aryMax[0],aryMax[1]];
 		return aryNow;
 	}//end func
 	
