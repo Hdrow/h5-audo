@@ -47,16 +47,16 @@ function importBase() {
 		this.landscapeWidth = wd || 1206;
 		this.landscapeHeight = ht || 750;
 		this.landscapeScale = scale || 'cover';
-		unit = this.dir == 'landscape' ? 'px' : (unit || 'rem');
+		this.unit = this.dir == 'landscape' ? 'px' : (unit || 'rem');
 		console.log('css unit:' + unit);
 		if(this.dir == 'portrait') {
 			if(base.dir == 'portrait') {
-				if(unit == 'rem' || unit == 'em') {
-					document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
+				if(this.unit == 'rem' || this.unit == 'em') {
 					document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
 				} //end if
 				else {
-					document.write('<meta name="viewport" content="width=' + base.cssMedia + ', minimum-scale = ' + window.screen.width / base.cssMedia + ', maximum-scale = ' + window.screen.width / base.cssMedia + ', target-densitydpi=device-dpi">');
+					var articles = document.querySelectorAll('article');
+					for(var i = 0; i < articles.length; i++) articles[i].style.transform = 'scale(' + window.screen.width / base.cssMedia + ')';
 					document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
 				} //edn else
 			} //end if
@@ -68,10 +68,7 @@ function importBase() {
 			} //edn if
 			window.addEventListener("orientationchange", window_orientation, false);
 		} //edn if
-		else {
-			document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
-			document.write('<link rel="stylesheet" type="text/css" href="css/common.landscape.css" />');
-		} //end else
+		else document.write('<link rel="stylesheet" type="text/css" href="css/common.landscape.css" />');
 	} //end func
 
 	base.unlockOrient = function() {
