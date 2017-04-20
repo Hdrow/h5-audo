@@ -4,7 +4,7 @@
 		gifOn: function($path,$num,options){
 			if($path && $path!='' && $num>1){
 				var $this=$(this);
-				var defaults = {type:'png',speed:100,repeat:-1,endStart:false,pause:false,first:0,mode:1};
+				var defaults = {type:'png',speed:100,repeat:-1,endStart:false,pause:false,first:0};
 				var opts = $.extend(defaults,options);
 				var $now=opts.first,$last=-1,$timer,$repeat=0;
 				load_handler();
@@ -23,28 +23,26 @@
 			}//end func
 			
 			function init(){
-				if(opts.mode==1){
-					for(var i=1; i<=$num; i++) $('<img>').attr({src:$path+i+'.'+opts.type}).appendTo($this);
-					$chd=$this.children();
-				}//edn if
+				for(var i=1; i<=$num; i++) $('<img>').attr({src:$path+i+'.'+opts.type}).appendTo($this);
+				$chd=$this.children();
 				$this.on('off',this_off).on('pause',this_pause).on('resume',this_resume).on('goto',this_goto).on('speed',this_speed);
-				if(!opts.pause) $timer=setInterval(this_play,opts.speed);
+				if(!opts.pause) this_play();
 				this_switch();
 			}//end init
 			
 			function this_off(e){
 				$this.off('off pause resume goto speed');
-				clearInterval($timer);
+				icom.clearTimeout($timer);
 			}//end if
 			
 			function this_pause(e,id){
-				clearInterval($timer);
+				icom.clearTimeout($timer);
 				if(id!=null && $now!=id) this_goto(null,id);
 			}//end func
 			
 			function this_resume(e){
-				clearInterval($timer);
-				$timer=setInterval(this_play,opts.speed);
+				icom.clearTimeout($timer);
+				this_play();
 			}//end func
 			
 			function this_goto(e,id){
@@ -56,7 +54,6 @@
 			
 			function this_speed(e,speed){
 				opts.speed=speed;
-				this_resume();
 			}//end func
 			
 			function this_play(){
@@ -77,16 +74,12 @@
 					}//end else
 				}//end if
 				else this_switch();
+				$timer=icom.setTimeout(this_play,opts.speed);
 			}//end func
 			
 			function this_switch(){
-				if(opts.mode==1){
-					$chd.eq($now).show();
-					if($last!=-1 && $last!=$now) $chd.eq($last).hide();
-				}//edn if
-				else{
-					$this.attr({src:$path+($now+1)+'.'+opts.type});
-				}//edn else
+				$chd.eq($now).show();
+				if($last!=-1 && $last!=$now) $chd.eq($last).hide();
 				$last=$now;
 				if(opts.onFrame) opts.onFrame($this,$now+1);
 			}//end func

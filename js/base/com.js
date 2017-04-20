@@ -489,11 +489,11 @@ function importCom() {
 
 	com.setTimeout = function(callback, frame, type) {
 		type = type || 0;
-		if(frame > 0 && callback) return setTimer(callback, frame, type);
+		if(frame > 0 && callback) return setTimer(callback, frame, type, false);
 	} //edn func
 
 	com.clearTimeout = function(timer) {
-		if(timer && timer.timer) cancelAnimationFrame(timer.timer);
+		if(timer && timer.timer) clearTimer(timer);
 	} //edn func
 
 	com.setInterval = function(callback, frame, type) {
@@ -502,11 +502,17 @@ function importCom() {
 	} //edn func
 
 	com.clearInterval = function(timer) {
-		if(timer && timer.timer) cancelAnimationFrame(timer.timer);
+		if(timer && timer.timer) clearTimer(timer);
+	} //edn func
+
+	function clearTimer(timer) {
+		cancelAnimationFrame(timer.timer);
+		timer.now = 0;
+		timer.start = new Date().getTime();
+		timer.timer = null;
 	} //edn func
 
 	function setTimer(callback, frame, type, interval) {
-		interval = interval || 0;
 		var timer = {
 			now: 0,
 			start: new Date().getTime(),
@@ -526,6 +532,7 @@ function importCom() {
 			} //end if
 			if(interval || (!interval && !timeup)) timer.timer = requestAnimationFrame(timer_handler);
 		} //end func
+
 	} //edn func
 
 	com.canvas_send = function(canvas, callback, secretkey, type, compress) {
