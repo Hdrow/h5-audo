@@ -16,7 +16,6 @@ function importShake(){
 	shake.off=function(){
 		this.init();
 		window.removeEventListener('devicemotion',devicemotion_handler);
-		if(opts.onOff) opts.onOff();
 	}//end func
 	
 	shake.init=function(options){
