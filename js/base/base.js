@@ -51,8 +51,14 @@ function importBase() {
 		console.log('css unit:' + unit);
 		if(this.dir == 'portrait') {
 			if(base.dir == 'portrait') {
-				if(this.unit == 'rem' || this.unit == 'em') document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
-				else document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
+				if(this.unit == 'rem' || this.unit == 'em'){
+					document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
+					document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
+				}//end if
+				else{
+					document.write('<meta name="viewport" content="width='+base.cssMedia+', minimum-scale = '+window.screen.width/base.cssMedia+', maximum-scale = '+window.screen.width/base.cssMedia+', target-densitydpi=device-dpi">');
+					document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
+				}//edn else
 			} //end if
 			document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏模式</p></aside>');
 			this.turnBox = document.getElementById("turnBox");
