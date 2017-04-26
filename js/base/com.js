@@ -1,10 +1,11 @@
-//2017.4.19
+//2017.4.26
 var icom = importCom();
 
 function importCom() {
 	var com = {};
 
 	com.init = function(callback) {
+		var article = $('article');
 		if(os.android) {
 			var input = $('input,textarea,[contenteditable="true"]');
 			if(input.length > 0) input.on('focus', input_focus).on('blur', input_blur);
@@ -16,16 +17,17 @@ function importCom() {
 			ibase.keyboard = false;
 		} //edn if
 		if(ibase.dir == 'portrait') {
+			if(ibase.unit=='px'){
+				var scale=window.screen.width / ibase.cssMedia;
+				article.css({width:ibase.cssMedia,height:window.innerHeight/scale, scale:scale});
+			}//edn if
 			lock_dected();
-
 			function lock_dected() {
 				if(ibase.lock) requestAnimationFrame(lock_dected);
 				else if(callback) callback();
 			} //edn func
 		} //edn if
 		else {
-			var article = $('article');
-			var container = article.children('.container');
 			var interface = article.children('.interface');
 			html_resize(ibase.getOrient(true));
 			$(window).on('orientationchange', window_orientation);

@@ -1,4 +1,4 @@
-//2017.4.18
+//2017.4.26
 //-----------------------------------os
 var os = importOS();
 
@@ -51,14 +51,8 @@ function importBase() {
 		console.log('css unit:' + unit);
 		if(this.dir == 'portrait') {
 			if(base.dir == 'portrait') {
-				if(this.unit == 'rem' || this.unit == 'em') {
-					document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
-				} //end if
-				else {
-					var articles = document.querySelectorAll('article');
-					for(var i = 0; i < articles.length; i++) articles[i].style.transform = 'scale(' + window.screen.width / base.cssMedia + ')';
-					document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
-				} //edn else
+				if(this.unit == 'rem' || this.unit == 'em') document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
+				else document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
 			} //end if
 			document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏模式</p></aside>');
 			this.turnBox = document.getElementById("turnBox");
