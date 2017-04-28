@@ -142,18 +142,14 @@ function importBase() {
 		document.getElementsByTagName('body')[0].appendChild(newNode);
 	} //end func
 
-	base.getUrl = function(url, box, fade) {
+	base.getUrl = function(url) {
 		var hmsr = icom.getQueryString('hmsr');
 		hmsr = hmsr || '';
 		var utm_source = icom.getQueryString('utm_source');
 		utm_source = utm_source || '';
-		fade = fade || 500;
 		if(url && url != '') {
 			url += (hmsr != '' ? (url.indexOf('?') == -1 ? '?' : '&') + 'hmsr=' + hmsr : '') + (utm_source != '' ? '&utm_source=' + utm_source : '');
-			if(box && box.length > 0) icom.fadeOut(box, fade, function() {
-				location.href = url;
-			});
-			else location.href = url;
+			location.href = url;
 		} //end if
 	} //edn func
 
