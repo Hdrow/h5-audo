@@ -1,4 +1,4 @@
-//2015.11.16
+//2017.4.27
 (function() {
 	$.event.special.pinch = {
 		setup: function() {
@@ -17,6 +17,8 @@
 				if(e.originalEvent.touches.length==1){
 					mutiTouch=false;
 					posLast1=[e.originalEvent.touches[0].clientX,e.originalEvent.touches[0].clientY];
+					touchBox.eq(0).html(posLast1[0]+'/'+posLast1[1]);
+					touchBox.eq(1).html('nan');
 				}//end if
 				else if(e.originalEvent.touches.length>=2){
 					mutiTouch=true;
@@ -24,13 +26,15 @@
 					posLast2=[e.originalEvent.touches[1].clientX,e.originalEvent.touches[1].clientY];
 					disLast=imath.getDis(posLast1,posLast2);
 					rotateSt=rotateLast=imath.getDeg(posLast1,posLast2);
+					touchBox.eq(0).html(posLast1[0]+'/'+posLast1[1]);
+					touchBox.eq(1).html(posLast2[0]+'/'+posLast2[1]);
 				}//end if
 			}//end func
 			
 			function this_touchmove(e){
 				e.preventDefault();
 				e.stopPropagation();
-				if(!mutiTouch && e.originalEvent.touches.length==1){
+				if(e.originalEvent.touches.length==1){
 					var pos1=[e.originalEvent.touches[0].clientX,e.originalEvent.touches[0].clientY];
 					_this.trigger("pinch").trigger('pinchmove',[pos1[0]-posLast1[0],pos1[1]-posLast1[1]]);
 					posLast1[0]=pos1[0];
@@ -55,11 +59,7 @@
 			}//end func
 		
 			function this_touchend(e){
-				e.preventDefault();
-				e.stopPropagation();
 				$(this).off('touchmove');
-				if(e.originalEvent.touches.length>=1) mutiTouch=true;
-				else mutiTouch=false;
 			}//end func
 		}//end setup
 	};
