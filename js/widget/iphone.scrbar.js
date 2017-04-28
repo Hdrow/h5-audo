@@ -105,7 +105,7 @@
 						$panel.show();
 						if(opts.panelFade) $panel.css({opacity:0});
 					}//end else
-					$scale=$this.height()/$size;
+					$scale=$this.height()/$size*(os.ios?1:1.4);
 					$sizeLastCont=$size;//滚动内容上一次高
 					$sizeLastThis=$this.height();
 				}//end if
@@ -126,11 +126,9 @@
 			
 			function this_touchmove(e){
 				e.preventDefault();
-
 				if(!$moving){
 					$moving=true;
 					$cont.addClass('moving');
-
 				}//edn if
 				var dis=e.originalEvent.touches[0].clientY-$posLast;
 				$dir=dis>0?-1:1;
