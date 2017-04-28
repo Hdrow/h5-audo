@@ -105,7 +105,7 @@
 						$panel.show();
 						if(opts.panelFade) $panel.css({opacity:0});
 					}//end else
-					$scale=$this.height()/$size*(os.ios?1:1.4);
+					$scale=$this.height()/$size;
 					$sizeLastCont=$size;//滚动内容上一次高
 					$sizeLastThis=$this.height();
 				}//end if
@@ -126,9 +126,11 @@
 			
 			function this_touchmove(e){
 				e.preventDefault();
+
 				if(!$moving){
 					$moving=true;
 					$cont.addClass('moving');
+
 				}//edn if
 				var dis=e.originalEvent.touches[0].clientY-$posLast;
 				$dir=dis>0?-1:1;
@@ -183,10 +185,13 @@
 			
 			function scroll_set(){
 //				console.log('$tar:'+$tar);
-				$bar[0].style.transform='translate3d(0,'+$tar+'px,0)';
+
+				// $bar[0].style.transform='translate3d(0,'+$tar+'px,0)';
+				$bar.css({y:$tar,z:0})
 				var percent=$tar/$barSize;
 				var position=percent*($size-$this.height());
-				$cont[0].style.transform='translate3d(0,'+ (-position) +'px,0)';
+				$cont.css({y:-position,z:0})
+				// $cont[0].style.transform='translate3d(0,'+ (-position) +'px,0)';
 				if(opts.onScroll) opts.onScroll(position,percent,$dir);
 			}//edn func
 			
