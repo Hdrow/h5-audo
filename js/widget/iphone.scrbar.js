@@ -1,4 +1,4 @@
-﻿//2017.4.18
+﻿//2017.4.28
 (function($) {
 	$.fn.extend({
 		scrbar: function(options) {	
@@ -90,7 +90,7 @@
 				if($sizeLastCont!=$size || $sizeLastThis!=$this.height()){
 					if(opts.static){
 						$tar=-$cont.position().top/($cont.outerHeight()-$this.height())*($this.height()-$bar.outerHeight())
-						$bar.css({y:$tar});
+						$bar.css({y:$tar,z:0});
 					}//end if
 					else{
 						$bar.css({height:$this.height()/$cont.outerHeight()*$panel.height()});
@@ -183,13 +183,10 @@
 			
 			function scroll_set(){
 //				console.log('$tar:'+$tar);
-
-				// $bar[0].style.transform='translate3d(0,'+$tar+'px,0)';
-				$bar.css({y:$tar,z:0})
+				$bar.css({y:$tar,z:0});
 				var percent=$tar/$barSize;
 				var position=percent*($size-$this.height());
-				$cont.css({y:-position,z:0})
-				// $cont[0].style.transform='translate3d(0,'+ (-position) +'px,0)';
+				$cont.css({y:-position,z:0});
 				if(opts.onScroll) opts.onScroll(position,percent,$dir);
 			}//edn func
 			
