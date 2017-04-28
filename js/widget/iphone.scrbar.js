@@ -183,10 +183,13 @@
 			
 			function scroll_set(){
 //				console.log('$tar:'+$tar);
-				$bar[0].style.transform='translate3d(0,'+$tar+'px,0)';
+
+				// $bar[0].style.transform='translate3d(0,'+$tar+'px,0)';
+				$bar.css({y:$tar,z:0})
 				var percent=$tar/$barSize;
 				var position=percent*($size-$this.height());
-				$cont[0].style.transform='translate3d(0,'+ (-position) +'px,0)';
+				$cont.css({y:-position,z:0})
+				// $cont[0].style.transform='translate3d(0,'+ (-position) +'px,0)';
 				if(opts.onScroll) opts.onScroll(position,percent,$dir);
 			}//edn func
 			
