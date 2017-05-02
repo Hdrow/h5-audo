@@ -1,11 +1,15 @@
-//2017.3.14
-var _hmt = _hmt || [];
+//2017.5.2
+
+var _hmt=_hmt||[];
+//百度监测贴这里
+
+
+
+//ga监测贴这里
+
+
 var hmsr=icom.getQueryString('hmsr');
 var imonitor=importMonitor();
-
-
-//pm给的监测代码贴在这里
-
 
 
 function importMonitor(){
@@ -34,7 +38,7 @@ function importMonitor(){
 	
 	function event_handler(data){
 		_hmt.push(['_trackEvent', hmsr?'来源：'+hmsr:'来源：默认', data.index, (data.category!=''?data.category+'-':'') + data.label]);
-//		ga('send', 'event', hmsr?'来源：'+hmsr:'来源：默认', data.index, (data.category!=''?data.category+'-':'') + data.label);
+		if(ga) ga('send', 'event', hmsr?'来源：'+hmsr:'来源：默认', data.index, (data.category!=''?data.category+'-':'') + data.label);
 		console.log('监测来源：'+(hmsr?hmsr:'默认')+' | '+'监测说明：'+(data.index!='0'?data.index+'-':'')+(data.category!=''?data.category+'-':'') + data.label);
 	}//end func
 	
