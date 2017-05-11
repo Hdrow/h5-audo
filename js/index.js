@@ -2,7 +2,8 @@ $(document).ready(function(){
 	
 	//-----------------------------------------定义和初始化变量----------------------------------------
 	var loadBox=$('aside.loadBox');
-	var articleBox=$('article');
+	var articleBox=$('article');\
+	var windowScale=window.innerWidth/750;
 	
 	//----------------------------------------页面初始化----------------------------------------
 	icom.init(init);//初始化
@@ -55,6 +56,9 @@ $(document).ready(function(){
 		console.log('init handler');
 //		icom.fadeOut(loadBox,500);
 		monitor_handler();
+		requestAnimationFrame(function(){
+			
+		});
 	}//end func
 	
 	//----------------------------------------页面监测代码----------------------------------------
