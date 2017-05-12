@@ -16,9 +16,11 @@ function importOS() {
 	os.weixin = userAgent.match(/MicroMessenger/) ? true : false;
 	os.weibo = userAgent.match(/Weibo/) || userAgent.match(/weibo/) ? true : false;
 	os.ali = userAgent.match(/AliApp/) ? true : false;
-	os.alipay = os.ali && userAgent.match(/AliPayClient/) ? true : false;
-	os.taobao = os.ali && userAgent.match(/WindVane/) ? true : false;
-	os.netease = userAgent.indexOf("NewsApp") >= 0 ? true : false;
+	if(os.ali){
+		os.alipay = userAgent.match(/Alipay/) ? true : false;
+		os.taobao = userAgent.match(/WindVane/) ? true : false;	
+	}//edn if
+	os.netease = userAgent.match(/NewsApp/) ? true : false;
 	os.safari = os.ios && userAgent.match(/Safari/) ? true : false;
 	os.chrome = userAgent.match(/Chrome/) ? true : false;
 	os.firefox = userAgent.match(/Firefox/) ? true : false;
