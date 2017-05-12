@@ -1,4 +1,4 @@
-//2017.4.26
+//2017.5.12
 //-----------------------------------os
 var os = importOS();
 
@@ -15,6 +15,9 @@ function importOS() {
 	if(os.ios) os.iosVer = userAgent.match(/OS \d+_/).length > 0 ? parseInt(userAgent.match(/OS \d+_/)[0].match(/\d+/)[0]) : 0;
 	os.weixin = userAgent.match(/MicroMessenger/) ? true : false;
 	os.weibo = userAgent.match(/Weibo/) || userAgent.match(/weibo/) ? true : false;
+	os.ali = userAgent.match(/AliApp/) ? true : false;
+	os.alipay = os.ali && userAgent.match(/AliPayClient/) ? true : false;
+	os.taobao = os.ali && userAgent.match(/WindVane/) ? true : false;
 	os.netease = userAgent.indexOf("NewsApp") >= 0 ? true : false;
 	os.safari = os.ios && userAgent.match(/Safari/) ? true : false;
 	os.chrome = userAgent.match(/Chrome/) ? true : false;
@@ -51,14 +54,14 @@ function importBase() {
 		console.log('css unit:' + unit);
 		if(this.dir == 'portrait') {
 			if(base.dir == 'portrait') {
-				if(this.unit == 'rem' || this.unit == 'em'){
+				if(this.unit == 'rem' || this.unit == 'em') {
 					document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
 					document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
-				}//end if
-				else{
-					document.write('<meta name="viewport" content="width='+base.cssMedia+', minimum-scale = '+window.screen.width/base.cssMedia+', maximum-scale = '+window.screen.width/base.cssMedia+', target-densitydpi=device-dpi">');
+				} //end if
+				else {
+					document.write('<meta name="viewport" content="width=' + base.cssMedia + ', minimum-scale = ' + window.screen.width / base.cssMedia + ', maximum-scale = ' + window.screen.width / base.cssMedia + ', target-densitydpi=device-dpi">');
 					document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
-				}//edn else
+				} //edn else
 			} //end if
 			document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏模式</p></aside>');
 			this.turnBox = document.getElementById("turnBox");
