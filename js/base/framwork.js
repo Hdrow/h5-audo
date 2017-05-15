@@ -11,7 +11,72 @@
 !function(){$.event.special.touched={setup:function(){function b(){a.one("touchmove",c).one("touchend",d)}function c(){a.off("touchend",d).one("touchstart",b)}function d(){a.off("touchmove",c).one("touchstart",b),a.trigger("touched")}var a=$(this);a.one("touchstart",b)}}}();
 
 //-----------------------------------pinch.js
-!function(){$.event.special.pinch={setup:function(){function i(a){a.preventDefault(),a.stopPropagation(),$(this).on("touchmove",j).one("touchend",k),1==a.originalEvent.touches.length?(b=!1,c=[a.originalEvent.touches[0].clientX,a.originalEvent.touches[0].clientY],touchBox.eq(0).html(c[0]+"/"+c[1]),touchBox.eq(1).html("nan")):a.originalEvent.touches.length>=2&&(b=!0,c=[a.originalEvent.touches[0].clientX,a.originalEvent.touches[0].clientY],d=[a.originalEvent.touches[1].clientX,a.originalEvent.touches[1].clientY],e=imath.getDis(c,d),g=h=imath.getDeg(c,d),touchBox.eq(0).html(c[0]+"/"+c[1]),touchBox.eq(1).html(d[0]+"/"+d[1]))}function j(b){var f,g,i,j;b.preventDefault(),b.stopPropagation(),1==b.originalEvent.touches.length?(f=[b.originalEvent.touches[0].clientX,b.originalEvent.touches[0].clientY],a.trigger("pinch").trigger("pinchmove",[f[0]-c[0],f[1]-c[1]]),c[0]=f[0],c[1]=f[1]):b.originalEvent.touches.length>=2&&(f=[b.originalEvent.touches[0].clientX,b.originalEvent.touches[0].clientY],g=[b.originalEvent.touches[1].clientX,b.originalEvent.touches[1].clientY],i=imath.getDis(f,g),Math.abs(i-e)>.5&&a.trigger("pinch").trigger("pinchscale",[.025*(i-e)/Math.abs(i-e)]),j=imath.getDeg(f,g),j!=h&&a.trigger("pinch").trigger("pinchrotate",[j-h]),c[0]=f[0],c[1]=f[1],d[0]=g[0],d[1]=g[1],e=i,h=j)}function k(){$(this).off("touchmove")}var b,e,g,h,a=$(this),c=[],d=[];a.on("touchstart",i)}},$.each({pinchmove:"pinch",pinchscale:"pinch",pinchrotate:"pinch"},function(a,b){$.event.special[a]={setup:function(){$(this).on(b,$.noop)}}})}();
+//2017.5.15
+(function() {
+    $.event.special.pinch = {
+        setup:function() {
+            var _this = $(this);
+            //touch 
+            var mutiTouch;
+            var posLast1 = [], posLast2 = [], disLast, disSt, rotateSt, rotateLast;
+            _this.on("touchstart", this_touchstart);
+            //单指双指触控
+            function this_touchstart(e) {
+                $(this).on("touchmove", this_touchmove).one("touchend", this_touchend);
+                if (e.originalEvent.touches.length == 1) {
+                    mutiTouch = false;
+                    posLast1 = [ e.originalEvent.touches[0].clientX, e.originalEvent.touches[0].clientY ];
+                } else if (e.originalEvent.touches.length >= 2) {
+                    mutiTouch = true;
+                    posLast1 = [ e.originalEvent.touches[0].clientX, e.originalEvent.touches[0].clientY ];
+                    posLast2 = [ e.originalEvent.touches[1].clientX, e.originalEvent.touches[1].clientY ];
+                    disLast = imath.getDis(posLast1, posLast2);
+                    rotateSt = rotateLast = imath.getDeg(posLast1, posLast2);
+                }
+            }
+            //end func
+            function this_touchmove(e) {
+                if (e.originalEvent.touches.length == 1) {
+                    var pos1 = [ e.originalEvent.touches[0].clientX, e.originalEvent.touches[0].clientY ];
+                    _this.trigger("pinch").trigger("pinchmove", [ pos1[0] - posLast1[0], pos1[1] - posLast1[1] ]);
+                    posLast1[0] = pos1[0];
+                    posLast1[1] = pos1[1];
+                } else if (e.originalEvent.touches.length >= 2) {
+                    var pos1 = [ e.originalEvent.touches[0].clientX, e.originalEvent.touches[0].clientY ];
+                    var pos2 = [ e.originalEvent.touches[1].clientX, e.originalEvent.touches[1].clientY ];
+                    var dis = imath.getDis(pos1, pos2);
+                    if (Math.abs(dis - disLast) > .5) {
+                        _this.trigger("pinch").trigger("pinchscale", [ .025 * (dis - disLast) / Math.abs(dis - disLast) ]);
+                    }
+                    //end if
+                    var rotate = imath.getDeg(pos1, pos2);
+                    if (rotate != rotateLast) _this.trigger("pinch").trigger("pinchrotate", [ rotate - rotateLast ]);
+                    posLast1[0] = pos1[0];
+                    posLast1[1] = pos1[1];
+                    posLast2[0] = pos2[0];
+                    posLast2[1] = pos2[1];
+                    disLast = dis;
+                    rotateLast = rotate;
+                }
+            }
+            //end func
+            function this_touchend(e) {
+                $(this).off("touchmove");
+            }
+        }
+    };
+    $.each({
+        pinchmove:"pinch",
+        pinchscale:"pinch",
+        pinchrotate:"pinch"
+    }, function(e, sourceEvent) {
+        $.event.special[e] = {
+            setup:function() {
+                $(this).on(sourceEvent, $.noop);
+            }
+        };
+    });
+})();
 
 //-----------------------------------com.js
 function importCom(){function b(a){a.preventDefault()}function c(a,b,c,d){b&&$.isPlainObject(b)&&(b=JSON.stringify(b)),$.post("./http/httpPost.php",{api_url:a,post_data:b,action:d},function(a){c&&c(a)},"json")}function d(a,b){var c,d,e;if(b=b||0,c=a.split("<br/>"),0>=b||c.length<=b)return a;for(d="",e=0;b>e;e++)d+=c[e],b-1>e&&(d+="<br/>");return d}function e(a,b){var d,e,c=Math.ceil(a.length/b);if(1==c)return a;for(d="",e=0;c>e;e++)d+=0==e?a.substr(0,b)+"<br/>":c-1>e?a.substr(e*b,b)+"<br/>":a.substr(e*b);return d}function g(a){cancelAnimationFrame(a.timer),a.now=0,a.start=(new Date).getTime(),a.timer=null}function h(a,b,c,d){function f(){c?e.now++:e.now=(new Date).getTime()-e.start;var g=c?e.now==b:e.now>=b;g&&(e.now=0,e.start=(new Date).getTime(),a()),(d||!d&&!g)&&(e.timer=requestAnimationFrame(f))}var e={now:0,start:(new Date).getTime(),timer:null};return f(),e}var a={};return a.init=function(a){function c(){ibase.keyboard=!0}function d(){ibase.keyboard=!1}function e(){ibase.lock?requestAnimationFrame(e):a&&a()}function i(){setTimeout(function(){j(ibase.getOrient())},200)}function j(a){var b,c,d;ibase.keyboard||("portrait"==a?(console.log("screen portrait"),b=imath.autoSize([ibase.landscapeHeight,ibase.landscapeWidth],[window.innerWidth,window.innerHeight],ibase.landscapeScale),c=b[0]/ibase.landscapeHeight,console.log("window size:"+window.innerHeight+"/"+window.innerWidth),console.log("auto scale:"+c),f.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,rotate:90}),h.css({scale:c,x:0,y:-ibase.landscapeHeight,width:window.innerHeight/c,height:window.innerWidth/c}),"cover"==ibase.landscapeScale||"contain"==ibase.landscapeScale||"width"==ibase.landscapeScale||"height"==ibase.landscapeScale?g.css({scale:c,x:.5*(window.innerHeight/c-ibase.landscapeWidth),y:-ibase.landscapeHeight+.5*(window.innerWidth/c-ibase.landscapeHeight)+(os.iphone6Plus?4:0)}):(d=[window.innerWidth/ibase.landscapeHeight,window.innerHeight/ibase.landscapeWidth],console.log("auto scales:"+d),g.css({scaleX:d[0],scaleY:d[1],x:0,y:-ibase.landscapeHeight}))):(console.log("screen landscape"),b=imath.autoSize([ibase.landscapeWidth,ibase.landscapeHeight],[window.innerWidth,window.innerHeight],ibase.landscapeScale),c=b[0]/ibase.landscapeWidth,console.log("window size:"+window.innerWidth+"/"+window.innerHeight),console.log("auto scale:"+c),f.css({width:ibase.landscapeWidth,height:ibase.landscapeHeight,rotate:0}),h.css({scale:c,x:0,y:0,width:window.innerWidth/c,height:window.innerHeight/c}),"cover"==ibase.landscapeScale||"contain"==ibase.landscapeScale||"width"==ibase.landscapeScale||"height"==ibase.landscapeScale?g.css({scale:c,x:.5*(window.innerWidth/c-ibase.landscapeWidth),y:.5*(window.innerHeight/c-ibase.landscapeHeight)}):(d=[window.innerWidth/ibase.landscapeWidth,window.innerHeight/ibase.landscapeHeight],console.log("auto scales:"+d),g.css({scaleX:d[0],scaleY:d[1],x:0,y:0}))))}var b,f,g,h;os.android&&(b=$('input,textarea,[contenteditable="true"]'),b.length>0&&b.on("focus",c).on("blur",d)),"portrait"==ibase.dir?e():(f=$("article"),g=f.children(".container"),h=f.children(".interface"),j(ibase.getOrient(!0)),$(window).on("orientationchange",i),a&&a())},a.screenScrollEnable=function(){$(document).off("touchmove",b)},a.screenScrollUnable=function(){$(document).on("touchmove",b)},a.fadeIn=function(a,b,c){a&&(b=b||500,a.show().css({opacity:0}).transition({opacity:1},b,function(){c&&c($(this))}))},a.fadeOut=function(a,b,c){a&&(b=b||500,a.transition({opacity:0},b,function(){$(this).hide().css({opacity:1}),c&&c($(this))}))},a.popOn=function(b,c){function f(){e.closeBtn.length>0&&"button"==e.closeType?e.closeBtn.off(e.closeEvent,f):b.off(e.closeEvent,f),e.fade?a.fadeOut(b,e.fade,function(){e.remove&&b.remove()}):e.remove?b.remove():b.hide(),b.off("close",f),e.onClose&&e.onClose(b)}var d,e;b&&b.length>0&&(d={closeEvent:"touchend",closeType:"button",closeBtn:b.find("a.close"),remove:!1},e=$.extend(d,c),e.text&&b.find(".text").html(e.text),e.fade?a.fadeIn(b,e.fade):b.show(),e.closeBtn.length>0&&"button"==e.closeType?e.closeBtn.one(e.closeEvent,f):b.one(e.closeEvent,f),b.on("close",f))},a.popOff=function(a){a&&a.length>0&&a.trigger("close")},a.alert=function(b,c){if(b&&""!=b){var d=$('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a href="javascript:;" class="close">确定</a></p></div></aside>').appendTo("landscape"==ibase.dir?"article>.interface":"body");a.popOn(d,{text:b,onClose:c,remove:!0,closeEvent:"click"})}},a.getQueryString=function(a){var b,c;return a&&""!=a?(b=new RegExp("(^|&)"+a+"=([^&]*)(&|$)","i"),c=window.location.search.substr(1).match(b),null!=c?decodeURIComponent(c[2]):null):null},a.imageLoad=function(a,b){var c,d;if(a&&""!=a){if(c=new PxLoader,"string"===$.type(a)&&""!=a)c.addImage(a);else if("array"===$.type(a)&&a.length>0)for(d=0;d<a.length;d++)c.addImage(a[d]);c.addCompletionListener(function(){console.log("images load complete"),c=null,b&&b(a)}),c.start()}},a.objectPrint=function(a){var b,c;if(a){console.log("-----------------------------------------------------------------------------"),b="";for(c in a)b+=c+":"+a[c]+"  ";console.log(b),console.log("-----------------------------------------------------------------------------")}},a.checkStr=function(a,b){var c;if(a&&""!=a){switch(b=b||0){case 0:c=new RegExp(/^1[3-9]\d{9}$/);break;case 1:c=new RegExp(/^[1-9]\d{5}$/);break;case 2:c=new RegExp(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/);break;case 3:c=new RegExp(/^\d+$/);break;case 4:c=new RegExp(/^[a-zA-Z\u0391-\uFFE5]*[\w\u0391-\uFFE5]*$/);break;case 5:c=new RegExp(/^\w+$/);break;case 6:c=new RegExp(/^[\u0391-\uFFE5]+$/);break;case 7:c=new RegExp(/^[a-zA-Z\u0391-\uFFE5]+$/)}return c.exec($.trim(a))?!0:!1}return!1},a.post=function(a,b,d){a&&""!=a&&c(a,b,d,"post")},a.get=function(a,b,d){a&&""!=a&&c(a,b,d,"get")},a.keyboard=function(a,b,c){function f(b){b.target!=a[0]&&a.blur()}function g(){"portrait"!=ibase.dir||0!=window.orientation&&180!=window.orientation?"landscape"!=ibase.dir||90!=window.orientation&&-90!=window.orientation||($(window).height()<d?h():i()):$(window).height()<d?h():i()}function h(){b.css({height:e}),c&&c(!0)}function i(){c&&c(!1)}var d,e;a=a||$('input,textarea,[contenteditable="true"]'),b=b||a.parents("section"),a.length>0&&(os.ios?a.on("focus",function(){$(document).one("touchend",f)}):b.length>0&&(d=$(window).height(),e=b.height(),$(window).on("resize",g)))},a.shake=function(b,c){var d,e,f,g;b&&b.length>0&&(d={rx:5,ry:5,delay:33,now:0,max:5,restore:!0},e=$.extend(d,c),f=imath.randomRange(-e.rx,e.rx),g=imath.randomRange(-e.ry,e.ry),b.css({x:f,y:g}),e.now++,e.now>e.max?(e.restore&&b.css({x:0,y:0}),e.onComplete&&e.onComplete()):setTimeout(a.shake,e.delay,b,e))},a.textareaGet=function(a,b){var c,e;return b=b||0,c=a.val(),""==c?"":(e=c.replaceAll("\n","<br/>"),d(e,b))},a.textareaSet=function(a,b){""==b?a.val(""):a.val(b.replaceAll("<br/>","\n"))},a.textareaLock=function(b){function i(){c=a.setInterval(k,15),$(this).one("blur",j)}function j(){var j,k,l,m,n;if(a.clearInterval(c),$(this).one("focus",i),j=a.textareaGet(b,f),-1!=j.indexOf("<br/>")){for(k=j.split("<br/>"),l="",m=0;m<k.length;m++)l+=e(k[m],g),m<k.length-1&&(l+="<br/>");l=d(l,f),n=l.replaceAll("<br/>","\n"),b.val(n)}}function k(){var c=a.textareaGet(b,f);-1==c.indexOf("<br/>")?b.attr({maxlength:h}):b.attr({maxlength:h+2*(c.split("<br/>").length-1)})}var c,f,g,h;b&&b.length>0&&(f=parseInt(b.attr("rows"))||0,g=parseInt(b.attr("cols"))||0,h=parseInt(b.attr("maxlength"))||0,h=0==h?f*g:h,f>0&&g>0&&h>0&&b.one("focus",i))},a.textareaUnlock=function(a){a.off()},a.url=function(a,b){var d,c=-1;for(d in b)c++,a+=0==c?"?":"&",a+=d+"="+b[d];return a},a.setTimeout=function(a,b,c){return c=c||0,b>0&&a?h(a,b,c,!1):void 0},a.clearTimeout=function(a){a&&a.timer&&g(a)},a.setInterval=function(a,b,c){return c=c||0,b>0&&a?h(a,b,c,!0):void 0},a.clearInterval=function(a){a&&a.timer&&g(a)},a.canvas_send=function(a,b,c,d,e){var f;a&&(c=c||"test",d=d||"jpg",e=e||.8,f="png"==d?a.toDataURL("image/png").split(",")[1]:a.toDataURL("image/jpeg",e).split(",")[1],this.base64_send(f,b,c))},a.base64_send=function(a,b,c){a&&(c=c||"test",$.post("http://upload.be-xx.com/upload",{data:a,key:c},function(a){b&&b(a)}))},a}var icom=importCom();String.prototype.replaceAll=function(a,b){return this.replace(new RegExp(a,"gm"),b)};
