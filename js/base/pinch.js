@@ -26,6 +26,7 @@
 			}//end func
 			
 			function this_touchmove(e){
+				e.preventDefault();
 				if(e.originalEvent.touches.length==1){
 					var pos1=[e.originalEvent.touches[0].clientX,e.originalEvent.touches[0].clientY];
 					_this.trigger("pinch").trigger('pinchmove',[pos1[0]-posLast1[0],pos1[1]-posLast1[1]]);

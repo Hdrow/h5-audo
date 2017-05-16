@@ -1,4 +1,4 @@
-//2017.4.19
+//2017.5.16
 var icom = importCom();
 
 function importCom() {
@@ -548,15 +548,52 @@ function importCom() {
 	com.base64_send = function(base64, callback, secretkey) {
 		if(base64) {
 			secretkey = secretkey || 'test';
-			$.post('http://upload.be-xx.com/upload', {
+			$.post('http://tool.be-xx.com/cdn/base64', {
 				data: base64,
 				key: secretkey
 			}, function(resp) {
-				if(callback) callback(resp);
-			})
+				if(resp.errcode==0){
+					if(callback) callback(resp.result);
+				}//edn if
+				else{
+					console.log('errmsg:'+resp.errmsg);
+				}//edn else
+			},'json');
 		} //edn if
 	} //end func
-
+	
+	com.base64_get = function(link, callback, secretkey) {
+		if(link) {
+			secretkey = secretkey || 'test';
+			$.post('http://tool.be-xx.com/image/base64', {
+				link: link,
+				key: secretkey
+			}, function(resp) {
+				if(callback) callback(resp);
+			},'text');
+		} //edn if
+	} //end func
+	
+	com.qrcode = function(txt,options) {
+		var defaults = {size:200,color:'#000000',bg:'#ffffff',border:0,error:0,logo:false};
+		var data = $.extend(defaults, options);
+		if(txt && txt!=''){
+			var src='http://tool.be-xx.com/image/qrcode?txt='+txt+'&size='+data.size+'&color='+data.color+'&bg='+data.bg+'&border='+data.border+'&error='+data.error+'&logo='+data.logo;
+			return src;
+		}//edn if
+		else return null;
+	} //end func
+	
+	com.barcode = function(txt,options) {
+		var defaults = {width:400,height:200,color:'#000000',bg:'#ffffff',pure:true};
+		var data = $.extend(defaults, options);
+		if(txt && txt!=''){
+			var src='http://tool.be-xx.com/image/barcode?txt='+txt+'&width='+data.width+'&height='+data.height+'&color='+data.color+'&bg='+data.bg+'&pure='+data.pure;
+			return src;
+		}//edn if
+		else return null;
+	} //end func
+	
 	return com;
 
 } //end import
