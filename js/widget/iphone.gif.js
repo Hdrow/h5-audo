@@ -26,18 +26,17 @@
 				for(var i=1; i<=$num; i++) $('<img>').attr({src:$path+i+'.'+opts.type}).appendTo($this);
 				$chd=$this.children();
 				$this.on('off',this_off).on('pause',this_pause).on('resume',this_resume).on('goto',this_goto).on('speed',this_speed);
-				if(!opts.pause) this_play();
-				this_switch();
+				this_switch(opts.pause);
 			}//end init
 			
 			function this_off(e){
+				console.log('this_off')
 				$this.off('off pause resume goto speed');
 				icom.clearTimeout($timer);
 			}//end if
 			
-			function this_pause(e,id){
+			function this_pause(e){
 				icom.clearTimeout($timer);
-				if(id!=null && $now!=id) this_goto(null,id);
 			}//end func
 			
 			function this_resume(e){
@@ -45,10 +44,12 @@
 				this_play();
 			}//end func
 			
-			function this_goto(e,id){
-				if(id!=null && $now!=id){
+			function this_goto(e,id,stop){
+				stop=stop||0;
+				if(id!=null){
 					$now=id;
-					this_switch();
+					icom.clearTimeout($timer);
+					this_switch(stop);
 				}//end if
 			}//end func
 			
@@ -74,14 +75,15 @@
 					}//end else
 				}//end if
 				else this_switch();
-				$timer=icom.setTimeout(this_play,opts.speed);
 			}//end func
 			
-			function this_switch(){
+			function this_switch(stop){
+				stop=stop||0;
 				$chd.eq($now).show();
 				if($last!=-1 && $last!=$now) $chd.eq($last).hide();
 				$last=$now;
 				if(opts.onFrame) opts.onFrame($now+1);
+				if(!stop) $timer=icom.setTimeout(this_play,opts.speed);
 			}//end func
 
 		},//end fn
@@ -93,7 +95,7 @@
 		},//end fn
 		gifGoto: function(id) {
 			id=Math.abs(id);
-			$(this).triggerHandler('goto',[id]);
+			$(this).triggerHandler('goto',[id,stop]);
 		},//end fn
 		gifSpeed: function(speed) {
 			if(speed && speed>0) $(this).triggerHandler('speed',[speed]);
