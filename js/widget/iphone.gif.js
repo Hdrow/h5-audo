@@ -1,4 +1,4 @@
-//2017.3.29
+//2017.5.18
 (function($) {	
 	jQuery.fn.extend({
 		gifOn: function($path,$num,options){
@@ -60,7 +60,7 @@
 				$now++;
 				if($now>=$num){
 					$repeat++;
-					if(opts.onComplete) opts.onComplete($this,$repeat);
+					if(opts.onComplete) opts.onComplete($repeat);
 					if(opts.repeat>=0){
 						if($repeat<=opts.repeat){
 							$now=0;
@@ -81,7 +81,7 @@
 				$chd.eq($now).show();
 				if($last!=-1 && $last!=$now) $chd.eq($last).hide();
 				$last=$now;
-				if(opts.onFrame) opts.onFrame($this,$now+1);
+				if(opts.onFrame) opts.onFrame($now+1);
 			}//end func
 
 		},//end fn
