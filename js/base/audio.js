@@ -96,6 +96,7 @@ function importAudio(){
 		
 		function onEnded(event){
 			_this.ended=1;
+			_this.played=0;
 			if(_this.onEnded) _this.onEnded();
 		}//end func
 		
