@@ -1,4 +1,4 @@
-//2017.5.22
+//2017.5.23
 //-----------------------------------os
 var os = importOS();
 
@@ -12,8 +12,13 @@ function importOS() {
 	os.ios = os.ipad || os.iphone;
 	os.wp = userAgent.match(/Windows Phone/) || userAgent.match(/IEMobile/) ? true : false;
 	os.supportsTouch = ((window.DocumentTouch && document instanceof window.DocumentTouch) || 'ontouchstart' in window);
-	if(os.ios) os.iosVer = userAgent.match(/OS \d+_/).length > 0 ? parseInt(userAgent.match(/OS \d+_/)[0].match(/\d+/)[0]) : 0;
+	if(os.ios) os.iosVer = parseInt(userAgent.match(/OS \d+_/)[0].match(/\d+/)[0]);
 	os.weixin = userAgent.match(/MicroMessenger/) ? true : false;
+	if(os.weixin){
+		var ver=userAgent.match(/MicroMessenger\/\d+.\d+.\d+/)[0].match(/\d+.\d+.\d+/)[0].split('.');
+		os.weixinVer=0;
+		for(var i=0; i<ver.length; i++) os.weixinVer+=parseInt(ver[i])*Math.pow(10,ver.length-i-1);
+	}//edn if
 	os.weibo = userAgent.match(/Weibo/) || userAgent.match(/weibo/) ? true : false;
 	os.ali = userAgent.match(/AliApp/) ? true : false;
 	if(os.ali){
