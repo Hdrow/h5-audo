@@ -10,9 +10,11 @@ $(document).ready(function(){
 	icom.screenScrollUnable();//如果是一屏高度项目且在ios下，阻止屏幕默认滑动行为
 	
 	function init(){
-//		loadBox.show();
-		iuser.init(userGetted);
-//		load_handler();
+		requestAnimationFrame(function(){
+//			loadBox.show();
+			iuser.init(userGetted);
+//			load_handler();
+		});
 	}//edn func
 	
 	//----------------------------------------微信用户登录验证----------------------------------------	
@@ -56,8 +58,6 @@ $(document).ready(function(){
 		console.log('init handler');
 //		icom.fadeOut(loadBox,500);
 		monitor_handler();
-		requestAnimationFrame(function(){
-		});
 	}//end func
 	
 	//----------------------------------------页面监测代码----------------------------------------
