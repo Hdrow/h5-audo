@@ -24,6 +24,8 @@ a>img{ width:100%;}
 .moving{ will-change:transform;}
 .smoothSlide {-webkit-overflow-scrolling: touch;}/* ios设备平滑滚动 */
 .txtShadow{text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000; }
+.aniStop{-webkit-animation-play-state: paused;}
+.aniPlay{ -webkit-animation-play-state: running;}
 
 /* css media */
 html{font-size:50px;}
