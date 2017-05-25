@@ -41,8 +41,10 @@ function importOS() {
 	os.iphone4 = (os.ios && ((screen.width == 320 && screen.height == 480) || (screen.width == 480 && screen.height == 320))) || (screen.width == 540 && screen.height == 702);
 	os.huawei=null;
 	if(os.android){
-		if(screen.width==360) os.huawei=(screen.height==640 && window.innerHeight<540 ) || screen.height<640;
-		else if(screen.width==412) os.huawei=(screen.height==732 && window.innerHeight<640 ) || screen.height<732;
+		requestAnimationFrame(function(){
+			if(screen.width==360) os.huawei=(screen.height==640 && window.innerHeight<540 ) || screen.height<640;
+			else if(screen.width==412) os.huawei=(screen.height==732 && window.innerHeight<640 ) || screen.height<732;
+		});
 	}//edn if
 	return os;
 } //end func
