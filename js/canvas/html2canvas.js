@@ -3363,7 +3363,7 @@ exports.decode64 = function(base64) {
 exports.getBoundingClientRect=function(dom){
 	if(dom){
 		var obj=$(dom);
-		return {top:obj.offset().top,bottom:obj.offset().top+obj.outerHeight(true),left:obj.offset().left,right:obj.offset().left+obj.outerWidth(true)};
+		return {top:obj.offset().top,bottom:obj.offset().top+obj.outerHeight(),left:obj.offset().left,right:obj.offset().left+obj.outerWidth()};
 	}//end if
 }//edn func
 
