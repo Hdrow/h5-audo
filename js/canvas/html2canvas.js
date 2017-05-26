@@ -5,6 +5,7 @@
   Released under  License
 */
 
+
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.html2canvas=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 (function (global){
 /*! http://mths.be/punycode v1.2.4 by @mathias */
@@ -3158,21 +3159,19 @@ Support.prototype.testRangeBounds = function(document) {
 
     if (document.createRange) {
         range = document.createRange();
-        if (range.getBoundingClientRect) {
-            testElement = document.createElement('boundtest');
-            testElement.style.height = "123px";
-            testElement.style.display = "block";
-            document.body.appendChild(testElement);
+        testElement = document.createElement('boundtest');
+        testElement.style.height = "123px";
+        testElement.style.display = "block";
+        document.body.appendChild(testElement);
 
-            range.selectNode(testElement);
-            rangeBounds = range.getBoundingClientRect();
-            rangeHeight = rangeBounds.height;
+        range.selectNode(testElement);
+        rangeBounds = range.getBoundingClientRect();
+        rangeHeight = rangeBounds.height;
 
-            if (rangeHeight === 123) {
-                support = true;
-            }
-            document.body.removeChild(testElement);
+        if (rangeHeight === 123) {
+            support = true;
         }
+        document.body.removeChild(testElement);
     }
 
     return support;
@@ -3361,20 +3360,24 @@ exports.decode64 = function(base64) {
     return output;
 };
 
+exports.getBoundingClientRect=function(dom){
+	if(dom){
+		var obj=$(dom);
+		return {top:obj.offset().top,bottom:obj.offset().top+obj.outerHeight(true),left:obj.offset().left,right:obj.offset().left+obj.outerWidth(true)};
+	}//end if
+}//edn func
+
 exports.getBounds = function(node) {
-    if (node.getBoundingClientRect) {
-        var clientRect = node.getBoundingClientRect();
-        var width = node.offsetWidth == null ? clientRect.width : node.offsetWidth;
-        return {
-            top: clientRect.top,
-            bottom: clientRect.bottom || (clientRect.top + clientRect.height),
-            right: clientRect.left + width,
-            left: clientRect.left,
-            width:  width,
-            height: node.offsetHeight == null ? clientRect.height : node.offsetHeight
-        };
-    }
-    return {};
+    var clientRect = exports.getBoundingClientRect(node);
+    var width = node.offsetWidth == null ? clientRect.width : node.offsetWidth;
+    return {
+        top: clientRect.top,
+        bottom: clientRect.bottom || (clientRect.top + clientRect.height),
+        right: clientRect.left + width,
+        left: clientRect.left,
+        width:  width,
+        height: node.offsetHeight == null ? clientRect.height : node.offsetHeight
+    };
 };
 
 exports.offsetBounds = function(node) {
