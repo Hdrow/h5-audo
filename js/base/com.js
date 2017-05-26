@@ -1,4 +1,4 @@
-//2017.5.16
+//2017.5.26
 var icom = importCom();
 
 function importCom() {
@@ -539,8 +539,8 @@ function importCom() {
 			secretkey = secretkey || 'test';
 			type = type || 'jpg';
 			compress = compress || 0.8;
-			if(type == 'png') var base64 = canvas.toDataURL('image/png').split(",")[1];
-			else var base64 = canvas.toDataURL('image/jpeg', compress).split(",")[1];
+			if(type == 'png') var base64 = canvas.toDataURL('image/png');
+			else var base64 = canvas.toDataURL('image/jpeg', compress);
 			this.base64_send(base64, callback, secretkey);
 		} //edn if
 	} //end func
