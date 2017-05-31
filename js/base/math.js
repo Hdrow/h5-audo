@@ -100,12 +100,12 @@ function importMath() {
 		scaleX = scaleX != null ? scaleX : 1;
 		scaleY = scaleY != null ? scaleY : 1;
 		if(source && target) {
-			var pos1 = [source.offset().left + source.outerWidth() * scaleX / 2, source.offset().top + source.outerHeight() * scaleY / 2];
-			var pos2 = [target.offset().left + target.outerWidth() * scaleX / 2, target.offset().top + target.outerHeight() * scaleY / 2];
+			var pos1 = [source.offset().left + source.outerWidth() * scaleX * 0.5, source.offset().top + source.outerHeight() * scaleY * 0.5];
+			var pos2 = [target.offset().left + target.outerWidth() * scaleX * 0.5, target.offset().top + target.outerHeight() * scaleY * 0.5];
 			var disX = Math.abs(pos2[0] - pos1[0]);
 			var disY = Math.abs(pos2[1] - pos1[1]);
-			var disXMin = (source.outerWidth() + target.outerWidth()) * scaleX / 2;
-			var disYMin = (source.outerHeight() + target.outerHeight()) * scaleY / 2;
+			var disXMin = (source.outerWidth() + target.outerWidth()) * scaleX * 0.5;
+			var disYMin = (source.outerHeight() + target.outerHeight()) * scaleY * 0.5;
 			if(disX <= disXMin && disY <= disYMin) return true;
 		} //end if
 		else return false;
@@ -114,12 +114,12 @@ function importMath() {
 	//测试2个带data().x,data().y的jquery对象是否重合
 	math.hitObject = function(source, target) {
 		if(source && target) {
-			var pos1 = [source.data().x + source.outerWidth() / 2, source.data().y + source.outerHeight() / 2];
-			var pos2 = [target.data().x + target.outerWidth() / 2, target.data().y + target.outerHeight() / 2];
+			var pos1 = [source.data().x + source.outerWidth() * 0.5, source.data().y + source.outerHeight() * 0.5];
+			var pos2 = [target.data().x + target.outerWidth() * 0.5, target.data().y + target.outerHeight() * 0.5];
 			var disX = Math.abs(pos2[0] - pos1[0]);
 			var disY = Math.abs(pos2[1] - pos1[1]);
-			var disXMin = (source.outerWidth() + target.outerWidth()) / 2;
-			var disYMin = (source.outerHeight() + target.outerHeight()) / 2;
+			var disXMin = (source.outerWidth() + target.outerWidth()) * 0.5;
+			var disYMin = (source.outerHeight() + target.outerHeight()) * 0.5;
 			if(disX <= disXMin && disY <= disYMin) return true;
 		} //end if
 		else return false;
