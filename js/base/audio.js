@@ -1,8 +1,10 @@
-//2016.11.25
+//2017.6.3
 var iaudio=importAudio();
 
 function importAudio(){
 	var audio={};
+	var webAudioContext=window.webkitAudioContext||window.AudioContext;
+	console.log(webAudioContext);
 	
 	audio.on=function(list,options){
 		var _this=this;
@@ -123,11 +125,12 @@ function importAudio(){
 	}//end func
 	
 	function webAudio(opts){
-		this.context=new window.webkitAudioContext(); /* 创建一个 AudioContext */
+		this.context=new webAudioContext(); /* 创建一个 AudioContext */
 	    this.buffer=null;
 	    this.source=null;
 	    this.src=opts.src;
 	    this.volume=opts.volume;
+	    console.log(this.volume)
 	    this.loop=opts.loop;
 	    this.autoPlay=opts.autoPlay;
 	    this.continuePlay=opts.continuePlay;
@@ -182,6 +185,12 @@ function importAudio(){
 		    this.source.connect(this.context.destination); /*连接 AudioBufferSourceNode 到 AudioContext */
 		    this.source.start(0,this.continuePlay?this.currentTime % this.buffer.duration:0); 
 		    this.startTime = this.context.currentTime;
+		    //调节音量
+		   	var gain = this.context.createGain();
+			this.source.connect(gain);
+			gain.connect(this.context.destination);
+			gain.gain.value = this.volume;
+//			console.log(gain);
 		    this.source.onended=function(){
 		    	if(_this.played){
 		    		console.log(get_src(_this.src)+' ended');
@@ -275,7 +284,7 @@ function importAudio(){
 	}//end func
 	
 	function webAudioBgm(opts){
-		this.context=new window.webkitAudioContext();
+		this.context=new webAudioContext();
 	    this.buffer=null;
 	    this.source=null;
 	    this.src=opts.src;
