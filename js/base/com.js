@@ -205,9 +205,11 @@ function importCom() {
 	} //end func
 
 	//系统选择框
-	com.confirm = function(text, callbackConfirm, callbackCancel) {
+	com.confirm = function(text, callbackConfirm, callbackCancel, textConfirm, textCancel) {
 		text = text || '确定？'
-		var box = $('<aside class="confirmBox"><div><p class="text">' + text + '</p><p class="btn"><a href="javascript:;" class="cancel">取消</a><a href="javascript:;" class="confirm">确定</a></p></div></aside>').appendTo(ibase.dir == 'landscape' ? 'article>.interface' : 'body');
+		textConfirm=textConfirm||'确定';
+		textCancel=textCancel||'取消';
+		var box = $('<aside class="confirmBox"><div><p class="text">' + text + '</p><p class="btn"><a href="javascript:;" class="cancel">'+textCancel+'</a><a href="javascript:;" class="confirm">'+textConfirm+'</a></p></div></aside>').appendTo(ibase.dir == 'landscape' ? 'article>.interface' : 'body');
 		var cancel = box.find('a.cancel');
 		cancel.one('click', function(e) {
 			box.remove();
