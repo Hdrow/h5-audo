@@ -58,11 +58,6 @@ $(document).ready(function(){
 		console.log('init handler');
 //		icom.fadeOut(loadBox,500);
 		monitor_handler();
-		icom.confirm('确定删除么？',function(){
-			icom.alert('哈哈哈');
-		},function(){
-			icom.alert('55555')
-		})
 	}//end func
 	
 	//----------------------------------------页面监测代码----------------------------------------
