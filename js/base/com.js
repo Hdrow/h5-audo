@@ -1,4 +1,4 @@
-//2017.6.8
+//2017.6.12
 var icom = importCom();
 
 function importCom() {
@@ -17,7 +17,6 @@ function importCom() {
 		} //edn if
 		if(ibase.dir == 'portrait') {
 			lock_dected();
-
 			function lock_dected() {
 				if(ibase.lock) requestAnimationFrame(lock_dected);
 				else if(callback) callback();
@@ -202,24 +201,6 @@ function importCom() {
 				closeEvent: 'click'
 			});
 		} //end if
-	} //end func
-
-	//系统选择框
-	com.confirm = function(text, callbackConfirm, callbackCancel, textConfirm, textCancel) {
-		text = text || '确定？'
-		textConfirm=textConfirm||'确定';
-		textCancel=textCancel||'取消';
-		var box = $('<aside class="confirmBox"><div><p class="text">' + text + '</p><p class="btn"><a href="javascript:;" class="cancel">'+textCancel+'</a><a href="javascript:;" class="confirm">'+textConfirm+'</a></p></div></aside>').appendTo(ibase.dir == 'landscape' ? 'article>.interface' : 'body');
-		var cancel = box.find('a.cancel');
-		cancel.one('click', function(e) {
-			box.remove();
-			if(callbackCancel) callbackCancel();
-		});
-		var confirm = box.find('a.confirm');
-		confirm.one('click', function(e) {
-			box.remove();
-			if(callbackConfirm) callbackConfirm();
-		});
 	} //end func
 
 	//获得http url参数
@@ -571,16 +552,16 @@ function importCom() {
 				data: base64,
 				key: secretkey
 			}, function(resp) {
-				if(resp.errcode == 0) {
+				if(resp.errcode==0){
 					if(callback) callback(resp.result);
-				} //edn if
-				else {
-					console.log('errmsg:' + resp.errmsg);
-				} //edn else
-			}, 'json');
+				}//edn if
+				else{
+					console.log('errmsg:'+resp.errmsg);
+				}//edn else
+			},'json');
 		} //edn if
 	} //end func
-
+	
 	com.base64_get = function(link, callback, secretkey) {
 		if(link) {
 			secretkey = secretkey || 'test';
@@ -589,43 +570,56 @@ function importCom() {
 				key: secretkey
 			}, function(resp) {
 				if(callback) callback(resp);
-			}, 'text');
+			},'text');
 		} //edn if
 	} //end func
-
-	com.qrcode = function(txt, options) {
-		var defaults = {
-			size: 200,
-			color: '#000000',
-			bg: '#ffffff',
-			border: 0,
-			error: 0,
-			logo: false
-		};
+	
+	com.qrcode = function(txt,options) {
+		var defaults = {size:200,color:'#000000',bg:'#ffffff',border:0,error:0,logo:false};
 		var data = $.extend(defaults, options);
-		if(txt && txt != '') {
-			var src = 'http://tool.be-xx.com/image/qrcode?txt=' + txt + '&size=' + data.size + '&color=' + data.color + '&bg=' + data.bg + '&border=' + data.border + '&error=' + data.error + '&logo=' + data.logo;
+		if(txt && txt!=''){
+			var src='http://tool.be-xx.com/image/qrcode?txt='+txt+'&size='+data.size+'&color='+data.color+'&bg='+data.bg+'&border='+data.border+'&error='+data.error+'&logo='+data.logo;
 			return src;
-		} //edn if
+		}//edn if
 		else return null;
 	} //end func
-
-	com.barcode = function(txt, options) {
-		var defaults = {
-			width: 400,
-			height: 200,
-			color: '#000000',
-			bg: '#ffffff',
-			pure: true
-		};
+	
+	com.barcode = function(txt,options) {
+		var defaults = {width:400,height:200,color:'#000000',bg:'#ffffff',pure:true};
 		var data = $.extend(defaults, options);
-		if(txt && txt != '') {
-			var src = 'http://tool.be-xx.com/image/barcode?txt=' + txt + '&width=' + data.width + '&height=' + data.height + '&color=' + data.color + '&bg=' + data.bg + '&pure=' + data.pure;
+		if(txt && txt!=''){
+			var src='http://tool.be-xx.com/image/barcode?txt='+txt+'&width='+data.width+'&height='+data.height+'&color='+data.color+'&bg='+data.bg+'&pure='+data.pure;
 			return src;
-		} //edn if
+		}//edn if
 		else return null;
 	} //end func
-
+	
+	com.clipboard=function(box,val,onComplete,onError){
+		var support = !!document.queryCommandSupported;
+		console.log('support:'+support);
+		if(support){
+			if(box.length>0 && val!=''){
+				box.attr({'data-copy':val}).on('click',{callback:onComplete},copyText);
+			}//edn if
+		}//edn if
+		else{
+			console.log('浏览器不支持复制文本到剪贴板');
+			if(onError) onError();
+		}//end else
+	}//edn func
+	
+	function copyText(e){
+		var val=$(this).data('copy');
+		var input=$('<textarea readonly="readonly"></textarea>').html(val).css({position:'absolute',left:0,top:0,width:1,height:1,visible:'hidden'}).appendTo('body');
+		input[0].select();
+		input[0].setSelectionRange(0, input[0].value.length);
+		console.log('copy content:'+input.val())
+		document.execCommand('Copy');
+		input.remove();
+		input=null;
+		if(e.data.callback) e.data.callback();
+	}//edn func
+	
 	return com;
 
 } //end import

@@ -4,7 +4,9 @@ var ishare=importShare();
 (function() {
 	ishare.wxId='wx61a3f44683b295b9';//微信 appid
 	//-------------------------------------------------------定义当前站点的分享设置
-	ishare.url=location.href.substr(0, location.href.lastIndexOf('/')+1);
+	var hrefs=location.href.split('?');
+	if(hrefs.length==0) ishare.url=location.href.substr(0, location.href.lastIndexOf('/')+1);
+	else ishare.url=hrefs[0].substr(0, hrefs[0].lastIndexOf('/')+1);
 	ishare.content={
 		link:ishare.url,
 		image:ishare.url+'images/share.jpg?v='+Math.random(),

@@ -4,7 +4,7 @@ var iaudio=importAudio();
 function importAudio(){
 	var audio={};
 	var webAudioContext=window.webkitAudioContext||window.AudioContext;
-	console.log(webAudioContext);
+//	console.log(webAudioContext);
 	
 	audio.on=function(list,options){
 		var _this=this;
