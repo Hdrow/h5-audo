@@ -1,4 +1,4 @@
-//2017.6.3
+//2017.6.13
 var iaudio=importAudio();
 
 function importAudio(){
@@ -171,48 +171,44 @@ function importAudio(){
 	
 	webAudio.prototype.play=function(){
 		var _this=this;
-		if(!this.played && this.loaded){
-			console.log(get_src(this.src)+' play');
-			this.played=1;
-			this.ended=0;
-			this.source = this.context.createBufferSource(); 
-		    this.source.buffer = this.buffer;
-		    this.source.loop = this.loop;
-		    this.source.connect(this.context.destination); /*连接 AudioBufferSourceNode 到 AudioContext */
-		    this.source.start(0,this.continuePlay?this.currentTime % this.buffer.duration:0); 
-		    this.startTime = this.context.currentTime;
-		    //调节音量
-		   	var gain = this.context.createGain();
-			this.source.connect(gain);
-			gain.connect(this.context.destination);
-			gain.gain.value = this.volume;
+		this.played=1;
+		this.ended=0;
+		this.source = this.context.createBufferSource(); 
+	    this.source.buffer = this.buffer;
+	    this.source.loop = this.loop;
+	    this.source.connect(this.context.destination); /*连接 AudioBufferSourceNode 到 AudioContext */
+	    this.source.start(0,this.continuePlay?this.currentTime % this.buffer.duration:0); 
+	    this.startTime = this.context.currentTime;
+	    //调节音量
+	   	var gain = this.context.createGain();
+		this.source.connect(gain);
+		gain.connect(this.context.destination);
+		gain.gain.value = this.volume;
 //			console.log(gain);
-		    this.source.onended=function(){
-		    	if(_this.played){
-		    		console.log(get_src(_this.src)+' ended');
-		    		_this.played=0;
-		    		_this.ended=1;
-		    		if(_this.onEnded) _this.onEnded(_this);
-		    		if(_this.onTimeupdate) clearInterval(_this.timeupdate);
-		    	}//edn if
-		    };
-		    if(this.onPlay) this.onPlay(this);
-		    if(this.onTimeupdate){
-		    	clearInterval(this.timeupdate);
-		    	this.timeupdate=setInterval(this.onTimeupdate,100,this);
-		    }//edn of
-		}//edn if
+	    this.source.onended=function(){
+	    	if(_this.played){
+	    		console.log(get_src(_this.src)+' ended');
+	    		_this.played=0;
+	    		_this.ended=1;
+	    		if(_this.onEnded) _this.onEnded(_this);
+	    		if(_this.onTimeupdate) clearInterval(_this.timeupdate);
+	    	}//edn if
+	    };
+	    if(this.onPlay) this.onPlay(this);
+	    if(this.onTimeupdate){
+	    	clearInterval(this.timeupdate);
+	    	this.timeupdate=setInterval(this.onTimeupdate,100,this);
+	    }//edn of
+//	    console.log(get_src(this.src)+' play');
 	}//end prototype
 	
 	webAudio.prototype.pause=function(){
-	    if(this.played && this.loaded && this.source){
-	    	console.log(get_src(this.src)+' pause');
-	    	this.played=0;
-			this.source.stop(0);
-	    	this.currentTime += this.context.currentTime - this.startTime;
-	    	if(this.onPause) this.onPause(_this);
-	    	if(this.onTimeupdate) clearInterval(this.timeupdate);
-		}//edn if
+    	this.played=0;
+		this.source.stop(0);
+    	this.currentTime += this.context.currentTime - this.startTime;
+    	if(this.onPause) this.onPause(_this);
+    	if(this.onTimeupdate) clearInterval(this.timeupdate);
+//  	console.log(get_src(this.src)+' pause');
 	}//end prototype
 	
 	audio.bgm=function(options){
