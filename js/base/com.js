@@ -1,4 +1,4 @@
-//2017.6.12
+//2017.6.13
 var icom = importCom();
 
 function importCom() {
@@ -200,6 +200,23 @@ function importCom() {
 				remove: true,
 				closeEvent: 'click'
 			});
+		} //end if
+	} //end func
+	
+	//confirm
+	com.confirm = function(text, callbackConfirm, callbackCancel, btnCancelText, btnConfirmText) {
+		text=text||'';
+		btnCancelText=btnCancelText||'取消';
+		btnConfirmText=btnConfirmText||'确认';
+		if(text != '') {
+			var box = $('<aside class="confirmBox"><div><p class="text">'+text+'</p><p class="btn"><a href="javascript:;" class="cancel">'+btnCancelText+'</a><a href="javascript:;" class="confirm">'+btnConfirmText+'</a></p></div></aside>').appendTo(ibase.dir == 'landscape' ? 'article>.interface' : 'body');
+			var btn=box.find('a');
+			btn.one('click',function(e){
+				if($(this).index()==0 && callbackCancel) callbackCancel();
+				else if($(this).index()==1 && callbackConfirm) callbackConfirm();
+				btn.off();
+				box.remove();
+			})
 		} //end if
 	} //end func
 
