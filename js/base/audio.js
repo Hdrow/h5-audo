@@ -105,23 +105,19 @@ function importAudio(){
 	}//end func
 	
 	localAudio.prototype.play=function(){
-		if(!this.played && this.loaded){
-			console.log(get_src(this.src)+' play');
-			this.played=1;
-			this.ended=0;
-			this.audio.volume=this.volume;
-			this.audio.currentTime=this.continuePlay?this.currentTime:0;
-			this.audio.play();
-		}//edn if
+		this.played=1;
+		this.ended=0;
+		this.audio.volume=this.volume;
+		this.audio.currentTime=this.continuePlay?this.currentTime:0;
+		this.audio.play();
+//		console.log(get_src(this.src)+' play');
 	}//end func
 	
 	localAudio.prototype.pause=function(){
-	    if(this.played && this.loaded){
-	    	console.log(get_src(this.src)+' pause');
-	    	this.played=0;
-	    	this.currentTime = this.audio.currentTime;
-	    	this.audio.pause();
-		}//edn if
+    	this.played=0;
+    	this.currentTime = this.audio.currentTime;
+    	this.audio.pause();
+//  	console.log(get_src(this.src)+' pause');
 	}//end func
 	
 	function webAudio(opts){
