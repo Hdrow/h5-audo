@@ -45,6 +45,16 @@ $(document).ready(function(){
 		loader.start();	
 	}//end func
 	
+	//模拟加载进度
+	function load_timer(per){
+		per=per||0;
+		per+=imath.randomRange(1,3);
+		per=per>100?100:per;
+		loadPer.html(per+'%');
+		if(per==100) setTimeout(init_handler,200);
+		else setTimeout(load_timer,33,per);
+	}//edn func
+	
 	//----------------------------------------页面逻辑代码----------------------------------------
 	function init_handler(){
 		console.log('init handler');
