@@ -1,4 +1,4 @@
-//2017.5.25
+//2017.6.15
 //-----------------------------------os
 var os = importOS();
 
@@ -144,20 +144,21 @@ function importBase() {
 			var fileref = document.createElement('script');
 			fileref.setAttribute("type", "text/javascript");
 			fileref.setAttribute("src", file.src);
-			document.getElementsByTagName('body')[0].appendChild(fileref);
+			document.querySelector('body').appendChild(fileref);
 		} //end else
 	} //end func
 
-	base.creatNode = function(nodeName, idName, className, innerHTML) {
+	base.creatNode = function(nodeName, idName, className, innerHTML ,wrapNode) {
 		nodeName = nodeName || 'div';
 		className = className || '';
 		idName = idName || '';
 		innerHTML = innerHTML || '';
+		wrapNode=wrapNode||document.querySelector('body');
 		var newNode = document.createElement(nodeName);
 		if(className != '') newNode.className = className;
 		if(idName != '') newNode.id = idName;
 		if(innerHTML != '') newNode.innerHTML = innerHTML;
-		document.getElementsByTagName('body')[0].appendChild(newNode);
+		wrapNode.appendChild(newNode);
 	} //end func
 
 	base.getUrl = function(url) {

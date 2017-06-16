@@ -13,10 +13,12 @@ $(document).ready(function(){
 	icom.screenScrollUnable();//如果是一屏高度项目且在ios下，阻止屏幕默认滑动行为
 	
 	function init(){
-//		loadBox.show();
-		articleBox.css({opacity:1}).show();
-		iuser.init(userGetted);
-//		load_handler();
+		requestAnimationFrame(function(){
+//			loadBox.show();
+			articleBox.css({opacity:1}).show();
+			iuser.init(userGetted);
+//			load_handler();
+		});
 	}//edn func
 	
 	//----------------------------------------微信用户登录验证----------------------------------------	

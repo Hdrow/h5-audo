@@ -212,7 +212,7 @@ function importAudio(){
 	}//end prototype
 	
 	audio.bgm=function(options){
-		var defaults = {src:'',btn:$('a.bgmBtn'),playClassName:'bgmPlay',stopClassName:'bgmStop',webAudio:true};
+		var defaults = {src:'',btn:$('a.bgmBtn'),playClassName:'bgmPlay',stopClassName:'bgmStop',webAudio:false};
 		var opts = $.extend(defaults,options);
 		console.log(opts.webAudio?'bgm is at web audio mode':'bgm is at local audio mode');
 		if(opts.webAudio) var bgm=new webAudioBgm(opts);
@@ -361,7 +361,7 @@ function importBgm(){
 	bgm.init=function(options){
 		opts = $.extend(defaults,options);
 		if(opts.src!=''){
-			ibase.creatNode('a',null,'bgmBtn',null);
+			ibase.creatNode('a',null,'bgmBtn',null,ibase.dir == 'landscape' ? document.querySelector('article>.interface') : document.querySelector('body'));
 			bgm.audio=iaudio.bgm({src:opts.src,onLoaded:opts.onLoaded,webAudio:opts.webAudio});
 			this.btn=$('a.bgmBtn');
 		}//edn if
