@@ -35,6 +35,9 @@ function importCom() {
 			setTimeout(function() {
 				html_resize(ibase.getOrient());
 			}, 250);
+			setTimeout(function() {
+				html_resize(ibase.getOrient());
+			},500);
 		} //edn func
 
 		function html_resize(dir) {
