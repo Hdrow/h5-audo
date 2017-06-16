@@ -1,3 +1,4 @@
+/*---------------------------------------- 默认css针对锁定屏幕翻转状态下的横屏 ----------------------------------------------*/
 section.index{ width: 1206px; height: 750px; background-color: #cccccc;}
 section.index p.blank{ height: 40px;}
 section.index .box{width: 500px; height: 300px; background-color: #555; padding: 40px; background-image: url(../images/common/turn_hor.png); background-size: auto; margin-left: 40px;}
@@ -6,3 +7,24 @@ section.index p.txt{ display: block; width: 580px; font-size: 28px; text-align: 
 .btn1{position: absolute; left: 30px; top: 30px; width: 70px; height: 70px; background-image: url(../images/common/bgm_on.png);}
 .btn2{position: absolute; left: 50%; top: 50%; width: 70px; margin-left: -35px; height: 70px; margin-left: -35px; background-image: url(../images/common/bgm_on.png);}
 .btn3{position: absolute; right: 30px; bottom: 30px; width: 70px; height: 70px; background-image: url(../images/common/bgm_on.png);}
+
+
+/*---------------------------------------- css media 适配部分（针对锁定屏幕翻转状态下的iphone6plus ），y轴偏移约10像素 ----------------------------------------------*/
+@media screen and (device-width:414px){
+
+.btn1{ top: 40px; }
+.btn3{ bottom: 40px; }
+
+}
+
+
+/*---------------------------------------- css media 适配部分（针对不锁定屏幕翻转状态下的横屏），y轴偏移约90像素,只在真机调试时解除注释 ----------------------------------------------*/
+
+@media screen and (orientation : landscape) { 
+
+/*
+.btn1{ top: 120px; }
+.btn3{ bottom: 120px; }
+*/
+
+}

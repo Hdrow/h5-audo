@@ -24,23 +24,21 @@ function importCom() {
 		} //edn if
 		else {
 			var article = $('article');
-			var container = article.children('.container');
-			var interface = article.children('.interface');
 			html_resize(ibase.getOrient(true));
 			$(window).on('orientationchange resize', window_orientation);
 			if(callback) callback();
 		} //end else
 
 		function window_orientation(e) {
-			setTimeout(function() {
-				html_resize(ibase.getOrient());
-			}, 250);
-			setTimeout(function() {
-				html_resize(ibase.getOrient());
-			},500);
+			for(var i=0; i<3; i++){
+				setTimeout(function() {
+					html_resize(ibase.getOrient());
+				}, i*250);
+			}//end for
 		} //edn func
-
+		
 		function html_resize(dir) {
+			var bgmBtn=$('a.bgmBtn');
 			if(!ibase.keyboard) {
 				if(dir == 'portrait') {
 					console.log('screen portrait');
@@ -53,15 +51,8 @@ function importCom() {
 						height: ibase.landscapeHeight,
 						rotate: 90
 					});
-					interface.css({
-						scale: scale,
-						x: 0,
-						y: -ibase.landscapeHeight,
-						width: window.innerHeight / scale,
-						height: window.innerWidth / scale
-					});
 					if(ibase.landscapeScale == 'cover' || ibase.landscapeScale == 'contain' || ibase.landscapeScale == 'width' || ibase.landscapeScale == 'height') {
-						container.css({
+						article.css({
 							scale: scale,
 							x: (window.innerHeight / scale - ibase.landscapeWidth) * 0.5,
 							y: -ibase.landscapeHeight + (window.innerWidth / scale - ibase.landscapeHeight) * 0.5 + (os.iphone6Plus ? 4 : 0)
@@ -70,7 +61,7 @@ function importCom() {
 					else {
 						var scales = [window.innerWidth / ibase.landscapeHeight, window.innerHeight / ibase.landscapeWidth];
 						console.log('auto scales:' + scales);
-						container.css({
+						article.css({
 							scaleX: scales[0],
 							scaleY: scales[1],
 							x: 0,
@@ -89,15 +80,8 @@ function importCom() {
 						height: ibase.landscapeHeight,
 						rotate: 0
 					});
-					interface.css({
-						scale: scale,
-						x: 0,
-						y: 0,
-						width: window.innerWidth / scale,
-						height: window.innerHeight / scale
-					});
 					if(ibase.landscapeScale == 'cover' || ibase.landscapeScale == 'contain' || ibase.landscapeScale == 'width' || ibase.landscapeScale == 'height') {
-						container.css({
+						article.css({
 							scale: scale,
 							x: (window.innerWidth / scale - ibase.landscapeWidth) * 0.5,
 							y: (window.innerHeight / scale - ibase.landscapeHeight) * 0.5
@@ -106,7 +90,7 @@ function importCom() {
 					else {
 						var scales = [window.innerWidth / ibase.landscapeWidth, window.innerHeight / ibase.landscapeHeight];
 						console.log('auto scales:' + scales);
-						container.css({
+						article.css({
 							scaleX: scales[0],
 							scaleY: scales[1],
 							x: 0,
@@ -118,7 +102,7 @@ function importCom() {
 		} //edn func
 
 	} //edn func
-
+	
 	com.screenScrollEnable = function() {
 		$(document).off('touchmove', noScroll);
 	} //end func
@@ -196,7 +180,7 @@ function importCom() {
 	//取代系统alert
 	com.alert = function(text, callback) {
 		if(text && text != '') {
-			var box = $('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a href="javascript:;" class="close">确定</a></p></div></aside>').appendTo(ibase.dir == 'landscape' ? 'article>.interface' : 'body');
+			var box = $('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a href="javascript:;" class="close">确定</a></p></div></aside>').appendTo(ibase.dir == 'landscape' ? 'article' : 'body');
 			com.popOn(box, {
 				text: text,
 				onClose: callback,
@@ -212,7 +196,7 @@ function importCom() {
 		btnCancelText=btnCancelText||'取消';
 		btnConfirmText=btnConfirmText||'确认';
 		if(text != '') {
-			var box = $('<aside class="confirmBox"><div><p class="text">'+text+'</p><p class="btn"><a href="javascript:;" class="cancel">'+btnCancelText+'</a><a href="javascript:;" class="confirm">'+btnConfirmText+'</a></p></div></aside>').appendTo(ibase.dir == 'landscape' ? 'article>.interface' : 'body');
+			var box = $('<aside class="confirmBox"><div><p class="text">'+text+'</p><p class="btn"><a href="javascript:;" class="cancel">'+btnCancelText+'</a><a href="javascript:;" class="confirm">'+btnConfirmText+'</a></p></div></aside>').appendTo(ibase.dir == 'landscape' ? 'article' : 'body');
 			var btn=box.find('a');
 			btn.one('click',function(e){
 				if($(this).index()==0 && callbackCancel) callbackCancel();

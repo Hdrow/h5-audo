@@ -3,8 +3,6 @@ $(document).ready(function(){
 	//-----------------------------------------定义和初始化变量----------------------------------------
 	var loadBox=$('aside.loadBox');
 	var articleBox=$('article');
-	var containerBox=articleBox.children('.container');
-	var interfaceBox=articleBox.children('.interface');
 	var windowScale=ibase.getOrient(true)=='landscape'?window.innerWidth/ibase.landscapeWidth:window.innerHeight/ibase.landscapeWidth;
 	console.log('windowScale:'+windowScale);
 	

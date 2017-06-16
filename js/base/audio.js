@@ -226,9 +226,7 @@ function importAudio(){
 	    this.onLoaded=opts.onLoaded;
 	    this.loaded=0;
 	    this.played=0;
-	    this.bgmPlay=sessionStorage.bgmPlay;
-		this.bgmPlay=this.bgmPlay||1;
-		this.bgmPlay=parseInt(this.bgmPlay);
+	    this.bgmPlay=opts.autoplay||0;
 		console.log('bgmPlay:'+this.bgmPlay);
 		this.bgmTime=sessionStorage.bgmTime;
 		this.bgmTime=this.bgmTime||0;
@@ -355,14 +353,14 @@ var ibgm=importBgm();
 
 function importBgm(){
 	var bgm={};
-	var defaults = {webAudio:0,src:''};
+	var defaults = {webAudio:0,src:'',autoplay:1};
 	var opts={};
 	
 	bgm.init=function(options){
 		opts = $.extend(defaults,options);
 		if(opts.src!=''){
-			ibase.creatNode('a',null,'bgmBtn',null,ibase.dir == 'landscape' ? document.querySelector('article>.interface') : document.querySelector('body'));
-			bgm.audio=iaudio.bgm({src:opts.src,onLoaded:opts.onLoaded,webAudio:opts.webAudio});
+			ibase.creatNode('a',null,'bgmBtn',null,ibase.dir == 'landscape' ? document.querySelector('article') : document.querySelector('body'));
+			bgm.audio=iaudio.bgm({src:opts.src,onLoaded:opts.onLoaded,webAudio:opts.webAudio,autoplay:opts.autoplay});
 			this.btn=$('a.bgmBtn');
 		}//edn if
 	}//edn func
