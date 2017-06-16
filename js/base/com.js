@@ -1,4 +1,4 @@
-//2017.6.13
+//2017.6.16
 var icom = importCom();
 
 function importCom() {
@@ -27,14 +27,14 @@ function importCom() {
 			var container = article.children('.container');
 			var interface = article.children('.interface');
 			html_resize(ibase.getOrient(true));
-			$(window).on('orientationchange', window_orientation);
+			$(window).on('orientationchange resize', window_orientation);
 			if(callback) callback();
 		} //end else
 
 		function window_orientation(e) {
 			setTimeout(function() {
 				html_resize(ibase.getOrient());
-			}, 200);
+			}, 250);
 		} //edn func
 
 		function html_resize(dir) {
