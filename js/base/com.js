@@ -55,7 +55,7 @@ function importCom() {
 						article.css({
 							scale: scale,
 							x: (window.innerHeight / scale - ibase.landscapeWidth) * 0.5,
-							y: -ibase.landscapeHeight + (window.innerWidth / scale - ibase.landscapeHeight) * 0.5 + (os.iphone6Plus ? 4 : 0)
+							y: -ibase.landscapeHeight + (window.innerWidth / scale - ibase.landscapeHeight) * 0.5 + (os.iphone6Plus ? 4 : 1)
 						});
 					} //edn if
 					else {
