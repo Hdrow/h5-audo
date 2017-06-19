@@ -60,12 +60,7 @@ $(document).ready(function(){
 		console.log('init handler');
 //		icom.fadeOut(loadBox,500);
 		monitor_handler();
-		$(window).on('orientationchange', window_orientation);
 	}//end func
-	
-	function window_orientation(e) {
-		alert(windiw.innerWidth+'/'+screen.width)
-	} //edn func
 	
 	//----------------------------------------页面监测代码----------------------------------------
 	function monitor_handler(){

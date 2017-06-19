@@ -82,18 +82,17 @@ a.bgmPlay{ background-image: url(../images/common/bgm_on.png);}
 a.bgmStop{ background-image: url(../images/common/bgm_off.png);}
 
 
-/*---------------------------------------- css media 适配部分（针对锁定屏幕翻转状态下的iphone6plus ），y轴偏移10像素 ----------------------------------------------*/
+/*---------------------------------------- iphone6plus ----------------------------------------------*/
 @media screen and (device-width:414px){
 
 a.bgmBtn{ top: 40px;}
 
 }
 
-/*---------------------------------------- css media 适配部分（针对不锁定屏幕翻转状态下的横屏），y轴偏移90像素,只在真机调试时解除注释 ----------------------------------------------*/
-@media screen and (orientation : landscape) { 
+/*-------------------------------------------------------- 针对真横屏 --------------------------------------------------------------------------------------*/
+@media screen and (orientation : landscape) and (width:568px), screen and (orientation : landscape) and (width:667px), screen and (orientation : landscape) and (width:736px), screen and (orientation : landscape) and (width:640px), screen and (orientation : landscape) and (width:732px), screen and (orientation : landscape) and (width:598px), screen and (orientation : landscape) and (width:684px) { 
 
-/*
-a.bgmBtn{ top: 120px;}
-*/
+a.bgmBtn{ top: 115px;}
+
 
 }

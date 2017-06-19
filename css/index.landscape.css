@@ -1,10 +1,7 @@
 /*-------------------------------------------------------- 默认css 针对假横屏（竖屏横过来看） --------------------------------------------------------------*/
-section.index{ width: 1206px; height: 750px; background-color: #cccccc;}
-p.txt{ position: absolute; left: 40px; top: 40px; color: #000;}
+section{ position: absolute; left: 0; top: 0; width: 1206px; height: 750px;}
 
-.btn1{position: absolute; left: 30px; top: 30px; width: 70px; height: 70px; background-image: url(../images/common/bgm_on.png);}
-.btn2{position: absolute; left: 50%; top: 50%; width: 70px; margin-left: -35px; height: 70px; margin-left: -35px; background-image: url(../images/common/bgm_on.png);}
-.btn3{position: absolute; right: 30px; bottom: 30px; width: 70px; height: 70px; background-image: url(../images/common/bgm_on.png);}
+p.test{ position: absolute; left: 40px; top: 40px; color: #000;}
 
 
 /*---------------------------------------- 虚拟系统按键android----------------------*/
@@ -17,43 +14,46 @@ p.txt{ position: absolute; left: 40px; top: 40px; color: #000;}
 
 }
 
-/*---------------------------------------- iphone ----------------------------------------------*/
-@media screen and (device-width:320px), screen and (device-width:375px), screen and (device-width:414px), screen and (device-width:540px) and (device-height:868px){
+/*---------------------------------------- iphone plus ----------------------------------------------*/
+@media screen and (device-width:414px){
 
 }
+
+/*---------------------------------------- iphone ----------------------------------------------*/
+@media screen and (device-width:320px), screen and (device-width:375px), screen and (device-width:414px){
+
+}
+
+
 
 /*-------------------------------------------------------- 针对真横屏 --------------------------------------------------------------------------------------*/
-@media screen and (orientation : landscape) { 
+@media screen and (orientation : landscape) and (width:568px), screen and (orientation : landscape) and (width:667px), screen and (orientation : landscape) and (width:736px), screen and (orientation : landscape) and (width:640px), screen and (orientation : landscape) and (width:732px), screen and (orientation : landscape) and (width:598px), screen and (orientation : landscape) and (width:684px) { 
 
-p.txt{ top: 130px;}
-
-/*
-.btn1{ top: 120px; }
-.btn3{ bottom: 120px; }
-*/
+p.test{ top: 130px;}
 
 }
 
-/*---------------------------------------- android 虚拟系统按键 -------------------------------*/
-@media screen and (orientation : landscape) and (device-width:598px), screen and (orientation : landscape) and (device-width:684px) { 
-
-/*绿色*/
-p.txt{ color: #0f0;}
-
-}
 
 /*---------------------------------------- iphone -------------------------------*/
-@media screen and (orientation : landscape) and (device-width:320px), screen and (orientation : landscape) and (device-width:375px), screen and (orientation : landscape) and (device-width:414px){ 
+@media screen and (orientation : landscape) and (width:568px), screen and (orientation : landscape) and (width:667px), screen and (orientation : landscape) and (width:736px){ 
 
 /*红色*/
-p.txt{ color: #f00;}
+p.test{ color: #f00;}
 
 }
 
 /*---------------------------------------- android -------------------------------*/
-@media screen and (orientation : landscape) and (min-device-width:598px) { 
+@media screen and (orientation : landscape) and (width:640px), screen and (orientation : landscape) and (width:732px), screen and (orientation : landscape) and (width:598px), screen and (orientation : landscape) and (width:684px) { 
 
 /*蓝色*/
-p.txt{ color: #00f;}
+p.test{ color: #00f;}
+
+}
+
+/*---------------------------------------- android 虚拟系统按键 -------------------------------*/
+@media screen and (orientation : landscape) and (width:598px), screen and (orientation : landscape) and (width:684px) { 
+
+/*绿色*/
+p.test{ color: #0f0;}
 
 }
