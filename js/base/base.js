@@ -1,4 +1,4 @@
-//2017.6.15
+//2017.7.4
 //-----------------------------------os
 var os = importOS();
 
@@ -14,20 +14,17 @@ function importOS() {
 	os.supportsTouch = ((window.DocumentTouch && document instanceof window.DocumentTouch) || 'ontouchstart' in window);
 	if(os.ios) os.iosVer = parseInt(userAgent.match(/OS \d+_/)[0].match(/\d+/)[0]);
 	os.weixin = userAgent.match(/MicroMessenger/) ? true : false;
-	os.weixinVer=null;
-	if(os.weixin){
-		var ver=userAgent.match(/MicroMessenger\/\d+.\d+.\d+/)[0].match(/\d+.\d+.\d+/)[0].split('.');
-		os.weixinVer=0;
-		for(var i=0; i<ver.length; i++) os.weixinVer+=parseInt(ver[i])*Math.pow(10,ver.length-i-1);
-	}//edn if
+	if(os.weixin) {
+		var ver = userAgent.match(/MicroMessenger\/\d+.\d+.\d+/)[0].match(/\d+.\d+.\d+/)[0].split('.');
+		os.weixinVer = 0;
+		for(var i = 0; i < ver.length; i++) os.weixinVer += parseInt(ver[i]) * Math.pow(10, ver.length - i - 1);
+	} //edn if
 	os.weibo = userAgent.match(/Weibo/) || userAgent.match(/weibo/) ? true : false;
 	os.ali = userAgent.match(/AliApp/) ? true : false;
-	os.alipay=null;
-	os.taobao=null;
-	if(os.ali){
+	if(os.ali) {
 		os.alipay = userAgent.match(/Alipay/) ? true : false;
-		os.taobao = userAgent.match(/WindVane/) ? true : false;	
-	}//edn if
+		os.taobao = userAgent.match(/WindVane/) ? true : false;
+	} //edn if
 	os.netease = userAgent.match(/NewsApp/) ? true : false;
 	os.safari = os.ios && userAgent.match(/Safari/) ? true : false;
 	os.chrome = userAgent.match(/Chrome/) ? true : false;
@@ -35,17 +32,22 @@ function importOS() {
 	os.ie = document.documentMode;
 	os.pc = !(os.android || os.ios || os.wp);
 	os.test = window.innerWidth == 540 && window.innerHeight == 850;
-	os.iphone6Plus = (os.ios && ((screen.width == 414 && screen.height == 736) || (screen.width == 736 && screen.height == 414) && window.devicePixelRatio == 3)) || (screen.width == 540 && screen.height == 876);
-	os.iphone6 = (os.ios && ((screen.width == 375 && screen.height == 667) || (screen.width == 667 && screen.height == 375))) || (screen.width == 540 && screen.height == 868);
-	os.iphone5 = os.ios && ((screen.width == 320 && screen.height == 568) || (screen.width == 568 && screen.height == 320));
-	os.iphone4 = (os.ios && ((screen.width == 320 && screen.height == 480) || (screen.width == 480 && screen.height == 320))) || (screen.width == 540 && screen.height == 702);
-	os.huawei=null;
-	if(os.android){
-		requestAnimationFrame(function(){
-			if(screen.width==360) os.huawei=(screen.height==640 && window.innerHeight<540 ) || screen.height<640;
-			else if(screen.width==412) os.huawei=(screen.height==732 && window.innerHeight<640 ) || screen.height<732;
-		});
+	if(os.ios){
+		os.iphone6Plus = (screen.width == 414 && screen.height == 736) || (window.innerWidth == 540 && window.innerHeight == 876);
+		os.iphone6 = (screen.width == 375 && screen.height == 667) || (window.innerWidth == 540 && window.innerHeight == 868);
+		os.iphone5 = (screen.width == 320 && screen.height == 568) || (window.innerWidth == 540 && window.innerHeight == 850);
+		os.iphone4 = (screen.width == 320 && screen.height == 480) || (window.innerWidth == 540 && window.innerHeight == 702);
 	}//edn if
+	else if(os.android){
+		if(window.innerWidth == 540 && window.innerHeight == 780) os.huawei = true;
+		else{
+			requestAnimationFrame(function() {
+				if(screen.width == 360) os.huawei = (screen.height == 640 && window.innerHeight < 540) || screen.height < 640;
+				else if(screen.width == 412) os.huawei = (screen.height == 732 && window.innerHeight < 640) || screen.height < 732;
+			});
+		} //edn if
+	}//edn if
+
 	return os;
 } //end func
 
@@ -148,12 +150,12 @@ function importBase() {
 		} //end else
 	} //end func
 
-	base.creatNode = function(nodeName, idName, className, innerHTML ,wrapNode) {
+	base.creatNode = function(nodeName, idName, className, innerHTML, wrapNode) {
 		nodeName = nodeName || 'div';
 		className = className || '';
 		idName = idName || '';
 		innerHTML = innerHTML || '';
-		wrapNode=wrapNode||document.querySelector('body');
+		wrapNode = wrapNode || document.querySelector('body');
 		var newNode = document.createElement(nodeName);
 		if(className != '') newNode.className = className;
 		if(idName != '') newNode.id = idName;

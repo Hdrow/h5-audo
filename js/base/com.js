@@ -1,4 +1,4 @@
-//2017.6.16
+//2017.7.4
 var icom = importCom();
 
 function importCom() {
@@ -305,7 +305,7 @@ function importCom() {
 		}, "json");
 	} //edn func
 
-	//安卓键盘压缩页面高度处理
+	//input fix
 	com.keyboard = function(input, shell, callback) {
 		input = input || $('input,textarea,[contenteditable="true"]');
 		shell = shell || input.parents('section');
@@ -346,6 +346,23 @@ function importCom() {
 
 		function slide_out() {
 			if(callback) callback(false);
+		} //edn func
+
+	} //end func
+	
+	//select ios fix
+	com.select = function(select) {
+		select = select || $('select');
+		if(select.length > 0) {
+			if(os.ios) {
+				select.on('focus', function(e) {
+					$(document).one('touchend', ios_select);
+				});
+			} //end if
+		} //end if
+
+		function ios_select(e) {
+			if(e.target != select[0]) select.blur();
 		} //edn func
 
 	} //end func
