@@ -1,7 +1,4351 @@
 /**
- * @license jCanvas v20.0.0
+ * @license jCanvas v20.1.0
  * Copyright 2017 Caleb Evans
  * Released under the MIT license
  */
-!function(a,b,c){"use strict";"object"==typeof module&&"object"==typeof module.exports?module.exports=function(a,b){return c(a,b)}:c(a,b)}("undefined"!=typeof window?window.jQuery:{},"undefined"!=typeof window?window:this,function(a,b){"use strict";function C(a){var c,b=this;for(c in a)Object.prototype.hasOwnProperty.call(a,c)&&(b[c]=a[c]);return b}function E(){k(this,E.baseDefaults)}function F(a){return"string"===m(a)}function G(a){return!isNaN(h(a))&&!isNaN(i(a))}function H(a){return a&&a.getContext?a.getContext("2d"):null}function I(a){var b,c,d;for(b in a)Object.prototype.hasOwnProperty.call(a,b)&&(d=a[b],c=m(d),"string"===c&&G(d)&&"text"!==b&&(a[b]=i(d)));void 0!==a.text&&(a.text=String(a.text))}function J(a){return a=k({},a),a.masks=a.masks.slice(0),a}function K(a,b){var c;a.save(),c=J(b.transforms),b.savedTransforms.push(c)}function L(a,b){0===b.savedTransforms.length?b.transforms=J(z):(a.restore(),b.transforms=b.savedTransforms.pop())}function M(a,b,c,d){c[d]&&(b[d]=n(c[d])?c[d].call(a,c):c[d])}function N(a,b,c){M(a,b,c,"fillStyle"),M(a,b,c,"strokeStyle"),b.lineWidth=c.strokeWidth,c.rounded?b.lineCap=b.lineJoin="round":(b.lineCap=c.strokeCap,b.lineJoin=c.strokeJoin,b.miterLimit=c.miterLimit),c.strokeDash||(c.strokeDash=[]),b.setLineDash&&b.setLineDash(c.strokeDash),b.webkitLineDash=c.strokeDash,b.lineDashOffset=b.webkitLineDashOffset=b.mozDashOffset=c.strokeDashOffset,b.shadowOffsetX=c.shadowX,b.shadowOffsetY=c.shadowY,b.shadowBlur=c.shadowBlur,b.shadowColor=c.shadowColor,b.globalAlpha=c.opacity,b.globalCompositeOperation=c.compositing,c.imageSmoothing&&(b.imageSmoothingEnabled=c.imageSmoothingEnabled)}function O(a,b,c){c.mask&&(c.autosave&&K(a,b),a.clip(),b.transforms.masks.push(c._args))}function P(a,b){b._transformed&&a.restore()}function Q(a,b,c){var d;c.closed&&b.closePath(),c.shadowStroke&&0!==c.strokeWidth?(b.stroke(),b.fill(),b.shadowColor="transparent",b.shadowBlur=0,b.stroke()):(b.fill(),"transparent"!==c.fillStyle&&(b.shadowColor="transparent"),0!==c.strokeWidth&&b.stroke()),c.closed||b.closePath(),P(b,c),c.mask&&(d=S(a),O(b,d,c))}function R(a,b,c,d,e){c._toRad=c.inDegrees?p/180:1,c._transformed=!0,b.save(),c.fromCenter||c._centered||void 0===d||(void 0===e&&(e=d),c.x+=d/2,c.y+=e/2,c._centered=!0),c.rotate&&rb(b,c,null),(1!==c.scale||1!==c.scaleX||1!==c.scaleY)&&sb(b,c,null),(c.translate||c.translateX||c.translateY)&&tb(b,c,null)}function S(b){var d,c=y.dataCache;return c._canvas===b&&c._data?d=c._data:(d=a.data(b,"jCanvas"),d||(d={canvas:b,layers:[],layer:{names:{},groups:{}},eventHooks:{},intersecting:[],lastIntersected:null,cursor:a(b).css("cursor"),drag:{layer:null,dragging:!1},event:{type:null,x:null,y:null},events:{},transforms:J(z),savedTransforms:[],animating:!1,animated:null,pixelRatio:1,scaled:!1},a.data(b,"jCanvas",d)),c._canvas=b,c._data=d),d}function T(a,b,c){var d;for(d in D.events)Object.prototype.hasOwnProperty.call(D.events,d)&&(c[d]||c.cursors&&c.cursors[d])&&U(a,b,c,d);b.events.mouseout||(a.bind("mouseout.jCanvas",function(){var d,c=b.drag.layer;for(c&&(b.drag={},db(a,b,c,"dragcancel")),d=0;d<b.layers.length;d+=1)c=b.layers[d],c._hovered&&a.triggerLayerEvent(b.layers[d],"mouseout");a.drawLayers()}),b.events.mouseout=!0)}function U(a,b,c,d){D.events[d](a,b),c._event=!0}function V(a,b,c){var d,e,f;if(c.draggable||c.cursors){for(d=["mousedown","mousemove","mouseup"],f=0;f<d.length;f+=1)e=d[f],U(a,b,c,e);c._event=!0}}function W(a,b,c,d){var e=b.layer.names;d?void 0!==d.name&&F(c.name)&&c.name!==d.name&&delete e[c.name]:d=c,F(d.name)&&(e[d.name]=c)}function X(a,b,c,d){var f,g,h,i,j,e=b.layer.groups;if(d){if(void 0!==d.groups&&null!==c.groups)for(h=0;h<c.groups.length;h+=1)if(g=c.groups[h],f=e[g]){for(j=0;j<f.length;j+=1)if(f[j]===c){i=j,f.splice(j,1);break}0===f.length&&delete e[g]}}else d=c;if(void 0!==d.groups&&null!==d.groups)for(h=0;h<d.groups.length;h+=1)g=d.groups[h],f=e[g],f||(f=e[g]=[],f.name=g),void 0===i&&(i=f.length),f.splice(i,0,c)}function Y(a){var b,c,d,e;for(b=null,c=a.intersecting.length-1;c>=0;c-=1)if(b=a.intersecting[c],b._masks){for(e=b._masks.length-1;e>=0;e-=1)if(d=b._masks[e],!d.intersects){b.intersects=!1;break}if(b.intersects&&!b.intangible)break}return b&&b.intangible&&(b=null),b}function Z(a,b,c,d){c&&c.visible&&c._method&&(c._next=d?d:null,c._method&&c._method.call(a,c))}function $(a,b,c){var d,e,f,g,h,i,j,k,l,m;if(g=b.drag,e=g.layer,h=e&&e.dragGroups||[],d=b.layers,"mousemove"===c||"touchmove"===c){if(g.dragging||(g.dragging=!0,e.dragging=!0,e.bringToFront&&(d.splice(e.index,1),e.index=d.push(e)),e._startX=e.x,e._startY=e.y,e._endX=e._eventX,e._endY=e._eventY,db(a,b,e,"dragstart")),g.dragging)for(l=e._eventX-(e._endX-e._startX),m=e._eventY-(e._endY-e._startY),e.constrainDragX&&(l=e.constrainDragX.call(a[0],e,l)),e.constrainDragY&&(m=e.constrainDragY.call(a[0],e,m)),e.dx=l-e.x,e.dy=m-e.y,"y"!==e.restrictDragToAxis&&(e.x=l),"x"!==e.restrictDragToAxis&&(e.y=m),db(a,b,e,"drag"),k=0;k<h.length;k+=1)if(j=h[k],i=b.layer.groups[j],e.groups&&i)for(f=0;f<i.length;f+=1)i[f]!==e&&("y"!==e.restrictDragToAxis&&"y"!==i[f].restrictDragToAxis&&(i[f].x+=e.dx),"x"!==e.restrictDragToAxis&&"x"!==i[f].restrictDragToAxis&&(i[f].y+=e.dy))}else("mouseup"===c||"touchend"===c)&&(g.dragging&&(e.dragging=!1,g.dragging=!1,db(a,b,e,"dragstop")),b.drag={})}function _(b,c,d){var e;c.cursors&&(e=c.cursors[d]),-1!==a.inArray(e,A.cursors)&&(e=A.prefix+e),e&&b.css({cursor:e})}function ab(a,b){a.css({cursor:b.cursor})}function bb(a,b,c,d,e){d[c]&&b._running&&!b._running[c]&&(b._running[c]=!0,d[c].call(a[0],b,e),b._running[c]=!1)}function cb(b,c){return!(b.disableEvents||b.intangible&&-1!==a.inArray(c,B))}function db(a,b,c,d,e){cb(c,d)&&("mouseout"!==d&&_(a,c,d),bb(a,c,d,c,e),bb(a,c,d,b.eventHooks,e),bb(a,c,d,D.eventHooks,e))}function eb(b,c,d,e){var f,g,h,i=c._layer?d:c;return c._args=d,(c.draggable||c.dragGroups)&&(c.layer=!0,c.draggable=!0),c._method||(e?c._method=e:c.method?c._method=a.fn[c.method]:c.type&&(c._method=a.fn[x.drawings[c.type]])),c.layer&&!c._layer?(f=a(b),g=S(b),h=g.layers,(null===i.name||F(i.name)&&void 0===g.layer.names[i.name])&&(I(c),i=new C(c),i.canvas=b,i.layer=!0,i._layer=!0,i._running={},i.data=null!==i.data?k({},i.data):{},i.groups=null!==i.groups?i.groups.slice(0):[],W(f,g,i),X(f,g,i),T(f,g,i),V(f,g,i),c._event=i._event,i._method===a.fn.drawText&&f.measureText(i),null===i.index&&(i.index=h.length),h.splice(i.index,0,i),c._args=i,db(f,g,i,"add"))):c.layer||I(c),i}function fb(a){var b,c;for(c=0;c<A.props.length;c+=1)b=A.props[c],a[b]=a["_"+b]}function gb(a,b){var c,d;for(d=0;d<A.props.length;d+=1)c=A.props[d],void 0!==a[c]&&(a["_"+c]=a[c],A.propsObj[c]=!0,b&&delete a[c])}function hb(a,b,c){var d,e,f,g;for(d in c)if(Object.prototype.hasOwnProperty.call(c,d)&&(e=c[d],n(e)&&(c[d]=e.call(a,b,d)),"object"===m(e)&&o(e))){for(f in e)Object.prototype.hasOwnProperty.call(e,f)&&(g=e[f],void 0!==b[d]&&(b[d+"."+f]=b[d][f],c[d+"."+f]=g));delete c[d]}return c}function ib(a){var b;for(b in a)Object.prototype.hasOwnProperty.call(a,b)&&-1!==b.indexOf(".")&&delete a[b]}function jb(b){var d,e,f=[],g=1;return"transparent"===b?b="rgba(0, 0, 0, 0)":b.match(/^([a-z]+|#[0-9a-f]+)$/gi)&&(e=c.head,d=e.style.color,e.style.color=b,b=a.css(e,"color"),e.style.color=d),b.match(/^rgb/gi)&&(f=b.match(/(\d+(\.\d+)?)/gi),b.match(/%/gi)&&(g=2.55),f[0]*=g,f[1]*=g,f[2]*=g,f[3]=void 0!==f[3]?i(f[3]):1),f}function kb(a){var c,b=3;for("array"!==m(a.start)&&(a.start=jb(a.start),a.end=jb(a.end)),a.now=[],(1!==a.start[3]||1!==a.end[3])&&(b=4),c=0;b>c;c+=1)a.now[c]=a.start[c]+(a.end[c]-a.start[c])*a.pos,3>c&&(a.now[c]=q(a.now[c]));1!==a.start[3]||1!==a.end[3]?a.now="rgba("+a.now.join(",")+")":(a.now.slice(0,3),a.now="rgb("+a.now.join(",")+")"),a.elem.nodeName?a.elem.style[a.prop]=a.now:a.elem[a.prop]=a.now}function lb(b){var c;for(c=0;c<b.length;c+=1)a.fx.step[b[c]]=kb}function mb(a){return x.touchEvents[a]&&(a=x.touchEvents[a]),a}function nb(a){return x.mouseEvents[a]&&(a=x.mouseEvents[a]),a}function ob(a){D.events[a]=function(b,c){function g(a){f.x=a.offsetX,f.y=a.offsetY,f.type=d,f.event=a,b.drawLayers({resetFire:!0}),a.preventDefault()}var d,e,f;f=c.event,d="mouseover"===a||"mouseout"===a?"mousemove":a,e=mb(d),c.events[d]||(e!==d?b.bind(d+".jCanvas "+e+".jCanvas",g):b.bind(d+".jCanvas",g),c.events[d]=!0)}}function pb(a){var b;for(b=0;b<a.length;b+=1)ob(a[b])}function qb(a,b,c){var d,e,f,g,h,i,j,k;d=c._args,d&&(e=S(a),f=e.event,null!==f.x&&null!==f.y&&(i=f.x*e.pixelRatio,j=f.y*e.pixelRatio,g=b.isPointInPath(i,j)||b.isPointInStroke&&b.isPointInStroke(i,j)),h=e.transforms,d.eventX=f.x,d.eventY=f.y,d.event=f.event,k=e.transforms.rotate,i=d.eventX,j=d.eventY,0!==k?(d._eventX=i*t(-k)-j*s(-k),d._eventY=j*t(-k)+i*s(-k)):(d._eventX=i,d._eventY=j),d._eventX/=h.scaleX,d._eventY/=h.scaleY,g&&e.intersecting.push(d),d.intersects=Boolean(g))}function rb(a,b,c){b._toRad=b.inDegrees?p/180:1,a.translate(b.x,b.y),a.rotate(b.rotate*b._toRad),a.translate(-b.x,-b.y),c&&(c.rotate+=b.rotate*b._toRad)}function sb(a,b,c){1!==b.scale&&(b.scaleX=b.scaleY=b.scale),a.translate(b.x,b.y),a.scale(b.scaleX,b.scaleY),a.translate(-b.x,-b.y),c&&(c.scaleX*=b.scaleX,c.scaleY*=b.scaleY)}function tb(a,b,c){b.translate&&(b.translateX=b.translateY=b.translate),a.translate(b.translateX,b.translateY),c&&(c.translateX+=b.translateX,c.translateY+=b.translateY)}function ub(a){for(;0>a;)a+=2*p;return a}function vb(a,b){return a.x+a.radius*t(b)}function wb(a,b){return a.y+a.radius*s(b)}function xb(a,b,c,d){var e,f,g,h,i,j,k,l,m,n,o;c===d?(m=0,n=0):(m=c.x,n=c.y),d.inDegrees||360!==d.end||(d.end=2*p),d.start*=c._toRad,d.end*=c._toRad,d.start-=p/2,d.end-=p/2,o=p/180,d.ccw&&(o*=-1),e=vb(d,d.start+o),f=wb(d,d.start+o),g=vb(d,d.start),h=wb(d,d.start),zb(a,b,c,d,e,f,g,h),b.arc(d.x+m,d.y+n,d.radius,d.start,d.end,d.ccw),i=vb(d,d.end+o),j=wb(d,d.end+o),k=vb(d,d.end),l=wb(d,d.end),Ab(a,b,c,d,k,l,i,j)}function yb(a,b,c,d,e,f,g,h){var i,j,k,l,m,n,o;d.arrowRadius&&!c.closed&&(o=u(h-f,g-e),o-=p,m=c.strokeWidth*t(o),n=c.strokeWidth*s(o),i=g+d.arrowRadius*t(o+d.arrowAngle/2),j=h+d.arrowRadius*s(o+d.arrowAngle/2),k=g+d.arrowRadius*t(o-d.arrowAngle/2),l=h+d.arrowRadius*s(o-d.arrowAngle/2),b.moveTo(i-m,j-n),b.lineTo(g-m,h-n),b.lineTo(k-m,l-n),b.moveTo(g-m,h-n),b.lineTo(g+m,h+n),b.moveTo(g,h))}function zb(a,b,c,d,e,f,g,h){d._arrowAngleConverted||(d.arrowAngle*=c._toRad,d._arrowAngleConverted=!0),d.startArrow&&yb(a,b,c,d,e,f,g,h)}function Ab(a,b,c,d,e,f,g,h){d._arrowAngleConverted||(d.arrowAngle*=c._toRad,d._arrowAngleConverted=!0),d.endArrow&&yb(a,b,c,d,e,f,g,h)}function Bb(a,b,c,d){var e,f,g;for(e=2,zb(a,b,c,d,d.x2+c.x,d.y2+c.y,d.x1+c.x,d.y1+c.y),void 0!==d.x1&&void 0!==d.y1&&b.moveTo(d.x1+c.x,d.y1+c.y);;){if(f=d["x"+e],g=d["y"+e],void 0===f||void 0===g)break;b.lineTo(f+c.x,g+c.y),e+=1}e-=1,Ab(a,b,c,d,d["x"+(e-1)]+c.x,d["y"+(e-1)]+c.y,d["x"+e]+c.x,d["y"+e]+c.y)}function Cb(a,b,c,d){var e,f,g,h,i;for(e=2,zb(a,b,c,d,d.cx1+c.x,d.cy1+c.y,d.x1+c.x,d.y1+c.y),void 0!==d.x1&&void 0!==d.y1&&b.moveTo(d.x1+c.x,d.y1+c.y);;){if(f=d["x"+e],g=d["y"+e],h=d["cx"+(e-1)],i=d["cy"+(e-1)],void 0===f||void 0===g||void 0===h||void 0===i)break;b.quadraticCurveTo(h+c.x,i+c.y,f+c.x,g+c.y),e+=1}e-=1,Ab(a,b,c,d,d["cx"+(e-1)]+c.x,d["cy"+(e-1)]+c.y,d["x"+e]+c.x,d["y"+e]+c.y)}function Db(a,b,c,d){var e,f,g,h,i,j,k,l;for(e=2,f=1,zb(a,b,c,d,d.cx1+c.x,d.cy1+c.y,d.x1+c.x,d.y1+c.y),void 0!==d.x1&&void 0!==d.y1&&b.moveTo(d.x1+c.x,d.y1+c.y);;){if(g=d["x"+e],h=d["y"+e],i=d["cx"+f],j=d["cy"+f],k=d["cx"+(f+1)],l=d["cy"+(f+1)],void 0===g||void 0===h||void 0===i||void 0===j||void 0===k||void 0===l)break;b.bezierCurveTo(i+c.x,j+c.y,k+c.x,l+c.y,g+c.x,h+c.y),e+=1,f+=2}e-=1,f-=2,Ab(a,b,c,d,d["cx"+(f+1)]+c.x,d["cy"+(f+1)]+c.y,d["x"+e]+c.x,d["y"+e]+c.y)}function Eb(a,b,c){return b*=a._toRad,b-=p/2,c*t(b)}function Fb(a,b,c){return b*=a._toRad,b-=p/2,c*s(b)}function Gb(a,b,c,d){var e,f,g,h,i,j,k,l,m,n,o;for(c===d?(h=0,i=0):(h=c.x,i=c.y),e=1,j=l=n=d.x+h,k=m=o=d.y+i,zb(a,b,c,d,j+Eb(c,d.a1,d.l1),k+Fb(c,d.a1,d.l1),j,k),void 0!==d.x&&void 0!==d.y&&b.moveTo(j,k);;){if(f=d["a"+e],g=d["l"+e],void 0===f||void 0===g)break;l=n,m=o,n+=Eb(c,f,g),o+=Fb(c,f,g),b.lineTo(n,o),e+=1}Ab(a,b,c,d,l,m,n,o)}function Hb(a,b,c){isNaN(h(c.fontSize))||(c.fontSize+="px"),b.font=c.fontStyle+" "+c.fontSize+" "+c.fontFamily}function Ib(b,c,d,e){var f,g,h,j=y.propCache;if(j.text===d.text&&j.fontStyle===d.fontStyle&&j.fontSize===d.fontSize&&j.fontFamily===d.fontFamily&&j.maxWidth===d.maxWidth&&j.lineHeight===d.lineHeight)d.width=j.width,d.height=j.height;else{for(d.width=c.measureText(e[0]).width,h=1;h<e.length;h+=1)g=c.measureText(e[h]).width,g>d.width&&(d.width=g);f=b.style.fontSize,b.style.fontSize=d.fontSize,d.height=i(a.css(b,"fontSize"))*e.length*d.lineHeight,b.style.fontSize=f}}function Jb(a,b){var g,h,i,j,k,l,c=String(b.text),d=b.maxWidth,e=c.split("\n"),f=[];for(i=0;i<e.length;i+=1){if(j=e[i],k=j.split(" "),g=[],h="",1===k.length||a.measureText(j).width<d)g=[j];else{for(l=0;l<k.length;l+=1)a.measureText(h+k[l]).width>d&&(""!==h&&g.push(h),h=""),h+=k[l],l!==k.length-1&&(h+=" ");g.push(h)}f=f.concat(g.join("\n").replace(/((\n))|($)/gi,"$2").split("\n"))}return f}var j,c=b.document,d=b.Image,e=b.Array,f=b.getComputedStyle,g=b.Math,h=b.Number,i=b.parseFloat,k=a.extend,l=a.inArray,m=function(a){return Object.prototype.toString.call(a).slice(8,-1).toLowerCase()},n=a.isFunction,o=a.isPlainObject,p=g.PI,q=g.round,r=g.abs,s=g.sin,t=g.cos,u=g.atan2,v=e.prototype.slice,x=(a.event.fix,{}),y={dataCache:{},propCache:{},imageCache:{}},z={rotate:0,scaleX:1,scaleY:1,translateX:0,translateY:0,masks:[]},A={},B=["mousedown","mousemove","mouseup","mouseover","mouseout","touchstart","touchmove","touchend"],D={events:{},eventHooks:{},future:{}};E.baseDefaults={align:"center",arrowAngle:90,arrowRadius:0,autosave:!0,baseline:"middle",bringToFront:!1,ccw:!1,closed:!1,compositing:"source-over",concavity:0,cornerRadius:0,count:1,cropFromCenter:!0,crossOrigin:null,cursors:null,disableEvents:!1,draggable:!1,dragGroups:null,groups:null,data:null,dx:null,dy:null,end:360,eventX:null,eventY:null,fillStyle:"transparent",fontStyle:"normal",fontSize:"12pt",fontFamily:"sans-serif",fromCenter:!0,height:null,imageSmoothing:!0,inDegrees:!0,intangible:!1,index:null,letterSpacing:null,lineHeight:1,layer:!1,mask:!1,maxWidth:null,miterLimit:10,name:null,opacity:1,r1:null,r2:null,radius:0,repeat:"repeat",respectAlign:!1,restrictDragToAxis:null,rotate:0,rounded:!1,scale:1,scaleX:1,scaleY:1,shadowBlur:0,shadowColor:"transparent",shadowStroke:!1,shadowX:0,shadowY:0,sHeight:null,sides:0,source:"",spread:0,start:0,strokeCap:"butt",strokeDash:null,strokeDashOffset:0,strokeJoin:"miter",strokeStyle:"transparent",strokeWidth:1,sWidth:null,sx:null,sy:null,text:"",translate:0,translateX:0,translateY:0,type:null,visible:!0,width:null,x:0,y:0},j=new E,C.prototype=j,D.extend=function(b){return b.name&&(b.props&&k(j,b.props),a.fn[b.name]=function c(a){var e,f,g,h,d=this;for(f=0;f<d.length;f+=1)e=d[f],g=H(e),g&&(h=new C(a),eb(e,h,a,c),N(e,g,h),b.fn.call(e,g,h));return d},b.type&&(x.drawings[b.type]=b.name)),a.fn[b.name]},a.fn.getEventHooks=function(){var b,c,a=this,d={};return 0!==a.length&&(b=a[0],c=S(b),d=c.eventHooks),d},a.fn.setEventHooks=function(a){var c,d,b=this;for(c=0;c<b.length;c+=1)d=S(b[c]),k(d.eventHooks,a);return b},a.fn.getLayers=function(a){var c,d,e,f,g,b=this,h=[];if(0!==b.length)if(c=b[0],d=S(c),e=d.layers,n(a))for(g=0;g<e.length;g+=1)f=e[g],a.call(c,f)&&h.push(f);else h=e;return h},a.fn.getLayer=function(a){var c,d,e,f,g,h,b=this;if(0!==b.length)if(c=b[0],d=S(c),e=d.layers,h=m(a),a&&a.layer)f=a;else if("number"===h)0>a&&(a=e.length+a),f=e[a];else if("regexp"===h){for(g=0;g<e.length;g+=1)if(F(e[g].name)&&e[g].name.match(a)){f=e[g];break}}else f=d.layer.names[a];return f},a.fn.getLayerGroup=function(a){var c,d,e,f,g,b=this,h=m(a);if(0!==b.length)if(c=b[0],"array"===h)g=a;else if("regexp"===h){d=S(c),e=d.layer.groups;for(f in e)if(f.match(a)){g=e[f];break}}else d=S(c),g=d.layer.groups[a];return g},a.fn.getLayerIndex=function(a){var b=this,c=b.getLayers(),d=b.getLayer(a);return l(d,c)},a.fn.setLayer=function(b,c){var e,f,g,h,j,l,n,d=this;for(f=0;f<d.length;f+=1)if(e=a(d[f]),g=S(d[f]),h=a(d[f]).getLayer(b)){W(e,g,h,c),X(e,g,h,c),I(c);for(j in c)Object.prototype.hasOwnProperty.call(c,j)&&(l=c[j],n=m(l),"object"===n&&o(l)?(h[j]=k({},l),I(h[j])):"array"===n?h[j]=l.slice(0):"string"===n?0===l.indexOf("+=")?h[j]+=i(l.substr(2)):0===l.indexOf("-=")?h[j]-=i(l.substr(2)):h[j]=!isNaN(l)&&G(l)&&"text"!==j?i(l):l:h[j]=l);T(e,g,h),V(e,g,h),a.isEmptyObject(c)===!1&&db(e,g,h,"change",c)}return d},a.fn.setLayers=function(b,c){var e,f,g,h,d=this;for(f=0;f<d.length;f+=1)for(e=a(d[f]),g=e.getLayers(c),h=0;h<g.length;h+=1)e.setLayer(g[h],b);return d},a.fn.setLayerGroup=function(b,c){var e,f,g,h,d=this;for(f=0;f<d.length;f+=1)if(e=a(d[f]),g=e.getLayerGroup(b))for(h=0;h<g.length;h+=1)e.setLayer(g[h],c);return d},a.fn.moveLayer=function(b,c){var e,f,g,h,i,d=this;for(f=0;f<d.length;f+=1)e=a(d[f]),g=S(d[f]),h=g.layers,i=e.getLayer(b),i&&(i.index=l(i,h),h.splice(i.index,1),h.splice(c,0,i),0>c&&(c=h.length+c),i.index=c,db(e,g,i,"move"));return d},a.fn.removeLayer=function(b){var d,e,f,g,h,c=this;for(e=0;e<c.length;e+=1)d=a(c[e]),f=S(c[e]),g=d.getLayers(),h=d.getLayer(b),h&&(h.index=l(h,g),g.splice(h.index,1),delete h._layer,W(d,f,h,{name:null}),X(d,f,h,{groups:null}),db(d,f,h,"remove"));return c},a.fn.removeLayers=function(b){var d,e,f,g,h,i,c=this;for(e=0;e<c.length;e+=1){for(d=a(c[e]),f=S(c[e]),g=d.getLayers(b),i=0;i<g.length;i+=1)h=g[i],d.removeLayer(h),i-=1;f.layer.names={},f.layer.groups={}}return c},a.fn.removeLayerGroup=function(b){var d,e,f,g,c=this;if(void 0!==b)for(e=0;e<c.length;e+=1)if(d=a(c[e]),f=d.getLayerGroup(b))for(f=f.slice(0),g=0;g<f.length;g+=1)d.removeLayer(f[g]);return c},a.fn.addLayerToGroup=function(b,c){var e,f,g,d=this,h=[c];for(f=0;f<d.length;f+=1)e=a(d[f]),g=e.getLayer(b),g.groups&&(h=g.groups.slice(0),-1===l(c,g.groups)&&h.push(c)),e.setLayer(g,{groups:h});return d},a.fn.removeLayerFromGroup=function(b,c){var e,f,g,i,d=this,h=[];for(f=0;f<d.length;f+=1)e=a(d[f]),g=e.getLayer(b),g.groups&&(i=l(c,g.groups),-1!==i&&(h=g.groups.slice(0),h.splice(i,1),e.setLayer(g,{groups:h})));return d},A.cursors=["grab","grabbing","zoom-in","zoom-out"],A.prefix=function(){var a=f(c.documentElement,""),b=(v.call(a).join("").match(/-(moz|webkit|ms)-/)||""===a.OLink&&["","o"])[1];return"-"+b+"-"}(),a.fn.triggerLayerEvent=function(b,c){var e,f,g,d=this;for(f=0;f<d.length;f+=1)e=a(d[f]),g=S(d[f]),b=e.getLayer(b),b&&db(e,g,b,c);return d},a.fn.drawLayer=function(b){var d,e,f,g,c=this;for(d=0;d<c.length;d+=1)f=a(c[d]),e=H(c[d]),e&&(g=f.getLayer(b),Z(f,e,g));return c},a.fn.drawLayers=function(b){var d,e,f,h,i,j,k,l,m,n,o,p,q,c=this,g=b||{};for(l=g.index,l||(l=0),e=0;e<c.length;e+=1)if(d=a(c[e]),f=H(c[e])){for(n=S(c[e]),g.clear!==!1&&d.clearCanvas(),h=n.layers,k=l;k<h.length;k+=1)if(i=h[k],i.index=k,g.resetFire&&(i._fired=!1),Z(d,f,i,k+1),i._masks=n.transforms.masks.slice(0),i._method===a.fn.drawImage&&i.visible){q=!0;break}if(q)break;m=k,i=Y(n),o=n.event,p=o.type,n.drag.layer&&$(d,n,p),j=n.lastIntersected,null===j||i===j||!j._hovered||j._fired||n.drag.dragging||(n.lastIntersected=null,j._fired=!0,j._hovered=!1,db(d,n,j,"mouseout"),ab(d,n)),i&&(i[p]||(p=nb(p)),i._event&&i.intersects&&(n.lastIntersected=i,(i.mouseover||i.mouseout||i.cursors)&&!n.drag.dragging&&(i._hovered||i._fired||(i._fired=!0,i._hovered=!0,db(d,n,i,"mouseover"))),i._fired||(i._fired=!0,o.type=null,db(d,n,i,p)),!i.draggable||i.disableEvents||"mousedown"!==p&&"touchstart"!==p||(n.drag.layer=i))),null!==i||n.drag.dragging||ab(d,n),m===h.length&&(n.intersecting.length=0,n.transforms=J(z),n.savedTransforms.length=0)}return c},a.fn.addLayer=function(a){var c,d,e,b=this;for(c=0;c<b.length;c+=1)d=H(b[c]),d&&(e=new C(a),e.layer=!0,eb(b[c],e,a));return b},A.props=["width","height","opacity","lineHeight"],A.propsObj={},a.fn.animateLayer=function(){function j(a,b,c){return function(){fb(c),ib(c),b.animating&&b.animated!==c||a.drawLayers(),c._animating=!1,b.animating=!1,b.animated=null,f[4]&&f[4].call(a[0],c),db(a,b,c,"animateend")}}function l(a,b,c){return function(d,e){var g,h,i,j=!1;"_"===e.prop[0]&&(j=!0,e.prop=e.prop.replace("_",""),c[e.prop]=c["_"+e.prop]),-1!==e.prop.indexOf(".")&&(g=e.prop.split("."),h=g[0],i=g[1],c[h]&&(c[h][i]=e.now)),c._pos!==e.pos&&(c._pos=e.pos,c._animating||b.animating||(c._animating=!0,b.animating=!0,b.animated=c),b.animating&&b.animated!==c||a.drawLayers()),f[5]&&f[5].call(a[0],d,e,c),db(a,b,c,"animate",e),j&&(e.prop="_"+e.prop)}}var c,d,e,g,h,i,b=this,f=v.call(arguments,0);for("object"===m(f[2])?(f.splice(2,0,f[2].duration||null),f.splice(3,0,f[3].easing||null),f.splice(4,0,f[4].complete||null),f.splice(5,0,f[5].step||null)):(void 0===f[2]?(f.splice(2,0,null),f.splice(3,0,null),f.splice(4,0,null)):n(f[2])&&(f.splice(2,0,null),f.splice(3,0,null)),void 0===f[3]?(f[3]=null,f.splice(4,0,null)):n(f[3])&&f.splice(3,0,null)),d=0;d<b.length;d+=1)c=a(b[d]),e=H(b[d]),e&&(g=S(b[d]),h=c.getLayer(f[0]),h&&h._method!==a.fn.draw&&(i=k({},f[1]),i=hb(b[d],h,i),gb(i,!0),gb(h),h.style=A.propsObj,a(h).animate(i,{duration:f[2],easing:a.easing[f[3]]?f[3]:null,complete:j(c,g,h),step:l(c,g,h)}),db(c,g,h,"animatestart")));return b},a.fn.animateLayerGroup=function(b){var d,e,g,h,c=this,f=v.call(arguments,0);for(e=0;e<c.length;e+=1)if(d=a(c[e]),g=d.getLayerGroup(b))for(h=0;h<g.length;h+=1)f[0]=g[h],d.animateLayer.apply(d,f);return c},a.fn.delayLayer=function(b,c){var e,f,g,h,d=this;for(c=c||0,f=0;f<d.length;f+=1)e=a(d[f]),g=S(d[f]),h=e.getLayer(b),h&&(a(h).delay(c),db(e,g,h,"delay"));return d},a.fn.delayLayerGroup=function(b,c){var e,f,g,h,i,d=this;for(c=c||0,f=0;f<d.length;f+=1)if(e=a(d[f]),g=e.getLayerGroup(b))for(i=0;i<g.length;i+=1)h=g[i],e.delayLayer(h,c);return d},a.fn.stopLayer=function(b,c){var e,f,g,h,d=this;for(f=0;f<d.length;f+=1)e=a(d[f]),g=S(d[f]),h=e.getLayer(b),h&&(a(h).stop(c),db(e,g,h,"stop"));return d},a.fn.stopLayerGroup=function(b,c){var e,f,g,h,i,d=this;for(f=0;f<d.length;f+=1)if(e=a(d[f]),g=e.getLayerGroup(b))for(i=0;i<g.length;i+=1)h=g[i],e.stopLayer(h,c);return d},lb(["color","backgroundColor","borderColor","borderTopColor","borderRightColor","borderBottomColor","borderLeftColor","fillStyle","outlineColor","strokeStyle","shadowColor"]),x.touchEvents={mousedown:"touchstart",mouseup:"touchend",mousemove:"touchmove"},x.mouseEvents={touchstart:"mousedown",touchend:"mouseup",touchmove:"mousemove"},pb(["click","dblclick","mousedown","mouseup","mousemove","mouseover","mouseout","touchstart","touchmove","touchend","pointerdown","pointermove","pointerup","contextmenu"]),x.drawings={arc:"drawArc",bezier:"drawBezier",ellipse:"drawEllipse","function":"draw",image:"drawImage",line:"drawLine",path:"drawPath",polygon:"drawPolygon",slice:"drawSlice",quadratic:"drawQuadratic",rectangle:"drawRect",text:"drawText",vector:"drawVector",save:"saveCanvas",restore:"restoreCanvas",rotate:"rotateCanvas",scale:"scaleCanvas",translate:"translateCanvas"},a.fn.draw=function hc(a){var c,d,b=this,e=new C(a);if(x.drawings[e.type]&&"function"!==e.type)b[x.drawings[e.type]](a);else for(c=0;c<b.length;c+=1)d=H(b[c]),d&&(e=new C(a),eb(b[c],e,a,hc),e.visible&&e.fn&&e.fn.call(b[c],d,e));return b},a.fn.clearCanvas=function ic(a){var c,d,b=this,e=new C(a);for(c=0;c<b.length;c+=1)d=H(b[c]),d&&(null===e.width||null===e.height?(d.save(),d.setTransform(1,0,0,1,0,0),d.clearRect(0,0,b[c].width,b[c].height),d.restore()):(eb(b[c],e,a,ic),R(b[c],d,e,e.width,e.height),d.clearRect(e.x-e.width/2,e.y-e.height/2,e.width,e.height),P(d,e)));return b},a.fn.saveCanvas=function jc(a){var c,d,e,f,g,b=this;for(c=0;c<b.length;c+=1)if(d=H(b[c]))for(f=S(b[c]),e=new C(a),eb(b[c],e,a,jc),g=0;g<e.count;g+=1)K(d,f);return b},a.fn.restoreCanvas=function kc(a){var c,d,e,f,g,b=this;for(c=0;c<b.length;c+=1)if(d=H(b[c]))for(f=S(b[c]),e=new C(a),eb(b[c],e,a,kc),g=0;g<e.count;g+=1)L(d,f);return b},a.fn.rotateCanvas=function lc(a){var c,d,e,f,b=this;for(c=0;c<b.length;c+=1)d=H(b[c]),d&&(f=S(b[c]),e=new C(a),eb(b[c],e,a,lc),e.autosave&&K(d,f),rb(d,e,f.transforms));return b},a.fn.scaleCanvas=function mc(a){var c,d,e,f,b=this;for(c=0;c<b.length;c+=1)d=H(b[c]),d&&(f=S(b[c]),e=new C(a),eb(b[c],e,a,mc),e.autosave&&K(d,f),sb(d,e,f.transforms));return b},a.fn.translateCanvas=function nc(a){var c,d,e,f,b=this;for(c=0;c<b.length;c+=1)d=H(b[c]),d&&(f=S(b[c]),e=new C(a),eb(b[c],e,a,nc),e.autosave&&K(d,f),tb(d,e,f.transforms));return b},a.fn.drawRect=function oc(a){var c,d,e,f,g,h,i,j,k,b=this;for(c=0;c<b.length;c+=1)d=H(b[c]),d&&(e=new C(a),eb(b[c],e,a,oc),e.visible&&(R(b[c],d,e,e.width,e.height),N(b[c],d,e),d.beginPath(),e.width&&e.height&&(f=e.x-e.width/2,g=e.y-e.height/2,j=r(e.cornerRadius),j?(h=e.x+e.width/2,i=e.y+e.height/2,e.width<0&&(k=f,f=h,h=k),e.height<0&&(k=g,g=i,i=k),0>h-f-2*j&&(j=(h-f)/2),0>i-g-2*j&&(j=(i-g)/2),d.moveTo(f+j,g),d.lineTo(h-j,g),d.arc(h-j,g+j,j,3*p/2,2*p,!1),d.lineTo(h,i-j),d.arc(h-j,i-j,j,0,p/2,!1),d.lineTo(f+j,i),d.arc(f+j,i-j,j,p/2,p,!1),d.lineTo(f,g+j),d.arc(f+j,g+j,j,p,3*p/2,!1),e.closed=!0):d.rect(f,g,e.width,e.height)),qb(b[c],d,e),Q(b[c],d,e)));return b},a.fn.drawArc=function pc(a){var c,d,e,b=this;for(c=0;c<b.length;c+=1)d=H(b[c]),d&&(e=new C(a),eb(b[c],e,a,pc),e.visible&&(R(b[c],d,e,2*e.radius),N(b[c],d,e),d.beginPath(),xb(b[c],d,e,e),qb(b[c],d,e),Q(b[c],d,e)));return b},a.fn.drawEllipse=function qc(a){var c,d,e,f,g,b=this;for(c=0;c<b.length;c+=1)d=H(b[c]),d&&(e=new C(a),eb(b[c],e,a,qc),e.visible&&(R(b[c],d,e,e.width,e.height),N(b[c],d,e),f=e.width*(4/3),g=e.height,d.beginPath(),d.moveTo(e.x,e.y-g/2),d.bezierCurveTo(e.x-f/2,e.y-g/2,e.x-f/2,e.y+g/2,e.x,e.y+g/2),d.bezierCurveTo(e.x+f/2,e.y+g/2,e.x+f/2,e.y-g/2,e.x,e.y-g/2),qb(b[c],d,e),e.closed=!0,Q(b[c],d,e)));return b},a.fn.drawPolygon=function rc(a){var c,d,e,f,g,h,i,j,k,l,b=this;for(c=0;c<b.length;c+=1)if(d=H(b[c]),d&&(e=new C(a),eb(b[c],e,a,rc),e.visible)){for(R(b[c],d,e,2*e.radius),N(b[c],d,e),g=2*p/e.sides,h=g/2,f=h+p/2,i=e.radius*t(h),d.beginPath(),l=0;l<e.sides;l+=1)j=e.x+e.radius*t(f),k=e.y+e.radius*s(f),d.lineTo(j,k),e.concavity&&(j=e.x+(i+-i*e.concavity)*t(f+h),k=e.y+(i+-i*e.concavity)*s(f+h),d.lineTo(j,k)),f+=g;qb(b[c],d,e),e.closed=!0,Q(b[c],d,e)}return b},a.fn.drawSlice=function sc(a){var c,d,e,f,g,h,b=this;for(c=0;c<b.length;c+=1)d=H(b[c]),d&&(e=new C(a),eb(b[c],e,a,sc),e.visible&&(R(b[c],d,e,2*e.radius),N(b[c],d,e),e.start*=e._toRad,e.end*=e._toRad,e.start-=p/2,e.end-=p/2,e.start=ub(e.start),e.end=ub(e.end),e.end<e.start&&(e.end+=2*p),f=(e.start+e.end)/2,g=e.radius*e.spread*t(f),h=e.radius*e.spread*s(f),e.x+=g,e.y+=h,d.beginPath(),d.arc(e.x,e.y,e.radius,e.start,e.end,e.ccw),d.lineTo(e.x,e.y),qb(b[c],d,e),e.closed=!0,Q(b[c],d,e)));return b},a.fn.drawLine=function tc(a){var c,d,e,b=this;for(c=0;c<b.length;c+=1)d=H(b[c]),d&&(e=new C(a),eb(b[c],e,a,tc),e.visible&&(R(b[c],d,e),N(b[c],d,e),d.beginPath(),Bb(b[c],d,e,e),qb(b[c],d,e),Q(b[c],d,e)));return b},a.fn.drawQuadratic=function uc(a){var c,d,e,b=this;for(c=0;c<b.length;c+=1)d=H(b[c]),d&&(e=new C(a),eb(b[c],e,a,uc),e.visible&&(R(b[c],d,e),N(b[c],d,e),d.beginPath(),Cb(b[c],d,e,e),qb(b[c],d,e),Q(b[c],d,e)));return b},a.fn.drawBezier=function vc(a){var c,d,e,b=this;for(c=0;c<b.length;c+=1)d=H(b[c]),d&&(e=new C(a),eb(b[c],e,a,vc),e.visible&&(R(b[c],d,e),N(b[c],d,e),d.beginPath(),Db(b[c],d,e,e),qb(b[c],d,e),Q(b[c],d,e)));return b},a.fn.drawVector=function wc(a){var c,d,e,b=this;for(c=0;c<b.length;c+=1)d=H(b[c]),d&&(e=new C(a),eb(b[c],e,a,wc),e.visible&&(R(b[c],d,e),N(b[c],d,e),d.beginPath(),Gb(b[c],d,e,e),qb(b[c],d,e),Q(b[c],d,e)));return b},a.fn.drawPath=function xc(a){var c,d,e,f,g,b=this;for(c=0;c<b.length;c+=1)if(d=H(b[c]),d&&(e=new C(a),eb(b[c],e,a,xc),e.visible)){for(R(b[c],d,e),N(b[c],d,e),d.beginPath(),f=1;;){if(g=e["p"+f],void 0===g)break;g=new C(g),"line"===g.type?Bb(b[c],d,e,g):"quadratic"===g.type?Cb(b[c],d,e,g):"bezier"===g.type?Db(b[c],d,e,g):"vector"===g.type?Gb(b[c],d,e,g):"arc"===g.type&&xb(b[c],d,e,g),f+=1}qb(b[c],d,e),Q(b[c],d,e)}return b},a.fn.drawText=function yc(a){var c,d,e,f,g,h,j,k,m,n,o,q,r,s,b=this,l=500;for(c=0;c<b.length;c+=1)if(d=H(b[c]),d&&(e=new C(a),eb(b[c],e,a,yc),e.visible)){if(d.textBaseline=e.baseline,d.textAlign=e.align,Hb(b[c],d,e),g=null!==e.maxWidth?Jb(d,e):e.text.toString().split("\n"),Ib(b[c],d,e,g),f&&(f.width=e.width,f.height=e.height),R(b[c],d,e,e.width,e.height),N(b[c],d,e),r=e.x,"left"===e.align?e.respectAlign?e.x+=e.width/2:r-=e.width/2:"right"===e.align&&(e.respectAlign?e.x-=e.width/2:r+=e.width/2),e.radius)for(k=i(e.fontSize),null===e.letterSpacing&&(e.letterSpacing=k/l),j=0;j<g.length;j+=1){for(d.save(),d.translate(e.x,e.y),h=g[j],e.flipArcText&&(n=h.split(""),n.reverse(),h=n.join("")),m=h.length,d.rotate(-(p*e.letterSpacing*(m-1))/2),q=0;m>q;q+=1)o=h[q],0!==q&&d.rotate(p*e.letterSpacing),d.save(),d.translate(0,-e.radius),e.flipArcText&&d.scale(-1,-1),d.fillText(o,0,0),"transparent"!==e.fillStyle&&(d.shadowColor="transparent"),0!==e.strokeWidth&&d.strokeText(o,0,0),d.restore();e.radius-=k,e.letterSpacing+=k/(2*l*p),d.restore()}else for(j=0;j<g.length;j+=1)h=g[j],s=(e.y+j*e.height/g.length-(g.length-1)*e.height/g.length)/2,d.shadowColor=e.shadowColor,d.fillText(h,r,s),"transparent"!==e.fillStyle&&(d.shadowColor="transparent"),0!==e.strokeWidth&&d.strokeText(h,r,s);s=0,"top"===e.baseline?s+=e.height/2:"bottom"===e.baseline&&(s-=e.height/2),e._event&&(d.beginPath(),d.rect(e.x-e.width/2,e.y-e.height/2+s,e.width,e.height),qb(b[c],d,e),d.closePath()),P(d,e)}return y.propCache=e,b},a.fn.measureText=function(a){var c,d,e,b=this;return d=b.getLayer(a),(!d||d&&!d._layer)&&(d=new C(a)),c=H(b[0]),c&&(Hb(b[0],c,d),e=Jb(c,d),Ib(b[0],c,d,e)),d},a.fn.drawImage=function Ac(b){function o(a,b,c,d,e){null===d.width&&null===d.sWidth&&(d.width=d.sWidth=k.width),null===d.height&&null===d.sHeight&&(d.height=d.sHeight=k.height),e&&(e.width=d.width,e.height=d.height),null!==d.sWidth&&null!==d.sHeight&&null!==d.sx&&null!==d.sy?(null===d.width&&(d.width=d.sWidth),null===d.height&&(d.height=d.sHeight),d.cropFromCenter&&(d.sx+=d.sWidth/2,d.sy+=d.sHeight/2),d.sy-d.sHeight/2<0&&(d.sy=d.sHeight/2),d.sy+d.sHeight/2>k.height&&(d.sy=k.height-d.sHeight/2),d.sx-d.sWidth/2<0&&(d.sx=d.sWidth/2),d.sx+d.sWidth/2>k.width&&(d.sx=k.width-d.sWidth/2),R(a,b,d,d.width,d.height),N(a,b,d),b.drawImage(k,d.sx-d.sWidth/2,d.sy-d.sHeight/2,d.sWidth,d.sHeight,d.x-d.width/2,d.y-d.height/2,d.width,d.height)):(R(a,b,d,d.width,d.height),N(a,b,d),b.drawImage(k,d.x-d.width/2,d.y-d.height/2,d.width,d.height)),b.beginPath(),b.rect(d.x-d.width/2,d.y-d.height/2,d.width,d.height),qb(a,b,d),b.closePath(),P(b,d),O(b,c,d)}function p(b,c,d,e,f){return function(){var g=a(b);o(b,c,d,e,f),e.layer?db(g,d,f,"load"):e.load&&e.load.call(g[0],f),e.layer&&(f._masks=d.transforms.masks.slice(0),e._next&&g.drawLayers({clear:!1,resetFire:!0,index:e._next}))}}var e,f,g,h,i,j,k,l,m,c=this,n=y.imageCache;for(f=0;f<c.length;f+=1)e=c[f],g=H(c[f]),g&&(h=S(c[f]),i=new C(b),j=eb(c[f],i,b,Ac),i.visible&&(m=i.source,l=m.getContext,m.src||l?k=m:m&&(n[m]&&n[m].complete?k=n[m]:(k=new d,m.match(/^data:/i)||(k.crossOrigin=i.crossOrigin),k.src=m,n[m]=k)),k&&(k.complete||l?p(e,g,h,i,j)():(k.onload=p(e,g,h,i,j),k.src=k.src))));return c},a.fn.createPattern=function(b){function k(){i=e.createPattern(g,f.repeat),f.load&&f.load.call(c[0],i)}var e,f,g,h,i,j,c=this;return e=H(c[0]),e?(f=new C(b),j=f.source,n(j)?(g=a("<canvas />")[0],g.width=f.width,g.height=f.height,h=H(g),j.call(g,h),k()):(h=j.getContext,j.src||h?g=j:(g=new d,j.match(/^data:/i)||(g.crossOrigin=f.crossOrigin),g.src=j),g.complete||h?k():(g.onload=k,g.src=g.src))):i=null,i},a.fn.createGradient=function(a){var c,d,e,g,h,i,j,k,l,m,b=this,f=[];if(d=new C(a),c=H(b[0])){for(d.x1=d.x1||0,d.y1=d.y1||0,d.x2=d.x2||0,d.y2=d.y2||0,e=null!==d.r1&&null!==d.r2?c.createRadialGradient(d.x1,d.y1,d.r1,d.x2,d.y2,d.r2):c.createLinearGradient(d.x1,d.y1,d.x2,d.y2),j=1;void 0!==d["c"+j];j+=1)void 0!==d["s"+j]?f.push(d["s"+j]):f.push(null);for(g=f.length,null===f[0]&&(f[0]=0),null===f[g-1]&&(f[g-1]=1),j=0;g>j;j+=1){if(null!==f[j]){for(l=1,m=0,h=f[j],k=j+1;g>k;k+=1){if(null!==f[k]){i=f[k];
-break}l+=1}h>i&&(f[k]=f[j])}else null===f[j]&&(m+=1,f[j]=h+m*((i-h)/l));e.addColorStop(f[j],d["c"+(j+1)])}}else e=null;return e},a.fn.setPixels=function Dc(a){var c,d,e,f,g,h,i,j,k,b=this;for(d=0;d<b.length;d+=1)if(c=b[d],e=H(c),e&&(f=new C(a),eb(c,f,a,Dc),R(b[d],e,f,f.width,f.height),(null===f.width||null===f.height)&&(f.width=c.width,f.height=c.height,f.x=f.width/2,f.y=f.height/2),0!==f.width&&0!==f.height)){if(h=e.getImageData(f.x-f.width/2,f.y-f.height/2,f.width,f.height),i=h.data,k=i.length,f.each)for(j=0;k>j;j+=4)g={r:i[j],g:i[j+1],b:i[j+2],a:i[j+3]},f.each.call(c,g,f),i[j]=g.r,i[j+1]=g.g,i[j+2]=g.b,i[j+3]=g.a;e.putImageData(h,f.x-f.width/2,f.y-f.height/2),e.restore()}return b},a.fn.getCanvasImage=function(a,b){var d,c=this,e=null;return 0!==c.length&&(d=c[0],d.toDataURL&&(void 0===b&&(b=1),e=d.toDataURL("image/"+a,b))),e},a.fn.detectPixelRatio=function(a){var d,e,f,g,h,i,j,k,l,c=this;for(e=0;e<c.length;e+=1)d=c[e],f=H(d),l=S(c[e]),l.scaled||(g=b.devicePixelRatio||1,h=f.webkitBackingStorePixelRatio||f.mozBackingStorePixelRatio||f.msBackingStorePixelRatio||f.oBackingStorePixelRatio||f.backingStorePixelRatio||1,i=g/h,1!==i&&(j=d.width,k=d.height,d.width=j*i,d.height=k*i,d.style.width=j+"px",d.style.height=k+"px",f.scale(i,i)),l.pixelRatio=i,l.scaled=!0,a&&a.call(d,i));return c},D.clearCache=function(){var a;for(a in y)Object.prototype.hasOwnProperty.call(y,a)&&(y[a]={})},a.support.canvas=void 0!==a("<canvas />")[0].getContext,k(D,{defaults:j,setGlobalProps:N,transformShape:R,detectEvents:qb,closePath:Q,setCanvasFont:Hb,measureText:Ib}),a.jCanvas=D,a.jCanvasObject=C});
+(function (jQuery, global, factory) {
+	'use strict';
+
+	if (typeof module === 'object' && typeof module.exports === 'object') {
+		module.exports = function (jQuery, w) {
+			return factory(jQuery, w);
+		};
+	} else {
+		factory(jQuery, global);
+	}
+
+// Pass this if window is not defined yet
+}(typeof window !== 'undefined' ? window.jQuery : {}, typeof window !== 'undefined' ? window : this, function ($, window) {
+'use strict';
+
+var document = window.document,
+	Image = window.Image,
+	Array = window.Array,
+	getComputedStyle = window.getComputedStyle,
+	Math = window.Math,
+	Number = window.Number,
+	parseFloat = window.parseFloat;
+
+// Define local aliases to frequently used properties
+var defaults,
+	// Aliases to jQuery methods
+	extendObject = $.extend,
+	inArray = $.inArray,
+	typeOf = function (operand) {
+		return Object.prototype.toString.call(operand)
+			.slice(8, -1).toLowerCase();
+	},
+	isFunction = $.isFunction,
+	isPlainObject = $.isPlainObject,
+	// Math constants and functions
+	PI = Math.PI,
+	round = Math.round,
+	abs = Math.abs,
+	sin = Math.sin,
+	cos = Math.cos,
+	atan2 = Math.atan2,
+	// The Array slice() method
+	arraySlice = Array.prototype.slice,
+	// jQuery's internal event normalization function
+	jQueryEventFix = $.event.fix,
+	// Object for storing a number of internal property maps
+	maps = {},
+	// jQuery internal caches
+	caches = {
+		dataCache: {},
+		propCache: {},
+		imageCache: {}
+	},
+	// Base transformations
+	baseTransforms = {
+		rotate: 0,
+		scaleX: 1,
+		scaleY: 1,
+		translateX: 0,
+		translateY: 0,
+		// Store all previous masks
+		masks: []
+	},
+	// Object for storing CSS-related properties
+	css = {},
+	tangibleEvents = [
+		'mousedown',
+		'mousemove',
+		'mouseup',
+		'mouseover',
+		'mouseout',
+		'touchstart',
+		'touchmove',
+		'touchend'
+	];
+
+// Constructor for creating objects that inherit from jCanvas preferences and defaults
+function jCanvasObject(args) {
+	var params = this,
+		propName;
+	// Copy the given parameters into new object
+	for (propName in args) {
+		// Do not merge defaults into parameters
+		if (Object.prototype.hasOwnProperty.call(args, propName)) {
+			params[propName] = args[propName];
+		}
+	}
+	return params;
+}
+
+// jCanvas object in which global settings are other data are stored
+var jCanvas = {
+	// Events object for storing jCanvas event initiation functions
+	events: {},
+	// Object containing all jCanvas event hooks
+	eventHooks: {},
+	// Settings for enabling future jCanvas features
+	future: {}
+};
+
+// jCanvas default property values
+function jCanvasDefaults() {
+	extendObject(this, jCanvasDefaults.baseDefaults);
+}
+jCanvasDefaults.baseDefaults = {
+	align: 'center',
+	arrowAngle: 90,
+	arrowRadius: 0,
+	autosave: true,
+	baseline: 'middle',
+	bringToFront: false,
+	ccw: false,
+	closed: false,
+	compositing: 'source-over',
+	concavity: 0,
+	cornerRadius: 0,
+	count: 1,
+	cropFromCenter: true,
+	crossOrigin: null,
+	cursors: null,
+	disableEvents: false,
+	draggable: false,
+	dragGroups: null,
+	groups: null,
+	data: null,
+	dx: null,
+	dy: null,
+	end: 360,
+	eventX: null,
+	eventY: null,
+	fillStyle: 'transparent',
+	fontStyle: 'normal',
+	fontSize: '12pt',
+	fontFamily: 'sans-serif',
+	fromCenter: true,
+	height: null,
+	imageSmoothing: true,
+	inDegrees: true,
+	intangible: false,
+	index: null,
+	letterSpacing: null,
+	lineHeight: 1,
+	layer: false,
+	mask: false,
+	maxWidth: null,
+	miterLimit: 10,
+	name: null,
+	opacity: 1,
+	r1: null,
+	r2: null,
+	radius: 0,
+	repeat: 'repeat',
+	respectAlign: false,
+	restrictDragToAxis: null,
+	rotate: 0,
+	rounded: false,
+	scale: 1,
+	scaleX: 1,
+	scaleY: 1,
+	shadowBlur: 0,
+	shadowColor: 'transparent',
+	shadowStroke: false,
+	shadowX: 0,
+	shadowY: 0,
+	sHeight: null,
+	sides: 0,
+	source: '',
+	spread: 0,
+	start: 0,
+	strokeCap: 'butt',
+	strokeDash: null,
+	strokeDashOffset: 0,
+	strokeJoin: 'miter',
+	strokeStyle: 'transparent',
+	strokeWidth: 1,
+	sWidth: null,
+	sx: null,
+	sy: null,
+	text: '',
+	translate: 0,
+	translateX: 0,
+	translateY: 0,
+	type: null,
+	visible: true,
+	width: null,
+	x: 0,
+	y: 0
+};
+defaults = new jCanvasDefaults();
+jCanvasObject.prototype = defaults;
+
+/* Internal helper methods */
+
+// Determines if the given operand is a string
+function isString(operand) {
+	return (typeOf(operand) === 'string');
+}
+
+// Determines if the given operand is numeric
+function isNumeric(operand) {
+	return !isNaN(Number(operand)) && !isNaN(parseFloat(operand));
+}
+
+// Get 2D context for the given canvas
+function _getContext(canvas) {
+	return (canvas && canvas.getContext ? canvas.getContext('2d') : null);
+}
+
+// Coerce designated number properties from strings to numbers
+function _coerceNumericProps(props) {
+	var propName, propType, propValue;
+	// Loop through all properties in given property map
+	for (propName in props) {
+		if (Object.prototype.hasOwnProperty.call(props, propName)) {
+			propValue = props[propName];
+			propType = typeOf(propValue);
+			// If property is non-empty string and value is numeric
+			if (propType === 'string' && isNumeric(propValue) && propName !== 'text') {
+				// Convert value to number
+				props[propName] = parseFloat(propValue);
+			}
+		}
+	}
+	// Ensure value of text property is always a string
+	if (props.text !== undefined) {
+		props.text = String(props.text);
+	}
+}
+
+// Clone the given transformations object
+function _cloneTransforms(transforms) {
+	// Clone the object itself
+	transforms = extendObject({}, transforms);
+	// Clone the object's masks array
+	transforms.masks = transforms.masks.slice(0);
+	return transforms;
+}
+
+// Save canvas context and update transformation stack
+function _saveCanvas(ctx, data) {
+	var transforms;
+	ctx.save();
+	transforms = _cloneTransforms(data.transforms);
+	data.savedTransforms.push(transforms);
+}
+
+// Restore canvas context update transformation stack
+function _restoreCanvas(ctx, data) {
+	if (data.savedTransforms.length === 0) {
+		// Reset transformation state if it can't be restored any more
+		data.transforms = _cloneTransforms(baseTransforms);
+	} else {
+		// Restore canvas context
+		ctx.restore();
+		// Restore current transform state to the last saved state
+		data.transforms = data.savedTransforms.pop();
+	}
+}
+
+// Set the style with the given name
+function _setStyle(canvas, ctx, params, styleName) {
+	if (params[styleName]) {
+		if (isFunction(params[styleName])) {
+			// Handle functions
+			ctx[styleName] = params[styleName].call(canvas, params);
+		} else {
+			// Handle string values
+			ctx[styleName] = params[styleName];
+		}
+	}
+}
+
+// Set canvas context properties
+function _setGlobalProps(canvas, ctx, params) {
+	_setStyle(canvas, ctx, params, 'fillStyle');
+	_setStyle(canvas, ctx, params, 'strokeStyle');
+	ctx.lineWidth = params.strokeWidth;
+	// Optionally round corners for paths
+	if (params.rounded) {
+		ctx.lineCap = ctx.lineJoin = 'round';
+	} else {
+		ctx.lineCap = params.strokeCap;
+		ctx.lineJoin = params.strokeJoin;
+		ctx.miterLimit = params.miterLimit;
+	}
+	// Reset strokeDash if null
+	if (!params.strokeDash) {
+		params.strokeDash = [];
+	}
+	// Dashed lines
+	if (ctx.setLineDash) {
+		ctx.setLineDash(params.strokeDash);
+	}
+	ctx.webkitLineDash = params.strokeDash;
+	ctx.lineDashOffset = ctx.webkitLineDashOffset = ctx.mozDashOffset = params.strokeDashOffset;
+	// Drop shadow
+	ctx.shadowOffsetX = params.shadowX;
+	ctx.shadowOffsetY = params.shadowY;
+	ctx.shadowBlur = params.shadowBlur;
+	ctx.shadowColor = params.shadowColor;
+	// Opacity and composite operation
+	ctx.globalAlpha = params.opacity;
+	ctx.globalCompositeOperation = params.compositing;
+	// Support cross-browser toggling of image smoothing
+	if (params.imageSmoothing) {
+		ctx.imageSmoothingEnabled = params.imageSmoothingEnabled;
+	}
+}
+
+// Optionally enable masking support for this path
+function _enableMasking(ctx, data, params) {
+	if (params.mask) {
+		// If jCanvas autosave is enabled
+		if (params.autosave) {
+			// Automatically save transformation state by default
+			_saveCanvas(ctx, data);
+		}
+		// Clip the current path
+		ctx.clip();
+		// Keep track of current masks
+		data.transforms.masks.push(params._args);
+	}
+}
+
+// Restore individual shape transformation
+function _restoreTransform(ctx, params) {
+	// If shape has been transformed by jCanvas
+	if (params._transformed) {
+		// Restore canvas context
+		ctx.restore();
+	}
+}
+
+// Close current canvas path
+function _closePath(canvas, ctx, params) {
+	var data;
+
+	// Optionally close path
+	if (params.closed) {
+		ctx.closePath();
+	}
+
+	if (params.shadowStroke && params.strokeWidth !== 0) {
+		// Extend the shadow to include the stroke of a drawing
+
+		// Add a stroke shadow by stroking before filling
+		ctx.stroke();
+		ctx.fill();
+		// Ensure the below stroking does not inherit a shadow
+		ctx.shadowColor = 'transparent';
+		ctx.shadowBlur = 0;
+		// Stroke over fill as usual
+		ctx.stroke();
+
+	} else {
+		// If shadowStroke is not enabled, stroke & fill as usual
+
+		ctx.fill();
+		// Prevent extra shadow created by stroke (but only when fill is present)
+		if (params.fillStyle !== 'transparent') {
+			ctx.shadowColor = 'transparent';
+		}
+		if (params.strokeWidth !== 0) {
+			// Only stroke if the stroke is not 0
+			ctx.stroke();
+		}
+
+	}
+
+	// Optionally close path
+	if (!params.closed) {
+		ctx.closePath();
+	}
+
+	// Restore individual shape transformation
+	_restoreTransform(ctx, params);
+
+	// Mask shape if chosen
+	if (params.mask) {
+		// Retrieve canvas data
+		data = _getCanvasData(canvas);
+		_enableMasking(ctx, data, params);
+	}
+
+}
+
+// Transform (translate, scale, or rotate) shape
+function _transformShape(canvas, ctx, params, width, height) {
+
+	// Get conversion factor for radians
+	params._toRad = (params.inDegrees ? (PI / 180) : 1);
+
+	params._transformed = true;
+	ctx.save();
+
+	// Optionally measure (x, y) position from top-left corner
+	if (!params.fromCenter && !params._centered && width !== undefined) {
+		// Always draw from center unless otherwise specified
+		if (height === undefined) {
+			height = width;
+		}
+		params.x += width / 2;
+		params.y += height / 2;
+		params._centered = true;
+	}
+	// Optionally rotate shape
+	if (params.rotate) {
+		_rotateCanvas(ctx, params, null);
+	}
+	// Optionally scale shape
+	if (params.scale !== 1 || params.scaleX !== 1 || params.scaleY !== 1) {
+		_scaleCanvas(ctx, params, null);
+	}
+	// Optionally translate shape
+	if (params.translate || params.translateX || params.translateY) {
+		_translateCanvas(ctx, params, null);
+	}
+
+}
+
+/* Plugin API */
+
+// Extend jCanvas with a user-defined method
+jCanvas.extend = function extend(plugin) {
+
+	// Create plugin
+	if (plugin.name) {
+		// Merge properties with defaults
+		if (plugin.props) {
+			extendObject(defaults, plugin.props);
+		}
+		// Define plugin method
+		$.fn[plugin.name] = function self(args) {
+			var $canvases = this, canvas, e, ctx,
+				params;
+
+			for (e = 0; e < $canvases.length; e += 1) {
+				canvas = $canvases[e];
+				ctx = _getContext(canvas);
+				if (ctx) {
+
+					params = new jCanvasObject(args);
+					_addLayer(canvas, params, args, self);
+
+					_setGlobalProps(canvas, ctx, params);
+					plugin.fn.call(canvas, ctx, params);
+
+				}
+			}
+			return $canvases;
+		};
+		// Add drawing type to drawing map
+		if (plugin.type) {
+			maps.drawings[plugin.type] = plugin.name;
+		}
+	}
+	return $.fn[plugin.name];
+};
+
+/* Layer API */
+
+// Retrieved the stored jCanvas data for a canvas element
+function _getCanvasData(canvas) {
+	var dataCache = caches.dataCache, data;
+	if (dataCache._canvas === canvas && dataCache._data) {
+
+		// Retrieve canvas data from cache if possible
+		data = dataCache._data;
+
+	} else {
+
+		// Retrieve canvas data from jQuery's internal data storage
+		data = $.data(canvas, 'jCanvas');
+		if (!data) {
+
+			// Create canvas data object if it does not already exist
+			data = {
+				// The associated canvas element
+				canvas: canvas,
+				// Layers array
+				layers: [],
+				// Layer maps
+				layer: {
+					names: {},
+					groups: {}
+				},
+				eventHooks: {},
+				// All layers that intersect with the event coordinates (regardless of visibility)
+				intersecting: [],
+				// The topmost layer whose area contains the event coordinates
+				lastIntersected: null,
+				cursor: $(canvas).css('cursor'),
+				// Properties for the current drag event
+				drag: {
+					layer: null,
+					dragging: false
+				},
+				// Data for the current event
+				event: {
+					type: null,
+					x: null,
+					y: null
+				},
+				// Events which already have been bound to the canvas
+				events: {},
+				// The canvas's current transformation state
+				transforms: _cloneTransforms(baseTransforms),
+				savedTransforms: [],
+				// Whether a layer is being animated or not
+				animating: false,
+				// The layer currently being animated
+				animated: null,
+				// The device pixel ratio
+				pixelRatio: 1,
+				// Whether pixel ratio transformations have been applied
+				scaled: false,
+				// Whether the canvas should be redrawn when a layer mousemove
+				// event triggers (either directly, or indirectly via dragging)
+				redrawOnMousemove: false
+			};
+			// Use jQuery to store canvas data
+			$.data(canvas, 'jCanvas', data);
+
+		}
+		// Cache canvas data for faster retrieval
+		dataCache._canvas = canvas;
+		dataCache._data = data;
+
+	}
+	return data;
+}
+
+// Initialize all of a layer's associated jCanvas events
+function _addLayerEvents($canvas, data, layer) {
+	var eventName;
+	// Determine which jCanvas events need to be bound to this layer
+	for (eventName in jCanvas.events) {
+		if (Object.prototype.hasOwnProperty.call(jCanvas.events, eventName)) {
+			// If layer has callback function to complement it
+			if (layer[eventName] || (layer.cursors && layer.cursors[eventName])) {
+				// Bind event to layer
+				_addExplicitLayerEvent($canvas, data, layer, eventName);
+			}
+		}
+	}
+	if (!data.events.mouseout) {
+		$canvas.bind('mouseout.jCanvas', function () {
+			// Retrieve the layer whose drag event was canceled
+			var layer = data.drag.layer, l;
+			// If cursor mouses out of canvas while dragging
+			if (layer) {
+				// Cancel drag
+				data.drag = {};
+				_triggerLayerEvent($canvas, data, layer, 'dragcancel');
+			}
+			// Loop through all layers
+			for (l = 0; l < data.layers.length; l += 1) {
+				layer = data.layers[l];
+				// If layer thinks it's still being moused over
+				if (layer._hovered) {
+					// Trigger mouseout on layer
+					$canvas.triggerLayerEvent(data.layers[l], 'mouseout');
+				}
+			}
+			// Redraw layers
+			$canvas.drawLayers();
+		});
+		// Indicate that an event handler has been bound
+		data.events.mouseout = true;
+	}
+}
+
+// Initialize the given event on the given layer
+function _addLayerEvent($canvas, data, layer, eventName) {
+	// Use touch events if appropriate
+	// eventName = _getMouseEventName(eventName);
+	// Bind event to layer
+	jCanvas.events[eventName]($canvas, data);
+	layer._event = true;
+}
+
+// Add a layer event that was explicitly declared in the layer's parameter map,
+// excluding events added implicitly (e.g. mousemove event required by draggable
+// layers)
+function _addExplicitLayerEvent($canvas, data, layer, eventName) {
+	_addLayerEvent($canvas, data, layer, eventName);
+	if (eventName === 'mouseover' || eventName === 'mouseout' || eventName === 'mousemove') {
+		data.redrawOnMousemove = true;
+	}
+}
+
+// Enable drag support for this layer
+function _enableDrag($canvas, data, layer) {
+	var dragHelperEvents, eventName, i;
+	// Only make layer draggable if necessary
+	if (layer.draggable || layer.cursors) {
+
+		// Organize helper events which enable drag support
+		dragHelperEvents = ['mousedown', 'mousemove', 'mouseup'];
+
+		// Bind each helper event to the canvas
+		for (i = 0; i < dragHelperEvents.length; i += 1) {
+			// Use touch events if appropriate
+			eventName = dragHelperEvents[i];
+			// Bind event
+			_addLayerEvent($canvas, data, layer, eventName);
+		}
+		// Indicate that this layer has events bound to it
+		layer._event = true;
+
+	}
+}
+
+// Update a layer property map if property is changed
+function _updateLayerName($canvas, data, layer, props) {
+	var nameMap = data.layer.names;
+
+	// If layer name is being added, not changed
+	if (!props) {
+
+		props = layer;
+
+	} else {
+
+		// Remove old layer name entry because layer name has changed
+		if (props.name !== undefined && isString(layer.name) && layer.name !== props.name) {
+			delete nameMap[layer.name];
+		}
+
+	}
+
+	// Add new entry to layer name map with new name
+	if (isString(props.name)) {
+		nameMap[props.name] = layer;
+	}
+}
+
+// Create or update the data map for the given layer and group type
+function _updateLayerGroups($canvas, data, layer, props) {
+	var groupMap = data.layer.groups,
+		group, groupName, g,
+		index, l;
+
+	// If group name is not changing
+	if (!props) {
+
+		props = layer;
+
+	} else {
+
+		// Remove layer from all of its associated groups
+		if (props.groups !== undefined && layer.groups !== null) {
+			for (g = 0; g < layer.groups.length; g += 1) {
+				groupName = layer.groups[g];
+				group = groupMap[groupName];
+				if (group) {
+					// Remove layer from its old layer group entry
+					for (l = 0; l < group.length; l += 1) {
+						if (group[l] === layer) {
+							// Keep track of the layer's initial index
+							index = l;
+							// Remove layer once found
+							group.splice(l, 1);
+							break;
+						}
+					}
+					// Remove layer group entry if group is empty
+					if (group.length === 0) {
+						delete groupMap[groupName];
+					}
+				}
+			}
+		}
+
+	}
+
+	// Add layer to new group if a new group name is given
+	if (props.groups !== undefined && props.groups !== null) {
+
+		for (g = 0; g < props.groups.length; g += 1) {
+
+			groupName = props.groups[g];
+
+			group = groupMap[groupName];
+			if (!group) {
+				// Create new group entry if it doesn't exist
+				group = groupMap[groupName] = [];
+				group.name = groupName;
+			}
+			if (index === undefined) {
+				// Add layer to end of group unless otherwise stated
+				index = group.length;
+			}
+			// Add layer to its new layer group
+			group.splice(index, 0, layer);
+
+		}
+
+	}
+}
+
+// Get event hooks object for the first selected canvas
+$.fn.getEventHooks = function getEventHooks() {
+	var $canvases = this, canvas, data,
+		eventHooks = {};
+
+	if ($canvases.length !== 0) {
+		canvas = $canvases[0];
+		data = _getCanvasData(canvas);
+		eventHooks = data.eventHooks;
+	}
+	return eventHooks;
+};
+
+// Set event hooks for the selected canvases
+$.fn.setEventHooks = function setEventHooks(eventHooks) {
+	var $canvases = this, e,
+		data;
+	for (e = 0; e < $canvases.length; e += 1) {
+		data = _getCanvasData($canvases[e]);
+		extendObject(data.eventHooks, eventHooks);
+	}
+	return $canvases;
+};
+
+// Get jCanvas layers array
+$.fn.getLayers = function getLayers(callback) {
+	var $canvases = this, canvas, data,
+		layers, layer, l,
+		matching = [];
+
+	if ($canvases.length !== 0) {
+
+		canvas = $canvases[0];
+		data = _getCanvasData(canvas);
+		// Retrieve layers array for this canvas
+		layers = data.layers;
+
+		// If a callback function is given
+		if (isFunction(callback)) {
+
+			// Filter the layers array using the callback
+			for (l = 0; l < layers.length; l += 1) {
+				layer = layers[l];
+				if (callback.call(canvas, layer)) {
+					// Add layer to array of matching layers if test passes
+					matching.push(layer);
+				}
+			}
+
+		} else {
+			// Otherwise, get all layers
+
+			matching = layers;
+
+		}
+
+	}
+	return matching;
+};
+
+// Get a single jCanvas layer object
+$.fn.getLayer = function getLayer(layerId) {
+	var $canvases = this, canvas,
+		data, layers, layer, l,
+		idType;
+
+	if ($canvases.length !== 0) {
+
+		canvas = $canvases[0];
+		data = _getCanvasData(canvas);
+		layers = data.layers;
+		idType = typeOf(layerId);
+
+		if (layerId && layerId.layer) {
+
+			// Return the actual layer object if given
+			layer = layerId;
+
+		} else if (idType === 'number') {
+
+			// Retrieve the layer using the given index
+
+			// Allow for negative indices
+			if (layerId < 0) {
+				layerId = layers.length + layerId;
+			}
+			// Get layer with the given index
+			layer = layers[layerId];
+
+		} else if (idType === 'regexp') {
+
+			// Get layer with the name that matches the given regex
+			for (l = 0; l < layers.length; l += 1) {
+				// Check if layer matches name
+				if (isString(layers[l].name) && layers[l].name.match(layerId)) {
+					layer = layers[l];
+					break;
+				}
+			}
+
+		} else {
+
+			// Get layer with the given name
+			layer = data.layer.names[layerId];
+
+		}
+
+	}
+	return layer;
+};
+
+// Get all layers in the given group
+$.fn.getLayerGroup = function getLayerGroup(groupId) {
+	var $canvases = this, canvas, data,
+		groups, groupName, group,
+		idType = typeOf(groupId);
+
+	if ($canvases.length !== 0) {
+
+		canvas = $canvases[0];
+
+		if (idType === 'array') {
+
+			// Return layer group if given
+			group = groupId;
+
+		} else if (idType === 'regexp') {
+
+			// Get canvas data
+			data = _getCanvasData(canvas);
+			groups = data.layer.groups;
+			// Loop through all layers groups for this canvas
+			for (groupName in groups) {
+				// Find a group whose name matches the given regex
+				if (groupName.match(groupId)) {
+					group = groups[groupName];
+					// Stop after finding the first matching group
+					break;
+				}
+			}
+
+		} else {
+
+			// Find layer group with the given group name
+			data = _getCanvasData(canvas);
+			group = data.layer.groups[groupId];
+		}
+
+	}
+	return group;
+};
+
+// Get index of layer in layers array
+$.fn.getLayerIndex = function getLayerIndex(layerId) {
+	var $canvases = this,
+		layers = $canvases.getLayers(),
+		layer = $canvases.getLayer(layerId);
+
+	return inArray(layer, layers);
+};
+
+// Set properties of a layer
+$.fn.setLayer = function setLayer(layerId, props) {
+	var $canvases = this, $canvas, e,
+		data, layer,
+		propName, propValue, propType;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+		data = _getCanvasData($canvases[e]);
+
+		layer = $($canvases[e]).getLayer(layerId);
+		if (layer) {
+
+			// Update layer property maps
+			_updateLayerName($canvas, data, layer, props);
+			_updateLayerGroups($canvas, data, layer, props);
+
+			_coerceNumericProps(props);
+
+			// Merge properties with layer
+			for (propName in props) {
+				if (Object.prototype.hasOwnProperty.call(props, propName)) {
+					propValue = props[propName];
+					propType = typeOf(propValue);
+					if (propType === 'object' && isPlainObject(propValue)) {
+						// Clone objects
+						layer[propName] = extendObject({}, propValue);
+						_coerceNumericProps(layer[propName]);
+					} else if (propType === 'array') {
+						// Clone arrays
+						layer[propName] = propValue.slice(0);
+					} else if (propType === 'string') {
+						if (propValue.indexOf('+=') === 0) {
+							// Increment numbers prefixed with +=
+							layer[propName] += parseFloat(propValue.substr(2));
+						} else if (propValue.indexOf('-=') === 0) {
+							// Decrement numbers prefixed with -=
+							layer[propName] -= parseFloat(propValue.substr(2));
+						} else if (!isNaN(propValue) && isNumeric(propValue) && propName !== 'text') {
+							// Convert numeric values as strings to numbers
+							layer[propName] = parseFloat(propValue);
+						} else {
+							// Otherwise, set given string value
+							layer[propName] = propValue;
+						}
+					} else {
+						// Otherwise, set given value
+						layer[propName] = propValue;
+					}
+				}
+			}
+
+			// Update layer events
+			_addLayerEvents($canvas, data, layer);
+			_enableDrag($canvas, data, layer);
+
+			// If layer's properties were changed
+			if ($.isEmptyObject(props) === false) {
+				_triggerLayerEvent($canvas, data, layer, 'change', props);
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+// Set properties of all layers (optionally filtered by a callback)
+$.fn.setLayers = function setLayers(props, callback) {
+	var $canvases = this, $canvas, e,
+		layers, l;
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+
+		layers = $canvas.getLayers(callback);
+		// Loop through all layers
+		for (l = 0; l < layers.length; l += 1) {
+			// Set properties of each layer
+			$canvas.setLayer(layers[l], props);
+		}
+	}
+	return $canvases;
+};
+
+// Set properties of all layers in the given group
+$.fn.setLayerGroup = function setLayerGroup(groupId, props) {
+	var $canvases = this, $canvas, e,
+		group, l;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		// Get layer group
+		$canvas = $($canvases[e]);
+
+		group = $canvas.getLayerGroup(groupId);
+		// If group exists
+		if (group) {
+
+			// Loop through layers in group
+			for (l = 0; l < group.length; l += 1) {
+				// Merge given properties with layer
+				$canvas.setLayer(group[l], props);
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+// Move a layer to the given index in the layers array
+$.fn.moveLayer = function moveLayer(layerId, index) {
+	var $canvases = this, $canvas, e,
+		data, layers, layer;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+		data = _getCanvasData($canvases[e]);
+
+		// Retrieve layers array and desired layer
+		layers = data.layers;
+		layer = $canvas.getLayer(layerId);
+		if (layer) {
+
+			// Ensure layer index is accurate
+			layer.index = inArray(layer, layers);
+
+			// Remove layer from its current placement
+			layers.splice(layer.index, 1);
+			// Add layer in its new placement
+			layers.splice(index, 0, layer);
+
+			// Handle negative indices
+			if (index < 0) {
+				index = layers.length + index;
+			}
+			// Update layer's stored index
+			layer.index = index;
+
+			_triggerLayerEvent($canvas, data, layer, 'move');
+
+		}
+	}
+	return $canvases;
+};
+
+// Remove a jCanvas layer
+$.fn.removeLayer = function removeLayer(layerId) {
+	var $canvases = this, $canvas, e, data,
+		layers, layer;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+		data = _getCanvasData($canvases[e]);
+
+		// Retrieve layers array and desired layer
+		layers = $canvas.getLayers();
+		layer = $canvas.getLayer(layerId);
+		// Remove layer if found
+		if (layer) {
+
+			// Ensure layer index is accurate
+			layer.index = inArray(layer, layers);
+			// Remove layer and allow it to be re-added later
+			layers.splice(layer.index, 1);
+			delete layer._layer;
+
+			// Update layer name map
+			_updateLayerName($canvas, data, layer, {
+				name: null
+			});
+			// Update layer group map
+			_updateLayerGroups($canvas, data, layer, {
+				groups: null
+			});
+
+			// Trigger 'remove' event
+			_triggerLayerEvent($canvas, data, layer, 'remove');
+
+		}
+	}
+	return $canvases;
+};
+
+// Remove all layers
+$.fn.removeLayers = function removeLayers(callback) {
+	var $canvases = this, $canvas, e,
+		data, layers, layer, l;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+		data = _getCanvasData($canvases[e]);
+		layers = $canvas.getLayers(callback);
+		// Remove all layers individually
+		for (l = 0; l < layers.length; l += 1) {
+			layer = layers[l];
+			$canvas.removeLayer(layer);
+			// Ensure no layer is skipped over
+			l -= 1;
+		}
+		// Update layer maps
+		data.layer.names = {};
+		data.layer.groups = {};
+	}
+	return $canvases;
+};
+
+// Remove all layers in the group with the given ID
+$.fn.removeLayerGroup = function removeLayerGroup(groupId) {
+	var $canvases = this, $canvas, e, group, l;
+
+	if (groupId !== undefined) {
+		for (e = 0; e < $canvases.length; e += 1) {
+			$canvas = $($canvases[e]);
+
+			group = $canvas.getLayerGroup(groupId);
+			// Remove layer group using given group name
+			if (group) {
+
+				// Clone groups array
+				group = group.slice(0);
+
+				// Loop through layers in group
+				for (l = 0; l < group.length; l += 1) {
+					$canvas.removeLayer(group[l]);
+				}
+
+			}
+		}
+	}
+	return $canvases;
+};
+
+// Add an existing layer to a layer group
+$.fn.addLayerToGroup = function addLayerToGroup(layerId, groupName) {
+	var $canvases = this, $canvas, e,
+		layer, groups = [groupName];
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+		layer = $canvas.getLayer(layerId);
+
+		// If layer is not already in group
+		if (layer.groups) {
+			// Clone groups list
+			groups = layer.groups.slice(0);
+			// If layer is not already in group
+			if (inArray(groupName, layer.groups) === -1) {
+				// Add layer to group
+				groups.push(groupName);
+			}
+		}
+		// Update layer group maps
+		$canvas.setLayer(layer, {
+			groups: groups
+		});
+
+	}
+	return $canvases;
+};
+
+// Remove an existing layer from a layer group
+$.fn.removeLayerFromGroup = function removeLayerFromGroup(layerId, groupName) {
+	var $canvases = this, $canvas, e,
+		layer, groups = [],
+		index;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+		layer = $canvas.getLayer(layerId);
+
+		if (layer.groups) {
+
+			// Find index of layer in group
+			index = inArray(groupName, layer.groups);
+
+			// If layer is in group
+			if (index !== -1) {
+
+				// Clone groups list
+				groups = layer.groups.slice(0);
+
+				// Remove layer from group
+				groups.splice(index, 1);
+
+				// Update layer group maps
+				$canvas.setLayer(layer, {
+					groups: groups
+				});
+
+			}
+
+		}
+
+	}
+	return $canvases;
+};
+
+// Get topmost layer that intersects with event coordinates
+function _getIntersectingLayer(data) {
+	var layer, i,
+		mask, m;
+
+	// Store the topmost layer
+	layer = null;
+
+	// Get the topmost layer whose visible area intersects event coordinates
+	for (i = data.intersecting.length - 1; i >= 0; i -= 1) {
+
+		// Get current layer
+		layer = data.intersecting[i];
+
+		// If layer has previous masks
+		if (layer._masks) {
+
+			// Search previous masks to ensure
+			// layer is visible at event coordinates
+			for (m = layer._masks.length - 1; m >= 0; m -= 1) {
+				mask = layer._masks[m];
+				// If mask does not intersect event coordinates
+				if (!mask.intersects) {
+					// Indicate that the mask does not
+					// intersect event coordinates
+					layer.intersects = false;
+					// Stop searching previous masks
+					break;
+				}
+
+			}
+
+			// If event coordinates intersect all previous masks
+			// and layer is not intangible
+			if (layer.intersects && !layer.intangible) {
+				// Stop searching for topmost layer
+				break;
+			}
+
+		}
+
+	}
+	// If resulting layer is intangible
+	if (layer && layer.intangible) {
+		// Cursor does not intersect this layer
+		layer = null;
+	}
+	return layer;
+}
+
+// Draw individual layer (internal)
+function _drawLayer($canvas, ctx, layer, nextLayerIndex) {
+	if (layer && layer.visible && layer._method) {
+		if (nextLayerIndex) {
+			layer._next = nextLayerIndex;
+		} else {
+			layer._next = null;
+		}
+		// If layer is an object, call its respective method
+		if (layer._method) {
+			layer._method.call($canvas, layer);
+		}
+	}
+}
+
+// Handle dragging of the currently-dragged layer
+function _handleLayerDrag($canvas, data, eventType) {
+	var layers, layer, l,
+		drag, dragGroups,
+		group, groupName, g,
+		newX, newY;
+
+	drag = data.drag;
+	layer = drag.layer;
+	dragGroups = (layer && layer.dragGroups) || [];
+	layers = data.layers;
+
+	if (eventType === 'mousemove' || eventType === 'touchmove') {
+		// Detect when user is currently dragging layer
+
+		if (!drag.dragging) {
+			// Detect when user starts dragging layer
+
+			// Signify that a layer on the canvas is being dragged
+			drag.dragging = true;
+			layer.dragging = true;
+
+			// Optionally bring layer to front when drag starts
+			if (layer.bringToFront) {
+				// Remove layer from its original position
+				layers.splice(layer.index, 1);
+				// Bring layer to front
+				// push() returns the new array length
+				layer.index = layers.push(layer);
+			}
+
+			// Set drag properties for this layer
+			layer._startX = layer.x;
+			layer._startY = layer.y;
+			layer._endX = layer._eventX;
+			layer._endY = layer._eventY;
+
+			// Trigger dragstart event
+			_triggerLayerEvent($canvas, data, layer, 'dragstart');
+
+		}
+
+		if (drag.dragging) {
+
+			// Calculate position after drag
+			newX = layer._eventX - (layer._endX - layer._startX);
+			newY = layer._eventY - (layer._endY - layer._startY);
+			if (layer.updateDragX) {
+				newX = layer.updateDragX.call($canvas[0], layer, newX);
+			}
+			if (layer.updateDragY) {
+				newY = layer.updateDragY.call($canvas[0], layer, newY);
+			}
+			layer.dx = newX - layer.x;
+			layer.dy = newY - layer.y;
+			if (layer.restrictDragToAxis !== 'y') {
+				layer.x = newX;
+			}
+			if (layer.restrictDragToAxis !== 'x') {
+				layer.y = newY;
+			}
+
+			// Trigger drag event
+			_triggerLayerEvent($canvas, data, layer, 'drag');
+
+			// Move groups with layer on drag
+			for (g = 0; g < dragGroups.length; g += 1) {
+
+				groupName = dragGroups[g];
+				group = data.layer.groups[groupName];
+				if (layer.groups && group) {
+
+					for (l = 0; l < group.length; l += 1) {
+						if (group[l] !== layer) {
+							if (layer.restrictDragToAxis !== 'y' && group[l].restrictDragToAxis !== 'y') {
+								group[l].x += layer.dx;
+							}
+							if (layer.restrictDragToAxis !== 'x' && group[l].restrictDragToAxis !== 'x') {
+								group[l].y += layer.dy;
+							}
+						}
+					}
+
+				}
+
+			}
+
+		}
+
+	} else if (eventType === 'mouseup' || eventType === 'touchend') {
+		// Detect when user stops dragging layer
+
+		if (drag.dragging) {
+			layer.dragging = false;
+			drag.dragging = false;
+			data.redrawOnMousemove = data.originalRedrawOnMousemove;
+			// Trigger dragstop event
+			_triggerLayerEvent($canvas, data, layer, 'dragstop');
+		}
+
+		// Cancel dragging
+		data.drag = {};
+
+	}
+}
+
+
+// List of CSS3 cursors that need to be prefixed
+css.cursors = ['grab', 'grabbing', 'zoom-in', 'zoom-out'];
+
+// Function to detect vendor prefix
+// Modified version of David Walsh's implementation
+// https://davidwalsh.name/vendor-prefix
+css.prefix = (function () {
+	var styles = getComputedStyle(document.documentElement, ''),
+		pre = (arraySlice
+			.call(styles)
+			.join('')
+			.match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
+		)[1];
+	return '-' + pre + '-';
+})();
+
+// Set cursor on canvas
+function _setCursor($canvas, layer, eventType) {
+	var cursor;
+	if (layer.cursors) {
+		// Retrieve cursor from cursors object if it exists
+		cursor = layer.cursors[eventType];
+	}
+	// Prefix any CSS3 cursor
+	if ($.inArray(cursor, css.cursors) !== -1) {
+		cursor = css.prefix + cursor;
+	}
+	// If cursor is defined
+	if (cursor) {
+		// Set canvas cursor
+		$canvas.css({
+			cursor: cursor
+		});
+	}
+}
+
+// Reset cursor on canvas
+function _resetCursor($canvas, data) {
+	$canvas.css({
+		cursor: data.cursor
+	});
+}
+
+// Run the given event callback with the given arguments
+function _runEventCallback($canvas, layer, eventType, callbacks, arg) {
+	// Prevent callback from firing recursively
+	if (callbacks[eventType] && layer._running && !layer._running[eventType]) {
+		// Signify the start of callback execution for this event
+		layer._running[eventType] = true;
+		// Run event callback with the given arguments
+		callbacks[eventType].call($canvas[0], layer, arg);
+		// Signify the end of callback execution for this event
+		layer._running[eventType] = false;
+	}
+}
+
+// Determine if the given layer can "legally" fire the given event
+function _layerCanFireEvent(layer, eventType) {
+	// If events are disable and if
+	// layer is tangible or event is not tangible
+	return (!layer.disableEvents &&
+		(!layer.intangible || $.inArray(eventType, tangibleEvents) === -1));
+}
+
+// Trigger the given event on the given layer
+function _triggerLayerEvent($canvas, data, layer, eventType, arg) {
+	// If layer can legally fire this event type
+	if (_layerCanFireEvent(layer, eventType)) {
+
+		// Do not set a custom cursor on layer mouseout
+		if (eventType !== 'mouseout') {
+			// Update cursor if one is defined for this event
+			_setCursor($canvas, layer, eventType);
+		}
+
+		// Trigger the user-defined event callback
+		_runEventCallback($canvas, layer, eventType, layer, arg);
+		// Trigger the canvas-bound event hook
+		_runEventCallback($canvas, layer, eventType, data.eventHooks, arg);
+		// Trigger the global event hook
+		_runEventCallback($canvas, layer, eventType, jCanvas.eventHooks, arg);
+
+	}
+}
+
+// Manually trigger a layer event
+$.fn.triggerLayerEvent = function (layer, eventType) {
+	var $canvases = this, $canvas, e,
+		data;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+		data = _getCanvasData($canvases[e]);
+		layer = $canvas.getLayer(layer);
+		if (layer) {
+			_triggerLayerEvent($canvas, data, layer, eventType);
+		}
+	}
+	return $canvases;
+};
+
+// Draw layer with the given ID
+$.fn.drawLayer = function drawLayer(layerId) {
+	var $canvases = this, e, ctx,
+		$canvas, layer;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+			layer = $canvas.getLayer(layerId);
+			_drawLayer($canvas, ctx, layer);
+		}
+	}
+	return $canvases;
+};
+
+// Draw all layers (or, if given, only layers starting at an index)
+$.fn.drawLayers = function drawLayers(args) {
+	var $canvases = this, $canvas, e, ctx,
+		// Internal parameters for redrawing the canvas
+		params = args || {},
+		// Other variables
+		layers, layer, lastLayer, l, index, lastIndex,
+		data, eventCache, eventType, isImageLayer;
+
+	// The layer index from which to start redrawing the canvas
+	index = params.index;
+	if (!index) {
+		index = 0;
+	}
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			data = _getCanvasData($canvases[e]);
+
+			// Clear canvas first unless otherwise directed
+			if (params.clear !== false) {
+				$canvas.clearCanvas();
+			}
+
+			// Cache the layers array
+			layers = data.layers;
+
+			// Draw layers from first to last (bottom to top)
+			for (l = index; l < layers.length; l += 1) {
+				layer = layers[l];
+
+				// Ensure layer index is up-to-date
+				layer.index = l;
+
+				// Prevent any one event from firing excessively
+				if (params.resetFire) {
+					layer._fired = false;
+				}
+				// Draw layer
+				_drawLayer($canvas, ctx, layer, l + 1);
+				// Store list of previous masks for each layer
+				layer._masks = data.transforms.masks.slice(0);
+
+				// Allow image layers to load before drawing successive layers
+				if (layer._method === $.fn.drawImage && layer.visible) {
+					isImageLayer = true;
+					break;
+				}
+
+			}
+
+			// If layer is an image layer
+			if (isImageLayer) {
+				// Stop and wait for drawImage() to resume drawLayers()
+				break;
+			}
+
+			// Store the latest
+			lastIndex = l;
+
+			// Get first layer that intersects with event coordinates
+			layer = _getIntersectingLayer(data);
+
+			eventCache = data.event;
+			eventType = eventCache.type;
+
+			// If jCanvas has detected a dragstart
+			if (data.drag.layer) {
+				// Handle dragging of layer
+				_handleLayerDrag($canvas, data, eventType);
+			}
+
+			// Manage mouseout event
+			lastLayer = data.lastIntersected;
+			if (lastLayer !== null && layer !== lastLayer && lastLayer._hovered && !lastLayer._fired && !data.drag.dragging) {
+
+				data.lastIntersected = null;
+				lastLayer._fired = true;
+				lastLayer._hovered = false;
+				_triggerLayerEvent($canvas, data, lastLayer, 'mouseout');
+				_resetCursor($canvas, data);
+
+			}
+
+			if (layer) {
+
+				// Use mouse event callbacks if no touch event callbacks are given
+				if (!layer[eventType]) {
+					eventType = _getMouseEventName(eventType);
+				}
+
+				// Check events for intersecting layer
+				if (layer._event && layer.intersects) {
+
+					data.lastIntersected = layer;
+
+					// Detect mouseover events
+					if ((layer.mouseover || layer.mouseout || layer.cursors) && !data.drag.dragging) {
+
+						if (!layer._hovered && !layer._fired) {
+
+							// Prevent events from firing excessively
+							layer._fired = true;
+							layer._hovered = true;
+							_triggerLayerEvent($canvas, data, layer, 'mouseover');
+
+						}
+
+					}
+
+					// Detect any other mouse event
+					if (!layer._fired) {
+
+						// Prevent event from firing twice unintentionally
+						layer._fired = true;
+						eventCache.type = null;
+
+						_triggerLayerEvent($canvas, data, layer, eventType);
+
+					}
+
+					// Use the mousedown event to start drag
+					if (layer.draggable && !layer.disableEvents && (eventType === 'mousedown' || eventType === 'touchstart')) {
+
+						// Keep track of drag state
+						data.drag.layer = layer;
+						data.originalRedrawOnMousemove = data.redrawOnMousemove;
+						data.redrawOnMousemove = true;
+
+					}
+
+				}
+
+			}
+
+			// If cursor is not intersecting with any layer
+			if (layer === null && !data.drag.dragging) {
+				// Reset cursor to previous state
+				_resetCursor($canvas, data);
+			}
+
+			// If the last layer has been drawn
+			if (lastIndex === layers.length) {
+
+				// Reset list of intersecting layers
+				data.intersecting.length = 0;
+				// Reset transformation stack
+				data.transforms = _cloneTransforms(baseTransforms);
+				data.savedTransforms.length = 0;
+
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+// Add a jCanvas layer (internal)
+function _addLayer(canvas, params, args, method) {
+	var $canvas, data,
+		layers, layer = (params._layer ? args : params);
+
+	// Store arguments object for later use
+	params._args = args;
+
+	// Convert all draggable drawings into jCanvas layers
+	if (params.draggable || params.dragGroups) {
+		params.layer = true;
+		params.draggable = true;
+	}
+
+	// Determine the layer's type using the available information
+	if (!params._method) {
+		if (method) {
+			params._method = method;
+		} else if (params.method) {
+			params._method = $.fn[params.method];
+		} else if (params.type) {
+			params._method = $.fn[maps.drawings[params.type]];
+		}
+	}
+
+	// If layer hasn't been added yet
+	if (params.layer && !params._layer) {
+		// Add layer to canvas
+
+		$canvas = $(canvas);
+
+		data = _getCanvasData(canvas);
+		layers = data.layers;
+
+		// Do not add duplicate layers of same name
+		if (layer.name === null || (isString(layer.name) && data.layer.names[layer.name] === undefined)) {
+
+			// Convert number properties to numbers
+			_coerceNumericProps(params);
+
+			// Ensure layers are unique across canvases by cloning them
+			layer = new jCanvasObject(params);
+			layer.canvas = canvas;
+			// Indicate that this is a layer for future checks
+			layer.layer = true;
+			layer._layer = true;
+			layer._running = {};
+			// If layer stores user-defined data
+			if (layer.data !== null) {
+				// Clone object
+				layer.data = extendObject({}, layer.data);
+			} else {
+				// Otherwise, create data object
+				layer.data = {};
+			}
+			// If layer stores a list of associated groups
+			if (layer.groups !== null) {
+				// Clone list
+				layer.groups = layer.groups.slice(0);
+			} else {
+				// Otherwise, create empty list
+				layer.groups = [];
+			}
+
+			// Update layer group maps
+			_updateLayerName($canvas, data, layer);
+			_updateLayerGroups($canvas, data, layer);
+
+			// Check for any associated jCanvas events and enable them
+			_addLayerEvents($canvas, data, layer);
+
+			// Optionally enable drag-and-drop support and cursor support
+			_enableDrag($canvas, data, layer);
+
+			// Copy _event property to parameters object
+			params._event = layer._event;
+
+			// Calculate width/height for text layers
+			if (layer._method === $.fn.drawText) {
+				$canvas.measureText(layer);
+			}
+
+			// Add layer to end of array if no index is specified
+			if (layer.index === null) {
+				layer.index = layers.length;
+			}
+
+			// Add layer to layers array at specified index
+			layers.splice(layer.index, 0, layer);
+
+			// Store layer on parameters object
+			params._args = layer;
+
+			// Trigger an 'add' event
+			_triggerLayerEvent($canvas, data, layer, 'add');
+
+		}
+
+	} else if (!params.layer) {
+		_coerceNumericProps(params);
+	}
+
+	return layer;
+}
+
+// Add a jCanvas layer
+$.fn.addLayer = function addLayer(args) {
+	var $canvases = this, e, ctx,
+		params;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			params = new jCanvasObject(args);
+			params.layer = true;
+			_addLayer($canvases[e], params, args);
+
+		}
+	}
+	return $canvases;
+};
+
+/* Animation API */
+
+// Define properties used in both CSS and jCanvas
+css.props = [
+	'width',
+	'height',
+	'opacity',
+	'lineHeight'
+];
+css.propsObj = {};
+
+// Hide/show jCanvas/CSS properties so they can be animated using jQuery
+function _showProps(obj) {
+	var cssProp, p;
+	for (p = 0; p < css.props.length; p += 1) {
+		cssProp = css.props[p];
+		obj[cssProp] = obj['_' + cssProp];
+	}
+}
+function _hideProps(obj, reset) {
+	var cssProp, p;
+	for (p = 0; p < css.props.length; p += 1) {
+		cssProp = css.props[p];
+		// Hide property using same name with leading underscore
+		if (obj[cssProp] !== undefined) {
+			obj['_' + cssProp] = obj[cssProp];
+			css.propsObj[cssProp] = true;
+			if (reset) {
+				delete obj[cssProp];
+			}
+		}
+	}
+}
+
+// Evaluate property values that are functions
+function _parseEndValues(canvas, layer, endValues) {
+	var propName, propValue,
+		subPropName, subPropValue;
+	// Loop through all properties in map of end values
+	for (propName in endValues) {
+		if (Object.prototype.hasOwnProperty.call(endValues, propName)) {
+			propValue = endValues[propName];
+			// If end value is function
+			if (isFunction(propValue)) {
+				// Call function and use its value as the end value
+				endValues[propName] = propValue.call(canvas, layer, propName);
+			}
+			// If end value is an object
+			if (typeOf(propValue) === 'object' && isPlainObject(propValue)) {
+				// Prepare to animate properties in object
+				for (subPropName in propValue) {
+					if (Object.prototype.hasOwnProperty.call(propValue, subPropName)) {
+						subPropValue = propValue[subPropName];
+						// Store property's start value at top-level of layer
+						if (layer[propName] !== undefined) {
+							layer[propName + '.' + subPropName] = layer[propName][subPropName];
+							// Store property's end value at top-level of end values map
+							endValues[propName + '.' + subPropName] = subPropValue;
+						}
+					}
+				}
+				// Delete sub-property of object as it's no longer needed
+				delete endValues[propName];
+			}
+		}
+	}
+	return endValues;
+}
+
+// Remove sub-property aliases from layer object
+function _removeSubPropAliases(layer) {
+	var propName;
+	for (propName in layer) {
+		if (Object.prototype.hasOwnProperty.call(layer, propName)) {
+			if (propName.indexOf('.') !== -1) {
+				delete layer[propName];
+			}
+		}
+	}
+}
+
+// Convert a color value to an array of RGB values
+function _colorToRgbArray(color) {
+	var originalColor, elem,
+		rgb = [],
+		multiple = 1;
+
+	// Deal with complete transparency
+	if (color === 'transparent') {
+		color = 'rgba(0, 0, 0, 0)';
+	} else if (color.match(/^([a-z]+|#[0-9a-f]+)$/gi)) {
+		// Deal with hexadecimal colors and color names
+		elem = document.head;
+		originalColor = elem.style.color;
+		elem.style.color = color;
+		color = $.css(elem, 'color');
+		elem.style.color = originalColor;
+	}
+	// Parse RGB string
+	if (color.match(/^rgb/gi)) {
+		rgb = color.match(/(\d+(\.\d+)?)/gi);
+		// Deal with RGB percentages
+		if (color.match(/%/gi)) {
+			multiple = 2.55;
+		}
+		rgb[0] *= multiple;
+		rgb[1] *= multiple;
+		rgb[2] *= multiple;
+		// Ad alpha channel if given
+		if (rgb[3] !== undefined) {
+			rgb[3] = parseFloat(rgb[3]);
+		} else {
+			rgb[3] = 1;
+		}
+	}
+	return rgb;
+}
+
+// Animate a hex or RGB color
+function _animateColor(fx) {
+	var n = 3,
+		i;
+	// Only parse start and end colors once
+	if (typeOf(fx.start) !== 'array') {
+		fx.start = _colorToRgbArray(fx.start);
+		fx.end = _colorToRgbArray(fx.end);
+	}
+	fx.now = [];
+
+	// If colors are RGBA, animate transparency
+	if (fx.start[3] !== 1 || fx.end[3] !== 1) {
+		n = 4;
+	}
+
+	// Calculate current frame for red, green, blue, and alpha
+	for (i = 0; i < n; i += 1) {
+		fx.now[i] = fx.start[i] + ((fx.end[i] - fx.start[i]) * fx.pos);
+		// Only the red, green, and blue values must be integers
+		if (i < 3) {
+			fx.now[i] = round(fx.now[i]);
+		}
+	}
+	if (fx.start[3] !== 1 || fx.end[3] !== 1) {
+		// Only use RGBA if RGBA colors are given
+		fx.now = 'rgba(' + fx.now.join(',') + ')';
+	} else {
+		// Otherwise, animate as solid colors
+		fx.now.slice(0, 3);
+		fx.now = 'rgb(' + fx.now.join(',') + ')';
+	}
+	// Animate colors for both canvas layers and DOM elements
+	if (fx.elem.nodeName) {
+		fx.elem.style[fx.prop] = fx.now;
+	} else {
+		fx.elem[fx.prop] = fx.now;
+	}
+}
+
+// Animate jCanvas layer
+$.fn.animateLayer = function animateLayer() {
+	var $canvases = this, $canvas, e, ctx,
+		args = arraySlice.call(arguments, 0),
+		data, layer, props;
+
+	// Deal with all cases of argument placement
+	/*
+		0. layer name/index
+		1. properties
+		2. duration/options
+		3. easing
+		4. complete function
+		5. step function
+	*/
+
+	if (typeOf(args[2]) === 'object') {
+
+		// Accept an options object for animation
+		args.splice(2, 0, args[2].duration || null);
+		args.splice(3, 0, args[3].easing || null);
+		args.splice(4, 0, args[4].complete || null);
+		args.splice(5, 0, args[5].step || null);
+
+	} else {
+
+		if (args[2] === undefined) {
+			// If object is the last argument
+			args.splice(2, 0, null);
+			args.splice(3, 0, null);
+			args.splice(4, 0, null);
+		} else if (isFunction(args[2])) {
+			// If callback comes after object
+			args.splice(2, 0, null);
+			args.splice(3, 0, null);
+		}
+		if (args[3] === undefined) {
+			// If duration is the last argument
+			args[3] = null;
+			args.splice(4, 0, null);
+		} else if (isFunction(args[3])) {
+			// If callback comes after duration
+			args.splice(3, 0, null);
+		}
+
+	}
+
+	// Run callback function when animation completes
+	function complete($canvas, data, layer) {
+
+		return function () {
+
+			_showProps(layer);
+			_removeSubPropAliases(layer);
+
+			// Prevent multiple redraw loops
+			if (!data.animating || data.animated === layer) {
+				// Redraw layers on last frame
+				$canvas.drawLayers();
+			}
+
+			// Signify the end of an animation loop
+			layer._animating = false;
+			data.animating = false;
+			data.animated = null;
+
+			// If callback is defined
+			if (args[4]) {
+				// Run callback at the end of the animation
+				args[4].call($canvas[0], layer);
+			}
+
+			_triggerLayerEvent($canvas, data, layer, 'animateend');
+
+		};
+
+	}
+
+	// Redraw layers on every frame of the animation
+	function step($canvas, data, layer) {
+
+		return function (now, fx) {
+			var parts, propName, subPropName,
+				hidden = false;
+
+			// If animated property has been hidden
+			if (fx.prop[0] === '_') {
+				hidden = true;
+				// Unhide property temporarily
+				fx.prop = fx.prop.replace('_', '');
+				layer[fx.prop] = layer['_' + fx.prop];
+			}
+
+			// If animating property of sub-object
+			if (fx.prop.indexOf('.') !== -1) {
+				parts = fx.prop.split('.');
+				propName = parts[0];
+				subPropName = parts[1];
+				if (layer[propName]) {
+					layer[propName][subPropName] = fx.now;
+				}
+			}
+
+			// Throttle animation to improve efficiency
+			if (layer._pos !== fx.pos) {
+
+				layer._pos = fx.pos;
+
+				// Signify the start of an animation loop
+				if (!layer._animating && !data.animating) {
+					layer._animating = true;
+					data.animating = true;
+					data.animated = layer;
+				}
+
+				// Prevent multiple redraw loops
+				if (!data.animating || data.animated === layer) {
+					// Redraw layers for every frame
+					$canvas.drawLayers();
+				}
+
+			}
+
+			// If callback is defined
+			if (args[5]) {
+				// Run callback for each step of animation
+				args[5].call($canvas[0], now, fx, layer);
+			}
+
+			_triggerLayerEvent($canvas, data, layer, 'animate', fx);
+
+			// If property should be hidden during animation
+			if (hidden) {
+				// Hide property again
+				fx.prop = '_' + fx.prop;
+			}
+
+		};
+
+	}
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			data = _getCanvasData($canvases[e]);
+
+			// If a layer object was passed, use it the layer to be animated
+			layer = $canvas.getLayer(args[0]);
+
+			// Ignore layers that are functions
+			if (layer && layer._method !== $.fn.draw) {
+
+				// Do not modify original object
+				props = extendObject({}, args[1]);
+
+				props = _parseEndValues($canvases[e], layer, props);
+
+				// Bypass jQuery CSS Hooks for CSS properties (width, opacity, etc.)
+				_hideProps(props, true);
+				_hideProps(layer);
+
+				// Fix for jQuery's vendor prefixing support, which affects how width/height/opacity are animated
+				layer.style = css.propsObj;
+
+				// Animate layer
+				$(layer).animate(props, {
+					duration: args[2],
+					easing: ($.easing[args[3]] ? args[3] : null),
+					// When animation completes
+					complete: complete($canvas, data, layer),
+					// Redraw canvas for every animation frame
+					step: step($canvas, data, layer)
+				});
+				_triggerLayerEvent($canvas, data, layer, 'animatestart');
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+// Animate all layers in a layer group
+$.fn.animateLayerGroup = function animateLayerGroup(groupId) {
+	var $canvases = this, $canvas, e,
+		args = arraySlice.call(arguments, 0),
+		group, l;
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+		group = $canvas.getLayerGroup(groupId);
+		if (group) {
+
+			// Animate all layers in the group
+			for (l = 0; l < group.length; l += 1) {
+
+				// Replace first argument with layer
+				args[0] = group[l];
+				$canvas.animateLayer.apply($canvas, args);
+
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+// Delay layer animation by a given number of milliseconds
+$.fn.delayLayer = function delayLayer(layerId, duration) {
+	var $canvases = this, $canvas, e,
+		data, layer;
+	duration = duration || 0;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+		data = _getCanvasData($canvases[e]);
+		layer = $canvas.getLayer(layerId);
+		// If layer exists
+		if (layer) {
+			// Delay animation
+			$(layer).delay(duration);
+			_triggerLayerEvent($canvas, data, layer, 'delay');
+		}
+	}
+	return $canvases;
+};
+
+// Delay animation all layers in a layer group
+$.fn.delayLayerGroup = function delayLayerGroup(groupId, duration) {
+	var $canvases = this, $canvas, e,
+		group, layer, l;
+	duration = duration || 0;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+
+		group = $canvas.getLayerGroup(groupId);
+		// Delay all layers in the group
+		if (group) {
+
+			for (l = 0; l < group.length; l += 1) {
+				// Delay each layer in the group
+				layer = group[l];
+				$canvas.delayLayer(layer, duration);
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+// Stop layer animation
+$.fn.stopLayer = function stopLayer(layerId, clearQueue) {
+	var $canvases = this, $canvas, e,
+		data, layer;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+		data = _getCanvasData($canvases[e]);
+		layer = $canvas.getLayer(layerId);
+		// If layer exists
+		if (layer) {
+			// Stop animation
+			$(layer).stop(clearQueue);
+			_triggerLayerEvent($canvas, data, layer, 'stop');
+		}
+	}
+	return $canvases;
+};
+
+// Stop animation of all layers in a layer group
+$.fn.stopLayerGroup = function stopLayerGroup(groupId, clearQueue) {
+	var $canvases = this, $canvas, e,
+		group, layer, l;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		$canvas = $($canvases[e]);
+
+		group = $canvas.getLayerGroup(groupId);
+		// Stop all layers in the group
+		if (group) {
+
+			for (l = 0; l < group.length; l += 1) {
+				// Stop each layer in the group
+				layer = group[l];
+				$canvas.stopLayer(layer, clearQueue);
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+// Enable animation for color properties
+function _supportColorProps(props) {
+	var p;
+	for (p = 0; p < props.length; p += 1) {
+		$.fx.step[props[p]] = _animateColor;
+	}
+}
+
+// Enable animation for color properties
+_supportColorProps([
+	'color',
+	'backgroundColor',
+	'borderColor',
+	'borderTopColor',
+	'borderRightColor',
+	'borderBottomColor',
+	'borderLeftColor',
+	'fillStyle',
+	'outlineColor',
+	'strokeStyle',
+	'shadowColor'
+]);
+
+/* Event API */
+
+// Map standard mouse events to touch events
+maps.touchEvents = {
+	'mousedown': 'touchstart',
+	'mouseup': 'touchend',
+	'mousemove': 'touchmove'
+};
+// Map standard touch events to mouse events
+maps.mouseEvents = {
+	'touchstart': 'mousedown',
+	'touchend': 'mouseup',
+	'touchmove': 'mousemove'
+};
+
+// Convert mouse event name to a corresponding touch event name (if possible)
+function _getTouchEventName(eventName) {
+	// Detect touch event support
+	if (maps.touchEvents[eventName]) {
+		eventName = maps.touchEvents[eventName];
+	}
+	return eventName;
+}
+// Convert touch event name to a corresponding mouse event name
+function _getMouseEventName(eventName) {
+	if (maps.mouseEvents[eventName]) {
+		eventName = maps.mouseEvents[eventName];
+	}
+	return eventName;
+}
+
+// Bind event to jCanvas layer using standard jQuery events
+function _createEvent(eventName) {
+
+	jCanvas.events[eventName] = function ($canvas, data) {
+		var helperEventName, touchEventName, eventCache;
+
+		// Retrieve canvas's event cache
+		eventCache = data.event;
+
+		// Both mouseover/mouseout events will be managed by a single mousemove event
+		helperEventName = (eventName === 'mouseover' || eventName === 'mouseout') ? 'mousemove' : eventName;
+		touchEventName = _getTouchEventName(helperEventName);
+
+		function eventCallback(event) {
+			// Cache current mouse position and redraw layers
+			eventCache.x = event.offsetX;
+			eventCache.y = event.offsetY;
+			eventCache.type = helperEventName;
+			eventCache.event = event;
+			// Redraw layers on every trigger of the event; don't redraw if at
+			// least one layer is draggable and there are no layers with
+			// explicit mouseover/mouseout/mousemove events
+			if (event.type !== 'mousemove' || data.redrawOnMousemove || data.drag.dragging) {
+				$canvas.drawLayers({
+					resetFire: true
+				});
+			}
+			// Prevent default event behavior
+			event.preventDefault();
+		}
+
+		// Ensure the event is not bound more than once
+		if (!data.events[helperEventName]) {
+			// Bind one canvas event which handles all layer events of that type
+			if (touchEventName !== helperEventName) {
+				$canvas.bind(helperEventName + '.jCanvas ' + touchEventName + '.jCanvas', eventCallback);
+			} else {
+				$canvas.bind(helperEventName + '.jCanvas', eventCallback);
+			}
+			// Prevent this event from being bound twice
+			data.events[helperEventName] = true;
+		}
+	};
+}
+function _createEvents(eventNames) {
+	var n;
+	for (n = 0; n < eventNames.length; n += 1) {
+		_createEvent(eventNames[n]);
+	}
+}
+// Populate jCanvas events object with some standard events
+_createEvents([
+	'click',
+	'dblclick',
+	'mousedown',
+	'mouseup',
+	'mousemove',
+	'mouseover',
+	'mouseout',
+	'touchstart',
+	'touchmove',
+	'touchend',
+	'pointerdown',
+	'pointermove',
+	'pointerup',
+	'contextmenu'
+]);
+
+// Check if event fires when a drawing is drawn
+function _detectEvents(canvas, ctx, params) {
+	var layer, data, eventCache, intersects,
+		transforms, x, y, angle;
+
+	// Use the layer object stored by the given parameters object
+	layer = params._args;
+	// Canvas must have event bindings
+	if (layer) {
+
+		data = _getCanvasData(canvas);
+		eventCache = data.event;
+		if (eventCache.x !== null && eventCache.y !== null) {
+			// Respect user-defined pixel ratio
+			x = eventCache.x * data.pixelRatio;
+			y = eventCache.y * data.pixelRatio;
+			// Determine if the given coordinates are in the current path
+			intersects = ctx.isPointInPath(x, y) || (ctx.isPointInStroke && ctx.isPointInStroke(x, y));
+		}
+		transforms = data.transforms;
+
+		// Allow callback functions to retrieve the mouse coordinates
+		layer.eventX = eventCache.x;
+		layer.eventY = eventCache.y;
+		layer.event = eventCache.event;
+
+		// Adjust coordinates to match current canvas transformation
+
+		// Keep track of some transformation values
+		angle = data.transforms.rotate;
+		x = layer.eventX;
+		y = layer.eventY;
+
+		if (angle !== 0) {
+			// Rotate coordinates if coordinate space has been rotated
+			layer._eventX = (x * cos(-angle)) - (y * sin(-angle));
+			layer._eventY = (y * cos(-angle)) + (x * sin(-angle));
+		} else {
+			// Otherwise, no calculations need to be made
+			layer._eventX = x;
+			layer._eventY = y;
+		}
+
+		// Scale coordinates
+		layer._eventX /= transforms.scaleX;
+		layer._eventY /= transforms.scaleY;
+
+		// If layer intersects with cursor
+		if (intersects) {
+			// Add it to a list of layers that intersect with cursor
+			data.intersecting.push(layer);
+		}
+		layer.intersects = Boolean(intersects);
+	}
+}
+
+// Normalize offsetX and offsetY for all browsers
+$.event.fix = function (event) {
+	var offset, originalEvent, touches;
+
+	event = jQueryEventFix.call($.event, event);
+	originalEvent = event.originalEvent;
+
+	// originalEvent does not exist for manually-triggered events
+	if (originalEvent) {
+		originalEvent.preventDefault();//防止阻止ios屏幕滑动失效
+		touches = originalEvent.changedTouches;
+
+		// If offsetX and offsetY are not supported, define them
+		if (event.pageX !== undefined && event.offsetX === undefined) {
+			offset = $(event.currentTarget).offset();
+			try {
+				if (offset) {
+					event.offsetX = event.pageX - offset.left;
+					event.offsetY = event.pageY - offset.top;
+				}
+			} catch (error) {
+				// Fail silently
+			}
+		} else if (touches) {
+			try {
+				// Enable offsetX and offsetY for mobile devices
+				offset = $(event.currentTarget).offset();
+				if (offset) {
+					event.offsetX = touches[0].pageX - offset.left;
+					event.offsetY = touches[0].pageY - offset.top;
+				}
+			} catch (error) {
+				// Fail silently
+			}
+		}
+
+	}
+	return event;
+};
+
+/* Drawing API */
+
+// Map drawing names with their respective method names
+maps.drawings = {
+	'arc': 'drawArc',
+	'bezier': 'drawBezier',
+	'ellipse': 'drawEllipse',
+	'function': 'draw',
+	'image': 'drawImage',
+	'line': 'drawLine',
+	'path': 'drawPath',
+	'polygon': 'drawPolygon',
+	'slice': 'drawSlice',
+	'quadratic': 'drawQuadratic',
+	'rectangle': 'drawRect',
+	'text': 'drawText',
+	'vector': 'drawVector',
+	'save': 'saveCanvas',
+	'restore': 'restoreCanvas',
+	'rotate': 'rotateCanvas',
+	'scale': 'scaleCanvas',
+	'translate': 'translateCanvas'
+};
+
+// Draws on canvas using a function
+$.fn.draw = function draw(args) {
+	var $canvases = this, e, ctx,
+		params = new jCanvasObject(args);
+
+	// Draw using any other method
+	if (maps.drawings[params.type] && params.type !== 'function') {
+
+		$canvases[maps.drawings[params.type]](args);
+
+	} else {
+
+		for (e = 0; e < $canvases.length; e += 1) {
+			ctx = _getContext($canvases[e]);
+			if (ctx) {
+
+				params = new jCanvasObject(args);
+				_addLayer($canvases[e], params, args, draw);
+				if (params.visible) {
+
+					if (params.fn) {
+						// Call the given user-defined function
+						params.fn.call($canvases[e], ctx, params);
+					}
+
+				}
+
+			}
+		}
+
+	}
+	return $canvases;
+};
+
+// Clears canvas
+$.fn.clearCanvas = function clearCanvas(args) {
+	var $canvases = this, e, ctx,
+		params = new jCanvasObject(args);
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			if (params.width === null || params.height === null) {
+				// Clear entire canvas if width/height is not given
+
+				// Reset current transformation temporarily to ensure that the entire canvas is cleared
+				ctx.save();
+				ctx.setTransform(1, 0, 0, 1, 0, 0);
+				ctx.clearRect(0, 0, $canvases[e].width, $canvases[e].height);
+				ctx.restore();
+
+			} else {
+				// Otherwise, clear the defined section of the canvas
+
+				// Transform clear rectangle
+				_addLayer($canvases[e], params, args, clearCanvas);
+				_transformShape($canvases[e], ctx, params, params.width, params.height);
+				ctx.clearRect(params.x - (params.width / 2), params.y - (params.height / 2), params.width, params.height);
+				// Restore previous transformation
+				_restoreTransform(ctx, params);
+
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+/* Transformation API */
+
+// Restores canvas
+$.fn.saveCanvas = function saveCanvas(args) {
+	var $canvases = this, e, ctx,
+		params, data, i;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			data = _getCanvasData($canvases[e]);
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, saveCanvas);
+
+			// Restore a number of times using the given count
+			for (i = 0; i < params.count; i += 1) {
+				_saveCanvas(ctx, data);
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+// Restores canvas
+$.fn.restoreCanvas = function restoreCanvas(args) {
+	var $canvases = this, e, ctx,
+		params, data, i;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			data = _getCanvasData($canvases[e]);
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, restoreCanvas);
+
+			// Restore a number of times using the given count
+			for (i = 0; i < params.count; i += 1) {
+				_restoreCanvas(ctx, data);
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+// Rotates canvas (internal)
+function _rotateCanvas(ctx, params, transforms) {
+
+	// Get conversion factor for radians
+	params._toRad = (params.inDegrees ? (PI / 180) : 1);
+
+	// Rotate canvas using shape as center of rotation
+	ctx.translate(params.x, params.y);
+	ctx.rotate(params.rotate * params._toRad);
+	ctx.translate(-params.x, -params.y);
+
+	// If transformation data was given
+	if (transforms) {
+		// Update transformation data
+		transforms.rotate += (params.rotate * params._toRad);
+	}
+}
+
+// Scales canvas (internal)
+function _scaleCanvas(ctx, params, transforms) {
+
+	// Scale both the x- and y- axis using the 'scale' property
+	if (params.scale !== 1) {
+		params.scaleX = params.scaleY = params.scale;
+	}
+
+	// Scale canvas using shape as center of rotation
+	ctx.translate(params.x, params.y);
+	ctx.scale(params.scaleX, params.scaleY);
+	ctx.translate(-params.x, -params.y);
+
+	// If transformation data was given
+	if (transforms) {
+		// Update transformation data
+		transforms.scaleX *= params.scaleX;
+		transforms.scaleY *= params.scaleY;
+	}
+}
+
+// Translates canvas (internal)
+function _translateCanvas(ctx, params, transforms) {
+
+	// Translate both the x- and y-axis using the 'translate' property
+	if (params.translate) {
+		params.translateX = params.translateY = params.translate;
+	}
+
+	// Translate canvas
+	ctx.translate(params.translateX, params.translateY);
+
+	// If transformation data was given
+	if (transforms) {
+		// Update transformation data
+		transforms.translateX += params.translateX;
+		transforms.translateY += params.translateY;
+	}
+}
+
+// Rotates canvas
+$.fn.rotateCanvas = function rotateCanvas(args) {
+	var $canvases = this, e, ctx,
+		params, data;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			data = _getCanvasData($canvases[e]);
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, rotateCanvas);
+
+			// Autosave transformation state by default
+			if (params.autosave) {
+				// Automatically save transformation state by default
+				_saveCanvas(ctx, data);
+			}
+			_rotateCanvas(ctx, params, data.transforms);
+		}
+
+	}
+	return $canvases;
+};
+
+// Scales canvas
+$.fn.scaleCanvas = function scaleCanvas(args) {
+	var $canvases = this, e, ctx,
+		params, data;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			data = _getCanvasData($canvases[e]);
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, scaleCanvas);
+
+			// Autosave transformation state by default
+			if (params.autosave) {
+				// Automatically save transformation state by default
+				_saveCanvas(ctx, data);
+			}
+			_scaleCanvas(ctx, params, data.transforms);
+
+		}
+	}
+	return $canvases;
+};
+
+// Translates canvas
+$.fn.translateCanvas = function translateCanvas(args) {
+	var $canvases = this, e, ctx,
+		params, data;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			data = _getCanvasData($canvases[e]);
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, translateCanvas);
+
+			// Autosave transformation state by default
+			if (params.autosave) {
+				// Automatically save transformation state by default
+				_saveCanvas(ctx, data);
+			}
+			_translateCanvas(ctx, params, data.transforms);
+
+		}
+	}
+	return $canvases;
+};
+
+/* Shape API */
+
+// Draws rectangle
+$.fn.drawRect = function drawRect(args) {
+	var $canvases = this, e, ctx,
+		params,
+		x1, y1,
+		x2, y2,
+		r, temp;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, drawRect);
+			if (params.visible) {
+
+				_transformShape($canvases[e], ctx, params, params.width, params.height);
+				_setGlobalProps($canvases[e], ctx, params);
+
+				ctx.beginPath();
+				if (params.width && params.height) {
+					x1 = params.x - (params.width / 2);
+					y1 = params.y - (params.height / 2);
+					r = abs(params.cornerRadius);
+					// If corner radius is defined and is not zero
+					if (r) {
+						// Draw rectangle with rounded corners if cornerRadius is defined
+
+						x2 = params.x + (params.width / 2);
+						y2 = params.y + (params.height / 2);
+
+						// Handle negative width
+						if (params.width < 0) {
+							temp = x1;
+							x1 = x2;
+							x2 = temp;
+						}
+						// Handle negative height
+						if (params.height < 0) {
+							temp = y1;
+							y1 = y2;
+							y2 = temp;
+						}
+
+						// Prevent over-rounded corners
+						if ((x2 - x1) - (2 * r) < 0) {
+							r = (x2 - x1) / 2;
+						}
+						if ((y2 - y1) - (2 * r) < 0) {
+							r = (y2 - y1) / 2;
+						}
+
+						// Draw rectangle
+						ctx.moveTo(x1 + r, y1);
+						ctx.lineTo(x2 - r, y1);
+						ctx.arc(x2 - r, y1 + r, r, 3 * PI / 2, PI * 2, false);
+						ctx.lineTo(x2, y2 - r);
+						ctx.arc(x2 - r, y2 - r, r, 0, PI / 2, false);
+						ctx.lineTo(x1 + r, y2);
+						ctx.arc(x1 + r, y2 - r, r, PI / 2, PI, false);
+						ctx.lineTo(x1, y1 + r);
+						ctx.arc(x1 + r, y1 + r, r, PI, 3 * PI / 2, false);
+						// Always close path
+						params.closed = true;
+
+					} else {
+
+						// Otherwise, draw rectangle with square corners
+						ctx.rect(x1, y1, params.width, params.height);
+
+					}
+				}
+				// Check for jCanvas events
+				_detectEvents($canvases[e], ctx, params);
+				// Close rectangle path
+				_closePath($canvases[e], ctx, params);
+			}
+		}
+	}
+	return $canvases;
+};
+
+// Retrieves a coterminal angle between 0 and 2pi for the given angle
+function _getCoterminal(angle) {
+	while (angle < 0) {
+		angle += (2 * PI);
+	}
+	return angle;
+}
+
+// Retrieves the x-coordinate for the given angle in a circle
+function _getArcX(params, angle) {
+	return params.x + (params.radius * cos(angle));
+}
+// Retrieves the y-coordinate for the given angle in a circle
+function _getArcY(params, angle) {
+	return params.y + (params.radius * sin(angle));
+}
+
+// Draws arc (internal)
+function _drawArc(canvas, ctx, params, path) {
+	var x1, y1, x2, y2,
+		x3, y3, x4, y4,
+		offsetX, offsetY,
+		diff;
+
+	// Determine offset from dragging
+	if (params === path) {
+		offsetX = 0;
+		offsetY = 0;
+	} else {
+		offsetX = params.x;
+		offsetY = params.y;
+	}
+
+	// Convert default end angle to radians
+	if (!path.inDegrees && path.end === 360) {
+		path.end = PI * 2;
+	}
+
+	// Convert angles to radians
+	path.start *= params._toRad;
+	path.end *= params._toRad;
+	// Consider 0deg due north of arc
+	path.start -= (PI / 2);
+	path.end -= (PI / 2);
+
+	// Ensure arrows are pointed correctly for CCW arcs
+	diff = PI / 180;
+	if (path.ccw) {
+		diff *= -1;
+	}
+
+	// Calculate coordinates for start arrow
+	x1 = _getArcX(path, path.start + diff);
+	y1 = _getArcY(path, path.start + diff);
+	x2 = _getArcX(path, path.start);
+	y2 = _getArcY(path, path.start);
+
+	_addStartArrow(
+		canvas, ctx,
+		params, path,
+		x1, y1,
+		x2, y2
+	);
+
+	// Draw arc
+	ctx.arc(path.x + offsetX, path.y + offsetY, path.radius, path.start, path.end, path.ccw);
+
+	// Calculate coordinates for end arrow
+	x3 = _getArcX(path, path.end + diff);
+	y3 = _getArcY(path, path.end + diff);
+	x4 = _getArcX(path, path.end);
+	y4 = _getArcY(path, path.end);
+
+	_addEndArrow(
+		canvas, ctx,
+		params, path,
+		x4, y4,
+		x3, y3
+	);
+}
+
+// Draws arc or circle
+$.fn.drawArc = function drawArc(args) {
+	var $canvases = this, e, ctx,
+		params;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, drawArc);
+			if (params.visible) {
+
+				_transformShape($canvases[e], ctx, params, params.radius * 2);
+				_setGlobalProps($canvases[e], ctx, params);
+
+				ctx.beginPath();
+				_drawArc($canvases[e], ctx, params, params);
+				// Check for jCanvas events
+				_detectEvents($canvases[e], ctx, params);
+				// Optionally close path
+				_closePath($canvases[e], ctx, params);
+
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+// Draws ellipse
+$.fn.drawEllipse = function drawEllipse(args) {
+	var $canvases = this, e, ctx,
+		params,
+		controlW,
+		controlH;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, drawEllipse);
+			if (params.visible) {
+
+				_transformShape($canvases[e], ctx, params, params.width, params.height);
+				_setGlobalProps($canvases[e], ctx, params);
+
+				// Calculate control width and height
+				controlW = params.width * (4 / 3);
+				controlH = params.height;
+
+				// Create ellipse using curves
+				ctx.beginPath();
+				ctx.moveTo(params.x, params.y - (controlH / 2));
+				// Left side
+				ctx.bezierCurveTo(params.x - (controlW / 2), params.y - (controlH / 2), params.x - (controlW / 2), params.y + (controlH / 2), params.x, params.y + (controlH / 2));
+				// Right side
+				ctx.bezierCurveTo(params.x + (controlW / 2), params.y + (controlH / 2), params.x + (controlW / 2), params.y - (controlH / 2), params.x, params.y - (controlH / 2));
+				// Check for jCanvas events
+				_detectEvents($canvases[e], ctx, params);
+				// Always close path
+				params.closed = true;
+				_closePath($canvases[e], ctx, params);
+
+			}
+		}
+	}
+	return $canvases;
+};
+
+// Draws a regular (equal-angled) polygon
+$.fn.drawPolygon = function drawPolygon(args) {
+	var $canvases = this, e, ctx,
+		params,
+		theta, dtheta, hdtheta,
+		apothem,
+		x, y, i;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, drawPolygon);
+			if (params.visible) {
+
+				_transformShape($canvases[e], ctx, params, params.radius * 2);
+				_setGlobalProps($canvases[e], ctx, params);
+
+				// Polygon's central angle
+				dtheta = (2 * PI) / params.sides;
+				// Half of dtheta
+				hdtheta = dtheta / 2;
+				// Polygon's starting angle
+				theta = hdtheta + (PI / 2);
+				// Distance from polygon's center to the middle of its side
+				apothem = params.radius * cos(hdtheta);
+
+				// Calculate path and draw
+				ctx.beginPath();
+				for (i = 0; i < params.sides; i += 1) {
+
+					// Draw side of polygon
+					x = params.x + (params.radius * cos(theta));
+					y = params.y + (params.radius * sin(theta));
+
+					// Plot point on polygon
+					ctx.lineTo(x, y);
+
+					// Project side if chosen
+					if (params.concavity) {
+						// Sides are projected from the polygon's apothem
+						x = params.x + ((apothem + (-apothem * params.concavity)) * cos(theta + hdtheta));
+						y = params.y + ((apothem + (-apothem * params.concavity)) * sin(theta + hdtheta));
+						ctx.lineTo(x, y);
+					}
+
+					// Increment theta by delta theta
+					theta += dtheta;
+
+				}
+				// Check for jCanvas events
+				_detectEvents($canvases[e], ctx, params);
+				// Always close path
+				params.closed = true;
+				_closePath($canvases[e], ctx, params);
+
+			}
+		}
+	}
+	return $canvases;
+};
+
+// Draws pie-shaped slice
+$.fn.drawSlice = function drawSlice(args) {
+	var $canvases = this, e, ctx,
+		params,
+		angle, dx, dy;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, drawSlice);
+			if (params.visible) {
+
+				_transformShape($canvases[e], ctx, params, params.radius * 2);
+				_setGlobalProps($canvases[e], ctx, params);
+
+				// Perform extra calculations
+
+				// Convert angles to radians
+				params.start *= params._toRad;
+				params.end *= params._toRad;
+				// Consider 0deg at north of arc
+				params.start -= (PI / 2);
+				params.end -= (PI / 2);
+
+				// Find positive equivalents of angles
+				params.start = _getCoterminal(params.start);
+				params.end = _getCoterminal(params.end);
+				// Ensure start angle is less than end angle
+				if (params.end < params.start) {
+					params.end += (2 * PI);
+				}
+
+				// Calculate angular position of slice
+				angle = ((params.start + params.end) / 2);
+
+				// Calculate ratios for slice's angle
+				dx = (params.radius * params.spread * cos(angle));
+				dy = (params.radius * params.spread * sin(angle));
+
+				// Adjust position of slice
+				params.x += dx;
+				params.y += dy;
+
+				// Draw slice
+				ctx.beginPath();
+				ctx.arc(params.x, params.y, params.radius, params.start, params.end, params.ccw);
+				ctx.lineTo(params.x, params.y);
+				// Check for jCanvas events
+				_detectEvents($canvases[e], ctx, params);
+				// Always close path
+				params.closed = true;
+				_closePath($canvases[e], ctx, params);
+
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+/* Path API */
+
+// Adds arrow to path using the given properties
+function _addArrow(canvas, ctx, params, path, x1, y1, x2, y2) {
+	var leftX, leftY,
+		rightX, rightY,
+		offsetX, offsetY,
+		angle;
+
+	// If arrow radius is given and path is not closed
+	if (path.arrowRadius && !params.closed) {
+
+		// Calculate angle
+		angle = atan2((y2 - y1), (x2 - x1));
+		// Adjust angle correctly
+		angle -= PI;
+		// Calculate offset to place arrow at edge of path
+		offsetX = (params.strokeWidth * cos(angle));
+		offsetY = (params.strokeWidth * sin(angle));
+
+		// Calculate coordinates for left half of arrow
+		leftX = x2 + (path.arrowRadius * cos(angle + (path.arrowAngle / 2)));
+		leftY = y2 + (path.arrowRadius * sin(angle + (path.arrowAngle / 2)));
+		// Calculate coordinates for right half of arrow
+		rightX = x2 + (path.arrowRadius * cos(angle - (path.arrowAngle / 2)));
+		rightY = y2 + (path.arrowRadius * sin(angle - (path.arrowAngle / 2)));
+
+		// Draw left half of arrow
+		ctx.moveTo(leftX - offsetX, leftY - offsetY);
+		ctx.lineTo(x2 - offsetX, y2 - offsetY);
+		// Draw right half of arrow
+		ctx.lineTo(rightX - offsetX, rightY - offsetY);
+
+		// Visually connect arrow to path
+		ctx.moveTo(x2 - offsetX, y2 - offsetY);
+		ctx.lineTo(x2 + offsetX, y2 + offsetY);
+		// Move back to end of path
+		ctx.moveTo(x2, y2);
+
+	}
+}
+
+// Optionally adds arrow to start of path
+function _addStartArrow(canvas, ctx, params, path, x1, y1, x2, y2) {
+	if (!path._arrowAngleConverted) {
+		path.arrowAngle *= params._toRad;
+		path._arrowAngleConverted = true;
+	}
+	if (path.startArrow) {
+		_addArrow(canvas, ctx, params, path, x1, y1, x2, y2);
+	}
+}
+
+// Optionally adds arrow to end of path
+function _addEndArrow(canvas, ctx, params, path, x1, y1, x2, y2) {
+	if (!path._arrowAngleConverted) {
+		path.arrowAngle *= params._toRad;
+		path._arrowAngleConverted = true;
+	}
+	if (path.endArrow) {
+		_addArrow(canvas, ctx, params, path, x1, y1, x2, y2);
+	}
+}
+
+// Draws line (internal)
+function _drawLine(canvas, ctx, params, path) {
+	var l,
+		lx, ly;
+	l = 2;
+	_addStartArrow(
+		canvas, ctx,
+		params, path,
+		path.x2 + params.x,
+		path.y2 + params.y,
+		path.x1 + params.x,
+		path.y1 + params.y
+	);
+	if (path.x1 !== undefined && path.y1 !== undefined) {
+		ctx.moveTo(path.x1 + params.x, path.y1 + params.y);
+	}
+	while (true) {
+		// Calculate next coordinates
+		lx = path['x' + l];
+		ly = path['y' + l];
+		// If coordinates are given
+		if (lx !== undefined && ly !== undefined) {
+			// Draw next line
+			ctx.lineTo(lx + params.x, ly + params.y);
+			l += 1;
+		} else {
+			// Otherwise, stop drawing
+			break;
+		}
+	}
+	l -= 1;
+	// Optionally add arrows to path
+	_addEndArrow(
+		canvas, ctx,
+		params,
+		path,
+		path['x' + (l - 1)] + params.x,
+		path['y' + (l - 1)] + params.y,
+		path['x' + l] + params.x,
+		path['y' + l] + params.y
+	);
+}
+
+// Draws line
+$.fn.drawLine = function drawLine(args) {
+	var $canvases = this, e, ctx,
+		params;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, drawLine);
+			if (params.visible) {
+
+				_transformShape($canvases[e], ctx, params);
+				_setGlobalProps($canvases[e], ctx, params);
+
+				// Draw each point
+				ctx.beginPath();
+				_drawLine($canvases[e], ctx, params, params);
+				// Check for jCanvas events
+				_detectEvents($canvases[e], ctx, params);
+				// Optionally close path
+				_closePath($canvases[e], ctx, params);
+
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+// Draws quadratic curve (internal)
+function _drawQuadratic(canvas, ctx, params, path) {
+	var l,
+		lx, ly,
+		lcx, lcy;
+
+	l = 2;
+
+	_addStartArrow(
+		canvas,
+		ctx,
+		params,
+		path,
+		path.cx1 + params.x,
+		path.cy1 + params.y,
+		path.x1 + params.x,
+		path.y1 + params.y
+	);
+
+	if (path.x1 !== undefined && path.y1 !== undefined) {
+		ctx.moveTo(path.x1 + params.x, path.y1 + params.y);
+	}
+	while (true) {
+		// Calculate next coordinates
+		lx = path['x' + l];
+		ly = path['y' + l];
+		lcx = path['cx' + (l - 1)];
+		lcy = path['cy' + (l - 1)];
+		// If coordinates are given
+		if (lx !== undefined && ly !== undefined && lcx !== undefined && lcy !== undefined) {
+			// Draw next curve
+			ctx.quadraticCurveTo(lcx + params.x, lcy + params.y, lx + params.x, ly + params.y);
+			l += 1;
+		} else {
+			// Otherwise, stop drawing
+			break;
+		}
+	}
+	l -= 1;
+	_addEndArrow(
+		canvas,
+		ctx,
+		params,
+		path,
+		path['cx' + (l - 1)] + params.x,
+		path['cy' + (l - 1)] + params.y,
+		path['x' + l] + params.x,
+		path['y' + l] + params.y
+	);
+}
+
+// Draws quadratic curve
+$.fn.drawQuadratic = function drawQuadratic(args) {
+	var $canvases = this, e, ctx,
+		params;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, drawQuadratic);
+			if (params.visible) {
+
+				_transformShape($canvases[e], ctx, params);
+				_setGlobalProps($canvases[e], ctx, params);
+
+				// Draw each point
+				ctx.beginPath();
+				_drawQuadratic($canvases[e], ctx, params, params);
+				// Check for jCanvas events
+				_detectEvents($canvases[e], ctx, params);
+				// Optionally close path
+				_closePath($canvases[e], ctx, params);
+
+			}
+		}
+	}
+	return $canvases;
+};
+
+// Draws Bezier curve (internal)
+function _drawBezier(canvas, ctx, params, path) {
+	var l, lc,
+		lx, ly,
+		lcx1, lcy1,
+		lcx2, lcy2;
+
+	l = 2;
+	lc = 1;
+
+	_addStartArrow(
+		canvas,
+		ctx,
+		params,
+		path,
+		path.cx1 + params.x,
+		path.cy1 + params.y,
+		path.x1 + params.x,
+		path.y1 + params.y
+	);
+
+	if (path.x1 !== undefined && path.y1 !== undefined) {
+		ctx.moveTo(path.x1 + params.x, path.y1 + params.y);
+	}
+	while (true) {
+		// Calculate next coordinates
+		lx = path['x' + l];
+		ly = path['y' + l];
+		lcx1 = path['cx' + lc];
+		lcy1 = path['cy' + lc];
+		lcx2 = path['cx' + (lc + 1)];
+		lcy2 = path['cy' + (lc + 1)];
+		// If next coordinates are given
+		if (lx !== undefined && ly !== undefined && lcx1 !== undefined && lcy1 !== undefined && lcx2 !== undefined && lcy2 !== undefined) {
+			// Draw next curve
+			ctx.bezierCurveTo(lcx1 + params.x, lcy1 + params.y, lcx2 + params.x, lcy2 + params.y, lx + params.x, ly + params.y);
+			l += 1;
+			lc += 2;
+		} else {
+			// Otherwise, stop drawing
+			break;
+		}
+	}
+	l -= 1;
+	lc -= 2;
+	_addEndArrow(
+		canvas,
+		ctx,
+		params,
+		path,
+		path['cx' + (lc + 1)] + params.x,
+		path['cy' + (lc + 1)] + params.y,
+		path['x' + l] + params.x,
+		path['y' + l] + params.y
+	);
+}
+
+// Draws Bezier curve
+$.fn.drawBezier = function drawBezier(args) {
+	var $canvases = this, e, ctx,
+		params;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, drawBezier);
+			if (params.visible) {
+
+				_transformShape($canvases[e], ctx, params);
+				_setGlobalProps($canvases[e], ctx, params);
+
+				// Draw each point
+				ctx.beginPath();
+				_drawBezier($canvases[e], ctx, params, params);
+				// Check for jCanvas events
+				_detectEvents($canvases[e], ctx, params);
+				// Optionally close path
+				_closePath($canvases[e], ctx, params);
+
+			}
+		}
+	}
+	return $canvases;
+};
+
+// Retrieves the x-coordinate for the given vector angle and length
+function _getVectorX(params, angle, length) {
+	angle *= params._toRad;
+	angle -= (PI / 2);
+	return (length * cos(angle));
+}
+// Retrieves the y-coordinate for the given vector angle and length
+function _getVectorY(params, angle, length) {
+	angle *= params._toRad;
+	angle -= (PI / 2);
+	return (length * sin(angle));
+}
+
+// Draws vector (internal) #2
+function _drawVector(canvas, ctx, params, path) {
+	var l, angle, length,
+		offsetX, offsetY,
+		x, y,
+		x3, y3,
+		x4, y4;
+
+	// Determine offset from dragging
+	if (params === path) {
+		offsetX = 0;
+		offsetY = 0;
+	} else {
+		offsetX = params.x;
+		offsetY = params.y;
+	}
+
+	l = 1;
+	x = x3 = x4 = path.x + offsetX;
+	y = y3 = y4 = path.y + offsetY;
+
+	_addStartArrow(
+		canvas, ctx,
+		params, path,
+		x + _getVectorX(params, path.a1, path.l1),
+		y + _getVectorY(params, path.a1, path.l1),
+		x,
+		y
+	);
+
+	// The vector starts at the given (x, y) coordinates
+	if (path.x !== undefined && path.y !== undefined) {
+		ctx.moveTo(x, y);
+	}
+	while (true) {
+
+		angle = path['a' + l];
+		length = path['l' + l];
+
+		if (angle !== undefined && length !== undefined) {
+			// Convert the angle to radians with 0 degrees starting at north
+			// Keep track of last two coordinates
+			x3 = x4;
+			y3 = y4;
+			// Compute (x, y) coordinates from angle and length
+			x4 += _getVectorX(params, angle, length);
+			y4 += _getVectorY(params, angle, length);
+			ctx.lineTo(x4, y4);
+			l += 1;
+		} else {
+			// Otherwise, stop drawing
+			break;
+		}
+
+	}
+	_addEndArrow(
+		canvas, ctx,
+		params, path,
+		x3, y3,
+		x4, y4
+	);
+}
+
+// Draws vector
+$.fn.drawVector = function drawVector(args) {
+	var $canvases = this, e, ctx,
+		params;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, drawVector);
+			if (params.visible) {
+
+				_transformShape($canvases[e], ctx, params);
+				_setGlobalProps($canvases[e], ctx, params);
+
+				// Draw each point
+				ctx.beginPath();
+				_drawVector($canvases[e], ctx, params, params);
+				// Check for jCanvas events
+				_detectEvents($canvases[e], ctx, params);
+				// Optionally close path
+				_closePath($canvases[e], ctx, params);
+
+			}
+		}
+	}
+	return $canvases;
+};
+
+// Draws a path consisting of one or more subpaths
+$.fn.drawPath = function drawPath(args) {
+	var $canvases = this, e, ctx,
+		params,
+		l, lp;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, drawPath);
+			if (params.visible) {
+
+				_transformShape($canvases[e], ctx, params);
+				_setGlobalProps($canvases[e], ctx, params);
+
+				ctx.beginPath();
+				l = 1;
+				while (true) {
+					lp = params['p' + l];
+					if (lp !== undefined) {
+						lp = new jCanvasObject(lp);
+						if (lp.type === 'line') {
+							_drawLine($canvases[e], ctx, params, lp);
+						} else if (lp.type === 'quadratic') {
+							_drawQuadratic($canvases[e], ctx, params, lp);
+						} else if (lp.type === 'bezier') {
+							_drawBezier($canvases[e], ctx, params, lp);
+						} else if (lp.type === 'vector') {
+							_drawVector($canvases[e], ctx, params, lp);
+						} else if (lp.type === 'arc') {
+							_drawArc($canvases[e], ctx, params, lp);
+						}
+						l += 1;
+					} else {
+						break;
+					}
+				}
+
+				// Check for jCanvas events
+				_detectEvents($canvases[e], ctx, params);
+				// Optionally close path
+				_closePath($canvases[e], ctx, params);
+
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+/* Text API */
+
+// Calculates font string and set it as the canvas font
+function _setCanvasFont(canvas, ctx, params) {
+	// Otherwise, use the given font attributes
+	if (!isNaN(Number(params.fontSize))) {
+		// Give font size units if it doesn't have any
+		params.fontSize += 'px';
+	}
+	// Set font using given font properties
+	ctx.font = params.fontStyle + ' ' + params.fontSize + ' ' + params.fontFamily;
+}
+
+// Measures canvas text
+function _measureText(canvas, ctx, params, lines) {
+	var originalSize, curWidth, l,
+		propCache = caches.propCache;
+
+	// Used cached width/height if possible
+	if (propCache.text === params.text && propCache.fontStyle === params.fontStyle && propCache.fontSize === params.fontSize && propCache.fontFamily === params.fontFamily && propCache.maxWidth === params.maxWidth && propCache.lineHeight === params.lineHeight) {
+
+		params.width = propCache.width;
+		params.height = propCache.height;
+
+	} else {
+		// Calculate text dimensions only once
+
+		// Calculate width of first line (for comparison)
+		params.width = ctx.measureText(lines[0]).width;
+
+		// Get width of longest line
+		for (l = 1; l < lines.length; l += 1) {
+
+			curWidth = ctx.measureText(lines[l]).width;
+			// Ensure text's width is the width of its longest line
+			if (curWidth > params.width) {
+				params.width = curWidth;
+			}
+
+		}
+
+		// Save original font size
+		originalSize = canvas.style.fontSize;
+		// Temporarily set canvas font size to retrieve size in pixels
+		canvas.style.fontSize = params.fontSize;
+		// Save text width and height in parameters object
+		params.height = parseFloat($.css(canvas, 'fontSize')) * lines.length * params.lineHeight;
+		// Reset font size to original size
+		canvas.style.fontSize = originalSize;
+	}
+}
+
+// Wraps a string of text within a defined width
+function _wrapText(ctx, params) {
+	var allText = String(params.text),
+		// Maximum line width (optional)
+		maxWidth = params.maxWidth,
+		// Lines created by manual line breaks (\n)
+		manualLines = allText.split('\n'),
+		// All lines created manually and by wrapping
+		allLines = [],
+		// Other variables
+		lines, line, l,
+		text, words, w;
+
+	// Loop through manually-broken lines
+	for (l = 0; l < manualLines.length; l += 1) {
+
+		text = manualLines[l];
+		// Split line into list of words
+		words = text.split(' ');
+		lines = [];
+		line = '';
+
+		// If text is short enough initially
+		// Or, if the text consists of only one word
+		if (words.length === 1 || ctx.measureText(text).width < maxWidth) {
+
+			// No need to wrap text
+			lines = [text];
+
+		} else {
+
+			// Wrap lines
+			for (w = 0; w < words.length; w += 1) {
+
+				// Once line gets too wide, push word to next line
+				if (ctx.measureText(line + words[w]).width > maxWidth) {
+					// This check prevents empty lines from being created
+					if (line !== '') {
+						lines.push(line);
+					}
+					// Start new line and repeat process
+					line = '';
+				}
+				// Add words to line until the line is too wide
+				line += words[w];
+				// Do not add a space after the last word
+				if (w !== (words.length - 1)) {
+					line += ' ';
+				}
+			}
+			// The last word should always be pushed
+			lines.push(line);
+
+		}
+		// Remove extra space at the end of each line
+		allLines = allLines.concat(
+			lines
+			.join('\n')
+			.replace(/((\n))|($)/gi, '$2')
+			.split('\n')
+		);
+
+	}
+
+	return allLines;
+}
+
+// Draws text on canvas
+$.fn.drawText = function drawText(args) {
+	var $canvases = this, e, ctx,
+		params, layer,
+		lines, line, l,
+		fontSize, constantCloseness = 500,
+		nchars, chars, ch, c,
+		x, y;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			params = new jCanvasObject(args);
+			_addLayer($canvases[e], params, args, drawText);
+			if (params.visible) {
+
+				// Set text-specific properties
+				ctx.textBaseline = params.baseline;
+				ctx.textAlign = params.align;
+
+				// Set canvas font using given properties
+				_setCanvasFont($canvases[e], ctx, params);
+
+				if (params.maxWidth !== null) {
+					// Wrap text using an internal function
+					lines = _wrapText(ctx, params);
+				} else {
+					// Convert string of text to list of lines
+					lines = params.text
+					.toString()
+					.split('\n');
+				}
+
+				// Calculate text's width and height
+				_measureText($canvases[e], ctx, params, lines);
+
+				// If text is a layer
+				if (layer) {
+					// Copy calculated width/height to layer object
+					layer.width = params.width;
+					layer.height = params.height;
+				}
+
+				_transformShape($canvases[e], ctx, params, params.width, params.height);
+				_setGlobalProps($canvases[e], ctx, params);
+
+				// Adjust text position to accomodate different horizontal alignments
+				x = params.x;
+				if (params.align === 'left') {
+					if (params.respectAlign) {
+						// Realign text to the left if chosen
+						params.x += params.width / 2;
+					} else {
+						// Center text block by default
+						x -= params.width / 2;
+					}
+				} else if (params.align === 'right') {
+					if (params.respectAlign) {
+						// Realign text to the right if chosen
+						params.x -= params.width / 2;
+					} else {
+						// Center text block by default
+						x += params.width / 2;
+					}
+				}
+
+				if (params.radius) {
+
+					fontSize = parseFloat(params.fontSize);
+
+					// Greater values move clockwise
+					if (params.letterSpacing === null) {
+						params.letterSpacing = fontSize / constantCloseness;
+					}
+
+					// Loop through each line of text
+					for (l = 0; l < lines.length; l += 1) {
+						ctx.save();
+						ctx.translate(params.x, params.y);
+						line = lines[l];
+						if (params.flipArcText) {
+							chars = line.split('');
+							chars.reverse();
+							line = chars.join('');
+						}
+						nchars = line.length;
+						ctx.rotate(-(PI * params.letterSpacing * (nchars - 1)) / 2);
+						// Loop through characters on each line
+						for (c = 0; c < nchars; c += 1) {
+							ch = line[c];
+							// If character is not the first character
+							if (c !== 0) {
+								// Rotate character onto arc
+								ctx.rotate(PI * params.letterSpacing);
+							}
+							ctx.save();
+							ctx.translate(0, -params.radius);
+							if (params.flipArcText) {
+								ctx.scale(-1, -1);
+							}
+							ctx.fillText(ch, 0, 0);
+							// Prevent extra shadow created by stroke (but only when fill is present)
+							if (params.fillStyle !== 'transparent') {
+								ctx.shadowColor = 'transparent';
+							}
+							if (params.strokeWidth !== 0) {
+								// Only stroke if the stroke is not 0
+								ctx.strokeText(ch, 0, 0);
+							}
+							ctx.restore();
+						}
+						params.radius -= fontSize;
+						params.letterSpacing += fontSize / (constantCloseness * 2 * PI);
+						ctx.restore();
+					}
+
+				} else {
+
+					// Draw each line of text separately
+					for (l = 0; l < lines.length; l += 1) {
+						line = lines[l];
+						// Add line offset to center point, but subtract some to center everything
+						y = params.y + (l * params.height / lines.length) - (((lines.length - 1) * params.height / lines.length) / 2);
+
+						ctx.shadowColor = params.shadowColor;
+
+						// Fill & stroke text
+						ctx.fillText(line, x, y);
+						// Prevent extra shadow created by stroke (but only when fill is present)
+						if (params.fillStyle !== 'transparent') {
+							ctx.shadowColor = 'transparent';
+						}
+						if (params.strokeWidth !== 0) {
+							// Only stroke if the stroke is not 0
+							ctx.strokeText(line, x, y);
+						}
+
+					}
+
+				}
+
+				// Adjust bounding box according to text baseline
+				y = 0;
+				if (params.baseline === 'top') {
+					y += params.height / 2;
+				} else if (params.baseline === 'bottom') {
+					y -= params.height / 2;
+				}
+
+				// Detect jCanvas events
+				if (params._event) {
+					ctx.beginPath();
+					ctx.rect(
+						params.x - (params.width / 2),
+						params.y - (params.height / 2) + y,
+						params.width,
+						params.height
+					);
+					_detectEvents($canvases[e], ctx, params);
+					// Close path and configure masking
+					ctx.closePath();
+				}
+				_restoreTransform(ctx, params);
+
+			}
+		}
+	}
+	// Cache jCanvas parameters object for efficiency
+	caches.propCache = params;
+	return $canvases;
+};
+
+// Measures text width/height using the given parameters
+$.fn.measureText = function measureText(args) {
+	var $canvases = this, ctx,
+		params, lines;
+
+	// Attempt to retrieve layer
+	params = $canvases.getLayer(args);
+	// If layer does not exist or if returned object is not a jCanvas layer
+	if (!params || (params && !params._layer)) {
+		params = new jCanvasObject(args);
+	}
+
+	ctx = _getContext($canvases[0]);
+	if (ctx) {
+
+		// Set canvas font using given properties
+		_setCanvasFont($canvases[0], ctx, params);
+		// Calculate width and height of text
+		lines = _wrapText(ctx, params);
+		_measureText($canvases[0], ctx, params, lines);
+
+
+	}
+
+	return params;
+};
+
+/* Image API */
+
+// Draws image on canvas
+$.fn.drawImage = function drawImage(args) {
+	var $canvases = this, canvas, e, ctx, data,
+		params, layer,
+		img, imgCtx, source,
+		imageCache = caches.imageCache;
+
+	// Draw image function
+	function draw(canvas, ctx, data, params, layer) {
+
+		// If width and sWidth are not defined, use image width
+		if (params.width === null && params.sWidth === null) {
+			params.width = params.sWidth = img.width;
+		}
+		// If width and sHeight are not defined, use image height
+		if (params.height === null && params.sHeight === null) {
+			params.height = params.sHeight = img.height;
+		}
+
+		// Ensure image layer's width and height are accurate
+		if (layer) {
+			layer.width = params.width;
+			layer.height = params.height;
+		}
+
+		// Only crop image if all cropping properties are given
+		if (params.sWidth !== null && params.sHeight !== null && params.sx !== null && params.sy !== null) {
+
+			// If width is not defined, use the given sWidth
+			if (params.width === null) {
+				params.width = params.sWidth;
+			}
+			// If height is not defined, use the given sHeight
+			if (params.height === null) {
+				params.height = params.sHeight;
+			}
+
+			// Optionally crop from top-left corner of region
+			if (params.cropFromCenter) {
+				params.sx += params.sWidth / 2;
+				params.sy += params.sHeight / 2;
+			}
+
+			// Ensure cropped region does not escape image boundaries
+
+			// Top
+			if ((params.sy - (params.sHeight / 2)) < 0) {
+				params.sy = (params.sHeight / 2);
+			}
+			// Bottom
+			if ((params.sy + (params.sHeight / 2)) > img.height) {
+				params.sy = img.height - (params.sHeight / 2);
+			}
+			// Left
+			if ((params.sx - (params.sWidth / 2)) < 0) {
+				params.sx = (params.sWidth / 2);
+			}
+			// Right
+			if ((params.sx + (params.sWidth / 2)) > img.width) {
+				params.sx = img.width - (params.sWidth / 2);
+			}
+
+			_transformShape(canvas, ctx, params, params.width, params.height);
+			_setGlobalProps(canvas, ctx, params);
+
+			// Draw image
+			ctx.drawImage(
+				img,
+				params.sx - (params.sWidth / 2),
+				params.sy - (params.sHeight / 2),
+				params.sWidth,
+				params.sHeight,
+				params.x - (params.width / 2),
+				params.y - (params.height / 2),
+				params.width,
+				params.height
+			);
+
+		} else {
+			// Show entire image if no crop region is defined
+
+			_transformShape(canvas, ctx, params, params.width, params.height);
+			_setGlobalProps(canvas, ctx, params);
+
+			// Draw image on canvas
+			ctx.drawImage(
+				img,
+				params.x - (params.width / 2),
+				params.y - (params.height / 2),
+				params.width,
+				params.height
+			);
+
+		}
+
+		// Draw invisible rectangle to allow for events and masking
+		ctx.beginPath();
+		ctx.rect(
+			params.x - (params.width / 2),
+			params.y - (params.height / 2),
+			params.width,
+			params.height
+		);
+		// Check for jCanvas events
+		_detectEvents(canvas, ctx, params);
+		// Close path and configure masking
+		ctx.closePath();
+		_restoreTransform(ctx, params);
+		_enableMasking(ctx, data, params);
+	}
+	// On load function
+	function onload(canvas, ctx, data, params, layer) {
+		return function () {
+			var $canvas = $(canvas);
+			draw(canvas, ctx, data, params, layer);
+			if (params.layer) {
+				// Trigger 'load' event for layers
+				_triggerLayerEvent($canvas, data, layer, 'load');
+			} else if (params.load) {
+				// Run 'load' callback for non-layers
+				params.load.call($canvas[0], layer);
+			}
+			// Continue drawing successive layers after this image layer has loaded
+			if (params.layer) {
+				// Store list of previous masks for each layer
+				layer._masks = data.transforms.masks.slice(0);
+				if (params._next) {
+					// Draw successive layers
+					$canvas.drawLayers({
+						clear: false,
+						resetFire: true,
+						index: params._next
+					});
+				}
+			}
+		};
+	}
+	for (e = 0; e < $canvases.length; e += 1) {
+		canvas = $canvases[e];
+		ctx = _getContext($canvases[e]);
+		if (ctx) {
+
+			data = _getCanvasData($canvases[e]);
+			params = new jCanvasObject(args);
+			layer = _addLayer($canvases[e], params, args, drawImage);
+			if (params.visible) {
+
+				// Cache the given source
+				source = params.source;
+
+				imgCtx = source.getContext;
+				if (source.src || imgCtx) {
+					// Use image or canvas element if given
+					img = source;
+				} else if (source) {
+					if (imageCache[source] && imageCache[source].complete) {
+						// Get the image element from the cache if possible
+						img = imageCache[source];
+					} else {
+						// Otherwise, get the image from the given source URL
+						img = new Image();
+						// If source URL is not a data URL
+						if (!source.match(/^data:/i)) {
+							// Set crossOrigin for this image
+							img.crossOrigin = params.crossOrigin;
+						}
+						img.src = source;
+						// Save image in cache for improved performance
+						imageCache[source] = img;
+					}
+				}
+
+				if (img) {
+					if (img.complete || imgCtx) {
+						// Draw image if already loaded
+						onload(canvas, ctx, data, params, layer)();
+					} else {
+						// Otherwise, draw image when it loads
+						img.onload = onload(canvas, ctx, data, params, layer);
+						// Fix onload() bug in IE9
+						img.src = img.src;
+					}
+				}
+
+			}
+		}
+	}
+	return $canvases;
+};
+
+// Creates a canvas pattern object
+$.fn.createPattern = function createPattern(args) {
+	var $canvases = this, ctx,
+		params,
+		img, imgCtx,
+		pattern, source;
+
+	// Function to be called when pattern loads
+	function onload() {
+		// Create pattern
+		pattern = ctx.createPattern(img, params.repeat);
+		// Run callback function if defined
+		if (params.load) {
+			params.load.call($canvases[0], pattern);
+		}
+	}
+
+	ctx = _getContext($canvases[0]);
+	if (ctx) {
+
+		params = new jCanvasObject(args);
+
+		// Cache the given source
+		source = params.source;
+
+		// Draw when image is loaded (if load() callback function is defined)
+
+		if (isFunction(source)) {
+			// Draw pattern using function if given
+
+			img = $('<canvas />')[0];
+			img.width = params.width;
+			img.height = params.height;
+			imgCtx = _getContext(img);
+			source.call(img, imgCtx);
+			onload();
+
+		} else {
+			// Otherwise, draw pattern using source image
+
+			imgCtx = source.getContext;
+			if (source.src || imgCtx) {
+				// Use image element if given
+				img = source;
+			} else {
+				// Use URL if given to get the image
+				img = new Image();
+				// If source URL is not a data URL
+				if (!source.match(/^data:/i)) {
+					// Set crossOrigin for this image
+					img.crossOrigin = params.crossOrigin;
+				}
+				img.src = source;
+			}
+
+			// Create pattern if already loaded
+			if (img.complete || imgCtx) {
+				onload();
+			} else {
+				img.onload = onload;
+				// Fix onload() bug in IE9
+				img.src = img.src;
+			}
+
+		}
+
+	} else {
+
+		pattern = null;
+
+	}
+	return pattern;
+};
+
+// Creates a canvas gradient object
+$.fn.createGradient = function createGradient(args) {
+	var $canvases = this, ctx,
+		params,
+		gradient,
+		stops = [], nstops,
+		start, end,
+		i, a, n, p;
+
+	params = new jCanvasObject(args);
+	ctx = _getContext($canvases[0]);
+	if (ctx) {
+
+		// Gradient coordinates must be defined
+		params.x1 = params.x1 || 0;
+		params.y1 = params.y1 || 0;
+		params.x2 = params.x2 || 0;
+		params.y2 = params.y2 || 0;
+
+		if (params.r1 !== null && params.r2 !== null) {
+			// Create radial gradient if chosen
+			gradient = ctx.createRadialGradient(params.x1, params.y1, params.r1, params.x2, params.y2, params.r2);
+		} else {
+			// Otherwise, create a linear gradient by default
+			gradient = ctx.createLinearGradient(params.x1, params.y1, params.x2, params.y2);
+		}
+
+		// Count number of color stops
+		for (i = 1; params['c' + i] !== undefined; i += 1) {
+			if (params['s' + i] !== undefined) {
+				stops.push(params['s' + i]);
+			} else {
+				stops.push(null);
+			}
+		}
+		nstops = stops.length;
+
+		// Define start stop if not already defined
+		if (stops[0] === null) {
+			stops[0] = 0;
+		}
+		// Define end stop if not already defined
+		if (stops[nstops - 1] === null) {
+			stops[nstops - 1] = 1;
+		}
+
+		// Loop through color stops to fill in the blanks
+		for (i = 0; i < nstops; i += 1) {
+			// A progression, in this context, is defined as all of the color stops between and including two known color stops
+
+			if (stops[i] !== null) {
+				// Start a new progression if stop is a number
+
+				// Number of stops in current progression
+				n = 1;
+				// Current iteration in current progression
+				p = 0;
+				start = stops[i];
+
+				// Look ahead to find end stop
+				for (a = (i + 1); a < nstops; a += 1) {
+					if (stops[a] !== null) {
+						// If this future stop is a number, make it the end stop for this progression
+						end = stops[a];
+						break;
+					} else {
+						// Otherwise, keep looking ahead
+						n += 1;
+					}
+				}
+
+				// Ensure start stop is not greater than end stop
+				if (start > end) {
+					stops[a] = stops[i];
+				}
+
+			} else if (stops[i] === null) {
+				// Calculate stop if not initially given
+				p += 1;
+				stops[i] = start + (p * ((end - start) / n));
+			}
+			// Add color stop to gradient object
+			gradient.addColorStop(stops[i], params['c' + (i + 1)]);
+		}
+
+	} else {
+		gradient = null;
+	}
+	return gradient;
+};
+
+// Manipulates pixels on the canvas
+$.fn.setPixels = function setPixels(args) {
+	var $canvases = this,
+		canvas, e, ctx,
+		params,
+		px,
+		imgData, data, i, len;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		canvas = $canvases[e];
+		ctx = _getContext(canvas);
+		if (ctx) {
+
+			params = new jCanvasObject(args);
+			_addLayer(canvas, params, args, setPixels);
+			_transformShape($canvases[e], ctx, params, params.width, params.height);
+
+			// Use entire canvas of x, y, width, or height is not defined
+			if (params.width === null || params.height === null) {
+				params.width = canvas.width;
+				params.height = canvas.height;
+				params.x = params.width / 2;
+				params.y = params.height / 2;
+			}
+
+			if (params.width !== 0 && params.height !== 0) {
+				// Only set pixels if width and height are not zero
+
+				imgData = ctx.getImageData(params.x - (params.width / 2), params.y - (params.height / 2), params.width, params.height);
+				data = imgData.data;
+				len = data.length;
+
+				// Loop through pixels with the "each" callback function
+				if (params.each) {
+					for (i = 0; i < len; i += 4) {
+						px = {
+							r: data[i],
+							g: data[i + 1],
+							b: data[i + 2],
+							a: data[i + 3]
+						};
+						params.each.call(canvas, px, params);
+						data[i] = px.r;
+						data[i + 1] = px.g;
+						data[i + 2] = px.b;
+						data[i + 3] = px.a;
+					}
+				}
+				// Put pixels on canvas
+				ctx.putImageData(imgData, params.x - (params.width / 2), params.y - (params.height / 2));
+				// Restore transformation
+				ctx.restore();
+
+			}
+
+		}
+	}
+	return $canvases;
+};
+
+// Retrieves canvas image as data URL
+$.fn.getCanvasImage = function getCanvasImage(type, quality) {
+	var $canvases = this, canvas,
+		dataURL = null;
+	if ($canvases.length !== 0) {
+		canvas = $canvases[0];
+		if (canvas.toDataURL) {
+			// JPEG quality defaults to 1
+			if (quality === undefined) {
+				quality = 1;
+			}
+			dataURL = canvas.toDataURL('image/' + type, quality);
+		}
+	}
+	return dataURL;
+};
+
+// Scales canvas based on the device's pixel ratio
+$.fn.detectPixelRatio = function detectPixelRatio(callback) {
+	var $canvases = this,
+		canvas, e, ctx,
+		devicePixelRatio, backingStoreRatio, ratio,
+		oldWidth, oldHeight,
+		data;
+
+	for (e = 0; e < $canvases.length; e += 1) {
+		// Get canvas and its associated data
+		canvas = $canvases[e];
+		ctx = _getContext(canvas);
+		data = _getCanvasData($canvases[e]);
+
+		// If canvas has not already been scaled with this method
+		if (!data.scaled) {
+
+			// Determine device pixel ratios
+			devicePixelRatio = window.devicePixelRatio || 1;
+			backingStoreRatio = ctx.webkitBackingStorePixelRatio ||
+				ctx.mozBackingStorePixelRatio ||
+				ctx.msBackingStorePixelRatio ||
+				ctx.oBackingStorePixelRatio ||
+				ctx.backingStorePixelRatio || 1;
+
+			// Calculate general ratio based on the two given ratios
+			ratio = devicePixelRatio / backingStoreRatio;
+
+			if (ratio !== 1) {
+				// Scale canvas relative to ratio
+
+				// Get the current canvas dimensions for future use
+				oldWidth = canvas.width;
+				oldHeight = canvas.height;
+
+				// Resize canvas relative to the determined ratio
+				canvas.width = oldWidth * ratio;
+				canvas.height = oldHeight * ratio;
+
+				// Scale canvas back to original dimensions via CSS
+				canvas.style.width = oldWidth + 'px';
+				canvas.style.height = oldHeight + 'px';
+
+				// Scale context to counter the manual scaling of canvas
+				ctx.scale(ratio, ratio);
+
+			}
+
+			// Set pixel ratio on canvas data object
+			data.pixelRatio = ratio;
+			// Ensure that this method can only be called once for any given canvas
+			data.scaled = true;
+
+			// Call the given callback function with the ratio as its only argument
+			if (callback) {
+				callback.call(canvas, ratio);
+			}
+
+		}
+
+	}
+	return $canvases;
+};
+
+// Clears the jCanvas cache
+jCanvas.clearCache = function clearCache() {
+	var cacheName;
+	for (cacheName in caches) {
+		if (Object.prototype.hasOwnProperty.call(caches, cacheName)) {
+			caches[cacheName] = {};
+		}
+	}
+};
+
+// Enable canvas feature detection with $.support
+$.support.canvas = ($('<canvas />')[0].getContext !== undefined);
+
+// Export jCanvas functions
+extendObject(jCanvas, {
+	defaults: defaults,
+	setGlobalProps: _setGlobalProps,
+	transformShape: _transformShape,
+	detectEvents: _detectEvents,
+	closePath: _closePath,
+	setCanvasFont: _setCanvasFont,
+	measureText: _measureText
+});
+$.jCanvas = jCanvas;
+$.jCanvasObject = jCanvasObject;
+
+}));
