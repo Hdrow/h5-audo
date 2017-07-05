@@ -2367,19 +2367,25 @@ $.event.fix = function (event) {
 
 	event = jQueryEventFix.call($.event, event);
 	originalEvent = event.originalEvent;
-
+	var jcanvasScale=1;
+	
 	// originalEvent does not exist for manually-triggered events
 	if (originalEvent) {
 		originalEvent.preventDefault();//防止阻止ios屏幕滑动失效
+		var target=originalEvent.target;
+		console.log(target.className);
+		if(target.tagName=='CANVAS' && target.className.indexOf('jcanvasScale')!=-1){
+			jcanvasScale=parseInt(target.getAttribute('jcanvasScale'));
+			console.log('jcanvasScale:'+jcanvasScale);
+		}//edn if
 		touches = originalEvent.changedTouches;
-
 		// If offsetX and offsetY are not supported, define them
 		if (event.pageX !== undefined && event.offsetX === undefined) {
 			offset = $(event.currentTarget).offset();
 			try {
 				if (offset) {
-					event.offsetX = event.pageX - offset.left;
-					event.offsetY = event.pageY - offset.top;
+					event.offsetX = (event.pageX - offset.left)*jcanvasScale;
+					event.offsetY = (event.pageY - offset.top)*jcanvasScale;
 				}
 			} catch (error) {
 				// Fail silently
@@ -2389,8 +2395,8 @@ $.event.fix = function (event) {
 				// Enable offsetX and offsetY for mobile devices
 				offset = $(event.currentTarget).offset();
 				if (offset) {
-					event.offsetX = touches[0].pageX - offset.left;
-					event.offsetY = touches[0].pageY - offset.top;
+					event.offsetX = (touches[0].pageX - offset.left)*jcanvasScale;
+					event.offsetY = (touches[0].pageY - offset.top)*jcanvasScale;
 				}
 			} catch (error) {
 				// Fail silently
