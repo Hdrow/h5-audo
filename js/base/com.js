@@ -1,4 +1,4 @@
-//2017.7.4
+//2017.7.5
 var icom = importCom();
 
 function importCom() {
@@ -422,17 +422,15 @@ function importCom() {
 			var col = parseInt(textarea.attr('cols')) || 0;
 			var max = parseInt(textarea.attr('maxlength')) || 0;
 			max = max == 0 ? row * col : max;
-			if(row > 0 && col > 0 && max > 0) textarea.one('focus', textarea_focus);
+			if(row > 0 && col > 0 && max > 0) textarea.on('focus', textarea_focus).on('blur', textarea_blur);
 		} //end if
 
 		function textarea_focus(e) {
-			timer = com.setInterval(textarea_lock, 15);
-			$(this).one('blur', textarea_blur);
+			timer = requestAnimationFrame(textarea_lock);
 		} //edn func
 
 		function textarea_blur(e) {
-			com.clearInterval(timer);
-			$(this).one('focus', textarea_focus);
+			cancelAnimationFrame(timer);
 			var first = com.textareaGet(textarea, row);
 			if(first.indexOf('<br/>') != -1) {
 				var str2 = first.split('<br/>');
@@ -495,6 +493,26 @@ function importCom() {
 	com.textareaUnlock = function(textarea) {
 		textarea.off();
 	} //edn func
+	
+	//切割textarea的文字
+	com.textareaCut = function(textarea,col) {
+		if(textarea.length>0){
+			var str = textarea.val();
+			if(str.indexOf('\n') == -1 && str.length>col) {
+				var str1='';
+				var line=Math.ceil(str.length/col);
+				console.log('line:'+line);
+				for(var i = 0; i < line; i++) {
+					if(i < line - 1) str1 += str.substr(i * col, col) + '\n';
+					else str1 += str.substr(i * col);
+				} //edn for
+				return str1;
+			} //end if
+			else return str;
+		}//edn if
+		else return null;
+	} //edn func
+	
 
 	com.url = function(url, para) {
 		var now = -1;
