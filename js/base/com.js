@@ -497,6 +497,7 @@ function importCom() {
 	//切割textarea的文字
 	com.textareaCut = function(textarea,col) {
 		if(textarea.length>0){
+			col=col||parseInt(textarea.attr('cols'));
 			var str = textarea.val();
 			if(str.indexOf('\n') == -1 && str.length>col) {
 				var str1='';

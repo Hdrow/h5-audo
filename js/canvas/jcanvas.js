@@ -2373,10 +2373,9 @@ $.event.fix = function (event) {
 	if (originalEvent) {
 		originalEvent.preventDefault();//防止阻止ios屏幕滑动失效
 		var target=originalEvent.target;
-		console.log(target.className);
-		if(target.tagName=='CANVAS' && target.className.indexOf('jcanvasScale')!=-1){
+		if(target.tagName=='CANVAS' && target.getAttribute('jcanvasScale')){
 			jcanvasScale=parseInt(target.getAttribute('jcanvasScale'));
-			console.log('jcanvasScale:'+jcanvasScale);
+//			console.log('jcanvasScale:'+jcanvasScale);
 		}//edn if
 		touches = originalEvent.changedTouches;
 		// If offsetX and offsetY are not supported, define them
