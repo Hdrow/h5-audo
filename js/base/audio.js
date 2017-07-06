@@ -1,4 +1,4 @@
-//2017.6.13
+//2017.7.6
 var iaudio=importAudio();
 
 function importAudio(){
@@ -15,12 +15,12 @@ function importAudio(){
 			this.webAudio=0;
 			if(options){
 				this.onProgress=options.onProgress;
-				this.onComplete=options.onComplete;
+				this.onLoadedComplete=options.onLoadedComplete;
 				this.webAudio=options.webAudio||0;	
 			}//end if
 			console.log(this.webAudio?'web audio mode':'local audio mode');
 			for(var i=0; i<list.length; i++){
-				var defaults = {src:'',volume:1,loop:0,autoPlay:0,continuePlay:0,currentTime:0};
+				var defaults = {src:'',volume:1,loop:0,autoplay:0,continuePlay:0,currentTime:0};
 				var opts = $.extend(defaults,list[i]);
 				if(opts.src!=''){
 					var str1=opts.src.split('/');
@@ -29,7 +29,7 @@ function importAudio(){
 						src:opts.src,
 						volume:opts.volume,
 						loop:opts.loop,
-						autoPlay:opts.autoPlay,
+						autoplay:opts.autoplay,
 						continuePlay:opts.continuePlay,
 						currentTime:opts.currentTime,
 						onListLoaded:this.onListLoaded,
@@ -56,7 +56,7 @@ function importAudio(){
 		if(_this.onProgress) _this.onProgress(_this.soundLoaded/_this.soundMax);
 		if(_this.soundLoaded==_this.soundMax){
 			console.log(_this.soundLoaded+' sounds load complete');
-			if(_this.onComplete) _this.onComplete();
+			if(_this.onLoadedComplete) _this.onLoadedComplete();
 		}//end if
 	}//end func
 	
@@ -65,7 +65,7 @@ function importAudio(){
 	    this.src=opts.src;
 	    this.volume=opts.volume;
 	    this.loop=opts.loop;
-	    this.autoPlay=opts.autoPlay;
+	    this.autoplay=opts.autoplay;
 	    this.continuePlay=opts.continuePlay;
 	    this.currentTime =opts.currentTime;
 	    this.startTime = 0;
@@ -93,7 +93,7 @@ function importAudio(){
 		
 		function init(event){
 			_this.loaded=1;
-			if(_this.autoPlay) _this.play(); 
+			if(_this.autoplay) _this.play(); 
 		}//end func
 		
 		function onEnded(event){
@@ -128,7 +128,7 @@ function importAudio(){
 	    this.volume=opts.volume;
 	    console.log(this.volume)
 	    this.loop=opts.loop;
-	    this.autoPlay=opts.autoPlay;
+	    this.autoplay=opts.autoplay;
 	    this.continuePlay=opts.continuePlay;
 	    this.currentTime =opts.currentTime;
 	    this.startTime = 0;
@@ -161,7 +161,7 @@ function importAudio(){
 	    function init(arrayBuffer){
 			_this.context.decodeAudioData(arrayBuffer, function(buffer) {
 				_this.buffer = buffer;  /* 将 buffer 传入解码 AudioBuffer. */
-				if(_this.autoPlay) _this.play();
+				if(_this.autoplay) _this.play();
 		    }, function(e) {
 		        console.log('Error decoding file', e);
 		    });
