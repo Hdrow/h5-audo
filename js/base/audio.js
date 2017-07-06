@@ -15,7 +15,7 @@ function importAudio(){
 			this.webAudio=0;
 			if(options){
 				this.onProgress=options.onProgress;
-				this.onLoadedComplete=options.onLoadedComplete;
+				this.onLoadComplete=options.onLoadComplete;
 				this.webAudio=options.webAudio||0;	
 			}//end if
 			console.log(this.webAudio?'web audio mode':'local audio mode');
@@ -56,7 +56,7 @@ function importAudio(){
 		if(_this.onProgress) _this.onProgress(_this.soundLoaded/_this.soundMax);
 		if(_this.soundLoaded==_this.soundMax){
 			console.log(_this.soundLoaded+' sounds load complete');
-			if(_this.onLoadedComplete) _this.onLoadedComplete();
+			if(_this.onLoadComplete) _this.onLoadComplete();
 		}//end if
 	}//end func
 	
