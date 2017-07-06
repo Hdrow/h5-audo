@@ -494,11 +494,9 @@ function importCom() {
 		textarea.off();
 	} //edn func
 	
-	//切割textarea的文字
-	com.textareaCut = function(textarea,col) {
-		if(textarea.length>0){
-			col=col||parseInt(textarea.attr('cols'));
-			var str = textarea.val();
+	//切割单行文字成几行
+	com.textToMulti = function(str,col) {
+		if(str!='' && col>1){
 			if(str.indexOf('\n') == -1 && str.length>col) {
 				var str1='';
 				var line=Math.ceil(str.length/col);
