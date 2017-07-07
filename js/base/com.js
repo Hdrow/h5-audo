@@ -263,18 +263,21 @@ function importCom() {
 					var reg = new RegExp(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/); //匹配EMAIL
 					break;
 				case 3:
-					var reg = new RegExp(/^\d+$/); //是否为0-9的数字
+					var reg = new RegExp(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/); //匹配身份证
 					break;
 				case 4:
-					var reg = new RegExp(/^[a-zA-Z\u0391-\uFFE5]*[\w\u0391-\uFFE5]*$/); //不能以数字或符号开头
+					var reg = new RegExp(/^\d+$/); //是否为0-9的数字
 					break;
 				case 5:
-					var reg = new RegExp(/^\w+$/); //匹配由数字、26个英文字母或者下划线组成的字符串
+					var reg = new RegExp(/^[a-zA-Z\u0391-\uFFE5]*[\w\u0391-\uFFE5]*$/); //不能以数字或符号开头
 					break;
 				case 6:
-					var reg = new RegExp(/^[\u0391-\uFFE5]+$/); //匹配中文
+					var reg = new RegExp(/^\w+$/); //匹配由数字、26个英文字母或者下划线组成的字符串
 					break;
 				case 7:
+					var reg = new RegExp(/^[\u0391-\uFFE5]+$/); //匹配中文
+					break;
+				case 8:
 					var reg = new RegExp(/^[a-zA-Z\u0391-\uFFE5]+$/); //不能包含数字和符号
 					break;
 			} //end switch

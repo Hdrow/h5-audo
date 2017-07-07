@@ -10,6 +10,14 @@ function importMath() {
 		randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 		return randomNumber;
 	} //end func 
+	
+	//获得随机颜色
+	math.randomColor = function() {
+		var str = "0123456789abcdef";
+		var s = "#";
+		for ( j = 0; j < 6; j++) s += str.charAt(Math.random() * str.length);
+		return s;
+	}//end func
 
 	//随机打乱一个数组
 	math.randomSort = function(ary) {
@@ -193,18 +201,40 @@ function importMath() {
 			return Number(str2);
 		} //end else
 	} //edn func
-
+	
+	math.colorToRgb = function( color )  {
+		if ( color.match( /^#?([0-9a-f]{6}|[0-9a-f]{3})$/i ) ) {
+			  var value = color.slice( color.indexOf('#') + 1 ),
+				  isShortNotation = (value.length === 3),
+				  r = isShortNotation ? (value.charAt(0) + value.charAt(0)) : value.substring(0, 2),
+				  g = isShortNotation ? (value.charAt(1) + value.charAt(1)) : value.substring(2, 4),
+				  b = isShortNotation ? (value.charAt(2) + value.charAt(2)) : value.substring(4, 6);
+			  return [parseInt(r, 16),parseInt(g, 16),parseInt(b, 16)];
+		}
+		return 'rgba(0,0,0,255)';
+	}//end func
+	
 	return math;
 
-	//为Array添加Contains方法
-	Array.prototype.contains = function(obj) {
-		var i = this.length;
-		while(i--) {
-			if(this[i] === obj) {
-				return true;
-			}
-		}
-		return false;
-	} //end func
-
 } //end import
+
+//为Array添加Contains方法
+Array.prototype.contains = function(obj) {
+	var i = this.length;
+	while(i--) {
+		if(this[i] === obj) return true;
+	}
+	return false;
+} //end func
+
+//为Array添加remove方法
+Array.prototype.remove=function (w){
+	var n=this.indexOf(w);
+	if(n!=-1)this.splice(n,1);
+};
+
+//为Array添加append方法
+Array.prototype.append = function(c) {
+    for (var b = 0, a = c.length; b < a; b++) this.push(c[b])
+    return this;
+};
