@@ -1,6 +1,6 @@
         function Hotspot(drawLayer, assetList, composition, ease, onUpdate, onComplete) {
             this._drawLayer = drawLayer;
-            this._composition = 'source-over';
+            this._composition = composition||'destination-out';
             this._ease = (ease === true);
             this._onUpdate = onUpdate;
             this._onComplete = onComplete;
@@ -41,7 +41,7 @@
 
                   
                     if (_self._currScale < toScale) {
-                        _self._animationReq = window.animationFrame(function () {
+                        _self._animationReq = requestAnimationFrame(function () {
                             draw(_self);
                         });
                     }
