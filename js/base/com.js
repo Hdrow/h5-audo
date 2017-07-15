@@ -52,6 +52,7 @@ function importCom() {
 						rotate: 90
 					});
 					if(ibase.landscapeScale == 'cover' || ibase.landscapeScale == 'contain' || ibase.landscapeScale == 'width' || ibase.landscapeScale == 'height') {
+						ibase.landScapeScaleX=ibase.landScapeScaleY=scale;
 						article.css({
 							scale: scale,
 							x: (window.innerHeight / scale - ibase.landscapeWidth) * 0.5,
@@ -61,6 +62,8 @@ function importCom() {
 					else {
 						var scales = [window.innerWidth / ibase.landscapeHeight, window.innerHeight / ibase.landscapeWidth];
 						console.log('auto scales:' + scales);
+						ibase.landScapeScaleX=scales[0];
+						ibase.landScapeScaleY=scales[1];
 						article.css({
 							scaleX: scales[0],
 							scaleY: scales[1],
@@ -81,6 +84,7 @@ function importCom() {
 						rotate: 0
 					});
 					if(ibase.landscapeScale == 'cover' || ibase.landscapeScale == 'contain' || ibase.landscapeScale == 'width' || ibase.landscapeScale == 'height') {
+						ibase.landScapeScaleX=ibase.landScapeScaleY=scale;
 						article.css({
 							scale: scale,
 							x: (window.innerWidth / scale - ibase.landscapeWidth) * 0.5,
@@ -90,6 +94,8 @@ function importCom() {
 					else {
 						var scales = [window.innerWidth / ibase.landscapeWidth, window.innerHeight / ibase.landscapeHeight];
 						console.log('auto scales:' + scales);
+						ibase.landScapeScaleX=scales[0];
+						ibase.landScapeScaleY=scales[1];
 						article.css({
 							scaleX: scales[0],
 							scaleY: scales[1],
