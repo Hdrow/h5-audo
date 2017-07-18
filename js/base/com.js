@@ -1,4 +1,4 @@
-//2017.4.19
+//2017.7.17
 var icom = importCom();
 
 function importCom() {
@@ -17,7 +17,6 @@ function importCom() {
 		} //edn if
 		if(ibase.dir == 'portrait') {
 			lock_dected();
-
 			function lock_dected() {
 				if(ibase.lock) requestAnimationFrame(lock_dected);
 				else if(callback) callback();
@@ -25,41 +24,34 @@ function importCom() {
 		} //edn if
 		else {
 			var article = $('article');
-			var container = article.children('.container');
-			var interface = article.children('.interface');
 			html_resize(ibase.getOrient(true));
-			$(window).on('orientationchange', window_orientation);
+			$(window).on('orientationchange resize', window_orientation);
 			if(callback) callback();
 		} //end else
 
 		function window_orientation(e) {
-			setTimeout(function() {
-				html_resize(ibase.getOrient());
-			}, 200);
+			for(var i=0; i<3; i++){
+				setTimeout(function() {
+					html_resize(ibase.getOrient());
+				}, i*250);
+			}//end for
 		} //edn func
-
+		
 		function html_resize(dir) {
+			var bgmBtn=$('a.bgmBtn');
 			if(!ibase.keyboard) {
 				if(dir == 'portrait') {
 					console.log('screen portrait');
-					var size = imath.autoSize([ibase.landscapeHeight, ibase.landscapeWidth], [window.innerWidth, window.innerHeight], ibase.landscapeScale);
+					var size = imath.autoSize([ibase.landscapeHeight, ibase.landscapeWidth], [window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
 					var scale = size[0] / ibase.landscapeHeight;
 					console.log('window size:' + window.innerHeight + '/' + window.innerWidth);
 					console.log('auto scale:' + scale);
-					article.css({
-						width: ibase.landscapeWidth,
-						height: ibase.landscapeHeight,
-						rotate: 90
-					});
-					interface.css({
-						scale: scale,
-						x: 0,
-						y: -ibase.landscapeHeight,
-						width: window.innerHeight / scale,
-						height: window.innerWidth / scale
-					});
-					if(ibase.landscapeScale == 'cover' || ibase.landscapeScale == 'contain' || ibase.landscapeScale == 'width' || ibase.landscapeScale == 'height') {
-						container.css({
+					if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
+						ibase.landScapeScaleX=ibase.landScapeScaleY=scale;
+						article.css({
+							width: ibase.landscapeWidth,
+							height: ibase.landscapeHeight,
+							rotate: 90,
 							scale: scale,
 							x: (window.innerHeight / scale - ibase.landscapeWidth) * 0.5,
 							y: -ibase.landscapeHeight + (window.innerWidth / scale - ibase.landscapeHeight) * 0.5 + (os.iphone6Plus ? 4 : 0)
@@ -68,7 +60,12 @@ function importCom() {
 					else {
 						var scales = [window.innerWidth / ibase.landscapeHeight, window.innerHeight / ibase.landscapeWidth];
 						console.log('auto scales:' + scales);
-						container.css({
+						ibase.landScapeScaleX=scales[0];
+						ibase.landScapeScaleY=scales[1];
+						article.css({
+							width: ibase.landscapeWidth,
+							height: ibase.landscapeHeight,
+							rotate: 90,
 							scaleX: scales[0],
 							scaleY: scales[1],
 							x: 0,
@@ -78,24 +75,16 @@ function importCom() {
 				} //end if
 				else {
 					console.log('screen landscape');
-					var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [window.innerWidth, window.innerHeight], ibase.landscapeScale);
+					var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
 					var scale = size[0] / ibase.landscapeWidth;
 					console.log('window size:' + window.innerWidth + '/' + window.innerHeight);
 					console.log('auto scale:' + scale);
-					article.css({
-						width: ibase.landscapeWidth,
-						height: ibase.landscapeHeight,
-						rotate: 0
-					});
-					interface.css({
-						scale: scale,
-						x: 0,
-						y: 0,
-						width: window.innerWidth / scale,
-						height: window.innerHeight / scale
-					});
-					if(ibase.landscapeScale == 'cover' || ibase.landscapeScale == 'contain' || ibase.landscapeScale == 'width' || ibase.landscapeScale == 'height') {
-						container.css({
+					if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
+						ibase.landScapeScaleX=ibase.landScapeScaleY=scale;
+						article.css({
+							width: ibase.landscapeWidth,
+							height: ibase.landscapeHeight,
+							rotate: 0,
 							scale: scale,
 							x: (window.innerWidth / scale - ibase.landscapeWidth) * 0.5,
 							y: (window.innerHeight / scale - ibase.landscapeHeight) * 0.5
@@ -104,7 +93,12 @@ function importCom() {
 					else {
 						var scales = [window.innerWidth / ibase.landscapeWidth, window.innerHeight / ibase.landscapeHeight];
 						console.log('auto scales:' + scales);
-						container.css({
+						ibase.landScapeScaleX=scales[0];
+						ibase.landScapeScaleY=scales[1];
+						article.css({
+							width: ibase.landscapeWidth,
+							height: ibase.landscapeHeight,
+							rotate: 0,
 							scaleX: scales[0],
 							scaleY: scales[1],
 							x: 0,
@@ -116,7 +110,7 @@ function importCom() {
 		} //edn func
 
 	} //edn func
-
+	
 	com.screenScrollEnable = function() {
 		$(document).off('touchmove', noScroll);
 	} //end func
@@ -194,13 +188,30 @@ function importCom() {
 	//取代系统alert
 	com.alert = function(text, callback) {
 		if(text && text != '') {
-			var box = $('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a href="javascript:;" class="close">确定</a></p></div></aside>').appendTo(ibase.dir == 'landscape' ? 'article>.interface' : 'body');
+			var box = $('<aside class="alertBox"><div><p class="text"></p><p class="btn"><a href="javascript:;" class="close">确定</a></p></div></aside>').appendTo(ibase.dir == 'landscape' ? 'article' : 'body');
 			com.popOn(box, {
 				text: text,
 				onClose: callback,
 				remove: true,
 				closeEvent: 'click'
 			});
+		} //end if
+	} //end func
+	
+	//confirm
+	com.confirm = function(text, callbackConfirm, callbackCancel, btnCancelText, btnConfirmText) {
+		text=text||'';
+		btnCancelText=btnCancelText||'取消';
+		btnConfirmText=btnConfirmText||'确认';
+		if(text != '') {
+			var box = $('<aside class="confirmBox"><div><p class="text">'+text+'</p><p class="btn"><a href="javascript:;" class="cancel">'+btnCancelText+'</a><a href="javascript:;" class="confirm">'+btnConfirmText+'</a></p></div></aside>').appendTo(ibase.dir == 'landscape' ? 'article' : 'body');
+			var btn=box.find('a');
+			btn.one('click',function(e){
+				if($(this).index()==0 && callbackCancel) callbackCancel();
+				else if($(this).index()==1 && callbackConfirm) callbackConfirm();
+				btn.off();
+				box.remove();
+			})
 		} //end if
 	} //end func
 
@@ -260,18 +271,21 @@ function importCom() {
 					var reg = new RegExp(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/); //匹配EMAIL
 					break;
 				case 3:
-					var reg = new RegExp(/^\d+$/); //是否为0-9的数字
+					var reg = new RegExp(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/); //匹配身份证
 					break;
 				case 4:
-					var reg = new RegExp(/^[a-zA-Z\u0391-\uFFE5]*[\w\u0391-\uFFE5]*$/); //不能以数字或符号开头
+					var reg = new RegExp(/^\d+$/); //是否为0-9的数字
 					break;
 				case 5:
-					var reg = new RegExp(/^\w+$/); //匹配由数字、26个英文字母或者下划线组成的字符串
+					var reg = new RegExp(/^[a-zA-Z\u0391-\uFFE5]*[\w\u0391-\uFFE5]*$/); //不能以数字或符号开头
 					break;
 				case 6:
-					var reg = new RegExp(/^[\u0391-\uFFE5]+$/); //匹配中文
+					var reg = new RegExp(/^\w+$/); //匹配由数字、26个英文字母或者下划线组成的字符串
 					break;
 				case 7:
+					var reg = new RegExp(/^[\u0391-\uFFE5]+$/); //匹配中文
+					break;
+				case 8:
 					var reg = new RegExp(/^[a-zA-Z\u0391-\uFFE5]+$/); //不能包含数字和符号
 					break;
 			} //end switch
@@ -302,7 +316,7 @@ function importCom() {
 		}, "json");
 	} //edn func
 
-	//安卓键盘压缩页面高度处理
+	//input fix
 	com.keyboard = function(input, shell, callback) {
 		input = input || $('input,textarea,[contenteditable="true"]');
 		shell = shell || input.parents('section');
@@ -343,6 +357,23 @@ function importCom() {
 
 		function slide_out() {
 			if(callback) callback(false);
+		} //edn func
+
+	} //end func
+	
+	//select ios fix
+	com.select = function(select) {
+		select = select || $('select');
+		if(select.length > 0) {
+			if(os.ios) {
+				select.on('focus', function(e) {
+					$(document).one('touchend', ios_select);
+				});
+			} //end if
+		} //end if
+
+		function ios_select(e) {
+			if(e.target != select[0]) select.blur();
 		} //edn func
 
 	} //end func
@@ -402,17 +433,15 @@ function importCom() {
 			var col = parseInt(textarea.attr('cols')) || 0;
 			var max = parseInt(textarea.attr('maxlength')) || 0;
 			max = max == 0 ? row * col : max;
-			if(row > 0 && col > 0 && max > 0) textarea.one('focus', textarea_focus);
+			if(row > 0 && col > 0 && max > 0) textarea.on('focus', textarea_focus).on('blur', textarea_blur);
 		} //end if
 
 		function textarea_focus(e) {
-			timer = com.setInterval(textarea_lock, 15);
-			$(this).one('blur', textarea_blur);
+			timer = requestAnimationFrame(textarea_lock);
 		} //edn func
 
 		function textarea_blur(e) {
-			com.clearInterval(timer);
-			$(this).one('focus', textarea_focus);
+			cancelAnimationFrame(timer);
 			var first = com.textareaGet(textarea, row);
 			if(first.indexOf('<br/>') != -1) {
 				var str2 = first.split('<br/>');
@@ -475,6 +504,25 @@ function importCom() {
 	com.textareaUnlock = function(textarea) {
 		textarea.off();
 	} //edn func
+	
+	//切割单行文字成几行
+	com.textToMulti = function(str,col) {
+		if(str!='' && col>1){
+			if(str.indexOf('\n') == -1 && str.length>col) {
+				var str1='';
+				var line=Math.ceil(str.length/col);
+				console.log('line:'+line);
+				for(var i = 0; i < line; i++) {
+					if(i < line - 1) str1 += str.substr(i * col, col) + '\n';
+					else str1 += str.substr(i * col);
+				} //edn for
+				return str1;
+			} //end if
+			else return str;
+		}//edn if
+		else return null;
+	} //edn func
+	
 
 	com.url = function(url, para) {
 		var now = -1;
@@ -540,8 +588,8 @@ function importCom() {
 			secretkey = secretkey || 'test';
 			type = type || 'jpg';
 			compress = compress || 0.8;
-			if(type == 'png') var base64 = canvas.toDataURL('image/png').split(",")[1];
-			else var base64 = canvas.toDataURL('image/jpeg', compress).split(",")[1];
+			if(type == 'png') var base64 = canvas.toDataURL('image/png');
+			else var base64 = canvas.toDataURL('image/jpeg', compress);
 			this.base64_send(base64, callback, secretkey);
 		} //edn if
 	} //end func
@@ -549,15 +597,78 @@ function importCom() {
 	com.base64_send = function(base64, callback, secretkey) {
 		if(base64) {
 			secretkey = secretkey || 'test';
-			$.post('http://upload.be-xx.com/upload', {
+			$.post('http://tool.be-xx.com/cdn/base64', {
 				data: base64,
 				key: secretkey
 			}, function(resp) {
-				if(callback) callback(resp);
-			})
+				if(resp.errcode==0){
+					if(callback) callback(resp.result);
+				}//edn if
+				else{
+					console.log('errmsg:'+resp.errmsg);
+				}//edn else
+			},'json');
 		} //edn if
 	} //end func
-
+	
+	com.base64_get = function(link, callback, secretkey) {
+		if(link) {
+			secretkey = secretkey || 'test';
+			$.post('http://tool.be-xx.com/image/base64', {
+				link: link,
+				key: secretkey
+			}, function(resp) {
+				if(callback) callback(resp);
+			},'text');
+		} //edn if
+	} //end func
+	
+	com.qrcode = function(txt,options) {
+		var defaults = {size:200,color:'#000000',bg:'#ffffff',border:0,error:0,logo:false};
+		var data = $.extend(defaults, options);
+		if(txt && txt!=''){
+			var src='http://tool.be-xx.com/image/qrcode?txt='+txt+'&size='+data.size+'&color='+data.color+'&bg='+data.bg+'&border='+data.border+'&error='+data.error+'&logo='+data.logo;
+			return src;
+		}//edn if
+		else return null;
+	} //end func
+	
+	com.barcode = function(txt,options) {
+		var defaults = {width:400,height:200,color:'#000000',bg:'#ffffff',pure:true};
+		var data = $.extend(defaults, options);
+		if(txt && txt!=''){
+			var src='http://tool.be-xx.com/image/barcode?txt='+txt+'&width='+data.width+'&height='+data.height+'&color='+data.color+'&bg='+data.bg+'&pure='+data.pure;
+			return src;
+		}//edn if
+		else return null;
+	} //end func
+	
+	com.clipboard=function(box,val,onComplete,onError){
+		var support = !!document.queryCommandSupported;
+		console.log('support:'+support);
+		if(support){
+			if(box.length>0 && val!=''){
+				box.attr({'data-copy':val}).on('click',{callback:onComplete},copyText);
+			}//edn if
+		}//edn if
+		else{
+			console.log('浏览器不支持复制文本到剪贴板');
+			if(onError) onError();
+		}//end else
+	}//edn func
+	
+	function copyText(e){
+		var val=$(this).data('copy');
+		var input=$('<textarea readonly="readonly"></textarea>').html(val).css({position:'absolute',left:0,top:0,width:1,height:1,visible:'hidden'}).appendTo('body');
+		input[0].select();
+		input[0].setSelectionRange(0, input[0].value.length);
+		console.log('copy content:'+input.val())
+		document.execCommand('Copy');
+		input.remove();
+		input=null;
+		if(e.data.callback) e.data.callback();
+	}//edn func
+	
 	return com;
 
 } //end import

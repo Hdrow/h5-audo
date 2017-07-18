@@ -1,4 +1,4 @@
-//2017.4.18
+//2017.7.17
 //-----------------------------------os
 var os = importOS();
 
@@ -12,22 +12,42 @@ function importOS() {
 	os.ios = os.ipad || os.iphone;
 	os.wp = userAgent.match(/Windows Phone/) || userAgent.match(/IEMobile/) ? true : false;
 	os.supportsTouch = ((window.DocumentTouch && document instanceof window.DocumentTouch) || 'ontouchstart' in window);
-	if(os.ios) os.iosVer = userAgent.match(/OS \d+_/).length > 0 ? parseInt(userAgent.match(/OS \d+_/)[0].match(/\d+/)[0]) : 0;
+	if(os.ios) os.iosVer = parseInt(userAgent.match(/OS \d+_/)[0].match(/\d+/)[0]);
 	os.weixin = userAgent.match(/MicroMessenger/) ? true : false;
+	if(os.weixin) {
+		var ver = userAgent.match(/MicroMessenger\/\d+.\d+.\d+/)[0].match(/\d+.\d+.\d+/)[0].split('.');
+		os.weixinVer = 0;
+		for(var i = 0; i < ver.length; i++) os.weixinVer += parseInt(ver[i]) * Math.pow(10, ver.length - i - 1);
+	} //edn if
 	os.weibo = userAgent.match(/Weibo/) || userAgent.match(/weibo/) ? true : false;
-	os.netease = userAgent.indexOf("NewsApp") >= 0 ? true : false;
+	os.ali = userAgent.match(/AliApp/) ? true : false;
+	if(os.ali) {
+		os.alipay = userAgent.match(/Alipay/) ? true : false;
+		os.taobao = userAgent.match(/WindVane/) ? true : false;
+	} //edn if
+	os.netease = userAgent.match(/NewsApp/) ? true : false;
 	os.safari = os.ios && userAgent.match(/Safari/) ? true : false;
 	os.chrome = userAgent.match(/Chrome/) ? true : false;
 	os.firefox = userAgent.match(/Firefox/) ? true : false;
 	os.ie = document.documentMode;
 	os.pc = !(os.android || os.ios || os.wp);
 	os.test = window.innerWidth == 540 && window.innerHeight == 850;
-	os.iphone6Plus = (os.ios && ((screen.width == 414 && screen.height == 736) || (screen.width == 736 && screen.height == 414) && window.devicePixelRatio == 3)) || (screen.width == 540 && screen.height == 876);
-	os.iphone6 = (os.ios && ((screen.width == 375 && screen.height == 667) || (screen.width == 667 && screen.height == 375))) || (screen.width == 540 && screen.height == 868);
-	os.iphone5 = os.ios && ((screen.width == 320 && screen.height == 568) || (screen.width == 568 && screen.height == 320));
-	os.iphone4 = (os.ios && ((screen.width == 320 && screen.height == 480) || (screen.width == 480 && screen.height == 320))) || (screen.width == 540 && screen.height == 702);
-	os.screen169 = screen.width / screen.height == 9 / 16 || screen.height / screen.width == 9 / 16 || (window.innerWidth == 540 && window.innerHeight == 850);
-	os.huawei = os.android && !os.screen169;
+	if(os.ios){
+		os.iphone6Plus = (screen.width == 414 && screen.height == 736) || (window.innerWidth == 540 && window.innerHeight == 876);
+		os.iphone6 = (screen.width == 375 && screen.height == 667) || (window.innerWidth == 540 && window.innerHeight == 868);
+		os.iphone5 = (screen.width == 320 && screen.height == 568) || (window.innerWidth == 540 && window.innerHeight == 850);
+		os.iphone4 = (screen.width == 320 && screen.height == 480) || (window.innerWidth == 540 && window.innerHeight == 702);
+	}//edn if
+	else if(os.android){
+		if(window.innerWidth == 540 && window.innerHeight == 780) os.huawei = true;
+		else{
+			requestAnimationFrame(function() {
+				if(screen.width == 360) os.huawei = (screen.height == 640 && window.innerHeight < 540) || screen.height < 640;
+				else if(screen.width == 412) os.huawei = (screen.height == 732 && window.innerHeight < 640) || screen.height < 732;
+			});
+		} //edn if
+	}//edn if
+
 	return os;
 } //end func
 
@@ -46,17 +66,17 @@ function importBase() {
 		this.dir = dir || 'portrait';
 		this.landscapeWidth = wd || 1206;
 		this.landscapeHeight = ht || 750;
-		this.landscapeScale = scale || 'cover';
+		this.landscapeScaleMode = scale || 'cover';
 		this.unit = this.dir == 'landscape' ? 'px' : (unit || 'rem');
 		console.log('css unit:' + unit);
 		if(this.dir == 'portrait') {
 			if(base.dir == 'portrait') {
 				if(this.unit == 'rem' || this.unit == 'em') {
+					document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
 					document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
 				} //end if
 				else {
-					var articles = document.querySelectorAll('article');
-					for(var i = 0; i < articles.length; i++) articles[i].style.transform = 'scale(' + window.screen.width / base.cssMedia + ')';
+					document.write('<meta name="viewport" content="width=' + base.cssMedia + ', minimum-scale = ' + window.screen.width / base.cssMedia + ', maximum-scale = ' + window.screen.width / base.cssMedia + ', target-densitydpi=device-dpi">');
 					document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
 				} //edn else
 			} //end if
@@ -126,34 +146,31 @@ function importBase() {
 			var fileref = document.createElement('script');
 			fileref.setAttribute("type", "text/javascript");
 			fileref.setAttribute("src", file.src);
-			document.getElementsByTagName('body')[0].appendChild(fileref);
+			document.querySelector('body').appendChild(fileref);
 		} //end else
 	} //end func
 
-	base.creatNode = function(nodeName, idName, className, innerHTML) {
+	base.creatNode = function(nodeName, idName, className, innerHTML, wrapNode) {
 		nodeName = nodeName || 'div';
 		className = className || '';
 		idName = idName || '';
 		innerHTML = innerHTML || '';
+		wrapNode = wrapNode || document.querySelector('body');
 		var newNode = document.createElement(nodeName);
 		if(className != '') newNode.className = className;
 		if(idName != '') newNode.id = idName;
 		if(innerHTML != '') newNode.innerHTML = innerHTML;
-		document.getElementsByTagName('body')[0].appendChild(newNode);
+		wrapNode.appendChild(newNode);
 	} //end func
 
-	base.getUrl = function(url, box, fade) {
+	base.getUrl = function(url) {
 		var hmsr = icom.getQueryString('hmsr');
 		hmsr = hmsr || '';
 		var utm_source = icom.getQueryString('utm_source');
 		utm_source = utm_source || '';
-		fade = fade || 500;
 		if(url && url != '') {
 			url += (hmsr != '' ? (url.indexOf('?') == -1 ? '?' : '&') + 'hmsr=' + hmsr : '') + (utm_source != '' ? '&utm_source=' + utm_source : '');
-			if(box && box.length > 0) icom.fadeOut(box, fade, function() {
-				location.href = url;
-			});
-			else location.href = url;
+			location.href = url;
 		} //end if
 	} //edn func
 
