@@ -1,4 +1,3 @@
-//----------------------------------------jquery.transit.js v1.0.2
 /*!
  * jQuery Transit - CSS3 transitions and transformations
  * (c) 2011-2016 Rico Sta. Cruz
@@ -63,13 +62,6 @@
     }
   }
 
-  // Helper function to check if transform3D is supported.
-  // Should return true for Webkits and Firefox 10+.
-  function checkTransform3dSupport() {
-    div.style[support.transform] = '';
-    div.style[support.transform] = 'rotateY(90deg)';
-    return div.style[support.transform] !== '';
-  }
 
   // Check for the browser's transitions support.
   support.transition      = getVendorPropertyName('transition');
@@ -77,7 +69,6 @@
   support.transform       = getVendorPropertyName('transform');
   support.transformOrigin = getVendorPropertyName('transformOrigin');
   support.filter          = getVendorPropertyName('Filter');
-  support.transform3d     = checkTransform3dSupport();
 
   var eventNames = {
     'transition':       'transitionend',
@@ -421,14 +412,6 @@
 
       for (var i in this) {
         if (this.hasOwnProperty(i)) {
-          // Don't use 3D transformations if the browser can't support it.
-          if ((!support.transform3d) && (
-            (i === 'rotateX') ||
-            (i === 'rotateY') ||
-            (i === 'rotateZ') ||
-            (i === 'perspective') ||
-            (i === 'transformOrigin'))) { continue; }
-
           if (i[0] !== '_') {
             if (use3d && (i === 'scale')) {
               re.push(i + "3d(" + this[i] + ",1)");
@@ -621,7 +604,7 @@
 
       // Prepare the callback.
       var cb = function() {
-        if (bound) { self.unbind(transitionEnd, cb); }
+        if (bound) { self.off(transitionEnd, cb); }
 
         if (i > 0) {
           self.each(function() {
@@ -636,7 +619,7 @@
       if ((i > 0) && (transitionEnd) && ($.transit.useTransitionEnd)) {
         // Use the 'transitionend' event if it's available.
         bound = true;
-        self.bind(transitionEnd, cb);
+        self.on(transitionEnd, cb);
       } else {
         // Fallback to timers if the 'transitionend' event isn't supported.
         window.setTimeout(cb, i);
