@@ -1,3 +1,4 @@
+//----------------------------------------jquery.transit.js v1.0.2
 /*!
  * jQuery Transit - CSS3 transitions and transformations
  * (c) 2011-2016 Rico Sta. Cruz
@@ -22,7 +23,7 @@
 }(this, function($) {
 
   $.transit = {
-    version: "1.0.1",
+    version: "1.0.2",
 
     // Map of $.css() keys to values for 'transitionProperty'.
     // See https://developer.mozilla.org/en/CSS/CSS_transitions#Properties_that_can_be_animated
@@ -70,8 +71,6 @@
     return div.style[support.transform] !== '';
   }
 
-  var isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-
   // Check for the browser's transitions support.
   support.transition      = getVendorPropertyName('transition');
   support.transitionDelay = getVendorPropertyName('transitionDelay');
@@ -99,9 +98,6 @@
       $.support[key] = support[key];
     }
   }
-
-  // Avoid memory leak in IE.
-  div = null;
 
   // ## $.cssEase
   // List of easing aliases that you can use with `$.fn.transition`.
@@ -160,27 +156,12 @@
         value = new Transform(value);
       }
 
-      // We've seen the 3D version of Scale() not work in Chrome when the
-      // element being scaled extends outside of the viewport.  Thus, we're
-      // forcing Chrome to not use the 3d transforms as well.  Not sure if
-      // translate is affectede, but not risking it.  Detection code from
-      // http://davidwalsh.name/detecting-google-chrome-javascript
-      if (support.transform === 'WebkitTransform' && !isChrome) {
-        elem.style[support.transform] = value.toString(true);
-      } else {
-        elem.style[support.transform] = value.toString();
-      }
-
+	  elem.style[support.transform] = value.toString();
       $(elem).data('transform', value);
     }
   };
 
-  // Add a CSS hook for `.css({ transform: '...' })`.
-  // In jQuery 1.8+, this will intentionally override the default `transform`
-  // CSS hook so it'll play well with Transit. (see issue #62)
-  $.cssHooks.transform = {
-    set: $.cssHooks['transit:transform'].set
-  };
+  
 
   // ## 'filter' CSS hook
   // Allows you to use the `filter` property in CSS.
@@ -196,38 +177,6 @@
     }
   };
 
-  // jQuery 1.8+ supports prefix-free transitions, so these polyfills will not
-  // be necessary.
-  if ($.fn.jquery < "1.8") {
-    // ## 'transformOrigin' CSS hook
-    // Allows the use for `transformOrigin` to define where scaling and rotation
-    // is pivoted.
-    //
-    //     $("#hello").css({ transformOrigin: '0 0' });
-    //
-    $.cssHooks.transformOrigin = {
-      get: function(elem) {
-        return elem.style[support.transformOrigin];
-      },
-      set: function(elem, value) {
-        elem.style[support.transformOrigin] = value;
-      }
-    };
-
-    // ## 'transition' CSS hook
-    // Allows you to use the `transition` property in CSS.
-    //
-    //     $("#hello").css({ transition: 'all 0 ease 0' });
-    //
-    $.cssHooks.transition = {
-      get: function(elem) {
-        return elem.style[support.transition];
-      },
-      set: function(elem, value) {
-        elem.style[support.transition] = value;
-      }
-    };
-  }
 
   // ## Other CSS hooks
   // Allows you to rotate, scale and translate.
@@ -242,6 +191,7 @@
   registerCssHook('rotate');
   registerCssHook('rotateX');
   registerCssHook('rotateY');
+  registerCssHook('rotateZ');
   registerCssHook('rotate3d');
   registerCssHook('perspective');
   registerCssHook('skewX');
@@ -337,6 +287,10 @@
 
       rotateY: function(theta) {
         this.rotateY = unit(theta, 'deg');
+      },
+      
+      rotateZ: function(theta) {
+        this.rotateZ = unit(theta, 'deg');
       },
 
       // ### scale
@@ -471,6 +425,7 @@
           if ((!support.transform3d) && (
             (i === 'rotateX') ||
             (i === 'rotateY') ||
+            (i === 'rotateZ') ||
             (i === 'perspective') ||
             (i === 'transformOrigin'))) { continue; }
 
