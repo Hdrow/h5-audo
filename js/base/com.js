@@ -1,4 +1,4 @@
-//2017.7.17
+//2017.8.1
 var icom = importCom();
 
 function importCom() {
@@ -73,7 +73,7 @@ function importCom() {
 						});
 					} //end else
 				} //end if
-				else {
+				else if(!ibase.landscapeLock){
 					console.log('screen landscape');
 					var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
 					var scale = size[0] / ibase.landscapeWidth;

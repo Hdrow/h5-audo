@@ -1,4 +1,4 @@
-//2017.7.17
+//2017.8.1
 //-----------------------------------os
 var os = importOS();
 
@@ -62,11 +62,12 @@ function importBase() {
 	base.cssMedia = 750;
 	base.scrollTop = -1;
 
-	base.init = function(dir, unit, wd, ht, scale) {
+	base.init = function(dir, unit, wd, ht, scale, landscapeLock) {
 		this.dir = dir || 'portrait';
 		this.landscapeWidth = wd || 1206;
 		this.landscapeHeight = ht || 750;
 		this.landscapeScaleMode = scale || 'cover';
+		this.landscapeLock=landscapeLock||0;
 		this.unit = this.dir == 'landscape' ? 'px' : (unit || 'rem');
 		console.log('css unit:' + unit);
 		if(this.dir == 'portrait') {
@@ -88,7 +89,18 @@ function importBase() {
 			} //edn if
 			window.addEventListener("orientationchange", window_orientation, false);
 		} //edn if
-		else document.write('<link rel="stylesheet" type="text/css" href="css/common.landscape.css" />');
+		else{
+			document.write('<link rel="stylesheet" type="text/css" href="css/common.landscape.css" />');
+			if(this.landscapeLock){
+				document.write('<aside class="landscape" id="turnBox"><img src="images/common/turn_hor.png" /><p>请打开手机竖排方向锁定后观看</p></aside>');
+				this.turnBox = document.getElementById("turnBox");
+				if(base.getOrient(true) == 'landscape') {
+					this.turnBox.style.display = "block";
+					this.lock = true;
+				} //edn if
+				window.addEventListener("orientationchange", landscape_lock, false);
+			}//edn if
+		}//end else
 	} //end func
 
 	base.unlockOrient = function() {
@@ -104,6 +116,19 @@ function importBase() {
 		console.log('window orientation:' + dir);
 		return dir;
 	}; //end func
+	
+	function landscape_lock(e) {
+		if(!base.keyboard) {
+			if(base.getOrient() == 'landscape') {
+				base.turnBox.style.display = "block";
+				base.lock = true;
+			} //edn if
+			else {
+				base.turnBox.style.display = 'none';
+				base.lock = false;
+			} //end else
+		} //edn if
+	} //end func
 
 	function window_orientation(e) {
 		if(!base.keyboard) {
