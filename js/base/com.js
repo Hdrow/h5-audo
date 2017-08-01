@@ -20,7 +20,7 @@ function importCom() {
 			var article = $('article');
 			html_resize(ibase.getOrient(true));
 			$(window).on('orientationchange resize', window_orientation);
-			if(ibase.landscapeLock) lock_dected();
+			if(os.ios) lock_dected();
 			else if(callback) callback();
 		} //end else
 		
@@ -73,7 +73,7 @@ function importCom() {
 						});
 					} //end else
 				} //end if
-				else if(!ibase.landscapeLock){
+				else{
 					console.log('screen landscape');
 					var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
 					var scale = size[0] / ibase.landscapeWidth;
