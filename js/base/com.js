@@ -15,19 +15,19 @@ function importCom() {
 		function input_blur(e) {
 			ibase.keyboard = false;
 		} //edn if
-		if(ibase.dir == 'portrait') {
-			lock_dected();
-			function lock_dected() {
-				if(ibase.lock) requestAnimationFrame(lock_dected);
-				else if(callback) callback();
-			} //edn func
-		} //edn if
+		if(ibase.dir == 'portrait') lock_dected();
 		else {
 			var article = $('article');
 			html_resize(ibase.getOrient(true));
 			$(window).on('orientationchange resize', window_orientation);
-			if(callback) callback();
+			if(ibase.landscapeLock) lock_dected();
+			else if(callback) callback();
 		} //end else
+		
+		function lock_dected() {
+			if(ibase.lock) requestAnimationFrame(lock_dected);
+			else if(callback) callback();
+		} //edn func
 
 		function window_orientation(e) {
 			for(var i=0; i<3; i++){
