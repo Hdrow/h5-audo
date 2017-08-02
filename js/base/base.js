@@ -62,14 +62,20 @@ function importBase() {
 	base.cssMedia = 750;
 	base.scrollTop = -1;
 
-	base.init = function(dir, unit, wd, ht, scale, landscapeLock) {
+	base.init = function(dir, unit, wd, ht, scale, follow) {
 		this.dir = dir || 'portrait';
+		this.simulation=window.orientation===undefined;
 		this.landscapeWidth = wd || 1206;
 		this.landscapeHeight = ht || 750;
 		this.landscapeScaleMode = scale || 'cover';
-		this.landscapeLock=landscapeLock||0;
+		this.landscapeFollow=follow||0;
+		this.landscapeLock=os.ios && !this.simulation;
+		this.landscapeFirstDir=base.getOrient(true);
 		this.unit = this.dir == 'landscape' ? 'px' : (unit || 'rem');
+		console.log('simulation:' + this.simulation);
+		console.log('landscapeLock:' + this.landscapeLock);
 		console.log('css unit:' + unit);
+		
 		if(this.dir == 'portrait') {
 			if(base.dir == 'portrait') {
 				if(this.unit == 'rem' || this.unit == 'em') {
@@ -81,7 +87,7 @@ function importBase() {
 					document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
 				} //edn else
 			} //end if
-			document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.png" class="turn"><p>请将手机调至竖屏模式</p></aside>');
+			document.write('<aside class="turnBoxPortrait" id="turnBox"><img src="images/common/turn.png"><p>请将手机调至竖屏模式</p></aside>');
 			this.turnBox = document.getElementById("turnBox");
 			if(this.dir != base.getOrient(true)) {
 				this.turnBox.style.display = "block";
@@ -92,9 +98,9 @@ function importBase() {
 		else{
 			document.write('<link rel="stylesheet" type="text/css" href="css/common.landscape.css" />');
 			if(this.landscapeLock){
-				document.write('<aside class="landscape" id="turnBox"><img src="images/common/turn_hor.png" /><p>请打开手机竖排方向锁定后观看</p></aside>');
+				document.write('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" /><p>请锁定手机竖排方向并横屏观看</p></aside>');
 				this.turnBox = document.getElementById("turnBox");
-				if(base.getOrient(true) == 'landscape') {
+				if(this.landscapeFirstDir == 'landscape') {
 					this.turnBox.style.display = "block";
 					this.lock = true;
 				} //edn if

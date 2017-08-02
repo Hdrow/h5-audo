@@ -18,8 +18,8 @@ function importCom() {
 		if(ibase.dir == 'portrait') lock_dected();
 		else {
 			var article = $('article');
-			html_resize(ibase.getOrient(true));
-			$(window).on('orientationchange resize', window_orientation);
+			html_resize();
+			$(window).on('orientationchange', window_orientation);
 			if(os.ios) lock_dected();
 			else if(callback) callback();
 		} //end else
@@ -30,15 +30,19 @@ function importCom() {
 		} //edn func
 
 		function window_orientation(e) {
-			for(var i=0; i<3; i++){
-				setTimeout(function() {
-					html_resize(ibase.getOrient());
-				}, i*250);
-			}//end for
+			if(!ibase.landscapeFollow){
+				if(ibase.landscapeFirstDir!='portrait' && ibase.getOrient()=='portrait'){
+					for(var i=1; i<=3; i++) com.setTimeout(html_resize, i*10,1);
+					$(this).off('orientationchange', window_orientation);
+				}//end if
+			}//edn if
+			else{
+				for(var i=1; i<=3; i++) com.setTimeout(html_resize, i*10,1);
+			}//edn else
 		} //edn func
 		
-		function html_resize(dir) {
-			var bgmBtn=$('a.bgmBtn');
+		function html_resize() {
+			var dir=ibase.getOrient(true);
 			if(!ibase.keyboard) {
 				if(dir == 'portrait') {
 					console.log('screen portrait');
