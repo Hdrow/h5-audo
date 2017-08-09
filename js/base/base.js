@@ -30,6 +30,7 @@ function importOS() {
 	os.chrome = userAgent.match(/Chrome/) ? true : false;
 	os.firefox = userAgent.match(/Firefox/) ? true : false;
 	os.ie = document.documentMode;
+	os.edge = userAgent.match(/Edge/) ? true : false;
 	os.pc = !(os.android || os.ios || os.wp);
 	os.test = window.innerWidth == 540 && window.innerHeight == 850;
 	if(os.ios){
