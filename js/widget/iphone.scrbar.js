@@ -3,15 +3,15 @@
 	$.fn.extend({
 		scrbar: function(options) {	
 			var $this=$(this);
-			var $sizeCont=0,$sizeThis=$this.height(),$sizeTimer,$scrollTimer;
 			var $cont=$this.children(".cont");
 			var $panel=$this.children(".panel");
-			var $bar=$panel.children(),$barSize=$sizeThis-$bar.outerHeight();
+			var $bar=$panel.children(),$barSize;
 			var $tar=0,$tarBack=0,$can=true,$posLast=0,$dir=0,$enable=true;
+			var $sizeCont=0,$sizeThis=0,$sizeTimer,$scrollTimer;
 			var defaults = {static:false,speed:1,panelFade:false,overback:true};
 			var opts = $.extend(defaults, options);
 			var $speed=0,$rate=45,$timeLast=0;
-			var $scale=$sizeThis/$cont.height()*(os.ios?1:1.5);
+			var $scale=0;
 			var $ease=os.ios?0.95:0.92;
 			var $touched=false,$moving=false;
 			
@@ -23,6 +23,34 @@
 				size_handler();
 				scroll_handler();
 			}//end func
+			
+			function size_handler(){
+//				console.log('size_handler');
+				if($sizeCont!=$cont.height() || $sizeThis!=$this.height()){
+					$sizeCont=$cont.height();
+					$sizeThis=$this.height();
+					$scale=$sizeThis/$sizeCont*(os.ios?1:1.5);
+					if(opts.static){
+						$tar=-$cont.position().top/($sizeCont-$sizeThis)*($sizeThis-$bar.height())
+						$bar.css({y:$tar,z:0});
+					}//end if
+					else{
+						$bar.css({height:$sizeThis/$sizeCont*$panel.height()});
+						$barSize=$sizeThis-$bar.height();
+					}//edn esle
+					if($sizeCont<=$sizeThis){
+						$can=false;
+						$panel.hide();
+					}//end if
+					else{
+						$can=true;
+						$panel.show();
+						if(opts.panelFade) $panel.css({opacity:0});
+					}//end else
+					$scale=$sizeThis/$sizeCont*(os.ios?1:1.4);
+				}//end if
+				$sizeTimer=icom.setTimeout(size_handler,15,true);
+			}//end func	
 			
 			function this_off(e){
 				$this.off("off goto offset top bottom pasue resume");
@@ -45,7 +73,7 @@
 					icom.clearTimeout($sizeTimer);
 					size_handler();
 					$dir=$tar<pos?1:-1;
-					pos=pos/($cont.outerHeight()-$sizeThis)*($sizeThis-$bar.outerHeight())
+					pos=pos/($sizeCont-$sizeThis)*($sizeThis-$bar.height())
 					$tar=pos;
 					$tar=Math.max(0,Math.min($tar,$barSize));
 					$speed=0;
@@ -58,7 +86,7 @@
 					icom.clearTimeout($sizeTimer);
 					size_handler();
 					$dir=offset>0?1:-1;
-					offset=offset/($cont.outerHeight()-$sizeThis)*($sizeThis-$bar.outerHeight())
+					offset=offset/($sizeCont-$sizeThis)*($sizeThis-$bar.height())
 					$tar+=offset;
 					$tar=Math.max(0,Math.min($tar,$barSize));
 					$speed=0;
@@ -83,33 +111,6 @@
 				$speed=0;
 				scroll_set();
 			}//end func
-			
-			function size_handler(){
-//				console.log('size_handler');
-				if($sizeCont!=$cont.outerHeight() || $sizeThis!=$this.height()){
-					$sizeCont=$cont.outerHeight();
-					$sizeThis=$this.height();
-					if(opts.static){
-						$tar=-$cont.position().top/($cont.outerHeight()-$sizeThis)*($sizeThis-$bar.outerHeight())
-						$bar.css({y:$tar,z:0});
-					}//end if
-					else{
-						$bar.css({height:$sizeThis/$cont.outerHeight()*$panel.height()});
-						$barSize=$sizeThis-$bar.outerHeight();
-					}//edn esle
-					if($sizeCont<=$sizeThis){
-						$can=false;
-						$panel.hide();
-					}//end if
-					else{
-						$can=true;
-						$panel.show();
-						if(opts.panelFade) $panel.css({opacity:0});
-					}//end else
-					$scale=$sizeThis/$sizeCont*(os.ios?1:1.4);
-				}//end if
-				$sizeTimer=icom.setTimeout(size_handler,15,true);
-			}//end func	
 			
 			function this_touchstart(e){
 				if($can && $enable){
