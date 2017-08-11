@@ -1,17 +1,17 @@
-﻿//2017.7.12
+﻿//2017.8.11
 (function($) {
 	$.fn.extend({
 		scrbar: function(options) {	
 			var $this=$(this);
+			var $sizeCont=0,$sizeThis=$this.height(),$sizeTimer,$scrollTimer;
 			var $cont=$this.children(".cont");
 			var $panel=$this.children(".panel");
-			var $bar=$panel.children(),$barSize=$this.height()-$bar.outerHeight();
-			var $tar=0,$tarBack=0,$can=true,$size=0,$sizeLastCont=0,$sizeLastThis=$this.height(),$posLast=0,$dir=0,$enable=true;
+			var $bar=$panel.children(),$barSize=$sizeThis-$bar.outerHeight();
+			var $tar=0,$tarBack=0,$can=true,$posLast=0,$dir=0,$enable=true;
 			var defaults = {static:false,speed:1,panelFade:false,overback:true};
 			var opts = $.extend(defaults, options);
-			var $sizeTimer,$scrollTimer;
 			var $speed=0,$rate=45,$timeLast=0;
-			var $scale=$this.height()/$cont.height()*(os.ios?1:1.5);
+			var $scale=$sizeThis/$cont.height()*(os.ios?1:1.5);
 			var $ease=os.ios?0.95:0.92;
 			var $touched=false,$moving=false;
 			
@@ -45,7 +45,7 @@
 					icom.clearTimeout($sizeTimer);
 					size_handler();
 					$dir=$tar<pos?1:-1;
-					pos=pos/($cont.outerHeight()-$this.height())*($this.height()-$bar.outerHeight())
+					pos=pos/($cont.outerHeight()-$sizeThis)*($sizeThis-$bar.outerHeight())
 					$tar=pos;
 					$tar=Math.max(0,Math.min($tar,$barSize));
 					$speed=0;
@@ -58,7 +58,7 @@
 					icom.clearTimeout($sizeTimer);
 					size_handler();
 					$dir=offset>0?1:-1;
-					offset=offset/($cont.outerHeight()-$this.height())*($this.height()-$bar.outerHeight())
+					offset=offset/($cont.outerHeight()-$sizeThis)*($sizeThis-$bar.outerHeight())
 					$tar+=offset;
 					$tar=Math.max(0,Math.min($tar,$barSize));
 					$speed=0;
@@ -86,17 +86,18 @@
 			
 			function size_handler(){
 //				console.log('size_handler');
-				$size=$cont.outerHeight();
-				if($sizeLastCont!=$size || $sizeLastThis!=$this.height()){
+				if($sizeCont!=$cont.outerHeight() || $sizeThis!=$this.height()){
+					$sizeCont=$cont.outerHeight();
+					$sizeThis=$this.height();
 					if(opts.static){
-						$tar=-$cont.position().top/($cont.outerHeight()-$this.height())*($this.height()-$bar.outerHeight())
+						$tar=-$cont.position().top/($cont.outerHeight()-$sizeThis)*($sizeThis-$bar.outerHeight())
 						$bar.css({y:$tar,z:0});
 					}//end if
 					else{
-						$bar.css({height:$this.height()/$cont.outerHeight()*$panel.height()});
-						$barSize=$this.height()-$bar.outerHeight();
+						$bar.css({height:$sizeThis/$cont.outerHeight()*$panel.height()});
+						$barSize=$sizeThis-$bar.outerHeight();
 					}//edn esle
-					if($size<=$this.height()){
+					if($sizeCont<=$sizeThis){
 						$can=false;
 						$panel.hide();
 					}//end if
@@ -105,9 +106,7 @@
 						$panel.show();
 						if(opts.panelFade) $panel.css({opacity:0});
 					}//end else
-					$scale=$this.height()/$size*(os.ios?1:1.4);
-					$sizeLastCont=$size;//滚动内容上一次高
-					$sizeLastThis=$this.height();
+					$scale=$sizeThis/$sizeCont*(os.ios?1:1.4);
 				}//end if
 				$sizeTimer=icom.setTimeout(size_handler,15,true);
 			}//end func	
@@ -186,7 +185,7 @@
 //				console.log('$tar:'+$tar);
 				$bar.css({y:$tar,z:0});
 				var percent=$tar/$barSize;
-				var position=percent*($size-$this.height());
+				var position=percent*($sizeCont-$sizeThis);
 				$cont.css({y:-position,z:0});
 				if(opts.onScroll) opts.onScroll(position,percent,$dir);
 			}//edn func
