@@ -69,10 +69,10 @@ function importBase() {
 		this.landscapeWidth = wd || 1206;
 		this.landscapeHeight = ht || 750;
 		this.landscapeScaleMode = scale || 'cover';
-		this.landscapeLock=os.ios && !this.simulation;
-		this.landscapeLock=lock==false?false:this.landscapeLock;
+		this.landscapeLock=lock||0;
+		this.landscapeLock=this.simulation?false:this.landscapeLock;
 		this.landscapeFollow=follow||0;
-		this.landscapeFollow=this.landscapeLock==false?true:this.landscapeFollow;
+		this.landscapeFollow=!this.landscapeLock?true:this.landscapeFollow;
 		this.landscapeFirstDir=base.getOrient(true);
 		this.unit = this.dir == 'landscape' ? 'px' : (unit || 'rem');
 		console.log('simulation:' + this.simulation);
