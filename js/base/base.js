@@ -63,14 +63,16 @@ function importBase() {
 	base.cssMedia = 750;
 	base.scrollTop = -1;
 
-	base.init = function(dir, unit, wd, ht, scale, follow) {
+	base.init = function(dir, unit, wd, ht, scale, lock, follow) {
 		this.dir = dir || 'portrait';
 		this.simulation=window.orientation===undefined;
 		this.landscapeWidth = wd || 1206;
 		this.landscapeHeight = ht || 750;
 		this.landscapeScaleMode = scale || 'cover';
-		this.landscapeFollow=follow||0;
 		this.landscapeLock=os.ios && !this.simulation;
+		this.landscapeLock=lock==false?false:this.landscapeLock;
+		this.landscapeFollow=follow||0;
+		this.landscapeFollow=this.landscapeLock==false?true:this.landscapeFollow;
 		this.landscapeFirstDir=base.getOrient(true);
 		this.unit = this.dir == 'landscape' ? 'px' : (unit || 'rem');
 		console.log('simulation:' + this.simulation);
