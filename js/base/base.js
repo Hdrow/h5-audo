@@ -1,4 +1,4 @@
-//2017.8.1
+//2017.8.18
 //-----------------------------------os
 var os = importOS();
 
@@ -32,15 +32,15 @@ function importOS() {
 	os.ie = document.documentMode;
 	os.edge = userAgent.match(/Edge/) ? true : false;
 	os.pc = !(os.android || os.ios || os.wp);
-	os.test = window.innerWidth == 540 && window.innerHeight == 850;
+	os.simulation = window.innerWidth == 540;
 	if(os.ios){
-		os.iphone6Plus = (screen.width == 414 && screen.height == 736) || (window.innerWidth == 540 && window.innerHeight == 876);
-		os.iphone6 = (screen.width == 375 && screen.height == 667) || (window.innerWidth == 540 && window.innerHeight == 868);
-		os.iphone5 = (screen.width == 320 && screen.height == 568) || (window.innerWidth == 540 && window.innerHeight == 850);
-		os.iphone4 = (screen.width == 320 && screen.height == 480) || (window.innerWidth == 540 && window.innerHeight == 702);
+		os.iphone6Plus = (screen.width == 414 && screen.height == 736) || (os.simulation && window.innerHeight == 876);
+		os.iphone6 = (screen.width == 375 && screen.height == 667) || (os.simulation && window.innerHeight == 868);
+		os.iphone5 = (screen.width == 320 && screen.height == 568) || (os.simulation && window.innerHeight == 850);
+		os.iphone4 = (screen.width == 320 && screen.height == 480) || (os.simulation && window.innerHeight == 702);
 	}//edn if
 	else if(os.android){
-		if(window.innerWidth == 540 && window.innerHeight == 780) os.huawei = true;
+		if(os.simulation && window.innerHeight == 780) os.huawei = true;
 		else{
 			requestAnimationFrame(function() {
 				if(screen.width == 360) os.huawei = (screen.height == 640 && window.innerHeight < 540) || screen.height < 640;
