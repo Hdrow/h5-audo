@@ -1,4 +1,4 @@
-//2017.4.19
+//2017.8.20
 var imath = importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath() {
@@ -10,14 +10,14 @@ function importMath() {
 		randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 		return randomNumber;
 	} //end func 
-	
+
 	//获得随机颜色
 	math.randomColor = function() {
 		var str = "0123456789abcdef";
 		var s = "#";
-		for ( j = 0; j < 6; j++) s += str.charAt(Math.random() * str.length);
+		for(j = 0; j < 6; j++) s += str.charAt(Math.random() * str.length);
 		return s;
-	}//end func
+	} //end func
 
 	//随机打乱一个数组
 	math.randomSort = function(ary) {
@@ -156,23 +156,21 @@ function importMath() {
 
 	//对array和object对象的深度复制
 	math.deepClone = function(source) {
-
 		return getClone(source);
 
 		function getClone(_source) {
-			var clone = getType(_source) == "array" ? [] : {};
+			var clone = math.dataType(_source) == "array" ? [] : {};
 			for(var i in _source) {
-				if(getType(_source[i]) != 'object' && getType(_source[i]) != 'array') clone[i] = _source[i];
+				if(math.dataType(_source[i]) != 'object' && math.dataType(_source[i]) != 'array') clone[i] = _source[i];
 				else clone[i] = getClone(_source[i]);
 			} //end for
 			return clone;
 		} //edn func
+	} //end func
 
-		function getType(o) {
-			if(typeof(o) === 'object') return Array == o.constructor ? 'array' : 'object';
-			else return null;
-		} //end func
-
+	math.dataType = function(o) {
+		if(typeof(o) === 'object') return Array == o.constructor ? 'array' : 'object';
+		else return null;
 	} //end func
 
 	//获得Object的长度
@@ -201,19 +199,19 @@ function importMath() {
 			return Number(str2);
 		} //end else
 	} //edn func
-	
-	math.colorToRgb = function( color )  {
-		if ( color.match( /^#?([0-9a-f]{6}|[0-9a-f]{3})$/i ) ) {
-			  var value = color.slice( color.indexOf('#') + 1 ),
-				  isShortNotation = (value.length === 3),
-				  r = isShortNotation ? (value.charAt(0) + value.charAt(0)) : value.substring(0, 2),
-				  g = isShortNotation ? (value.charAt(1) + value.charAt(1)) : value.substring(2, 4),
-				  b = isShortNotation ? (value.charAt(2) + value.charAt(2)) : value.substring(4, 6);
-			  return [parseInt(r, 16),parseInt(g, 16),parseInt(b, 16)];
+
+	math.colorToRgb = function(color) {
+		if(color.match(/^#?([0-9a-f]{6}|[0-9a-f]{3})$/i)) {
+			var value = color.slice(color.indexOf('#') + 1),
+				isShortNotation = (value.length === 3),
+				r = isShortNotation ? (value.charAt(0) + value.charAt(0)) : value.substring(0, 2),
+				g = isShortNotation ? (value.charAt(1) + value.charAt(1)) : value.substring(2, 4),
+				b = isShortNotation ? (value.charAt(2) + value.charAt(2)) : value.substring(4, 6);
+			return [parseInt(r, 16), parseInt(g, 16), parseInt(b, 16)];
 		}
 		return 'rgba(0,0,0,255)';
-	}//end func
-	
+	} //end func
+
 	return math;
 
 } //end import
@@ -228,13 +226,13 @@ Array.prototype.contains = function(obj) {
 } //end func
 
 //为Array添加remove方法
-Array.prototype.remove=function (w){
-	var n=this.indexOf(w);
-	if(n!=-1)this.splice(n,1);
+Array.prototype.remove = function(w) {
+	var n = this.indexOf(w);
+	if(n != -1) this.splice(n, 1);
 };
 
 //为Array添加append方法
 Array.prototype.append = function(c) {
-    for (var b = 0, a = c.length; b < a; b++) this.push(c[b])
-    return this;
+	for(var b = 0, a = c.length; b < a; b++) this.push(c[b])
+	return this;
 };
