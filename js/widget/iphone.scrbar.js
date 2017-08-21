@@ -1,4 +1,4 @@
-﻿//2017.8.11
+﻿//2017.8.21
 (function($) {
 	$.fn.extend({
 		scrbar: function(options) {	
@@ -149,7 +149,7 @@
 						$(this).off("touchstart",this_touchstart);
 						cancelAnimationFrame($scrollTimer);
 						$scrollTimer=requestAnimationFrame(scroll_overback);
-						if(opts.onOverscroll) opts.onOverscroll();
+						if(opts.onOverscroll) opts.onOverscroll($tarBack);
 					}//edn if
 				}//edn if
 			}//end func
@@ -200,7 +200,7 @@
 					$cont.removeClass('moving');
 					$this.one("touchstart",this_touchstart);
 					$scrollTimer=requestAnimationFrame(scroll_handler);
-					if(opts.onOverback) opts.onOverback();
+					if(opts.onOverback) opts.onOverback($tarBack);
 				}//end else
 			}//edn func
 			
