@@ -48,6 +48,7 @@ function importOS() {
 			});
 		} //edn if
 	}//edn if
+	os.facebook = userAgent.match(/(FB)/) ? true : false;
 
 	return os;
 } //end func
