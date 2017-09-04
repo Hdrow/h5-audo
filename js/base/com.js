@@ -269,7 +269,7 @@ function importCom() {
 					var reg = new RegExp(/^1[3-9]\d{9}$/); //手机号码验证
 					break;
 				case 1:
-					var reg = new RegExp(/^[1-9]\d{5}$/); //邮政编码验证
+					var reg = new RegExp(/^\d{6}$/); //邮政编码、6位数验证码验证
 					break;
 				case 2:
 					var reg = new RegExp(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/); //匹配EMAIL
