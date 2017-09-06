@@ -1,4 +1,4 @@
-//2017.8.1
+//2017.9.6
 var icom = importCom();
 
 function importCom() {
@@ -269,7 +269,7 @@ function importCom() {
 					var reg = new RegExp(/^1[3-9]\d{9}$/); //手机号码验证
 					break;
 				case 1:
-					var reg = new RegExp(/^\d{6}$/); //邮政编码、6位数验证码验证
+					var reg = new RegExp(/^[1-9]\d{5}$/); //邮政编码验证
 					break;
 				case 2:
 					var reg = new RegExp(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/); //匹配EMAIL
@@ -291,6 +291,12 @@ function importCom() {
 					break;
 				case 8:
 					var reg = new RegExp(/^[a-zA-Z\u0391-\uFFE5]+$/); //不能包含数字和符号
+					break;
+				case 9:
+					var reg = new RegExp(/^\d{6}$/); //6位验证码验证
+					break;
+				case 10:
+					var reg = new RegExp(/^\d{4}$/); //4位验证码验证
 					break;
 			} //end switch
 			if(reg.exec($.trim(str))) return true;
@@ -326,8 +332,9 @@ function importCom() {
 		shell = shell || input.parents('section');
 		if(input.length > 0) {
 			if(os.ios) {
+				var body=$('body');
 				input.on('focus', function(e) {
-					$(document).one('touchend', ios_keyboard);
+					body.one('touchend', ios_keyboard);
 				});
 			} //end if
 			else if(shell.length > 0) {
