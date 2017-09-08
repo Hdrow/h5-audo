@@ -24,8 +24,8 @@ a>img{ width:100%;}
 .moving{ will-change:transform;}
 .smoothSlide {-webkit-overflow-scrolling: touch;}/* ios设备平滑滚动 */
 .txtShadow{text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000; }
-.aniStop{-webkit-animation-play-state: paused;}
-.aniPlay{ -webkit-animation-play-state: running;}
+.aniStop{animation-play-state: paused;}
+.aniPlay{ animation-play-state: running;}
 .overScroll{ overflow-y:scroll; -webkit-overflow-scrolling: touch;}
 
 /* css media */
@@ -56,26 +56,25 @@ aside.turnBoxPortrait>p{ text-align:center; font-size:0.28rem; color:#fff;}
 
 /* load浮层 */
 aside.loadBox{ position:absolute; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:996; display: none;}
-aside.loadBox>span{ display:block; position:absolute; left:50%; top:50%; margin-left:-0.12rem; margin-top:-0.24rem; -webkit-transform:scale(0.46); -webkit-transform-origin: 50% 50%;}
+aside.loadBox>span{ display:block; position:absolute; left:50%; top:50%; margin-left:-0.12rem; margin-top:-0.24rem; transform:scale(0.46); transform-origin: 50% 50%;}
 aside.loadBox>span i{ display:block; position:absolute; left:0; top:0; width:0.4rem; height:0.1rem; border-radius:0.08rem; background-color:rgba(255,255,255,0.5); box-shadow:0 0 0.1rem rgba(255,255,255,1);}
-aside.loadBox>span i:nth-child(1){ -webkit-transform:translate(0.6rem, 0) rotate(0deg); -webkit-animation:loadCircle 2.4s 0s linear infinite;}
-aside.loadBox>span i:nth-child(2){ -webkit-transform:translate(0.5196rem, 0.3rem) rotate(30deg); -webkit-animation:loadCircle 2.4s 0.2s linear infinite;}
-aside.loadBox>span i:nth-child(3){ -webkit-transform:translate(0.3rem, 0.5196rem) rotate(60deg); -webkit-animation:loadCircle 2.4s 0.4s linear infinite;}
-aside.loadBox>span i:nth-child(4){ -webkit-transform:translate(0, 0.6rem) rotate(90deg); -webkit-animation:loadCircle 2.4s 0.6s linear infinite;}
-aside.loadBox>span i:nth-child(5){ -webkit-transform:translate(-0.3rem, 0.5196rem) rotate(120deg); -webkit-animation:loadCircle 2.4s 0.8s linear infinite;}
-aside.loadBox>span i:nth-child(6){ -webkit-transform:translate(-0.5196rem, 0.3rem) rotate(150deg); -webkit-animation:loadCircle 2.4s 1.0s linear infinite;}
-aside.loadBox>span i:nth-child(7){ -webkit-transform:translate(-0.6rem, 0) rotate(180deg); -webkit-animation:loadCircle 2.4s 1.2s linear infinite;}
-aside.loadBox>span i:nth-child(8){ -webkit-transform:translate(-0.5196rem, -0.3rem) rotate(210deg); -webkit-animation:loadCircle 2.4s 1.4s linear infinite;}
-aside.loadBox>span i:nth-child(9){ -webkit-transform:translate(-0.3rem, -0.5196rem) rotate(240deg); -webkit-animation:loadCircle 2.4s 1.6s linear infinite;}
-aside.loadBox>span i:nth-child(10){ -webkit-transform:translate(0, -0.6rem) rotate(270deg); -webkit-animation:loadCircle 2.4s 1.8s linear infinite;}
-aside.loadBox>span i:nth-child(11){ -webkit-transform:translate(0.3rem, -0.5196rem) rotate(300deg); -webkit-animation:loadCircle 2.4s 2.0s linear infinite;}
-aside.loadBox>span i:nth-child(12){ -webkit-transform:translate(0.5196rem, -0.3rem) rotate(330deg); -webkit-animation:loadCircle 2.4s 2.2s linear infinite;}
-aside.loadBox>b{ display:block; position:absolute; left:0; top:50%; width:100%; height:0.4rem; line-height:0.4rem; margin-left:-0.1rem; margin-top:-0.34rem; text-align:center; font-size:0.2rem; color:rgba(255,255,255,0.7);}
+aside.loadBox>span i:nth-child(1){ transform:translate(0.6rem, 0) rotate(0deg); animation:loadCircle 2.4s 0s linear infinite;}
+aside.loadBox>span i:nth-child(2){ transform:translate(0.5196rem, 0.3rem) rotate(30deg); animation:loadCircle 2.4s 0.2s linear infinite;}
+aside.loadBox>span i:nth-child(3){ transform:translate(0.3rem, 0.5196rem) rotate(60deg); animation:loadCircle 2.4s 0.4s linear infinite;}
+aside.loadBox>span i:nth-child(4){ transform:translate(0, 0.6rem) rotate(90deg); animation:loadCircle 2.4s 0.6s linear infinite;}
+aside.loadBox>span i:nth-child(5){ transform:translate(-0.3rem, 0.5196rem) rotate(120deg); animation:loadCircle 2.4s 0.8s linear infinite;}
+aside.loadBox>span i:nth-child(6){ transform:translate(-0.5196rem, 0.3rem) rotate(150deg); animation:loadCircle 2.4s 1.0s linear infinite;}
+aside.loadBox>span i:nth-child(7){ transform:translate(-0.6rem, 0) rotate(180deg); animation:loadCircle 2.4s 1.2s linear infinite;}
+aside.loadBox>span i:nth-child(8){ transform:translate(-0.5196rem, -0.3rem) rotate(210deg); animation:loadCircle 2.4s 1.4s linear infinite;}
+aside.loadBox>span i:nth-child(9){ transform:translate(-0.3rem, -0.5196rem) rotate(240deg); animation:loadCircle 2.4s 1.6s linear infinite;}
+aside.loadBox>span i:nth-child(10){ transform:translate(0, -0.6rem) rotate(270deg); animation:loadCircle 2.4s 1.8s linear infinite;}
+aside.loadBox>span i:nth-child(11){ transform:translate(0.3rem, -0.5196rem) rotate(300deg); animation:loadCircle 2.4s 2.0s linear infinite;}
+aside.loadBox>span i:nth-child(12){ transform:translate(0.5196rem, -0.3rem) rotate(330deg); animation:loadCircle 2.4s 2.2s linear infinite;}
 @-webkit-keyframes loadCircle{0%{opacity:1}8.3%{opacity:0}50%{opacity:1}100%{opacity:1}}
 
 /* 取代系统alert的弹窗 */
 aside.alertBox{ position:absolute; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:998;}
-aside.alertBox>div{ position: absolute; left: 50%; top: 50%; width:85%; -webkit-transform: translate(-50%,-50%); background-color:#FAFAFC; border-radius:0.07rem; padding-top: 0.46rem;}
+aside.alertBox>div{ position: absolute; left: 50%; top: 50%; width:85%; transform: translate(-50%,-50%); background-color:#FAFAFC; border-radius:0.07rem; padding-top: 0.46rem;}
 aside.alertBox>div>p.text{font-size:0.3rem; line-height: 1.4; color:#888; padding: 0 0.46rem 0; margin-bottom: 0.46rem; text-align:center; }
 aside.alertBox>div>p.btn{ text-align: center; border-top: 1px solid #D5D5D6; }
 aside.alertBox>div>p.btn a{ color:#0BB20C; font-size:0.4rem; line-height: 1rem; display: block;}
@@ -83,7 +82,7 @@ aside.alertBox>div>p.btn a:active{ background-color: #eeeeee;}
 
 /* 系统confirm弹窗 */
 aside.confirmBox{ position:absolute; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:998;}
-aside.confirmBox>div{ position: absolute; left: 50%; top: 50%; width:85%; -webkit-transform: translate(-50%,-50%); background-color:#FAFAFC; border-radius:0.07rem; padding-top: 0.46rem;}
+aside.confirmBox>div{ position: absolute; left: 50%; top: 50%; width:85%; transform: translate(-50%,-50%); background-color:#FAFAFC; border-radius:0.07rem; padding-top: 0.46rem;}
 aside.confirmBox>div>p.text{font-size:0.3rem; line-height: 1.4; color:#888; padding: 0 0.46rem 0; margin-bottom: 0.46rem; text-align:center; }
 aside.confirmBox>div>p.btn{ border-top: 1px solid #D5D5D6; display: flex; align-items: center; justify-content: center; }
 aside.confirmBox>div>p.btn a{ color:#0BB20C; font-size:0.4rem; line-height: 1rem; text-align: center; flex: 1;}
