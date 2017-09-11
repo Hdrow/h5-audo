@@ -58,6 +58,7 @@ $(document).ready(function(){
 		console.log('init handler');
 //		icom.fadeOut(loadBox,500);
 		monitor_handler();
+		console.log('huawei:'+os.huawei)
 	}//end func
 	
 	//----------------------------------------页面监测代码----------------------------------------
