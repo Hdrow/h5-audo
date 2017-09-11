@@ -33,6 +33,7 @@ function importOS() {
 	os.edge = userAgent.match(/Edge/) ? true : false;
 	os.pc = !(os.android || os.ios || os.wp);
 	if(os.ios){
+		os.iphoneX = screen.width == 375 && screen.height == 812;
 		os.iphone6Plus = screen.width == 414 && screen.height == 736;
 		os.iphone6 = screen.width == 375 && screen.height == 667;
 		os.iphone5 = screen.width == 320 && screen.height == 568;
