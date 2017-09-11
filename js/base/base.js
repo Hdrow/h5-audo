@@ -40,8 +40,8 @@ function importOS() {
 	}//edn if
 	else if(os.android){
 		requestAnimationFrame(function() {
-			if(screen.width == 360) os.huawei = (screen.height == 640 && window.innerHeight < 540) || window.innerHeight <= 540;
-			else if(screen.width == 412) os.huawei = (screen.height == 732 && window.innerHeight < 640) || window.innerHeight <= 640;
+			if(screen.width == 360) os.huawei = (screen.height == 640 && window.innerHeight < 540) || window.innerHeight < 540;
+			else if(screen.width == 412) os.huawei = (screen.height == 732 && window.innerHeight < 640) || window.innerHeight < 640;
 		});
 	}//edn if
 	os.facebook = userAgent.match(/(FB)/) ? true : false;
