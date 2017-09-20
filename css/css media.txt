@@ -1,15 +1,14 @@
 ﻿//---------------------------------------------------- 苹果
 物理分辨率：
-iphone4 640x960
 iphone5 640x1136
 iphone6 750x1334
 iphone6plus 1920×1080
+iphoneX 1125x2436
 
 微信竖屏：
-iphone4 screen:320x480/weixin:320x416
 iphone5 screen:320x568/weixin:320x504
 iphone6 screen:375x667/weixin:375x603
-iphone6plus screen:414×736/weixin:414x672
+iphone6plus screen:414x736/weixin:414x672
 iphoneX screen:375×812/weixin:375x748
 
 微信横屏：
@@ -39,16 +38,15 @@ android 1080P not 16:9 :1080x1776
 android 2k not 16:9 :1440x2390
 
 微信竖屏：
-android 16:9 720p/1080p screen:360x640/weixin:360x567
-android 16:9 2k screen:412x732/weixin:412x660
-android not 16:9 720p screen:360x592/weixin:360x520
+android 16:9 1080p screen:360x640/weixin:360x572
+android 16:9 2k screen:412x732/weixin:412x664
 android not 16:9 1080p screen:360x598/weixin:360x526
 android not 16:9 2k screen:412x684/weixin:412x612
 
 微信横屏：
-android 16:9 720p/1080p screen:640x360/weixin:640x295
+android 16:9 1080p screen:640x360/weixin:640x295
 android 16:9 2k screen:732x412/weixin:732x338
-android not 16:9 720p/1080p screen:598x360/weixin:598x288
+android not 16:9 1080p screen:598x360/weixin:598x288
 android not 16:9 2k screen:684x412/weixin:684x340
 
 浏览器标识：
