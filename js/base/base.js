@@ -99,7 +99,7 @@ function importBase() {
 		else{
 			document.write('<link rel="stylesheet" type="text/css" href="css/common.landscape.css" />');
 			if(this.landscapeLock){
-				document.write('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" /><p>请锁定手机竖排方向并横屏观看</p></aside>');
+				document.write('<aside class="turnBoxLandscape" id="turnBox"><img src="images/common/turn_hor.png" /><p>请打开手机竖排方向锁定并横屏观看</p></aside>');
 				this.turnBox = document.getElementById("turnBox");
 				if(this.landscapeFirstDir == 'landscape') {
 					this.turnBox.style.display = "block";
