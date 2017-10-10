@@ -11,8 +11,8 @@ var ishare=importShare();
 		link:ishare.url,
 		image:ishare.url+'images/share.jpg?v='+Math.random(),
 		title:$('title').html(),
-		friend:'发动给朋友的分享文案',
-		timeline:'发动到给朋友圈的分享文案'
+		friend:'发送给朋友的分享文案',
+		timeline:'发送到给朋友圈的分享文案'
 	};
 	ishare.from=icom.getQueryString('from');
 	ishare.from=ishare.from||'friend';
