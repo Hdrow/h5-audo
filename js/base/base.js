@@ -1,4 +1,4 @@
-//2017.8.18
+//2017.10.12
 //-----------------------------------os
 var os = importOS();
 
@@ -41,9 +41,15 @@ function importOS() {
 	}//edn if
 	else if(os.android){
 		requestAnimationFrame(function() {
-			if(screen.width == 360) os.huawei = (screen.height == 640 && window.innerHeight < 540) || window.innerHeight < 540;
-			else if(screen.width == 412) os.huawei = (screen.height == 732 && window.innerHeight < 640) || window.innerHeight < 640;
+			if(screen.width == 360) os.screen159 = (screen.height == 640 && window.innerHeight < 540) || window.innerHeight < 540;
+			else if(screen.width == 412) os.screen159 = (screen.height == 732 && window.innerHeight < 640) || window.innerHeight < 640;
+			if(screen.width == 360) os.screen189 = (screen.height == 678 && window.innerHeight < 620) || window.innerHeight < 620;
+			else if(screen.width == 412) os.screen189 = (screen.height == 775 && window.innerHeight < 740) || window.innerHeight < 740;
 		});
+		os.miui=userAgent.match(/MI/) || userAgent.match(/Redmi/) ? true : false;
+		os.huawei=userAgent.match(/HUAWEI/) ? true : false;
+		os.oppo=userAgent.match(/OPPO/) ? true : false;
+		os.vivo=userAgent.match(/vivo/) ? true : false;
 	}//edn if
 	os.facebook = userAgent.match(/(FB)/) ? true : false;
 
