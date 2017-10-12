@@ -26,37 +26,41 @@ Mozilla/5.0 (iPhone; CPU iPhone OS 11_0_2 like Mac OS X) AppleWebKit/604.1.38 (K
 //--------------------------------------------------------------------------------------------------------安卓----------------------------------------------------
 物理分辨率 ：
 //-----16:9
-android 720P :720x1280
-android 1080P :1080x1920
-android 2K :1440x2560
+android 720P 720x1280
+android 1080P 1080x1920
+android 1440p 1440x2560
 //-----18:9
-android 720P :720x1440
-android 1080P :1080x2160
-android 2K :1440×2880
+android 720P 720x1440
+android 1080P 1080x2160
+android 1440p 1440×2880
+//-----18.5:9
+android 1440p 1440×2960
 
 
 微信竖屏：
 //-----15:9(带虚拟按键的16:9手机)
-android 720p/1080p screen:360x598/window:360x526
-android 2k screen:412x684/window:412x612
+android 720p/1080p screen:360x640/window:360x526
+android 1440p screen:412x732/window:412x612
 //-----16:9(带物理按键的16:9手机)
 android 720p/1080p screen:360x640/window:360x572
-android 2k screen:412x732/window:412x664
+android 1440p screen:412x732/window:412x664
 //-----18:9(全面屏手机都是虚拟按键)
-android 720p/1080p screen:360x678/window:360x606
-android 2k screen:412x775/window:412x723
+android 720p/1080p screen:360x720/window:360x606
+android 1440p screen:412x823/window:412x703
+//-----18.5:9(全面屏手机都是虚拟按键)
+android 1440p screen:412x846/window:412x726
 
 
 微信横屏：
 //-----15:9
 android 1080p screen:598x360/window:598x288
-android 2k screen:684x412/window:684x340
+android 1440p screen:684x412/window:684x340
 //-----16:9
 android 1080p screen:640x360/window:640x295
-android 2k screen:732x412/window:732x338
+android 1440p screen:732x412/window:732x338
 //-----18:9
 android 1080p screen:678x360/window:678x288
-android 2k screen:775x412/window:775x340
+android 1440p screen:775x412/window:775x340
 
 
 微信浏览器标识：

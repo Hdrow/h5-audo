@@ -42,7 +42,7 @@ function importOS() {
 	else if(os.android){
 		requestAnimationFrame(function() {
 			os.screen159 = (screen.width == 360 && window.innerHeight < 540) || (screen.width == 412 && window.innerHeight < 640);
-			os.screen189 = (screen.width == 360 && window.innerHeight > 590) || (screen.width == 412 && window.innerHeight > 690) || (screen.width == 393 && window.innerHeight > 660);
+			os.screen189 = (screen.width == 360 && window.innerHeight > 590) || (screen.width == 412 && window.innerHeight > 680) || (screen.width == 393 && window.innerHeight > 660);
 		});
 		os.miui=userAgent.match(/MI/) || userAgent.match(/Redmi/) ? true : false;
 		os.huawei=userAgent.match(/HUAWEI/) ? true : false;
