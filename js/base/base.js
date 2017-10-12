@@ -41,10 +41,8 @@ function importOS() {
 	}//edn if
 	else if(os.android){
 		requestAnimationFrame(function() {
-			if(screen.width == 360) os.screen159 = (screen.height == 640 && window.innerHeight < 540) || window.innerHeight < 540;
-			else if(screen.width == 412) os.screen159 = (screen.height == 732 && window.innerHeight < 640) || window.innerHeight < 640;
-			if(screen.width == 360) os.screen189 = (screen.height == 678 && window.innerHeight < 620) || window.innerHeight < 620;
-			else if(screen.width == 412) os.screen189 = (screen.height == 775 && window.innerHeight < 740) || window.innerHeight < 740;
+			os.screen159 = (screen.width == 360 && window.innerHeight < 540) || (screen.width == 412 && window.innerHeight < 640);
+			os.screen189 = (screen.width == 360 && window.innerHeight > 590) || (screen.width == 412 && window.innerHeight > 690) || (screen.width == 393 && window.innerHeight > 660);
 		});
 		os.miui=userAgent.match(/MI/) || userAgent.match(/Redmi/) ? true : false;
 		os.huawei=userAgent.match(/HUAWEI/) ? true : false;

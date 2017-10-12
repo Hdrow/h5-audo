@@ -58,6 +58,7 @@ $(document).ready(function(){
 		console.log('init handler');
 //		icom.fadeOut(loadBox,500);
 		monitor_handler();
+		icom.alert('screen159:'+os.screen159+'</br>'+'screen189:'+os.screen189);
 	}//end func
 	
 	//----------------------------------------页面监测代码----------------------------------------
