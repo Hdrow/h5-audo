@@ -30,19 +30,20 @@ android 720P :720x1280
 android 1080P :1080x1920
 android 2K :1440x2560
 //-----18:9
+android 720P :720x1440
 android 1080P :1080x2160
 android 2K :1440×2880
 
 
 微信竖屏：
 //-----15:9(带虚拟按键的16:9手机)
-android 1080p screen:360x598/window:360x526
+android 720p/1080p screen:360x598/window:360x526
 android 2k screen:412x684/window:412x612
 //-----16:9(带物理按键的16:9手机)
-android 1080p screen:360x640/window:360x572
+android 720p/1080p screen:360x640/window:360x572
 android 2k screen:412x732/window:412x664
 //-----18:9(全面屏手机都是虚拟按键)
-android 1080p screen:360x678/window:360x606
+android 720p/1080p screen:360x678/window:360x606
 android 2k screen:412x775/window:412x723
 
 
