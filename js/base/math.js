@@ -1,4 +1,4 @@
-//2017.8.20
+//2017.10.19
 var imath = importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath() {
@@ -211,6 +211,12 @@ function importMath() {
 		}
 		return 'rgba(0,0,0,255)';
 	} //end func
+	
+	//获取路径
+	math.path = function(path) {
+		if(path && path!='') return path.substr(0, path.lastIndexOf('/')+1);
+		else return false;
+	} //edn func
 
 	return math;
 
