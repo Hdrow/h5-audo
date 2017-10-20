@@ -49,6 +49,7 @@ android 720p/1080p screen:360x720/window:360x606
 android 1440p screen:412x823/window:412x703
 //-----18.5:9(全面屏手机都是虚拟按键)
 android 1440p screen:412x846/window:412x726
+小米mix2 1080p screen:393x786/window:393x667 设备像素比:2.75
 
 
 微信横屏：
