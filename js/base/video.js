@@ -6,9 +6,10 @@ function importVideo(){
 	
 	video.add=function(src,options){
 		if(src && src!=''){
-			var defaults = {shell:$('body'),controls:false,autoplay:true};
+			var defaults = {shell:$('body'),controls:false,autoplay:true,x5:false};
 			var opts = $.extend(defaults,options);
 			var container=$('<video playsinline webkit-playsinline></video>').attr({src:src,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
+			if(opts.x5) container.attr({'x5-video-player-type':'h5'}); 
 			if(opts.controls) container.attr({controls:''});
 			if(opts.onLoaded) container[0].addEventListener('canplaythrough',opts.onLoaded,false);
 			if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
