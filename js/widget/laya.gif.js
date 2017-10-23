@@ -1,12 +1,12 @@
-//2018.10.19
+//2018.10.23
 (function($) {	
 	jQuery.fn.extend({
-		gifOn: function(json,options){
+		gifLayaOn: function(json,options){
 			if(json){
 				var $this=$(this);
 				var $path=imath.path(json);
 				var $num,$json,$keys,$images,$name,$type,$shell,$ht,$wd,$chd;
-				var defaults = {speed:33,repeat:-1,endStart:false,pause:false,delay:0,first:0,pause:0};
+				var defaults = {speed:33,repeat:-1,endStart:false,pause:false,delay:0,first:0,pause:0,scale:1};
 				var opts = $.extend(defaults,options);
 				var $now=opts.first,$last=-1,$timer,$repeat=0;
 				var $sound=opts.sound,$btnSound;
@@ -31,7 +31,7 @@
 			
 			function image_loaded(list){
 				$this.empty();
-				$shell=$('<div class="shell"></div>').css({width:$wd,height:$ht,scale:window.innerWidth/750*40/36}).appendTo($this);
+				$shell=$('<div class="shell"></div>').css({width:$wd,height:$ht,scale:opts.scale}).appendTo($this);
 				for(var i=0; i<list.length; i++) $('<div></div>').css({backgroundImage:'url('+list[i]+')'}).appendTo($shell);
 				$chd=$shell.children();
 				$this.on('off',this_off).on('pause',this_pause).on('resume',this_resume).on('goto',this_goto).on('speed',this_speed);
@@ -150,20 +150,20 @@
 			}//end func
 
 		},//end fn
-		gifPause: function(id) {
+		gifLayaPause: function(id) {
 			$(this).triggerHandler('pause',[id]);
 		},//end fn
-		gifResume: function() {
+		gifLayaResume: function() {
 			$(this).triggerHandler('resume');
 		},//end fn
-		gifGoto: function(id) {
+		gifLayaGoto: function(id) {
 			id=Math.abs(id);
 			$(this).triggerHandler('goto',[id,stop]);
 		},//end fn
-		gifSpeed: function(speed) {
+		gifLayaSpeed: function(speed) {
 			if(speed && speed>0) $(this).triggerHandler('speed',[speed]);
 		},//end fn
-		gifOff: function() {
+		gifLayaOff: function() {
 			$(this).triggerHandler('off');
 		}//end fn			
 	});//end extend
