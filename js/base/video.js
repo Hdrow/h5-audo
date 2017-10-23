@@ -1,4 +1,4 @@
-//2016.10.31
+//2017.10.23
 var ivideo=importVideo();
 
 function importVideo(){
@@ -8,7 +8,7 @@ function importVideo(){
 		if(src && src!=''){
 			var defaults = {shell:$('body'),controls:false,autoplay:true};
 			var opts = $.extend(defaults,options);
-			var container=$('<video playsinline webkit-playsinline x5-video-player-type="h5" /></video>').attr({src:src,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
+			var container=$('<video playsinline webkit-playsinline></video>').attr({src:src,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
 			if(opts.controls) container.attr({controls:''});
 			if(opts.onLoaded) container[0].addEventListener('canplaythrough',opts.onLoaded,false);
 			if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
