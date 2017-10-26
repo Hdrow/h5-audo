@@ -1,4 +1,4 @@
-//2017.5.18
+//2017.10.26
 (function($) {	
 	jQuery.fn.extend({
 		gifOn: function($path,$num,options){
@@ -6,7 +6,7 @@
 				var $this=$(this);
 				var defaults = {type:'png',speed:100,repeat:-1,endStart:false,pause:false,first:0};
 				var opts = $.extend(defaults,options);
-				var $now=opts.first,$last=-1,$timer,$repeat=0;
+				var $now=opts.first,$last=-1,$timer,$repeat=0,$chd;
 				load_handler();
 			}//end if
 			
@@ -32,15 +32,15 @@
 			function this_off(e){
 				console.log('this_off')
 				$this.off('off pause resume goto speed');
-				icom.clearTimeout($timer);
+				clearTimeout($timer);
 			}//end if
 			
 			function this_pause(e){
-				icom.clearTimeout($timer);
+				clearTimeout($timer);
 			}//end func
 			
 			function this_resume(e){
-				icom.clearTimeout($timer);
+				clearTimeout($timer);
 				this_play();
 			}//end func
 			
@@ -48,7 +48,7 @@
 				stop=stop||0;
 				if(id!=null){
 					$now=id;
-					icom.clearTimeout($timer);
+					clearTimeout($timer);
 					this_switch(stop);
 				}//end if
 			}//end func
@@ -83,7 +83,7 @@
 				if($last!=-1 && $last!=$now) $chd.eq($last).hide();
 				$last=$now;
 				if(opts.onFrame) opts.onFrame($now+1);
-				if(!stop) $timer=icom.setTimeout(this_play,opts.speed);
+				if(!stop) $timer=setTimeout(this_play,opts.speed);
 			}//end func
 
 		},//end fn

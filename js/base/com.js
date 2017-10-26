@@ -1,4 +1,4 @@
-//2017.9.6
+//2017.10.26
 var icom = importCom();
 
 function importCom() {
@@ -566,15 +566,13 @@ function importCom() {
 
 	function clearTimer(timer) {
 		cancelAnimationFrame(timer.timer);
-		timer.now = 0;
-		timer.start = new Date().getTime();
-		timer.timer = null;
+		timer=null;
 	} //edn func
 
 	function setTimer(callback, frame, type, interval) {
 		var timer = {
 			now: 0,
-			start: new Date().getTime(),
+			start: type ? 0 : new Date().getTime(),
 			timer: null
 		};
 		timer_handler();
