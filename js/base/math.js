@@ -1,4 +1,4 @@
-//2017.10.19
+//2017.10.27
 var imath = importMath();
 //------------------------------------------------------------------------------数学函数------------------------------------------------------------------------------	
 function importMath() {
@@ -221,24 +221,3 @@ function importMath() {
 	return math;
 
 } //end import
-
-//为Array添加Contains方法
-Array.prototype.contains = function(obj) {
-	var i = this.length;
-	while(i--) {
-		if(this[i] === obj) return true;
-	}
-	return false;
-} //end func
-
-//为Array添加remove方法
-Array.prototype.remove = function(w) {
-	var n = this.indexOf(w);
-	if(n != -1) this.splice(n, 1);
-};
-
-//为Array添加append方法
-Array.prototype.append = function(c) {
-	for(var b = 0, a = c.length; b < a; b++) this.push(c[b])
-	return this;
-};
