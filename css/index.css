@@ -1,17 +1,22 @@
-/* ---------------------------------------- 默认css针对16:9标准比例屏幕----------------------------------------*/
+/* ---------------------------------------- 默认css针对16:9标准比例屏幕微信----------------------------------------*/
 
-/*---------------------------------------- 15:9 android----------------------*/
-@media screen and (device-width:360px) and (max-height:540px), screen and (device-width:412px) and (max-height:640px){
-
-}
-
-/*---------------------------------------- 18:9 android----------------------*/
-@media screen and (device-width:360px) and (min-height:590px), screen and (device-width:412px) and (min-height:680px), screen and (device-width:393px){
+/*---------------------------------------- 15:9 android 微信 && iphone 浏览器----------------------*/
+@media screen and (device-width:360px) and (max-height:540px), screen and (device-width:412px) and (max-height:640px), screen and (device-width:320px) and (max-height:460px), screen and (device-width:375px) and (max-height:553px), screen and (device-width:414px) and (max-height:622px){
 
 }
 
-/*---------------------------------------- iphoneX ----------------------------------------------*/
-@media screen and (device-width:375px) and (device-height:812px){
+/*---------------------------------------- 18:9 android 微信 && iphoneX 微信----------------------*/
+@media screen and (device-width:360px) and (min-height:600px), screen and (device-width:412px) and (min-height:700px), screen and (device-width:393px) and (min-height:660px), screen and (device-width:375px) and (device-height:812px){
+
+}
+
+/*---------------------------------------- 18:9 android 浏览器----------------------*/
+@media screen and (device-width:360px) and (min-height:540px) and (max-height:560px), screen and (device-width:412px) and (min-height:630px) and (min-height:640px), screen and (device-width:393px) and (max-height:620px){
+	
+}
+
+/*---------------------------------------- iphoneX 浏览器----------------------------------------------*/
+@media screen and (device-width:375px) and (device-height:812px) and (max-height:698px){
 
 }
 
