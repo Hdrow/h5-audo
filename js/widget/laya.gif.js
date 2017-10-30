@@ -42,6 +42,7 @@
 					if(!opts.pause) sound_play();
 					else $btnSound.hide();
 				}//end if
+				if(opts.onLoaded) opts.onLoaded();
 			}//end init
 			
 			//-------------------------------sound
