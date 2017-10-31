@@ -27,6 +27,7 @@
 				$chd=$this.children();
 				$this.on('off',this_off).on('pause',this_pause).on('resume',this_resume).on('goto',this_goto).on('speed',this_speed);
 				this_switch(opts.pause);
+				if(opts.onLoaded) opts.onLoaded();
 			}//end init
 			
 			function this_off(e){
