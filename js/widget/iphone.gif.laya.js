@@ -1,4 +1,4 @@
-//2018.10.23
+//2018.10.31
 (function($) {	
 	jQuery.fn.extend({
 		gifLayaOn: function(json,options){
@@ -34,7 +34,7 @@
 				$shell=$('<div class="shell"></div>').css({width:$wd,height:$ht,scale:opts.scale}).appendTo($this);
 				for(var i=0; i<list.length; i++) $('<div></div>').css({backgroundImage:'url('+list[i]+')'}).appendTo($shell);
 				$chd=$shell.children();
-				$this.on('off',this_off).on('pause',this_pause).on('resume',this_resume).on('goto',this_goto).on('speed',this_speed);
+				$this.on('off',this_off).on('pause',this_pause).on('resume',this_resume).on('goto',this_goto).on('speed',this_speed).on('next',this_next).on('prev',this_prev);
 				this_switch(opts.pause);
 				if($sound){
 					$btnSound=$('<a class="sound"></a>').appendTo($this);
@@ -66,7 +66,7 @@
 			//-------------------------------------event
 			function this_off(e){
 				console.log('this_off')
-				$this.off('off pause resume goto speed');
+				$this.off('off pause resume goto speed next prev');
 				icom.clearTimeout($timer);
 				if($sound){
 					sound_pause();
@@ -107,6 +107,24 @@
 					if($sound){
 						sound_play($now*opts.speed);
 					}//edn if
+				}//end if
+			}//end func
+			
+			function this_prev(e,stop){
+				stop=stop||0;
+				if($now>0){
+					$now--;
+					icom.clearTimeout($timer);
+					this_switch(stop);
+				}//end if
+			}//end func
+			
+			function this_next(e,stop){
+				stop=stop||0;
+				if($now<$num-1){
+					$now++;
+					icom.clearTimeout($timer);
+					this_switch(stop);
 				}//end if
 			}//end func
 			
@@ -161,6 +179,12 @@
 			id=Math.abs(id);
 			stop=stop||0;
 			$(this).triggerHandler('goto',[id,stop]);
+		},//end fn
+		gifLayaPrev: function(stop) {
+			$(this).triggerHandler('prev',[stop]);
+		},//end fn
+		gifLayaNext: function(stop) {
+			$(this).triggerHandler('next',[stop]);
 		},//end fn
 		gifLayaSpeed: function(speed) {
 			if(speed && speed>0) $(this).triggerHandler('speed',[speed]);
