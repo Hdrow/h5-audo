@@ -157,8 +157,9 @@
 		gifLayaResume: function() {
 			$(this).triggerHandler('resume');
 		},//end fn
-		gifLayaGoto: function(id) {
+		gifLayaGoto: function(id,stop) {
 			id=Math.abs(id);
+			stop=stop||0;
 			$(this).triggerHandler('goto',[id,stop]);
 		},//end fn
 		gifLayaSpeed: function(speed) {
