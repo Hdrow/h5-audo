@@ -1,18 +1,19 @@
-//2017.10.26
+//2017.10.31
 (function($) {	
 	jQuery.fn.extend({
-		gifOn: function($path,$num,options){
-			if($path && $path!='' && $num>1){
+		gifOn: function(options){
+			if(options.path && options.path!=''){
 				var $this=$(this);
-				var defaults = {type:'png',speed:100,repeat:-1,endStart:false,pause:false,first:0};
+				var defaults = {num:1,type:'png',speed:100,repeat:-1,endStart:false,pause:false,first:0};
 				var opts = $.extend(defaults,options);
+				var $path=options.path;
 				var $now=opts.first,$last=-1,$timer,$repeat=0,$chd;
 				load_handler();
 			}//end if
 			
 			function load_handler(){
 				var loader = new PxLoader();
-				for(var i=1; i<=$num; i++) loader.addImage($path+i+'.'+opts.type);
+				for(var i=1; i<=opts.num; i++) loader.addImage($path+i+'.'+opts.type);
 				loader.addCompletionListener(function() {
 					console.log('gif loaded');
 					loader=null;
@@ -23,7 +24,7 @@
 			}//end func
 			
 			function init(){
-				for(var i=1; i<=$num; i++) $('<img>').attr({src:$path+i+'.'+opts.type}).appendTo($this);
+				for(var i=1; i<=opts.num; i++) $('<img>').attr({src:$path+i+'.'+opts.type}).appendTo($this);
 				$chd=$this.children();
 				$this.on('off',this_off).on('pause',this_pause).on('resume',this_resume).on('goto',this_goto).on('speed',this_speed);
 				this_switch(opts.pause);
@@ -60,7 +61,7 @@
 			
 			function this_play(){
 				$now++;
-				if($now>=$num){
+				if($now>=opts.num){
 					$repeat++;
 					if(opts.onComplete) opts.onComplete($repeat);
 					if(opts.repeat>=0){
