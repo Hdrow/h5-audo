@@ -1,4 +1,4 @@
-//2017.10.25
+//2017.10.31
 var ivideo=importVideo();
 
 function importVideo(){
@@ -12,7 +12,8 @@ function importVideo(){
 			if(opts.playsinline) container.attr({'playsinline':'','webkit-playsinline':''});
 			if(opts.x5) container.attr({'x5-video-player-type':'h5'});
 			if(opts.controls) container.attr({controls:''});
-			if(opts.onLoaded) container[0].addEventListener('canplaythrough',opts.onLoaded,false);
+			if(opts.onLoadstart) container[0].addEventListener('progress',opts.onLoadstart,false);
+			if(opts.onLoaded) container[0].addEventListener('loadedmetadata',opts.onLoaded,false);
 			if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
 			if(opts.onTimeupdate) container[0].addEventListener('timeupdate',opts.onTimeupdate,false);
 			if(opts.onPlay) container[0].addEventListener('play',opts.onPlay,false);
