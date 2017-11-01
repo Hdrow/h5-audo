@@ -1,4 +1,4 @@
-//2017.10.31
+//2017.11.1
 (function($) {	
 	jQuery.fn.extend({
 		gifOn: function(options){
@@ -48,7 +48,7 @@
 			
 			function this_goto(e,id,stop){
 				stop=stop||0;
-				if(id!=null){
+				if(id>=0 && id<=opts.num-1){
 					$now=id;
 					clearTimeout($timer);
 					this_switch(stop);
@@ -95,8 +95,9 @@
 		gifResume: function() {
 			$(this).triggerHandler('resume');
 		},//end fn
-		gifGoto: function(id) {
+		gifGoto: function(id,stop) {
 			id=Math.abs(id);
+			stop=stop||0;
 			$(this).triggerHandler('goto',[id,stop]);
 		},//end fn
 		gifSpeed: function(speed) {
