@@ -1,4 +1,4 @@
-//2017.7.6
+//2017.11.3
 var iaudio=importAudio();
 
 function importAudio(){
@@ -122,6 +122,7 @@ function importAudio(){
 	
 	function webAudio(opts){
 		this.context=new webAudioContext(); /* 创建一个 AudioContext */
+		this.gainNode= this.context.createGain();
 	    this.buffer=null;
 	    this.source=null;
 	    this.src=opts.src;
@@ -179,12 +180,8 @@ function importAudio(){
 	    this.source.connect(this.context.destination); /*连接 AudioBufferSourceNode 到 AudioContext */
 	    this.source.start(0,this.continuePlay?this.currentTime % this.buffer.duration:0); 
 	    this.startTime = this.context.currentTime;
-	    //调节音量
-	   	var gain = this.context.createGain();
-		this.source.connect(gain);
-		gain.connect(this.context.destination);
-		gain.gain.value = this.volume;
-//			console.log(gain);
+	    this.source.connect(this.gainNode);
+	    this.gainNode.connect(this.context.destination);
 	    this.source.onended=function(){
 	    	if(_this.played){
 	    		console.log(get_src(_this.src)+' ended');
@@ -202,6 +199,20 @@ function importAudio(){
 //	    console.log(get_src(this.src)+' play');
 	}//end prototype
 	
+	webAudio.prototype.mute=function(mute){
+		mute=mute||0;
+		console.log('mute:'+mute);
+		this.gainNode.gain.value = mute?-1:1;
+	}//end prototype
+	
+	//在手机浏览器里，webaudio可以调节音量,audio目前还不行
+	webAudio.prototype.volume=function(volume){
+		volume=volume||0;
+		volume=Math.max(-1,Math.min(volume,1));
+		console.log('volume:'+volume);
+		this.gainNode.gain.value = volume;
+	}//end prototype
+	
 	webAudio.prototype.pause=function(){
     	this.played=0;
 		this.source.stop(0);
@@ -212,7 +223,7 @@ function importAudio(){
 	}//end prototype
 	
 	audio.bgm=function(options){
-		var defaults = {src:'',btn:$('a.bgmBtn'),playClassName:'bgmPlay',stopClassName:'bgmStop',webAudio:false};
+		var defaults = {src:'',btn:$('a.bgmBtn'),playClassName:'bgmPlay',stopClassName:'bgmStop',webAudio:false,autoplay:true};
 		var opts = $.extend(defaults,options);
 		console.log(opts.webAudio?'bgm is at web audio mode':'bgm is at local audio mode');
 		if(opts.webAudio) var bgm=new webAudioBgm(opts);
@@ -226,8 +237,8 @@ function importAudio(){
 	    this.onLoaded=opts.onLoaded;
 	    this.loaded=0;
 	    this.played=0;
-	    this.bgmPlay=opts.autoplay||0;
-		console.log('bgmPlay:'+this.bgmPlay);
+	    this.bgmPlay=opts.autoplay && parseInt(sessionStorage.bgmPlay);
+		console.log('this bgmPlay:'+this.bgmPlay);
 		this.bgmTime=sessionStorage.bgmTime;
 		this.bgmTime=this.bgmTime||0;
 		this.bgmTime=Number(this.bgmTime);
@@ -280,10 +291,8 @@ function importAudio(){
 	    this.src=opts.src;
 	    this.startTime = 0;
 	    this.onLoaded=opts.onLoaded;
-	    this.bgmPlay=sessionStorage.bgmPlay;
-		this.bgmPlay=this.bgmPlay||1;
-		this.bgmPlay=parseInt(this.bgmPlay);
-		console.log('bgmPlay:'+this.bgmPlay);
+	    this.bgmPlay=opts.autoplay && parseInt(sessionStorage.bgmPlay);
+		console.log('this bgmPlay:'+this.bgmPlay);
 		this.bgmTime=sessionStorage.bgmTime;
 		this.bgmTime=this.bgmTime||0;
 		this.bgmTime=Number(this.bgmTime);
