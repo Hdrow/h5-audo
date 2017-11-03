@@ -1,4 +1,4 @@
-//2017.10.12
+//2017.11.3
 //-----------------------------------os
 var os = importOS();
 
@@ -60,7 +60,6 @@ var ibase = importBase();
 function importBase() {
 	var base = {}
 	base.dir = 'portrait';
-	base.keyboard = false;
 	base.lock = false;
 	base.cssMedia = 750;
 	base.scrollTop = -1;
@@ -129,41 +128,37 @@ function importBase() {
 	}; //end func
 	
 	function landscape_lock(e) {
-		if(!base.keyboard) {
-			if(base.getOrient() == 'landscape') {
-				base.turnBox.style.display = "block";
-				base.lock = true;
-			} //edn if
-			else {
-				base.turnBox.style.display = 'none';
-				base.lock = false;
-			} //end else
+		if(base.getOrient() == 'landscape') {
+			base.turnBox.style.display = "block";
+			base.lock = true;
 		} //edn if
+		else {
+			base.turnBox.style.display = 'none';
+			base.lock = false;
+		} //end else
 	} //end func
 
 	function window_orientation(e) {
-		if(!base.keyboard) {
-			if(base.dir != base.getOrient()) {
-				base.turnBox.style.display = 'block';
-				base.lock = true;
-				if(os.ios) {
-					if(base.scrollTop == -1 && document.body.scrollTop > 0) {
-						base.scrollTop = document.body.scrollTop;
-						document.body.scrollTop = 0;
-					} //edn if
-				} //end if
-			} //edn if
-			else {
-				base.turnBox.style.display = 'none';
-				base.lock = false;
-				if(os.ios) {
-					if(base.scrollTop != -1) {
-						document.body.scrollTop = base.scrollTop;
-						base.scrollTop = -1;
-					} //edn if
+		if(base.dir != base.getOrient()) {
+			base.turnBox.style.display = 'block';
+			base.lock = true;
+			if(os.ios) {
+				if(base.scrollTop == -1 && document.body.scrollTop > 0) {
+					base.scrollTop = document.body.scrollTop;
+					document.body.scrollTop = 0;
 				} //edn if
-			} //end else
+			} //end if
 		} //edn if
+		else {
+			base.turnBox.style.display = 'none';
+			base.lock = false;
+			if(os.ios) {
+				if(base.scrollTop != -1) {
+					document.body.scrollTop = base.scrollTop;
+					base.scrollTop = -1;
+				} //edn if
+			} //edn if
+		} //end else
 	} //end func
 
 	base.load = function(f, shell, nocache) {

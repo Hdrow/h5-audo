@@ -1,20 +1,10 @@
-//2017.10.26
+//2017.11.3
 var icom = importCom();
 
 function importCom() {
 	var com = {};
 
 	com.init = function(callback) {
-		if(os.android) {
-			var input = $('input,textarea,[contenteditable="true"]');
-			if(input.length > 0) input.on('focus', input_focus).on('blur', input_blur);
-		} //edn if
-		function input_focus(e) {
-			ibase.keyboard = true;
-		} //edn if
-		function input_blur(e) {
-			ibase.keyboard = false;
-		} //edn if
 		if(ibase.dir == 'portrait') lock_dected();
 		else {
 			var article = $('article');
@@ -43,74 +33,72 @@ function importCom() {
 		
 		function html_resize() {
 			var dir=ibase.getOrient(true);
-			if(!ibase.keyboard) {
-				if(dir == 'portrait') {
-					console.log('screen portrait');
-					var size = imath.autoSize([ibase.landscapeHeight, ibase.landscapeWidth], [window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
-					var scale = size[0] / ibase.landscapeHeight;
-					console.log('window size:' + window.innerHeight + '/' + window.innerWidth);
-					console.log('auto scale:' + scale);
-					if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
-						ibase.landScapeScaleX=ibase.landScapeScaleY=scale;
-						article.css({
-							width: ibase.landscapeWidth,
-							height: ibase.landscapeHeight,
-							rotate: 90,
-							scale: scale,
-							x: (window.innerHeight / scale - ibase.landscapeWidth) * 0.5,
-							y: -ibase.landscapeHeight + (window.innerWidth / scale - ibase.landscapeHeight) * 0.5 + (os.iphone6Plus ? 4 : 0)
-						});
-					} //edn if
-					else {
-						var scales = [window.innerWidth / ibase.landscapeHeight, window.innerHeight / ibase.landscapeWidth];
-						console.log('auto scales:' + scales);
-						ibase.landScapeScaleX=scales[0];
-						ibase.landScapeScaleY=scales[1];
-						article.css({
-							width: ibase.landscapeWidth,
-							height: ibase.landscapeHeight,
-							rotate: 90,
-							scaleX: scales[0],
-							scaleY: scales[1],
-							x: 0,
-							y: -ibase.landscapeHeight
-						});
-					} //end else
-				} //end if
-				else{
-					console.log('screen landscape');
-					var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
-					var scale = size[0] / ibase.landscapeWidth;
-					console.log('window size:' + window.innerWidth + '/' + window.innerHeight);
-					console.log('auto scale:' + scale);
-					if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
-						ibase.landScapeScaleX=ibase.landScapeScaleY=scale;
-						article.css({
-							width: ibase.landscapeWidth,
-							height: ibase.landscapeHeight,
-							rotate: 0,
-							scale: scale,
-							x: (window.innerWidth / scale - ibase.landscapeWidth) * 0.5,
-							y: (window.innerHeight / scale - ibase.landscapeHeight) * 0.5
-						});
-					} //edn if
-					else {
-						var scales = [window.innerWidth / ibase.landscapeWidth, window.innerHeight / ibase.landscapeHeight];
-						console.log('auto scales:' + scales);
-						ibase.landScapeScaleX=scales[0];
-						ibase.landScapeScaleY=scales[1];
-						article.css({
-							width: ibase.landscapeWidth,
-							height: ibase.landscapeHeight,
-							rotate: 0,
-							scaleX: scales[0],
-							scaleY: scales[1],
-							x: 0,
-							y: 0
-						});
-					} //end else
+			if(dir == 'portrait') {
+				console.log('screen portrait');
+				var size = imath.autoSize([ibase.landscapeHeight, ibase.landscapeWidth], [window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
+				var scale = size[0] / ibase.landscapeHeight;
+				console.log('window size:' + window.innerHeight + '/' + window.innerWidth);
+				console.log('auto scale:' + scale);
+				if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
+					ibase.landScapeScaleX=ibase.landScapeScaleY=scale;
+					article.css({
+						width: ibase.landscapeWidth,
+						height: ibase.landscapeHeight,
+						rotate: 90,
+						scale: scale,
+						x: (window.innerHeight / scale - ibase.landscapeWidth) * 0.5,
+						y: -ibase.landscapeHeight + (window.innerWidth / scale - ibase.landscapeHeight) * 0.5 + (os.iphone6Plus ? 4 : 0)
+					});
+				} //edn if
+				else {
+					var scales = [window.innerWidth / ibase.landscapeHeight, window.innerHeight / ibase.landscapeWidth];
+					console.log('auto scales:' + scales);
+					ibase.landScapeScaleX=scales[0];
+					ibase.landScapeScaleY=scales[1];
+					article.css({
+						width: ibase.landscapeWidth,
+						height: ibase.landscapeHeight,
+						rotate: 90,
+						scaleX: scales[0],
+						scaleY: scales[1],
+						x: 0,
+						y: -ibase.landscapeHeight
+					});
 				} //end else
-			} //edn if
+			} //end if
+			else{
+				console.log('screen landscape');
+				var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
+				var scale = size[0] / ibase.landscapeWidth;
+				console.log('window size:' + window.innerWidth + '/' + window.innerHeight);
+				console.log('auto scale:' + scale);
+				if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
+					ibase.landScapeScaleX=ibase.landScapeScaleY=scale;
+					article.css({
+						width: ibase.landscapeWidth,
+						height: ibase.landscapeHeight,
+						rotate: 0,
+						scale: scale,
+						x: (window.innerWidth / scale - ibase.landscapeWidth) * 0.5,
+						y: (window.innerHeight / scale - ibase.landscapeHeight) * 0.5
+					});
+				} //edn if
+				else {
+					var scales = [window.innerWidth / ibase.landscapeWidth, window.innerHeight / ibase.landscapeHeight];
+					console.log('auto scales:' + scales);
+					ibase.landScapeScaleX=scales[0];
+					ibase.landScapeScaleY=scales[1];
+					article.css({
+						width: ibase.landscapeWidth,
+						height: ibase.landscapeHeight,
+						rotate: 0,
+						scaleX: scales[0],
+						scaleY: scales[1],
+						x: 0,
+						y: 0
+					});
+				} //end else
+			} //end else
 		} //edn func
 
 	} //edn func
