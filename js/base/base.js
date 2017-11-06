@@ -63,6 +63,7 @@ function importBase() {
 	base.lock = false;
 	base.cssMedia = 750;
 	base.scrollTop = -1;
+	
 
 	base.init = function(dir, unit, wd, ht, scale, lock, follow) {
 		this.dir = dir || 'portrait';
@@ -79,6 +80,8 @@ function importBase() {
 		console.log('simulation:' + this.simulation);
 		console.log('landscapeLock:' + this.landscapeLock);
 		console.log('css unit:' + unit);
+		this.debug=parseInt(this.getQueryString('debug'))||0;
+		console.log('ibase debug:'+base.debug);
 		
 		if(this.dir == 'portrait') {
 			if(base.dir == 'portrait') {
@@ -204,6 +207,17 @@ function importBase() {
 			location.href = url;
 		} //end if
 	} //edn func
+	
+	//获得http url参数
+	base.getQueryString = function(name) {
+		if(name && name != '') {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			var r = window.location.search.substr(1).match(reg);
+			if(r != null) return decodeURIComponent(r[2]);
+			return null;
+		} //end if
+		else return null;
+	} //end func
 
 	function get_filetype(f, nocache) {
 		nocache = nocache != null ? nocache : true;

@@ -22,3 +22,6 @@ function importMath(){var a={};return a.randomRange=function(a,b){var c;return c
 //-----------------------------------loadBox
 if(ibase.dir=='landscape') $('<aside class="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></aside>').appendTo('article');
 else document.write('<aside class="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></aside>');
+
+//-----------------------------------debug
+if(ibase.debug) ibase.load('js/base/vConsole.min.js');
