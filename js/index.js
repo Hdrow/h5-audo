@@ -64,5 +64,4 @@ $(document).ready(function(){
 	function monitor_handler(){
 //		imonitor.add({obj:$('a.btnTest'),action:'touchstart',index:'',category:'',label:'测试按钮'});
 	}//end func
-	
 });//end ready

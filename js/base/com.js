@@ -1,4 +1,4 @@
-//2017.11.3
+//2017.11.10
 var icom = importCom();
 
 function importCom() {
@@ -236,17 +236,6 @@ function importCom() {
 			loader.start();
 		} //end if
 	} //end func	
-
-	//打印object数据
-	com.objectPrint = function(data) {
-		if(data) {
-			console.log("-----------------------------------------------------------------------------");
-			var info = "";
-			for(var i in data) info += i + ":" + data[i] + "  "
-			console.log(info);
-			console.log("-----------------------------------------------------------------------------");
-		} //end if
-	} //end func
 
 	//常用正则
 	com.checkStr = function(str, type) {
