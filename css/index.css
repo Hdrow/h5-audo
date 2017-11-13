@@ -16,12 +16,12 @@
 }
 
 /*---------------------------------------- iphoneX 微信----------------------*/
-@media screen and (device-width:375px) and (device-height:812px) and (min-height:720px){
+@media screen and (device-width:375px) and (min-height:720px){
 
 }
 
 /*---------------------------------------- iphoneX 浏览器----------------------------------------------*/
-@media screen and (device-width:375px) and (device-height:812px) and (min-height:630px) and (max-height:640px){
+@media screen and (device-width:375px) and (min-height:630px) and (max-height:640px){
 
 }
 
