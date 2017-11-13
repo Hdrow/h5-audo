@@ -18,7 +18,7 @@ function importUser(){
 	function initCallback(data,callback){
 		console.log('获得微信用户数据');
 		setTimeout(function(){
-			icom.objectPrint(data);
+			console.table(data)
 		},50);
 		user.info=data;
 		if(callback) callback(data);
