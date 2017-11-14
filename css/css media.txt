@@ -7,8 +7,8 @@ iphoneX 1125x2436
 
 微信竖屏：
 iphone5 screen:320x568 / weixin:320x504 / safari:320x460
-iphone6/7/8 screen:375x667 / weixin:375x603 / safari:320x553
-iphone6/7/8 plus screen:414x736 / weixin:414x672 / safari:320x622
+iphone6/7/8 screen:375x667 / weixin:375x603 / safari:375x553
+iphone6/7/8 plus screen:414x736 / weixin:414x672 / safari:414x622
 iphoneX screen:375×812 / weixin:375x724 / safari:375x635
 
 微信横屏：
