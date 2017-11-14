@@ -237,7 +237,7 @@ function importAudio(){
 	    this.onLoaded=opts.onLoaded;
 	    this.loaded=0;
 	    this.played=0;
-	    this.bgmPlay=opts.autoplay && parseInt(sessionStorage.bgmPlay);
+	    this.bgmPlay=sessionStorage.bgmPlay==null?opts.autoplay:(opts.autoplay && parseInt(sessionStorage.bgmPlay));
 		console.log('this bgmPlay:'+this.bgmPlay);
 		this.bgmTime=sessionStorage.bgmTime;
 		this.bgmTime=this.bgmTime||0;
@@ -291,7 +291,7 @@ function importAudio(){
 	    this.src=opts.src;
 	    this.startTime = 0;
 	    this.onLoaded=opts.onLoaded;
-	    this.bgmPlay=opts.autoplay && parseInt(sessionStorage.bgmPlay);
+	    this.bgmPlay=sessionStorage.bgmPlay==null?opts.autoplay:(opts.autoplay && parseInt(sessionStorage.bgmPlay));
 		console.log('this bgmPlay:'+this.bgmPlay);
 		this.bgmTime=sessionStorage.bgmTime;
 		this.bgmTime=this.bgmTime||0;
