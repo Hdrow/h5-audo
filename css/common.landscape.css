@@ -29,7 +29,7 @@ a>img{ width:100%;}
 
 /* 竖屏锁定提示浮层 */
 aside.turnBoxLandscape{ position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,1); z-index:10999; display: none;}
-aside.turnBoxLandscape>div.lock{ margin: 45px auto 0; width: 50px; height: 50px; background-color: #fff; border-radius: 15px; position: relative; animation: turnLock 3.2s linear infinite both;}
+aside.turnBoxLandscape>div.lock{ margin: 50px auto 0; width: 50px; height: 50px; background-color: #fff; border-radius: 15px; position: relative; animation: turnLock 3.2s linear infinite both;}
 aside.turnBoxLandscape>div.lock span{position: absolute; left: 10px; top: 10px; width: 30px; height: 30px;}
 aside.turnBoxLandscape>div.lock span:nth-child(1){ background-image: url(../images/common/turn_unlock.png); animation: turnLock1 3.2s linear infinite both;}
 aside.turnBoxLandscape>div.lock span:nth-child(2){ background-image: url(../images/common/turn_lock.png); animation: turnLock2 3.2s linear infinite both;}
@@ -42,7 +42,7 @@ aside.turnBoxLandscape>div.phone img{ width: 100%; height: 100%;}
 aside.turnBoxLandscape>div.phone i{ position: absolute; left: 50%; top: 20px; width: 30px; margin-left: -15px; height: 22.5px;}
 aside.turnBoxLandscape>div.phone i.yes{ background-image: url(../images/common/turn_yes.png); opacity: 0; animation: turnYes 3.2s linear infinite both;}
 aside.turnBoxLandscape>div.phone i.no{ background-image: url(../images/common/turn_no.png); opacity: 0; animation: turnNo 3.2s linear infinite both;}
-aside.turnBoxLandscape>p{ text-align:center; font-size:28px; color:rgba(255,255,255,0.65); margin-top: 40px;}
+aside.turnBoxLandscape>p{ text-align:center; font-size:24px; color:rgba(255,255,255,0.65); margin-top: 40px;}
 
 @-webkit-keyframes turnLock{
 	0%{ transform: scale(1);}
@@ -109,10 +109,10 @@ aside.turnBoxLandscape>p{ text-align:center; font-size:28px; color:rgba(255,255,
 
 @-webkit-keyframes turnNo{
 	0%{ transform: scale(0); opacity: 0;}
-	4%{ transform: scale(1.15); opacity: 0.6;}
-	8%{ transform: scale(0.85); opacity: 0.6;}
-	12%{ transform: scale(1); opacity: 0.6;}
-	30%{ transform: scale(1); opacity: 0.6;}
+	4%{ transform: scale(1.15); opacity: 1;}
+	8%{ transform: scale(0.85); opacity: 1;}
+	12%{ transform: scale(1); opacity: 1;}
+	30%{ transform: scale(1); opacity: 1;}
 	35%{ transform: scale(0); opacity: 0;}
 	100%{ transform: scale(0); opacity: 0;}
 }
