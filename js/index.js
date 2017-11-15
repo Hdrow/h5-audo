@@ -62,6 +62,6 @@ $(document).ready(function(){
 	
 	//----------------------------------------页面监测代码----------------------------------------
 	function monitor_handler(){
-//		imonitor.add({obj:$('a.btnTest'),action:'touchstart',category:'',label:'测试按钮'});
+//		imonitor.add({obj:$('a'),action:'touchstart',label:'测试按钮'});
 	}//end func
 });//end ready

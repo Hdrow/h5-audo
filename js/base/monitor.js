@@ -1,46 +1,52 @@
 //2017.11.15
 
-var _hmt=_hmt||[];
+var _hmt = _hmt || [];
 //百度监测贴这里
-
-
 
 //ga监测贴这里
 
+var imonitor = importMonitor();
 
-var hmsr=icom.getQueryString('hmsr');
-var imonitor=importMonitor();
+function importMonitor() {
+	var monitor = {};
+	var hmsr = icom.getQueryString('hmsr');
+	hmsr = hmsr || 'default';
 
+	monitor.add = function(options) {
+		if(options) {
+			var defaults = {
+				action: 'touchend',
+				category: 'default',
+				label: ''
+			};
+			var opts = $.extend(defaults, options);
+			if(opts.obj && opts.obj.length > 0) {
+				opts.hmsr = hmsr;
+				opts.obj.each(function(i) {
+					$(this).on(opts.action, opts, event_bind);
+				});
+			} //end if
+			else {
+				opts.action = 'script'
+				event_bind(null, opts);
+			} //end else
+		} //end if
+	} //end func
 
-function importMonitor(){
-	var monitor={};
-	
-	monitor.add=function(option){
-		if(option){
-			var obj=option.obj;
-			var category=option.category||'';
-			var action=option.action||'touchend';
-			var label=option.label||'';
-			var index=option.index||'0';
-			if(obj && obj.length>0){
-				obj.each(function(i) {
-					$(this).on(action,{category:category,label:obj.length==1?label:label+(i+1),index:index},event_bind);}
-				);
-			}//end if
-			else event_bind(null,{category:category,label:label,index:index});
-		}//end if
-	}//end func
-	
-	function event_bind(e,data){
+	function event_bind(e, data) {
 		if(e) event_handler(e.data);
 		else event_handler(data);
-	}//end func
-	
-	function event_handler(data){
-		if(window._hmt) window._hmt.push(['_trackEvent', hmsr?hmsr:'默认', data.category, data.label]);
-		if(window.gtag) window.gtag('event', data.label, {'group':hmsr?hmsr:'默认', 'category':data.category} );
-		if(window.console) window.console.log('监测来源：'+(hmsr?hmsr:'默认')+' | '+'监测说明：'(data.category!=''?data.category+'-':'') + data.label);
-	}//end func
-	
+	} //end func
+
+	function event_handler(data) {
+		if(window._hmt) window._hmt.push(['_trackEvent', data.hmsr, data.category, data.label]);
+		if(window.gtag) window.gtag('event', data.action, {
+			'event_category': data.category,
+			'event_label': data.label,
+			'event_hmsr': data.hmsr
+		});
+		if(window.console) window.console.log('事件：' + data.action + ' | ' + '来源：' + data.hmsr + ' | ' + '类别：' + data.category + ' | ' + '标签：' + data.label);
+	} //end func
+
 	return monitor;
-}//end import
+} //end import
