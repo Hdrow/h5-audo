@@ -29,7 +29,7 @@ $(document).ready(function(){
 	//----------------------------------------加载页面图片----------------------------------------
 	function load_handler(){
 		var loader = new PxLoader();
-		loader.addImage('images/common/turn.png');
+		loader.addImage('images/common/turn_phone.png');
 		
 		//实际加载进度
 //		loader.addProgressListener(function(e) {
@@ -64,7 +64,7 @@ $(document).ready(function(){
 	
 	//----------------------------------------页面监测代码----------------------------------------
 	function monitor_handler(){
-//		imonitor.add({obj:$('a.btnTest'),action:'touchstart',index:'',category:'',label:'测试按钮'});
+//		imonitor.add({obj:$('a.btnTest'),action:'touchstart',category:'',label:'测试按钮'});
 	}//end func
 	
 });//end ready
