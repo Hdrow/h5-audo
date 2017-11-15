@@ -9,8 +9,6 @@ var imonitor = importMonitor();
 
 function importMonitor() {
 	var monitor = {};
-	var hmsr = icom.getQueryString('hmsr');
-	hmsr = hmsr || 'default';
 
 	monitor.add = function(options) {
 		if(options) {
@@ -21,7 +19,6 @@ function importMonitor() {
 			};
 			var opts = $.extend(defaults, options);
 			if(opts.obj && opts.obj.length > 0) {
-				opts.hmsr = hmsr;
 				opts.obj.each(function(i) {
 					$(this).on(opts.action, opts, event_bind);
 				});
@@ -39,12 +36,12 @@ function importMonitor() {
 	} //end func
 
 	function event_handler(data) {
-		if(window._hmt) window._hmt.push(['_trackEvent', data.hmsr, data.category, data.label]);
+		if(window._hmt) window._hmt.push(['_trackEvent', data.action, data.category, data.label]);
 		if(window.gtag) window.gtag('event', data.action, {
 			'event_category': data.category,
 			'event_label': data.label
 		});
-		if(window.console) window.console.log('事件：' + data.action + ' | ' + '来源：' + data.hmsr + ' | ' + '类别：' + data.category + ' | ' + '标签：' + data.label);
+		if(window.console) window.console.log('事件：' + ' | ' + '类别：' + data.category + ' | ' + '标签：' + data.label);
 	} //end func
 
 	return monitor;
