@@ -68,7 +68,6 @@ function importBase() {
 	base.init = function(dir, unit, wd, ht, scale, lock, follow) {
 		this.dir = dir || 'portrait';
 		this.simulation=window.orientation===undefined;
-		this.simulation=false;
 		this.landscapeWidth = wd || 1206;
 		this.landscapeHeight = ht || 750;
 		this.landscapeScaleMode = scale || 'cover';
