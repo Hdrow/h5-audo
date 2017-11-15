@@ -37,6 +37,7 @@ function importMonitor() {
 
 	function event_handler(data) {
 		if(window._hmt) window._hmt.push(['_trackEvent', data.action, data.category, data.label]);
+		if(window.ga) window.ga('send', 'event', data.category, data.action, data.label);
 		if(window.gtag) window.gtag('event', data.action, {
 			'event_category': data.category,
 			'event_label': data.label
