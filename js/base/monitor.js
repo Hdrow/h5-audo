@@ -42,8 +42,7 @@ function importMonitor() {
 		if(window._hmt) window._hmt.push(['_trackEvent', data.hmsr, data.category, data.label]);
 		if(window.gtag) window.gtag('event', data.action, {
 			'event_category': data.category,
-			'event_label': data.label,
-			'event_hmsr': data.hmsr
+			'event_label': data.label
 		});
 		if(window.console) window.console.log('事件：' + data.action + ' | ' + '来源：' + data.hmsr + ' | ' + '类别：' + data.category + ' | ' + '标签：' + data.label);
 	} //end func
