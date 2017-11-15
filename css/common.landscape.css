@@ -37,12 +37,12 @@ aside.turnBoxLandscape>div.sign{ margin-top: 10px; width: 100%; height: 16px; po
 aside.turnBoxLandscape>div.sign span{ position: absolute; left: 0; top: 0; width: 100%; text-align: center; font-size:16px; color: #fff;}
 aside.turnBoxLandscape>div.sign span:nth-child(1){ animation: turnSign1 3.2s linear infinite both;}
 aside.turnBoxLandscape>div.sign span:nth-child(2){ animation: turnSign2 3.2s linear infinite both;}
-aside.turnBoxLandscape>div.phone{ width: 120px; height: 60px; margin:15px auto 0; position: relative;}
+aside.turnBoxLandscape>div.phone{ width: 60px; height: 120px; margin:-10px auto 0; position: relative; transform: rotate(-90deg);}
 aside.turnBoxLandscape>div.phone img{ width: 100%; height: 100%;}
-aside.turnBoxLandscape>div.phone i{ position: absolute; left: 50%; top: 20px; width: 30px; margin-left: -15px; height: 22.5px;}
+aside.turnBoxLandscape>div.phone i{ position: absolute; left: 50%; top: 48px; width: 30px; margin-left: -15px; height: 22.5px;}
 aside.turnBoxLandscape>div.phone i.yes{ background-image: url(../images/common/turn_yes.png); opacity: 0; animation: turnYes 3.2s linear infinite both;}
 aside.turnBoxLandscape>div.phone i.no{ background-image: url(../images/common/turn_no.png); opacity: 0; animation: turnNo 3.2s linear infinite both;}
-aside.turnBoxLandscape>p{ text-align:center; font-size:24px; color:rgba(255,255,255,0.65); margin-top: 40px;}
+aside.turnBoxLandscape>p{ text-align:center; font-size:24px; color:rgba(255,255,255,0.65); margin-top: 10px;}
 
 @-webkit-keyframes turnLock{
 	0%{ transform: scale(1);}
@@ -97,14 +97,14 @@ aside.turnBoxLandscape>p{ text-align:center; font-size:24px; color:rgba(255,255,
 }
 
 @-webkit-keyframes turnYes{
-	0%{ transform: scale(0); opacity: 0;}
-	50%{ transform: scale(0); opacity: 0;}
-	54%{ transform: scale(1.15); opacity: 1;}
-	58%{ transform: scale(0.85); opacity: 1;}
-	62%{ transform: scale(1); opacity: 1;}
-	80%{ transform: scale(1); opacity: 1;}
-	85%{ transform: scale(0); opacity: 0;}
-	100%{ transform: scale(0); opacity: 0;}
+	0%{ transform: scale(0) rotate(90deg); opacity: 0;}
+	50%{ transform: scale(0) rotate(90deg); opacity: 0;}
+	54%{ transform: scale(1.15) rotate(90deg); opacity: 1;}
+	58%{ transform: scale(0.85) rotate(90deg); opacity: 1;}
+	62%{ transform: scale(1) rotate(90deg); opacity: 1;}
+	80%{ transform: scale(1) rotate(90deg); opacity: 1;}
+	85%{ transform: scale(0) rotate(90deg); opacity: 0;}
+	100%{ transform: scale(0) rotate(90deg); opacity: 0;}
 }
 
 @-webkit-keyframes turnNo{

@@ -95,7 +95,7 @@ function importBase() {
 					document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
 				} //edn else
 			} //end if
-			document.write('<aside class="turnBoxPortrait" id="turnBox"><div class="phone"><img src="images/common/turm_phone_portrait.png"><i class="yes"></i><i class="no"></i></div><p>竖屏体验更佳</p></aside>');
+			document.write('<aside class="turnBoxPortrait" id="turnBox"><div class="phone"><img src="images/common/turn_phone.png"><i class="yes"></i><i class="no"></i></div><p>竖屏体验更佳</p></aside>');
 			this.turnBox = document.getElementById("turnBox");
 			if(this.dir != base.getOrient(true)) {
 				this.turnBox.style.display = "block";
@@ -106,7 +106,7 @@ function importBase() {
 		else{
 			document.write('<link rel="stylesheet" type="text/css" href="css/common.landscape.css" />');
 			if(this.landscapeLock){
-				document.write('<aside class="turnBoxLandscape" id="turnBox"><div class="lock"><span></span><span></span></div><div class="sign"><span>竖排方向锁定：关闭</span><span>竖排方向锁定：打开</span></div><div class="phone"><img src="images/common/turn_phone_landscape.png"><i class="yes"></i><i class="no"></i></div><p>锁定竖屏体验更佳</p></aside>');
+				document.write('<aside class="turnBoxLandscape" id="turnBox"><div class="lock"><span></span><span></span></div><div class="sign"><span>竖排方向锁定：关闭</span><span>竖排方向锁定：打开</span></div><div class="phone"><img src="images/common/turn_phone.png"><i class="yes"></i><i class="no"></i></div><p>锁定竖屏体验更佳</p></aside>');
 				this.turnBox = document.getElementById("turnBox");
 				if(this.landscapeFirstDir == 'landscape') {
 					this.turnBox.style.display = "block";
