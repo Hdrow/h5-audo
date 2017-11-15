@@ -1,4 +1,4 @@
-//2017.11.13
+//2017.11.15
 
 var _hmt=_hmt||[];
 //百度监测贴这里
@@ -37,10 +37,9 @@ function importMonitor(){
 	}//end func
 	
 	function event_handler(data){
-		if(window._hmt) window._hmt.push(['_trackEvent', hmsr?'来源：'+hmsr:'来源：默认', data.index, (data.category!=''?data.category+'-':'') + data.label]);
-		if(window.ga) window.ga('send', 'event', hmsr?'来源：'+hmsr:'来源：默认', data.index, (data.category!=''?data.category+'-':'') + data.label);
-		if(window.gtag) window.gtag('event', (data.category!=''?data.category+'-':'') + data.label, {hmsr:hmsr?'来源：'+hmsr:'来源：默认', index:data.index} );
-		if(window.console) window.console.log('监测来源：'+(hmsr?hmsr:'默认')+' | '+'监测说明：'+(data.index!='0'?data.index+'-':'')+(data.category!=''?data.category+'-':'') + data.label);
+		if(window._hmt) window._hmt.push(['_trackEvent', hmsr?hmsr:'默认', data.category, data.label]);
+		if(window.gtag) window.gtag('event', data.label, {'group':hmsr?hmsr:'默认', 'category':data.category} );
+		if(window.console) window.console.log('监测来源：'+(hmsr?hmsr:'默认')+' | '+'监测说明：'(data.category!=''?data.category+'-':'') + data.label);
 	}//end func
 	
 	return monitor;
