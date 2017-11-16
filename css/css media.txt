@@ -43,7 +43,7 @@ android 720p/1080p screen:360x640 / weixin:360x526 / browser:360x468
 android 1440p screen:412x732 / weixin:412x612 / browser:412x554
 //-----16:9(带物理按键的16:9手机)
 android 720p/1080p screen:360x640 / weixin:360x572 / browser:360x514
-android 1440p screen:412x732 / weixin:412x664 / browser:412x596
+android 1440p screen:412x732 / weixin:412x660 / browser:412x612
 //-----18:9(全面屏手机都是虚拟按键)
 android 720p/1080p screen:360x720 / weixin:360x606 / browser:360x550
 android 1440p screen:412x823 / weixin:412x703  / browser:360x645
@@ -59,7 +59,7 @@ android 1080p screen:598x360 / weixin:598x288
 android 1440p screen:684x412 / weixin:684x340
 //-----16:9
 android 1080p screen:640x360 / weixin:640x295
-android 1440p screen:732x412 / weixin:732x338
+android 1440p screen:732x412 / weixin:732x340 / browser:412x332
 //-----18:9
 android 1080p screen:678x360 / weixin:678x288
 android 1440p screen:775x412 / weixin:775x340

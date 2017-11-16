@@ -268,8 +268,8 @@ function importBase() {
 		},
 		'android 16:9 1440p': {
 			screen: '412x732',
-			weixin: '412x664',
-			browser: '412x596'
+			weixin: '412x660',
+			browser: '412x612'
 		},
 		'android 18:9 720p,1080p': {
 			screen: '360x720',
