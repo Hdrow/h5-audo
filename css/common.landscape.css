@@ -175,6 +175,8 @@ a.bgmStop{ background-image: url(../images/common/bgm_off.png);}
 /*---------------------------------------- iphone6plus ----------------------------------------------*/
 @media screen and (device-width:414px){
 
+aside.turnBoxLandscape>div.lock{ margin: 80px auto 0;}
+
 a.bgmBtn{ top: 40px;}
 
 }
