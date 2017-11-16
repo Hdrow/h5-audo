@@ -24,4 +24,7 @@ if(ibase.dir=='landscape') $('<aside class="loadBox"><span><i></i><i></i><i></i>
 else document.write('<aside class="loadBox"><span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></aside>');
 
 //-----------------------------------debug
-if(ibase.debug) ibase.load('js/base/vConsole.min.js');
+if(ibase.debug){
+	ibase.load('js/base/vConsole.min.js');
+	window.console.table(ibase.screenList);
+}//end if

@@ -6,16 +6,16 @@ iphone6plus 1920×1080
 iphoneX 1125x2436
 
 微信竖屏：
-iphone5 screen:320x568 / weixin:320x504 / safari:320x460
-iphone6/7/8 screen:375x667 / weixin:375x603 / safari:375x553
-iphone6/7/8 plus screen:414x736 / weixin:414x672 / safari:414x622
-iphoneX screen:375×812 / weixin:375x724 / safari:375x635
+iphone5 screen:320x568 / weixin:320x504 / browser:320x460
+iphone6/7/8 screen:375x667 / weixin:375x603 / browser:375x553
+iphone6/7/8 plus screen:414x736 / weixin:414x672 / browser:414x622
+iphoneX screen:375×812 / weixin:375x724 / browser:375x635
 
 微信横屏：
-iphone5 screen:568x320 / weixin:568x268
-iphone6 screen:667x375 / weixin:667x323
-iphone6plus screen:736x414 / weixin:736x362
-iphoneX screen:812×375 / weixin:812x343 / safari:724x325
+iphone5 screen:568x320 / weixin:568x268 / browser:568x232
+iphone6 screen:667x375 / weixin:667x323 / browser:667x350
+iphone6plus screen:736x414 / weixin:736x362 / browser:736x364
+iphoneX screen:812×375 / weixin:812x343 / browser:724x325
 
 原生浏览器标识：
 Mozilla/5.0 (iPhone; CPU iPhone OS 11_0_2 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A421 Safari/604.1
@@ -39,17 +39,17 @@ android 1440p 1440×2960
 
 微信竖屏：
 //-----15:9(带虚拟按键的16:9手机)
-android 720p/1080p screen:360x640 / weixin:360x526
-android 1440p screen:412x732 / weixin:412x612
+android 720p/1080p screen:360x640 / weixin:360x526 / browser:360x468
+android 1440p screen:412x732 / weixin:412x612 / browser:412x554
 //-----16:9(带物理按键的16:9手机)
 android 720p/1080p screen:360x640 / weixin:360x572 / browser:360x514
-android 1440p screen:412x732 / weixin:412x664
+android 1440p screen:412x732 / weixin:412x664 / browser:412x596
 //-----18:9(全面屏手机都是虚拟按键)
 android 720p/1080p screen:360x720 / weixin:360x606 / browser:360x550
-android 1440p screen:412x823 / weixin:412x703
-小米mix2 1080p screen:393x786 / weixin:393x667 / browser:360x610
+android 1440p screen:412x823 / weixin:412x703  / browser:360x645
+xiaomi mix2 screen:393x786 / weixin:393x667 / browser:360x610
 //-----18.5:9(全面屏手机都是虚拟按键)
-android 1440p screen:412x846 / weixin:412x726
+android 1440p screen:412x846 / weixin:412x726 / browser:412x668
 
 
 
