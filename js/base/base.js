@@ -251,7 +251,7 @@ function importBase() {
 			weixin: '375x724',
 			browser: '375x635'
 		},
-		'android 15:9 720p,1080p': {
+		'android 15:9 720p/1080p': {
 			screen: '360x640',
 			weixin: '360x526',
 			browser: '360x468'
@@ -261,7 +261,7 @@ function importBase() {
 			weixin: '412x612',
 			browser: '412x554'
 		},
-		'android 16:9 720p,1080p': {
+		'android 16:9 720p/1080p': {
 			screen: '360x640',
 			weixin: '360x572',
 			browser: '360x514'
@@ -271,7 +271,7 @@ function importBase() {
 			weixin: '412x660',
 			browser: '412x612'
 		},
-		'android 18:9 720p,1080p': {
+		'android 18:9 720p/1080p': {
 			screen: '360x720',
 			weixin: '360x606',
 			browser: '360x550'
@@ -284,7 +284,7 @@ function importBase() {
 		'android 18:9 mix2': {
 			screen: '393x786',
 			weixin: '393x667',
-			browser: '393x610'
+			browser: '393x609'
 		},
 		'android 18.5:9 1440p': {
 			screen: '412x846',
