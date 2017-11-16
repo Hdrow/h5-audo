@@ -285,11 +285,6 @@ function importBase() {
 			screen: '393x786',
 			weixin: '393x667',
 			browser: '393x609'
-		},
-		'android 18.5:9 1440p': {
-			screen: '412x846',
-			weixin: '412x726',
-			browser: '412x668'
 		}
 	};
 
