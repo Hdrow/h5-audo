@@ -59,7 +59,7 @@ android 720p/1080p screen:598x360 / weixin:598x288
 android 1440p screen:684x412 / weixin:684x340
 //-----16:9
 android 720p/1080p screen:640x360 / weixin:640x295
-android 1440p screen:732x412 / weixin:732x340 / browser:412x332
+android 1440p screen:732x412 / weixin:732x340 / browser:732x332
 //-----18:9
 android 720p/1080p screen:678x360 / weixin:678x288 / browser:678x236
 android 1440p screen:775x412 / weixin:775x340
