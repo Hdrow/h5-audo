@@ -15,7 +15,7 @@ iphoneX screen:375×812 / weixin:375x724 / safari:375x635
 iphone5 screen:568x320 / weixin:568x268
 iphone6 screen:667x375 / weixin:667x323
 iphone6plus screen:736x414 / weixin:736x362
-iphoneX screen:812×375 / weixin:812x323
+iphoneX screen:812×375 / weixin:812x343 / safari:724x325
 
 原生浏览器标识：
 Mozilla/5.0 (iPhone; CPU iPhone OS 11_0_2 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A421 Safari/604.1
