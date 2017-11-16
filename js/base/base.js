@@ -284,7 +284,7 @@ function importBase() {
 		'android 18:9 mix2': {
 			screen: '393x786',
 			weixin: '393x667',
-			browser: '360x610'
+			browser: '393x610'
 		},
 		'android 18.5:9 1440p': {
 			screen: '412x846',

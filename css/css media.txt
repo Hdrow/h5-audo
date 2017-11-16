@@ -5,13 +5,13 @@ iphone6 750x1334
 iphone6plus 1920×1080
 iphoneX 1125x2436
 
-微信竖屏：
+竖屏：
 iphone5 screen:320x568 / weixin:320x504 / browser:320x460
 iphone6/7/8 screen:375x667 / weixin:375x603 / browser:375x553
 iphone6/7/8 plus screen:414x736 / weixin:414x672 / browser:414x622
 iphoneX screen:375×812 / weixin:375x724 / browser:375x635
 
-微信横屏：
+横屏：
 iphone5 screen:568x320 / weixin:568x268 / browser:568x232
 iphone6 screen:667x375 / weixin:667x323 / browser:667x350
 iphone6plus screen:736x414 / weixin:736x362 / browser:736x364
@@ -37,7 +37,7 @@ android 1440p 1440×2880
 android 1440p 1440×2960
 
 
-微信竖屏：
+竖屏：
 //-----15:9(带虚拟按键的16:9手机)
 android 720p/1080p screen:360x640 / weixin:360x526 / browser:360x468
 android 1440p screen:412x732 / weixin:412x612 / browser:412x554
@@ -45,25 +45,25 @@ android 1440p screen:412x732 / weixin:412x612 / browser:412x554
 android 720p/1080p screen:360x640 / weixin:360x572 / browser:360x514
 android 1440p screen:412x732 / weixin:412x660 / browser:412x612
 //-----18:9(全面屏手机都是虚拟按键)
-android 720p/1080p screen:360x720 / weixin:360x606 / browser:360x550
+android 720p/1080p screen:360x720 / weixin:360x606 / browser:360x554
 android 1440p screen:412x823 / weixin:412x703  / browser:360x645
-xiaomi mix2 screen:393x786 / weixin:393x667 / browser:360x610
+xiaomi mix2 screen:393x786 / weixin:393x667 / browser:393x609
 //-----18.5:9(全面屏手机都是虚拟按键)
 android 1440p screen:412x846 / weixin:412x726 / browser:412x668
 
 
 
-微信横屏：
+横屏：
 //-----15:9
-android 1080p screen:598x360 / weixin:598x288
+android 720p/1080p screen:598x360 / weixin:598x288
 android 1440p screen:684x412 / weixin:684x340
 //-----16:9
-android 1080p screen:640x360 / weixin:640x295
+android 720p/1080p screen:640x360 / weixin:640x295
 android 1440p screen:732x412 / weixin:732x340 / browser:412x332
 //-----18:9
-android 1080p screen:678x360 / weixin:678x288
+android 720p/1080p screen:678x360 / weixin:678x288 / browser:678x236
 android 1440p screen:775x412 / weixin:775x340
-
+xiaomi mix2 screen:786x393 / weixin:739x321 / browser:739x343
 
 微信浏览器标识：
 
