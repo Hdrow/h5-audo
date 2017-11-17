@@ -1,4 +1,4 @@
-//2017.10.31
+//2017.11.17
 var ivideo=importVideo();
 
 function importVideo(){
@@ -18,6 +18,7 @@ function importVideo(){
 			if(opts.onTimeupdate) container[0].addEventListener('timeupdate',opts.onTimeupdate,false);
 			if(opts.onPlay) container[0].addEventListener('play',opts.onPlay,false);
 			if(opts.onPause) container[0].addEventListener('pause',opts.onPause,false);
+			if(opts.onVolumechange) container[0].addEventListener('volumechange',opts.onVolumechange,false);
 			if(opts.autoplay) container[0].play();
 			if(opts.autoSize && opts.videoSize){
 				var size=imath.autoSize(opts.videoSize,opts.autoSize,1);
