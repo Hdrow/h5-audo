@@ -126,7 +126,7 @@ aside.confirmBox>div>p.btn a:first-child{ border-right: 1px solid #D5D5D6;}
 
 /* 视频 */
 aside.videoBox{position:absolute; left:0; top:0; width:100%; height:100%; background-color:#000; z-index:996; display:none;}
-aside.videoBox>iframe,aside.videoBox>video{position:absolute; left:0;}
+aside.videoBox>iframe,aside.videoBox>video{position:absolute; left:0; top: 0; object-fit: fill;}
 aside.videoBox>a.close{ position:absolute; right:0.46rem; top:0.46rem; width:0.7rem; height:0.7rem; background-image: url(../images/common/close_video.png);}
 
 /* 电子罗盘数据面板 */
