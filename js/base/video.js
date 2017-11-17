@@ -22,7 +22,7 @@ function importVideo(){
 			if(opts.autoplay) container[0].play();
 			if(opts.autoSize && opts.videoSize){
 				var size=imath.autoSize(opts.videoSize,opts.autoSize,1);
-				container.attr({width:size[0],height:size[1]}).css({marginLeft:(opts.autoSize[0]-size[0])*0.5,marginTop:(opts.autoSize[1]-size[1])*0.5});
+				container.css({width:size[0],height:size[1],left:(opts.autoSize[0]-size[0])*0.5,top:(opts.autoSize[1]-size[1])*0.5});
 			}//edn if
 			return container[0];
 		}//end if
