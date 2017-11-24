@@ -1,8 +1,21 @@
-//2017.11.15
+//2017.11.24
 
 //百度监测贴这里
+//var _hmt = _hmt || [];
+//(function() {
+//var hm = document.createElement("script");
+//hm.src = "https://hm.baidu.com/hm.js?42b71e30fab1dd283c8d6f451a4c011b";
+//var s = document.getElementsByTagName("script")[0]; 
+//s.parentNode.insertBefore(hm, s);
+//})();
 
 //ga监测贴这里
+//(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+//(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+//m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+//})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+//ga('create', 'UA-55069627-11', 'auto');
+//ga('send', 'pageview');
 
 var imonitor = importMonitor();
 
