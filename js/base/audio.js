@@ -1,4 +1,4 @@
-//2017.11.3
+//2017.11.27
 var iaudio=importAudio();
 
 function importAudio(){
@@ -251,8 +251,17 @@ function importAudio(){
 		this.audio.src=this.src;
 		this.audio.loop=true;
 		this.audio.load();
-		this.audio.addEventListener('loadeddata',init,false);
-		if(this.onLoaded) this.audio.addEventListener('loadeddata',this.onLoaded,false);
+		if(os.weibo && os.ios){//解决ios版微博下，无法触发audio的各种Load事件
+			setTimeout(function(){
+				init();
+				if(this.onLoaded) this.onLoaded(this.audio);
+			},250);
+		}//end if
+		else{
+			this.audio.addEventListener('loadeddata',init,false);
+			if(this.onLoaded) this.audio.addEventListener('loadeddata',this.onLoaded,false);
+		}//edn else
+		
 		
 		function init(event){
 			_this.loaded=1;
