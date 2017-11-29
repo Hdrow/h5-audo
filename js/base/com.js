@@ -1,4 +1,4 @@
-//2017.11.16
+//2017.11.29
 var icom = importCom();
 
 function importCom() {
@@ -70,7 +70,9 @@ function importCom() {
 			else{
 				console.log('screen landscape');
 				if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
-					var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
+					var body=query;
+					var iphoneX=os.iphoneX && os.weixin;
+					var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [iphoneX?window.innerWidth-60:window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
 					var scale = size[0] / ibase.landscapeWidth;
 					console.log('window size:' + window.innerWidth + '/' + window.innerHeight);
 					console.log('auto scale:' + scale);
@@ -80,7 +82,7 @@ function importCom() {
 						height: ibase.landscapeHeight,
 						rotate: 0,
 						scale: scale,
-						x: (window.innerWidth / scale - ibase.landscapeWidth) * 0.5,
+						x: (window.innerWidth / scale - ibase.landscapeWidth) * 0.5 + iphoneX?30/scale:0,
 						y: (window.innerHeight / scale - ibase.landscapeHeight) * 0.5
 					});
 				} //edn if
@@ -94,7 +96,7 @@ function importCom() {
 						width: ibase.landscapeWidth,
 						height: ibase.landscapeHeight,
 						rotate: 0,
-						scaleX: scale[0],
+						scaleX: scale[0] + iphoneX?30/scale[0]:0,
 						scaleY: scale[1],
 						x: 0,
 						y: 0
