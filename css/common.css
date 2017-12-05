@@ -12,6 +12,7 @@ input::-webkit-input-placeholder,textarea::-webkit-input-placeholder{color:#555;
 video{ background-color:#000;}
 a{ text-decoration:none; display:inline-block;}
 a>img{ width:100%;}
+blockquote, q { quotes: none; }
 .clearFix {display: block;}
 .clearFix:after {clear: both;content: ".";display: block;height: 0;visibility: hidden;}
 .fl,.flt{float:left;display:inline;}
