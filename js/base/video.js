@@ -29,7 +29,6 @@ function importVideo(){
 					container.css({width:size[0],height:size[1],left:(opts.maxSize[0]-size[0])*0.5,top:(opts.maxSize[1]-size[1])*0.5});
 				}//edn if
 			}//edn else
-			
 			if(opts.autoplay) container[0].play();
 			return container[0];
 		}//end if
