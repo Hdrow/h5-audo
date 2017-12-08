@@ -24,7 +24,7 @@ blockquote, q { quotes: none; }
 .gpuClose{will-change:auto;}
 .moving{ will-change:transform;}
 .smoothSlide {-webkit-overflow-scrolling: touch;}/* ios设备平滑滚动 */
-.txtShadow{text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000; }
+.txtShadow{ text-shadow: 0 0 0.01rem #000, 0 0 0.01rem #000; }
 .aniStop{animation-play-state: paused;}
 .aniPlay{ animation-play-state: running;}
 .overScroll{ overflow-y:scroll; -webkit-overflow-scrolling: touch;}
