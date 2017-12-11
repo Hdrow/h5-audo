@@ -8,7 +8,10 @@ function importCom() {
 		var article=$('article');
 		var iphoneXWeixin=os.iphoneX && os.weixin;
 		var iphoneXOffset=44;
-		if(ibase.dir == 'portrait') lock_dected();
+		if(ibase.dir == 'portrait'){
+			article.addClass('iphoneXPortrait');
+			lock_dected();
+		}//edn if
 		else {
 			html_resize();
 			$(window).on('orientationchange', window_orientation);
@@ -37,7 +40,7 @@ function importCom() {
 			var dir=ibase.getOrient();
 			if(dir == 'portrait') {
 				console.log('screen portrait');
-				if(iphoneXWeixin) article.removeClass('iphoneXLandscape');
+				if(iphoneXWeixin) article.removeClass('iphoneXLandscape').addClass('iphoneXPortrait');
 				if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
 					var size = imath.autoSize([ibase.landscapeHeight, ibase.landscapeWidth], [window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
 					var scale = size[0] / ibase.landscapeHeight;
@@ -72,6 +75,7 @@ function importCom() {
 			} //end if
 			else{
 				console.log('screen landscape');
+				if(iphoneXWeixin) article.addClass('iphoneXLandscape').removeClass('iphoneXPortrait');
 				if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
 					var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [iphoneXWeixin?window.innerWidth-iphoneXOffset*2:window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
 					var scale = size[0] / ibase.landscapeWidth;
@@ -103,7 +107,6 @@ function importCom() {
 						y: 0
 					});
 				} //end else
-				if(iphoneXWeixin) article.addClass('iphoneXLandscape');
 			} //end else
 		} //edn func
 

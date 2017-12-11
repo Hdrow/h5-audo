@@ -145,12 +145,14 @@ a.bgmBtn{ position: absolute; right: 0.24rem; top: 0.24rem; width: 0.58rem; heig
 a.bgmPlay{ background-image: url(../images/common/bgm_on.png);}
 a.bgmStop{ background-image: url(../images/common/bgm_off.png);}
 
-/* 初始化标签*/
-body{ background-color:#fff; color:#000;}
-a,a:visited{ color:#000;}
-article{ width:100%; height: 100%; overflow: hidden; position:relative; transform-origin: 0 0; }
-
+/* iphoneX适配 */
+.iphoneXPortrait{}
 .iphoneXLandscape{ left: 0.43rem; width: calc( 100% - 0.86rem );}
+
+/* 初始化标签*/
+body{ background-color:white; color:black;}
+a,a:visited{ color:black;}
+article{ width:100%; height: 100%; overflow: hidden; position:relative; transform-origin: 0 0; }
 
 /*---------------------------------------- css media 适配部分（针对android）----------------------*/
 @media screen and (device-width:360px), screen and (device-width:412px){
