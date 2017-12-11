@@ -1,25 +1,35 @@
-//2016.10.31
+//2017.11.20
 var ivideo=importVideo();
 
 function importVideo(){
 	var video={};
 	
-	video.add=function(src,options){
-		if(src && src!=''){
-			var defaults = {shell:$('body'),controls:false,autoplay:true};
+	video.add=function(options){
+		if(options && options.src && options.shell){
+			var defaults = {controls:false,autoplay:true,playsinline:true,x5:true};
 			var opts = $.extend(defaults,options);
-			var container=$('<video playsinline webkit-playsinline x5-video-player-type="h5" /></video>').attr({src:src,poster:opts.poster}).addClass(opts.classname).appendTo(opts.shell);
+			var container=$('<video></video>').attr({src:opts.src}).addClass(opts.classname).appendTo(opts.shell);
+			if(opts.playsinline) container.attr({'playsinline':'','webkit-playsinline':''});
+			if(opts.x5) container.attr({'x5-video-player-type':'h5'});
 			if(opts.controls) container.attr({controls:''});
-			if(opts.onLoaded) container[0].addEventListener('canplaythrough',opts.onLoaded,false);
+			if(opts.onLoadstart) container[0].addEventListener('progress',opts.onLoadstart,false);
+			if(opts.onLoaded) container[0].addEventListener('loadedmetadata',opts.onLoaded,false);
 			if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
 			if(opts.onTimeupdate) container[0].addEventListener('timeupdate',opts.onTimeupdate,false);
 			if(opts.onPlay) container[0].addEventListener('play',opts.onPlay,false);
 			if(opts.onPause) container[0].addEventListener('pause',opts.onPause,false);
-			if(opts.autoplay) container[0].play();
-			if(opts.autoSize && opts.videoSize){
-				var size=imath.autoSize(opts.videoSize,opts.autoSize,1);
-				container.attr({width:size[0],height:size[1]}).css({marginLeft:(opts.autoSize[0]-size[0])*0.5,marginTop:(opts.autoSize[1]-size[1])*0.5});
+			if(opts.onVolumechange) container[0].addEventListener('volumechange',opts.onVolumechange,false);
+			if(opts.autosize){
+				container.css({'object-fit':opts.autosize})
 			}//edn if
+			else{
+				container.attr({poster:opts.poster});
+				if(opts.maxSize && opts.sourceSize){
+					var size=imath.autoSize(opts.sourceSize,opts.maxSize,1);
+					container.css({width:size[0],height:size[1],left:(opts.maxSize[0]-size[0])*0.5,top:(opts.maxSize[1]-size[1])*0.5});
+				}//edn if
+			}//edn else
+			if(opts.autoplay) container[0].play();
 			return container[0];
 		}//end if
 	}//end func

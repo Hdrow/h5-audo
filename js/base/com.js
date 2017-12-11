@@ -1,20 +1,10 @@
-//2017.8.1
+//2017.11.29
 var icom = importCom();
 
 function importCom() {
 	var com = {};
 
 	com.init = function(callback) {
-		if(os.android) {
-			var input = $('input,textarea,[contenteditable="true"]');
-			if(input.length > 0) input.on('focus', input_focus).on('blur', input_blur);
-		} //edn if
-		function input_focus(e) {
-			ibase.keyboard = true;
-		} //edn if
-		function input_blur(e) {
-			ibase.keyboard = false;
-		} //edn if
 		if(ibase.dir == 'portrait') lock_dected();
 		else {
 			var article = $('article');
@@ -43,74 +33,76 @@ function importCom() {
 		
 		function html_resize() {
 			var dir=ibase.getOrient(true);
-			if(!ibase.keyboard) {
-				if(dir == 'portrait') {
-					console.log('screen portrait');
+			if(dir == 'portrait') {
+				console.log('screen portrait');
+				if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
 					var size = imath.autoSize([ibase.landscapeHeight, ibase.landscapeWidth], [window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
 					var scale = size[0] / ibase.landscapeHeight;
 					console.log('window size:' + window.innerHeight + '/' + window.innerWidth);
 					console.log('auto scale:' + scale);
-					if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
-						ibase.landScapeScaleX=ibase.landScapeScaleY=scale;
-						article.css({
-							width: ibase.landscapeWidth,
-							height: ibase.landscapeHeight,
-							rotate: 90,
-							scale: scale,
-							x: (window.innerHeight / scale - ibase.landscapeWidth) * 0.5,
-							y: -ibase.landscapeHeight + (window.innerWidth / scale - ibase.landscapeHeight) * 0.5 + (os.iphone6Plus ? 4 : 0)
-						});
-					} //edn if
-					else {
-						var scales = [window.innerWidth / ibase.landscapeHeight, window.innerHeight / ibase.landscapeWidth];
-						console.log('auto scales:' + scales);
-						ibase.landScapeScaleX=scales[0];
-						ibase.landScapeScaleY=scales[1];
-						article.css({
-							width: ibase.landscapeWidth,
-							height: ibase.landscapeHeight,
-							rotate: 90,
-							scaleX: scales[0],
-							scaleY: scales[1],
-							x: 0,
-							y: -ibase.landscapeHeight
-						});
-					} //end else
-				} //end if
-				else{
-					console.log('screen landscape');
-					var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
+					ibase.landScapeScaleX=ibase.landScapeScaleY=scale;
+					article.css({
+						width: ibase.landscapeWidth,
+						height: ibase.landscapeHeight,
+						rotate: 90,
+						scale: scale,
+						x: (window.innerHeight / scale - ibase.landscapeWidth) * 0.5,
+						y: -ibase.landscapeHeight + (ibase.landscapeHeight-window.innerWidth / scale) * 0.5
+					});
+				} //edn if
+				else {
+					var scale = [window.innerWidth / ibase.landscapeHeight, window.innerHeight / ibase.landscapeWidth];
+					console.log('window size:' + window.innerHeight + '/' + window.innerWidth);
+					console.log('auto scale:' + scale);
+					ibase.landScapeScaleX=scale[0];
+					ibase.landScapeScaleY=scale[1];
+					article.css({
+						width: ibase.landscapeWidth,
+						height: ibase.landscapeHeight,
+						rotate: 90,
+						scaleX: scale[1],
+						scaleY: scale[0],
+						x: 0,
+						y: -ibase.landscapeHeight
+					});
+				} //end else
+			} //end if
+			else{
+				console.log('screen landscape');
+				if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
+					var body=query;
+					var iphoneX=os.iphoneX && os.weixin;
+					var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [iphoneX?window.innerWidth-60:window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
 					var scale = size[0] / ibase.landscapeWidth;
 					console.log('window size:' + window.innerWidth + '/' + window.innerHeight);
 					console.log('auto scale:' + scale);
-					if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
-						ibase.landScapeScaleX=ibase.landScapeScaleY=scale;
-						article.css({
-							width: ibase.landscapeWidth,
-							height: ibase.landscapeHeight,
-							rotate: 0,
-							scale: scale,
-							x: (window.innerWidth / scale - ibase.landscapeWidth) * 0.5,
-							y: (window.innerHeight / scale - ibase.landscapeHeight) * 0.5
-						});
-					} //edn if
-					else {
-						var scales = [window.innerWidth / ibase.landscapeWidth, window.innerHeight / ibase.landscapeHeight];
-						console.log('auto scales:' + scales);
-						ibase.landScapeScaleX=scales[0];
-						ibase.landScapeScaleY=scales[1];
-						article.css({
-							width: ibase.landscapeWidth,
-							height: ibase.landscapeHeight,
-							rotate: 0,
-							scaleX: scales[0],
-							scaleY: scales[1],
-							x: 0,
-							y: 0
-						});
-					} //end else
+					ibase.landScapeScaleX=ibase.landScapeScaleY=scale;
+					article.css({
+						width: ibase.landscapeWidth,
+						height: ibase.landscapeHeight,
+						rotate: 0,
+						scale: scale,
+						x: (window.innerWidth / scale - ibase.landscapeWidth) * 0.5 + iphoneX?30/scale:0,
+						y: (window.innerHeight / scale - ibase.landscapeHeight) * 0.5
+					});
+				} //edn if
+				else {
+					var scale = [window.innerWidth / ibase.landscapeWidth, window.innerHeight / ibase.landscapeHeight];
+					console.log('window size:' + window.innerHeight + '/' + window.innerWidth);
+					console.log('auto scale:' + scale);
+					ibase.landScapeScaleX=scale[0];
+					ibase.landScapeScaleY=scale[1];
+					article.css({
+						width: ibase.landscapeWidth,
+						height: ibase.landscapeHeight,
+						rotate: 0,
+						scaleX: scale[0] + iphoneX?30/scale[0]:0,
+						scaleY: scale[1],
+						x: 0,
+						y: 0
+					});
 				} //end else
-			} //edn if
+			} //end else
 		} //edn func
 
 	} //edn func
@@ -249,17 +241,6 @@ function importCom() {
 		} //end if
 	} //end func	
 
-	//打印object数据
-	com.objectPrint = function(data) {
-		if(data) {
-			console.log("-----------------------------------------------------------------------------");
-			var info = "";
-			for(var i in data) info += i + ":" + data[i] + "  "
-			console.log(info);
-			console.log("-----------------------------------------------------------------------------");
-		} //end if
-	} //end func
-
 	//常用正则
 	com.checkStr = function(str, type) {
 		if(str && str != '') {
@@ -291,6 +272,12 @@ function importCom() {
 					break;
 				case 8:
 					var reg = new RegExp(/^[a-zA-Z\u0391-\uFFE5]+$/); //不能包含数字和符号
+					break;
+				case 9:
+					var reg = new RegExp(/^\d{6}$/); //6位验证码验证
+					break;
+				case 10:
+					var reg = new RegExp(/^\d{4}$/); //4位验证码验证
 					break;
 			} //end switch
 			if(reg.exec($.trim(str))) return true;
@@ -326,8 +313,9 @@ function importCom() {
 		shell = shell || input.parents('section');
 		if(input.length > 0) {
 			if(os.ios) {
+				var body=$('body');
 				input.on('focus', function(e) {
-					$(document).one('touchend', ios_keyboard);
+					body.one('touchend', ios_keyboard);
 				});
 			} //end if
 			else if(shell.length > 0) {
@@ -559,15 +547,13 @@ function importCom() {
 
 	function clearTimer(timer) {
 		cancelAnimationFrame(timer.timer);
-		timer.now = 0;
-		timer.start = new Date().getTime();
-		timer.timer = null;
+		timer=null;
 	} //edn func
 
 	function setTimer(callback, frame, type, interval) {
 		var timer = {
 			now: 0,
-			start: new Date().getTime(),
+			start: type ? 0 : new Date().getTime(),
 			timer: null
 		};
 		timer_handler();
@@ -679,4 +665,26 @@ function importCom() {
 
 String.prototype.replaceAll = function(s1, s2) {
 	return this.replace(new RegExp(s1, "gm"), s2);
+}
+
+/**
+ * 扩展一个可以指定时间输出格式的 Date 的方法
+ * 年(y)可以用 1-4 个占位符、月(M)、日(d)、季度(q)可以用 1-2 个占位符
+ * 小时(h)、分(m)、秒(s)、毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+ * @param  fmt  | 格式化表达式
+ */
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1,
+        "d+": this.getDate(),
+        "h+": this.getHours(),
+        "m+": this.getMinutes(),
+        "s+": this.getSeconds(),
+        "q+": Math.floor((this.getMonth() + 3) / 3),
+        "S": this.getMilliseconds()
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
 }

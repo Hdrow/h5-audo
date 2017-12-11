@@ -1,56 +1,83 @@
-﻿//---------------------------------------------------- 苹果
+﻿//--------------------------------------------------------------------------------------------------------苹果----------------------------------------------------
 物理分辨率：
-iphone4 640x960
 iphone5 640x1136
 iphone6 750x1334
 iphone6plus 1920×1080
+iphoneX 1125x2436
 
-微信竖屏：
-iphone4 screen:320x480/weixin:320x416
-iphone5 screen:320x568/weixin:320x504
-iphone6 screen:375x667/weixin:375x603
-iphone6plus screen:414×736/weixin:414x672
+竖屏：
+iphone5 screen:320x568 / weixin:320x504 / browser:320x460
+iphone6/7/8 screen:375x667 / weixin:375x603 / browser:375x553
+iphone6/7/8 plus screen:414x736 / weixin:414x672 / browser:414x622
+iphoneX screen:375×812 / weixin:375x724 / browser:375x635
 
-微信横屏：
-iphone5 screen:568x320 /weixin:568x268
-iphone6 screen:667x375 /weixin:667x323
-iphone6plus screen:736x414 /weixin:736x362
+横屏：
+iphone5 screen:568x320 / weixin:568x268 / browser:568x232
+iphone6 screen:667x375 / weixin:667x323 / browser:667x350
+iphone6plus screen:736x414 / weixin:736x362 / browser:736x364
+iphoneX screen:812×375 / weixin:812x343 / browser:724x325
 
 原生浏览器标识：
-Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1
+Mozilla/5.0 (iPhone; CPU iPhone OS 11_0_2 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A421 Safari/604.1
 
 微信浏览器标识：
-Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 MicroMessenger/6.5.4 NetType/WIFI Language/zh_CN
+Mozilla/5.0 (iPhone; CPU iPhone OS 11_0_2 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Mobile/15A421 MicroMessenger/6.5.18 NetType/WIFI Language/zh_CN
 
-//---------------------------------------------------- 安卓
+//--------------------------------------------------------------------------------------------------------安卓----------------------------------------------------
 物理分辨率 ：
-android 480P :480x854
-android 540P :540x960
-android 720P :720x1280
-android 1080P :1080x1920
-android 2K :1440x2560
-android 4K :2160x3840
-android 480P not 16:9 :480x800
-android 540P not 16:9 :540x906
-android 720P not 16:9 :720x1184
-android 1080P not 16:9 :1080x1776
-android 2k not 16:9 :1440x2390
+//-----16:9
+android 720P 720x1280
+android 1080P 1080x1920
+android 1440p 1440x2560
+//-----18:9
+android 720P 720x1440
+android 1080P 1080x2160
+android 1440p 1440×2880
+//-----18.5:9
+android 1440p 1440×2960
 
-微信竖屏：
-android 16:9 720p/1080p screen:360x640/weixin:360x567
-android 16:9 2k screen:412x732/weixin:412x660
-android not 16:9 720p screen:360x592/weixin:360x520
-android not 16:9 1080p screen:360x598/weixin:360x526
-android not 16:9 2k screen:412x684/weixin:412x612
 
-微信横屏：
-android 16:9 720p/1080p screen:640x360/weixin:640x295
-android 16:9 2k screen:732x412/weixin:732x338
-android not 16:9 720p/1080p screen:598x360/weixin:598x288
-android not 16:9 2k screen:684x412/weixin:684x340
+竖屏：
+//-----15:9(带虚拟按键的16:9手机)
+android 720p/1080p screen:360x640 / weixin:360x526 / browser:360x468
+android 1440p screen:412x732 / weixin:412x612 / browser:412x554
+//-----16:9(带物理按键的16:9手机)
+android 720p/1080p screen:360x640 / weixin:360x572 / browser:360x514
+android 1440p screen:412x732 / weixin:412x660 / browser:412x612
+//-----18:9(全面屏手机都是虚拟按键)
+android 720p/1080p screen:360x720 / weixin:360x606 / browser:360x554
+android 1440p screen:412x823 / weixin:412x703  / browser:360x645
+xiaomi mix2 screen:393x786 / weixin:393x667 / browser:393x609
+//-----18.5:9(全面屏手机都是虚拟按键)
+android 1440p screen:412x846 / weixin:412x726 / browser:412x668
 
-浏览器标识：
-Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36
 
-//---------------------------------------------------- 锁定横屏
-psd一律以Iphone6竖屏模式的横向窗口尺寸为标准：1206x750
+
+横屏：
+//-----15:9
+android 720p/1080p screen:598x360 / weixin:598x288
+android 1440p screen:684x412 / weixin:684x340
+//-----16:9
+android 720p/1080p screen:640x360 / weixin:640x295
+android 1440p screen:732x412 / weixin:732x340 / browser:732x332
+//-----18:9
+android 720p/1080p screen:678x360 / weixin:678x288 / browser:678x236
+android 1440p screen:775x412 / weixin:775x340
+xiaomi mix2 screen:786x393 / weixin:739x321 / browser:739x343
+
+微信浏览器标识：
+
+小米： 
+Mozilla/5.0 (Linux; Android 7.0; MI 5 Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043520 Safari/537.36 MicroMessenger/6.5.16.1120 NetType/WIFI Language/zh_CN
+
+红米：
+Mozilla/5.0 (Linux; Android 6.0.1; Redmi 4 Build/MMB29M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043520 Safari/537.36 MicroMessenger/6.5.16.1120 NetType/WIFI Language/zh_CN
+
+华为：
+Mozilla/5.0 (Linux; Android 7.0; EVA-AL10 Build/HUAWEIEVA-AL10; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043520 Safari/537.36 MicroMessenger/6.5.16.1120 NetType/WIFI Language/zh_CN
+
+oppo：
+Mozilla/5.0 (Linux; Android 5.1; OPPO R9m Build/LMY47I; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043508 Safari/537.36 MicroMessenger/6.5.16.1120 NetType/WIFI Language/zh_CN
+
+vivo：
+Mozilla/5.0 (Linux; Android 5.1.1; vivo X7 Build/LMY47V; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043520 Safari/537.36 MicroMessenger/6.5.13.1100 NetType/WIFI Language/zh_CN
