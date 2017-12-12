@@ -60,7 +60,6 @@ var ibase = importBase();
 
 function importBase() {
 	var base = {}
-	base.dir = 'portrait';
 	base.lock = false;
 	base.cssMedia = 750;
 	base.scrollTop = -1;
@@ -83,18 +82,15 @@ function importBase() {
 		console.log('css unit:' + unit);
 		this.debug = parseInt(this.getQueryString('debug')) || 0;
 		console.log('ibase debug:' + base.debug);
-
 		if(this.dir == 'portrait') {
-			if(base.dir == 'portrait') {
-				if(this.unit == 'rem' || this.unit == 'em') {
-					document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
-					document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
-				} //end if
-				else {
-					document.write('<meta name="viewport" content="width=' + base.cssMedia + ', minimum-scale = ' + window.screen.width / base.cssMedia + ', maximum-scale = ' + window.screen.width / base.cssMedia + ', target-densitydpi=device-dpi">');
-					document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
-				} //edn else
+			if(this.unit == 'rem' || this.unit == 'em') {
+				document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
+				document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
 			} //end if
+			else {
+				document.write('<meta name="viewport" content="width=' + base.cssMedia + ', minimum-scale = ' + window.screen.width / base.cssMedia + ', maximum-scale = ' + window.screen.width / base.cssMedia + ', target-densitydpi=device-dpi">');
+				document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
+			} //edn else
 			document.write('<aside class="turnBoxPortrait" id="turnBox"><div class="phone"><img src="images/common/turn_phone.png"><i class="yes"></i><i class="no"></i></div><p>竖屏体验更佳</p></aside>');
 			this.turnBox = document.getElementById("turnBox");
 			if(this.dir != base.getOrient(true)) {

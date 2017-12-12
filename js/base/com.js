@@ -25,12 +25,12 @@ function importCom() {
 		function window_orientation(e) {
 			if(!ibase.landscapeFollow){
 				if(ibase.landscapeFirstDir!='portrait' && ibase.getOrient()=='portrait'){
-					for(var i=1; i<=3; i++) com.setTimeout(html_resize, i*10,1);
+					com.setTimeout(html_resize, i*10,1);
 					$(this).off('orientationchange', window_orientation);
 				}//end if
 			}//edn if
 			else{
-				for(var i=1; i<=3; i++) com.setTimeout(html_resize, i*10,1);
+				com.setTimeout(html_resize, i*10,1);
 			}//edn else
 		} //edn func
 		
