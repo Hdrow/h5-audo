@@ -1,4 +1,4 @@
-//2017.12.11
+//2017.12.12
 //-----------------------------------os
 var os = importOS();
 
@@ -33,7 +33,8 @@ function importOS() {
 	os.edge = userAgent.match(/Edge/) ? true : false;
 	os.pc = !(os.android || os.ios || os.wp);
 	if(os.ios) {
-		os.iphoneX = (screen.width == 375 && screen.height == 812) || (screen.width == 375 && window.innerHeight >= 635) || (window.innerWidth == 724 && window.innerHeight == 375);
+		os.iphoneX = (screen.width == 375 && screen.height == 812) || (screen.width == 375 && window.innerHeight >= 635) || (window.innerWidth == 724 && window.innerHeight == 375) || (window.innerWidth == 375 && window.innerHeight == 724) || (window.innerWidth == 812 && window.innerHeight == 343) || (window.innerWidth == 343 && window.innerHeight == 812);
+		os.iphoneXWeixin = os.iphoneX && os.weixin;
 		os.iphone6Plus = (screen.width == 414 && screen.height == 736) || (screen.width == 414 && window.innerHeight >= 622);
 		os.iphone6 = (screen.width == 375 && screen.height == 667) || (screen.width == 375 && window.innerHeight <= 603);
 		os.iphone5 = (screen.width == 320 && screen.height == 568) || (screen.width == 320 && window.innerHeight >= 460);
@@ -63,6 +64,7 @@ function importBase() {
 	base.lock = false;
 	base.cssMedia = 750;
 	base.scrollTop = -1;
+	base.iphoneXLandscapeOffset=44;
 
 	base.init = function(dir, unit, wd, ht, scale, lock, follow) {
 		this.dir = dir || 'portrait';

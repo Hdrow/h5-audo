@@ -22,3 +22,8 @@ section{ position: absolute; left: 0; top: 0; width: 1206px; height: 750px;}
 @media screen and (device-width:320px), screen and (device-width:375px), screen and (device-width:414px){
 
 }
+
+/*-------------------------------------------------------- 针对真横屏 --------------------------------------------------------------------------------------*/
+@media screen and (orientation : landscape){ 
+
+}

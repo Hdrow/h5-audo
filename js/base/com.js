@@ -1,4 +1,4 @@
-//2017.12.11
+//2017.12.12
 var icom = importCom();
 
 function importCom() {
@@ -6,8 +6,6 @@ function importCom() {
 
 	com.init = function(callback) {
 		var article=$('article');
-		var iphoneXWeixin=os.iphoneX && os.weixin;
-		var iphoneXOffset=44;
 		if(ibase.dir == 'portrait'){
 			article.addClass('iphoneXPortrait');
 			lock_dected();
@@ -40,7 +38,7 @@ function importCom() {
 			var dir=ibase.getOrient();
 			if(dir == 'portrait') {
 				console.log('screen portrait');
-				if(iphoneXWeixin) article.removeClass('iphoneXLandscape').addClass('iphoneXPortrait');
+				if(os.iphoneXWeixin) article.removeClass('iphoneXLandscape').addClass('iphoneXPortrait');
 				if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
 					var size = imath.autoSize([ibase.landscapeHeight, ibase.landscapeWidth], [window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
 					var scale = size[0] / ibase.landscapeHeight;
@@ -75,9 +73,9 @@ function importCom() {
 			} //end if
 			else{
 				console.log('screen landscape');
-				if(iphoneXWeixin) article.addClass('iphoneXLandscape').removeClass('iphoneXPortrait');
+				if(os.iphoneXWeixin) article.addClass('iphoneXLandscape').removeClass('iphoneXPortrait');
 				if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
-					var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [iphoneXWeixin?window.innerWidth-iphoneXOffset*2:window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
+					var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [os.iphoneXWeixin?window.innerWidth-ibase.iphoneXLandscapeOffset*2:window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
 					var scale = size[0] / ibase.landscapeWidth;
 					console.log('window size:' + window.innerWidth + '/' + window.innerHeight);
 					console.log('auto scale:' + scale);
@@ -87,7 +85,7 @@ function importCom() {
 						height: ibase.landscapeHeight,
 						rotate: 0,
 						scale: scale,
-						x: (window.innerWidth / scale - ibase.landscapeWidth) * 0.5 + iphoneXWeixin?iphoneXOffset/scale:0,
+						x: (window.innerWidth / scale - ibase.landscapeWidth) * 0.5 + os.iphoneXWeixin?ibase.iphoneXLandscapeOffset/scale:0,
 						y: (window.innerHeight / scale - ibase.landscapeHeight) * 0.5
 					});
 				} //edn if
@@ -101,7 +99,7 @@ function importCom() {
 						width: ibase.landscapeWidth,
 						height: ibase.landscapeHeight,
 						rotate: 0,
-						scaleX: scale[0] + iphoneXWeixin?iphoneXOffset/scale[0]:0,
+						scaleX: scale[0] + os.iphoneXWeixin?ibase.iphoneXLandscapeOffset/scale[0]:0,
 						scaleY: scale[1],
 						x: 0,
 						y: 0

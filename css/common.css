@@ -90,7 +90,7 @@ aside.turnBoxPortrait>p{ text-align:center; font-size:0.28rem; color:rgba(255,25
 
 /* load浮层 */
 aside.loadBox{ position:absolute; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:996; display: none;}
-aside.loadBox>span{ display:block; position:absolute; left:50%; top:50%; margin-left:-0.12rem; margin-top:-0.24rem; transform:scale(0.46); transform-origin: 50% 50%;}
+aside.loadBox>span{ display:block; position:absolute; left:50%; top:50%; transform: translate(-50%,-50%) scale(0.46); transform-origin: 50% 50%;}
 aside.loadBox>span i{ display:block; position:absolute; left:0; top:0; width:0.4rem; height:0.1rem; border-radius:0.08rem; background-color:rgba(255,255,255,0.5); box-shadow:0 0 0.1rem rgba(255,255,255,1);}
 aside.loadBox>span i:nth-child(1){ transform:translate(0.6rem, 0) rotate(0deg); animation:loadCircle 2.4s 0s linear infinite;}
 aside.loadBox>span i:nth-child(2){ transform:translate(0.5196rem, 0.3rem) rotate(30deg); animation:loadCircle 2.4s 0.2s linear infinite;}
@@ -146,17 +146,20 @@ a.bgmPlay{ background-image: url(../images/common/bgm_on.png);}
 a.bgmStop{ background-image: url(../images/common/bgm_off.png);}
 
 /* iphoneX适配 */
-.iphoneXPortrait{}
-.iphoneXLandscape{ left: 0.43rem; width: calc( 100% - 0.86rem );}
+.iphoneXPortrait{ height:  calc( 100% - 0.7rem ) ;}
+.iphoneXLandscape{}
 
 /* 初始化标签*/
-body{ background-color:white; color:black;}
-a,a:visited{ color:black;}
-article{ width:100%; height: 100%; overflow: hidden; position:relative; transform-origin: 0 0; }
+body{ background-color:black;}
+article{ background-color:white; width:100%; height: 100%; overflow: hidden; position:relative; transform-origin: 0 0; }
 
 /*---------------------------------------- css media 适配部分（针对android）----------------------*/
 @media screen and (device-width:360px), screen and (device-width:412px){
-
 article{ overflow: auto; }
+}
 
+/*---------------------------------------- iphoneX 微信----------------------*/
+@media screen and (device-width:375px) and (min-height:720px){
+aside.loadBox{height:  calc( 100% - 0.7rem ) ;}
+aside.alertBox{height:  calc( 100% - 0.7rem ) ;}
 }
