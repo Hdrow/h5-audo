@@ -50,7 +50,7 @@ function importCom() {
 						height: ibase.landscapeHeight,
 						rotate: 90,
 						scale: scale,
-						x: 0,
+						x: os.iphoneX?0:(window.innerHeight / scale - ibase.landscapeWidth) * 0.5,
 						y: -ibase.landscapeHeight + (ibase.landscapeHeight-window.innerWidth / scale) * 0.5
 					});
 				} //edn if
