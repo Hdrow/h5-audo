@@ -7,7 +7,7 @@ function importCom() {
 	com.init = function(callback) {
 		var article=$('article');
 		if(ibase.dir == 'portrait'){
-			article.addClass('iphoneXPortrait');
+			if(os.iphoneXWeixin) article.addClass('iphoneXPortrait');
 			lock_dected();
 		}//edn if
 		else {
