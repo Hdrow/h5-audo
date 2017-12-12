@@ -63,7 +63,8 @@ function importBase() {
 	base.lock = false;
 	base.cssMedia = 750;
 	base.scrollTop = -1;
-	base.iphoneXLandscapeOffset=44;
+	base.iphoneXOffsetLandscape=44;
+	base.iphoneXOffsetPortrait=35;
 
 	base.init = function(dir, unit, wd, ht, scale, lock, follow) {
 		this.dir = dir || 'portrait';
