@@ -35,7 +35,7 @@ function importCom() {
 		} //edn func
 		
 		function html_resize() {
-			var dir=ibase.getOrient();
+			var dir=ibase.getOrient(true);
 			if(dir == 'portrait') {
 				console.log('screen portrait');
 				if(os.iphoneXWeixin || os.iphoneXWeibo) article.removeClass('iphoneXLandscape').addClass('iphoneXPortrait');
