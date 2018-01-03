@@ -6,9 +6,10 @@ function importVideo(){
 	
 	video.add=function(options){
 		if(options && options.src && options.shell){
-			var defaults = {controls:false,autoplay:true,playsinline:true,x5:true};
+			var defaults = {controls:false,autoplay:true,playsinline:true,x5:true,autosize:'fill'};
 			var opts = $.extend(defaults,options);
 			var container=$('<video></video>').attr({src:opts.src}).addClass(opts.classname).appendTo(opts.shell);
+			if(opts.poster) container.attr({poster:opts.poster});
 			if(opts.playsinline) container.attr({'playsinline':'','webkit-playsinline':''});
 			if(opts.x5) container.attr({'x5-video-player-type':'h5'});
 			if(opts.x5_orientation) container.attr({'x5-video-orientation':opts.x5_orientation});
@@ -21,16 +22,7 @@ function importVideo(){
 			if(opts.onPlay) container[0].addEventListener('play',opts.onPlay,false);
 			if(opts.onPause) container[0].addEventListener('pause',opts.onPause,false);
 			if(opts.onVolumechange) container[0].addEventListener('volumechange',opts.onVolumechange,false);
-			if(opts.autosize){
-				container.css({'object-fit':opts.autosize})
-			}//edn if
-			else{
-				container.attr({poster:opts.poster});
-				if(opts.maxSize && opts.sourceSize){
-					var size=imath.autoSize(opts.sourceSize,opts.maxSize,1);
-					container.css({width:size[0],height:size[1],left:(opts.maxSize[0]-size[0])*0.5,top:(opts.maxSize[1]-size[1])*0.5});
-				}//edn if
-			}//edn else
+			if(opts.autosize) container.css({'object-fit':opts.autosize});
 			if(opts.autoplay) container[0].play();
 			return container[0];
 		}//end if
