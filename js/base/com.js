@@ -1,4 +1,4 @@
-//2018.1.1
+//2018.1.3
 var icom = importCom();
 
 function importCom() {
@@ -10,7 +10,7 @@ function importCom() {
 			if(os.iphoneXWeixin || os.iphoneXWeibo) article.addClass('iphoneXPortrait');
 			lock_dected();
 		}//edn if
-		else {
+		else if(ibase.dir == 'landscape'){
 			html_resize();
 			$(window).on('orientationchange', window_orientation);
 			if(os.ios) lock_dected();
@@ -54,7 +54,7 @@ function importCom() {
 						y: -ibase.landscapeHeight + (ibase.landscapeHeight-window.innerWidth / scale) * 0.5
 					});
 				} //edn if
-				else {
+				else{
 					var scale = [window.innerWidth / ibase.landscapeHeight, window.innerHeight / ibase.landscapeWidth];
 					console.log('window size:' + window.innerHeight + '/' + window.innerWidth);
 					console.log('auto scale:' + scale);
@@ -71,7 +71,7 @@ function importCom() {
 					});
 				} //end else
 			} //end if
-			else{
+			else if(dir == 'landscape') {
 				console.log('screen landscape');
 				if(os.iphoneXWeixin || os.iphoneXWeibo) article.addClass('iphoneXLandscape').removeClass('iphoneXPortrait');
 				if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {

@@ -1,4 +1,4 @@
-//2018.1.1
+//2018.1.3
 //-----------------------------------os
 var os = importOS();
 
@@ -61,6 +61,7 @@ var ibase = importBase();
 
 function importBase() {
 	var base = {}
+	base.dir = 'portrait';
 	base.lock = false;
 	base.cssMedia = 750;
 	base.scrollTop = -1;
