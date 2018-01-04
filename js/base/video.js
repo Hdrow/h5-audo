@@ -1,4 +1,4 @@
-//2017.11.20
+//2018.1.3
 var ivideo=importVideo();
 
 function importVideo(){
@@ -6,11 +6,14 @@ function importVideo(){
 	
 	video.add=function(options){
 		if(options && options.src && options.shell){
-			var defaults = {controls:false,autoplay:true,playsinline:true,x5:true};
+			var defaults = {controls:false,autoplay:true,playsinline:true,x5:true,autosize:'fill'};
 			var opts = $.extend(defaults,options);
 			var container=$('<video></video>').attr({src:opts.src}).addClass(opts.classname).appendTo(opts.shell);
+			if(opts.poster) container.attr({poster:opts.poster});
 			if(opts.playsinline) container.attr({'playsinline':'','webkit-playsinline':''});
 			if(opts.x5) container.attr({'x5-video-player-type':'h5'});
+			if(opts.x5_orientation) container.attr({'x5-video-orientation':opts.x5_orientation});
+			if(opts.x5_fullscreen) container.attr({'x5-video-player-fullscreen':'true'});
 			if(opts.controls) container.attr({controls:''});
 			if(opts.onLoadstart) container[0].addEventListener('progress',opts.onLoadstart,false);
 			if(opts.onLoaded) container[0].addEventListener('loadedmetadata',opts.onLoaded,false);
@@ -19,23 +22,14 @@ function importVideo(){
 			if(opts.onPlay) container[0].addEventListener('play',opts.onPlay,false);
 			if(opts.onPause) container[0].addEventListener('pause',opts.onPause,false);
 			if(opts.onVolumechange) container[0].addEventListener('volumechange',opts.onVolumechange,false);
-			if(opts.autosize){
-				container.css({'object-fit':opts.autosize})
-			}//edn if
-			else{
-				container.attr({poster:opts.poster});
-				if(opts.maxSize && opts.sourceSize){
-					var size=imath.autoSize(opts.sourceSize,opts.maxSize,1);
-					container.css({width:size[0],height:size[1],left:(opts.maxSize[0]-size[0])*0.5,top:(opts.maxSize[1]-size[1])*0.5});
-				}//edn if
-			}//edn else
+			if(opts.autosize) container.css({'object-fit':opts.autosize});
 			if(opts.autoplay) container[0].play();
 			return container[0];
 		}//end if
 	}//end func
 	
 	video.on=function(options){
-		var defaults = {btn:$('a.btnVideo,#btnVideo'),autoplay:true};
+		var defaults = {btn:$('a.btnVideo,#btnVideo'),autoplay:true,shell:'article'};
 		var opts = $.extend(defaults,options);
 		if(opts.btn.length>0) opts.btn.on('click',opts,video_play);
 	}//end func
@@ -76,28 +70,12 @@ function importVideo(){
 		else return url;
 	}//end func
 	
-	video.insert=function(options){
-		var defaults = {type:'youku',autoplay:false,controls:true,width:'100%',height:'100%'};
-		var opts = $.extend(defaults,options);
-		if(opts.box.length>0){
-			if(opts.type=='youku') $('<iframe width='+opts.width+' height='+opts.height+' src=http://player.youku.com/embed/'+opts.vid+ (opts.autoplay?'?autoplay=true':'') + ' frameborder=0 allowfullscreen></iframe>').appendTo(opts.box);
-			else if(opts.type=='qq') $('<iframe width='+opts.width+' height='+opts.height+' src=http://v.qq.com/iframe/player.html?vid='+opts.vid+'&tiny=0&auto='+(opts.autoplay?1:0)+' frameborder=0 allowfullscreen></iframe>').appendTo(opts.box);
-			else if(opts.type=='mp4'){
-				var container=$('<video playsinline webkit-playsinline x5-video-player-type="h5"></video>').attr({src:opts.vid,poster:opts.poster}).appendTo(opts.box);
-				if(opts.controls) container.attr({controls:''});
-				if(opts.autoplay) container[0].play();
-				if(opts.onEnded) container[0].addEventListener('ended',opts.onEnded,false);
-			}//end else
-		}//edn if
-	}//end func
-	
 	function video_play(e){
-		e.stopImmediatePropagation();
 		var autoplay=e.data.autoplay;
 		var onOpen=e.data.onOpen;
 		var onEnded=e.data.onEnded;
 		var onClose=e.data.onClose;
-		var box=$("<aside class='videoBox' id='videoBox'></aside>").appendTo($('body')).show();
+		var box=$("<aside class='videoBox' id='videoBox'></aside>").appendTo($(e.data.shell)).show();
 		var url=$(this).data('url');
 		var type=video.getType(url);
 		var vid=video.getVid(url,type);

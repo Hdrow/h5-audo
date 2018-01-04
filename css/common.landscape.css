@@ -12,6 +12,8 @@ input::-webkit-input-placeholder,input:focus::-webkit-input-placeholder{color:#5
 video{ background-color:#000;}
 a{ text-decoration:none; display:inline-block;}
 a>img{ width:100%;}
+sup,sub{ font-size: 60%;}
+blockquote, q { quotes: none; }
 .clearFix {display: block;}
 .clearFix:after {clear: both;content: ".";display: block;height: 0;visibility: hidden;}
 .fl,.flt{float:left;display:inline;}
@@ -162,29 +164,28 @@ aside.videoBox>a.close{ position:absolute; right:40px; top:40px; width:60px; hei
 aside.shareBox{position:absolute; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:997; display:none;}
 aside.shareBox>img{ width:100%;}
 
-/* 根标签 */
-article{ width:100%; height:100%; position:relative; transform-origin: 0 0; }
-
-
 /* 背景音乐按钮 */
 a.bgmBtn{ position: absolute; right:30px; top: 30px; width: 60px; height: 60px;}
 a.bgmPlay{ background-image: url(../images/common/bgm_on.png);}
 a.bgmStop{ background-image: url(../images/common/bgm_off.png);}
 
+/* iphoneX适配 */
+.iphoneXPortrait{}
+.iphoneXLandscape{}
+
+/* 初始化标签*/
+body{background-color:black; color: #000;}
+a,a:hover{ color: #000;}
+article{ background-color:white; width:100%; height:100%; position:relative; transform-origin: 0 0; }
+
 
 /*---------------------------------------- iphone6plus ----------------------------------------------*/
 @media screen and (device-width:414px){
-
 aside.turnBoxLandscape>div.lock{ margin: 80px auto 0;}
-
 a.bgmBtn{ top: 40px;}
-
 }
 
 /*-------------------------------------------------------- 针对真横屏 --------------------------------------------------------------------------------------*/
-@media screen and (orientation : landscape) and (width:568px), screen and (orientation : landscape) and (width:667px), screen and (orientation : landscape) and (width:736px), screen and (orientation : landscape) and (width:640px), screen and (orientation : landscape) and (width:732px), screen and (orientation : landscape) and (width:598px), screen and (orientation : landscape) and (width:684px) { 
-
+@media screen and (orientation : landscape){ 
 a.bgmBtn{ top: 115px;}
-
-
 }

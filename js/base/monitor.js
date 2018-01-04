@@ -1,4 +1,4 @@
-//2017.11.24
+//2017.12.19
 
 //百度监测贴这里
 //var _hmt = _hmt || [];
@@ -31,8 +31,8 @@ function importMonitor() {
 			};
 			var opts = $.extend(defaults, options);
 			if(opts.obj && opts.obj.length > 0) {
-				opts.obj.each(function(i) {
-					$(this).on(opts.action, opts, event_bind);
+				opts.obj.each(function(i,n) {
+					$(n).on(opts.action, {action:opts.action,category:opts.category,label:opts.label+(i+1)}, event_bind);
 				});
 			} //end if
 			else {

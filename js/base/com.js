@@ -1,13 +1,16 @@
-//2017.11.29
+//2018.1.3
 var icom = importCom();
 
 function importCom() {
 	var com = {};
 
 	com.init = function(callback) {
-		if(ibase.dir == 'portrait') lock_dected();
-		else {
-			var article = $('article');
+		var article=$('article');
+		if(ibase.dir == 'portrait'){
+			if(os.iphoneXWeixin || os.iphoneXWeibo) article.addClass('iphoneXPortrait');
+			lock_dected();
+		}//edn if
+		else if(ibase.dir == 'landscape'){
 			html_resize();
 			$(window).on('orientationchange', window_orientation);
 			if(os.ios) lock_dected();
@@ -35,8 +38,9 @@ function importCom() {
 			var dir=ibase.getOrient(true);
 			if(dir == 'portrait') {
 				console.log('screen portrait');
+				if(os.iphoneXWeixin || os.iphoneXWeibo) article.removeClass('iphoneXLandscape').addClass('iphoneXPortrait');
 				if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
-					var size = imath.autoSize([ibase.landscapeHeight, ibase.landscapeWidth], [window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
+					var size = imath.autoSize([ibase.landscapeHeight, ibase.landscapeWidth], [window.innerWidth, os.iphoneXWeixin || os.iphoneXWeibo?window.innerHeight-ibase.iphoneXOffsetPortrait:window.innerHeight], ibase.landscapeScaleMode);
 					var scale = size[0] / ibase.landscapeHeight;
 					console.log('window size:' + window.innerHeight + '/' + window.innerWidth);
 					console.log('auto scale:' + scale);
@@ -46,11 +50,11 @@ function importCom() {
 						height: ibase.landscapeHeight,
 						rotate: 90,
 						scale: scale,
-						x: (window.innerHeight / scale - ibase.landscapeWidth) * 0.5,
+						x: os.iphoneX?0:(window.innerHeight / scale - ibase.landscapeWidth) * 0.5,
 						y: -ibase.landscapeHeight + (ibase.landscapeHeight-window.innerWidth / scale) * 0.5
 					});
 				} //edn if
-				else {
+				else{
 					var scale = [window.innerWidth / ibase.landscapeHeight, window.innerHeight / ibase.landscapeWidth];
 					console.log('window size:' + window.innerHeight + '/' + window.innerWidth);
 					console.log('auto scale:' + scale);
@@ -67,12 +71,11 @@ function importCom() {
 					});
 				} //end else
 			} //end if
-			else{
+			else if(dir == 'landscape') {
 				console.log('screen landscape');
+				if(os.iphoneXWeixin || os.iphoneXWeibo) article.addClass('iphoneXLandscape').removeClass('iphoneXPortrait');
 				if(ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
-					var body=query;
-					var iphoneX=os.iphoneX && os.weixin;
-					var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [iphoneX?window.innerWidth-60:window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
+					var size = imath.autoSize([ibase.landscapeWidth, ibase.landscapeHeight], [os.iphoneXWeixin || os.iphoneXWeibo?window.innerWidth-ibase.iphoneXOffsetLandscape*2:window.innerWidth, window.innerHeight], ibase.landscapeScaleMode);
 					var scale = size[0] / ibase.landscapeWidth;
 					console.log('window size:' + window.innerWidth + '/' + window.innerHeight);
 					console.log('auto scale:' + scale);
@@ -82,7 +85,7 @@ function importCom() {
 						height: ibase.landscapeHeight,
 						rotate: 0,
 						scale: scale,
-						x: (window.innerWidth / scale - ibase.landscapeWidth) * 0.5 + iphoneX?30/scale:0,
+						x: (window.innerWidth / scale - ibase.landscapeWidth) * 0.5 + os.iphoneXWeixin || os.iphoneXWeibo?ibase.iphoneXOffsetLandscape/scale:0,
 						y: (window.innerHeight / scale - ibase.landscapeHeight) * 0.5
 					});
 				} //edn if
@@ -96,7 +99,7 @@ function importCom() {
 						width: ibase.landscapeWidth,
 						height: ibase.landscapeHeight,
 						rotate: 0,
-						scaleX: scale[0] + iphoneX?30/scale[0]:0,
+						scaleX: scale[0] + os.iphoneXWeixin || os.iphoneXWeibo?ibase.iphoneXOffsetLandscape/scale[0]:0,
 						scaleY: scale[1],
 						x: 0,
 						y: 0
@@ -310,7 +313,6 @@ function importCom() {
 	//input fix
 	com.keyboard = function(input, shell, callback) {
 		input = input || $('input,textarea,[contenteditable="true"]');
-		shell = shell || input.parents('section');
 		if(input.length > 0) {
 			if(os.ios) {
 				var body=$('body');
@@ -318,7 +320,7 @@ function importCom() {
 					body.one('touchend', ios_keyboard);
 				});
 			} //end if
-			else if(shell.length > 0) {
+			else if(shell && shell.length > 0) {
 				var windowHt = $(window).height();
 				var ht = shell.height();
 				$(window).on('resize', android_keyboard);

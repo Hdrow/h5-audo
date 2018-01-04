@@ -12,6 +12,7 @@ input::-webkit-input-placeholder,textarea::-webkit-input-placeholder{color:#555;
 video{ background-color:#000;}
 a{ text-decoration:none; display:inline-block;}
 a>img{ width:100%;}
+sup,sub{ font-size: 60%;}
 blockquote, q { quotes: none; }
 .clearFix {display: block;}
 .clearFix:after {clear: both;content: ".";display: block;height: 0;visibility: hidden;}
@@ -90,7 +91,7 @@ aside.turnBoxPortrait>p{ text-align:center; font-size:0.28rem; color:rgba(255,25
 
 /* load浮层 */
 aside.loadBox{ position:absolute; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:996; display: none;}
-aside.loadBox>span{ display:block; position:absolute; left:50%; top:50%; margin-left:-0.12rem; margin-top:-0.24rem; transform:scale(0.46); transform-origin: 50% 50%;}
+aside.loadBox>span{ display:block; position:absolute; left:50%; top:50%; transform: translate(-50%,-50%) scale(0.46); transform-origin: 50% 50%;}
 aside.loadBox>span i{ display:block; position:absolute; left:0; top:0; width:0.4rem; height:0.1rem; border-radius:0.08rem; background-color:rgba(255,255,255,0.5); box-shadow:0 0 0.1rem rgba(255,255,255,1);}
 aside.loadBox>span i:nth-child(1){ transform:translate(0.6rem, 0) rotate(0deg); animation:loadCircle 2.4s 0s linear infinite;}
 aside.loadBox>span i:nth-child(2){ transform:translate(0.5196rem, 0.3rem) rotate(30deg); animation:loadCircle 2.4s 0.2s linear infinite;}
@@ -105,6 +106,25 @@ aside.loadBox>span i:nth-child(10){ transform:translate(0, -0.6rem) rotate(270de
 aside.loadBox>span i:nth-child(11){ transform:translate(0.3rem, -0.5196rem) rotate(300deg); animation:loadCircle 2.4s 2.0s linear infinite;}
 aside.loadBox>span i:nth-child(12){ transform:translate(0.5196rem, -0.3rem) rotate(330deg); animation:loadCircle 2.4s 2.2s linear infinite;}
 @-webkit-keyframes loadCircle{0%{opacity:1}8.3%{opacity:0}50%{opacity:1}100%{opacity:1}}
+
+/* vloading */
+.vLoading{ position:absolute; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5);  display: none;}
+.vLoading>span{ display:block; position:absolute; left:50%; top:50%; margin-left:-0.12rem; margin-top:-0.24rem; transform:scale(0.46); transform-origin: 50% 50%;}
+.vLoading>span i{ display:block; position:absolute; left:0; top:0; width:0.4rem; height:0.1rem; border-radius:0.08rem; background-color:rgba(255,255,255,0.5); box-shadow:0 0 0.1rem rgba(255,255,255,1);}
+.vLoading>span i:nth-child(1){ transform:translate(0.6rem, 0) rotate(0deg); animation:loadCircle 2.4s 0s linear infinite;}
+.vLoading>span i:nth-child(2){ transform:translate(0.5196rem, 0.3rem) rotate(30deg); animation:loadCircle 2.4s 0.2s linear infinite;}
+.vLoading>span i:nth-child(3){ transform:translate(0.3rem, 0.5196rem) rotate(60deg); animation:loadCircle 2.4s 0.4s linear infinite;}
+.vLoading>span i:nth-child(4){ transform:translate(0, 0.6rem) rotate(90deg); animation:loadCircle 2.4s 0.6s linear infinite;}
+.vLoading>span i:nth-child(5){ transform:translate(-0.3rem, 0.5196rem) rotate(120deg); animation:loadCircle 2.4s 0.8s linear infinite;}
+.vLoading>span i:nth-child(6){ transform:translate(-0.5196rem, 0.3rem) rotate(150deg); animation:loadCircle 2.4s 1.0s linear infinite;}
+.vLoading>span i:nth-child(7){ transform:translate(-0.6rem, 0) rotate(180deg); animation:loadCircle 2.4s 1.2s linear infinite;}
+.vLoading>span i:nth-child(8){ transform:translate(-0.5196rem, -0.3rem) rotate(210deg); animation:loadCircle 2.4s 1.4s linear infinite;}
+.vLoading>span i:nth-child(9){ transform:translate(-0.3rem, -0.5196rem) rotate(240deg); animation:loadCircle 2.4s 1.6s linear infinite;}
+.vLoading>span i:nth-child(10){ transform:translate(0, -0.6rem) rotate(270deg); animation:loadCircle 2.4s 1.8s linear infinite;}
+.vLoading>span i:nth-child(11){ transform:translate(0.3rem, -0.5196rem) rotate(300deg); animation:loadCircle 2.4s 2.0s linear infinite;}
+.vLoading>span i:nth-child(12){ transform:translate(0.5196rem, -0.3rem) rotate(330deg); animation:loadCircle 2.4s 2.2s linear infinite;}
+
+
 
 /* 取代系统alert的弹窗 */
 aside.alertBox{ position:absolute; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:998;}
@@ -145,7 +165,12 @@ a.bgmBtn{ position: absolute; right: 0.24rem; top: 0.24rem; width: 0.58rem; heig
 a.bgmPlay{ background-image: url(../images/common/bgm_on.png);}
 a.bgmStop{ background-image: url(../images/common/bgm_off.png);}
 
+/* iphoneX适配 */
+.iphoneXPortrait{ height:  calc( 100% - 0.7rem ) ;}
+.iphoneXLandscape{}
+
 /* 初始化标签*/
+<<<<<<< HEAD
 body{ background-color:#fff; color:#000;}
 a,a:visited{ color:#000;}
 article{ width:100%; min-height: 100%;  position:relative; transform-origin: 0 0; }
@@ -154,5 +179,19 @@ article{ width:100%; min-height: 100%;  position:relative; transform-origin: 0 0
 @media screen and (device-width:360px), screen and (device-width:412px){
 
 
+=======
+body{ background-color:black; color: #000;}
+a,a:hover{ color: #000;}
+article{ background-color:white; width:100%; height: 100%; overflow: hidden; position:relative; transform-origin: 0 0; }
 
+/*---------------------------------------- css media 适配部分（针对android）----------------------*/
+@media screen and (device-width:360px), screen and (device-width:412px){
+article{ overflow: auto; }
+}
+>>>>>>> 0390664b44f15143e8b43804b54ee0589c9060c4
+
+/*---------------------------------------- iphoneX 微信----------------------*/
+@media screen and (device-width:375px) and (min-height:720px){
+aside.loadBox{height:  calc( 100% - 0.7rem ) ;}
+aside.alertBox{height:  calc( 100% - 0.7rem ) ;}
 }

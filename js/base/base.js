@@ -1,4 +1,4 @@
-//2017.11.16
+//2018.1.3
 //-----------------------------------os
 var os = importOS();
 
@@ -33,7 +33,9 @@ function importOS() {
 	os.edge = userAgent.match(/Edge/) ? true : false;
 	os.pc = !(os.android || os.ios || os.wp);
 	if(os.ios) {
-		os.iphoneX = (screen.width == 375 && screen.height == 812) || (screen.width == 375 && window.innerHeight >= 635);
+		os.iphoneX = (screen.width == 375 && screen.height == 812) || (screen.width == 375 && window.innerHeight >= 635) || (window.innerWidth == 724 && window.innerHeight == 375) || (window.innerWidth == 375 && window.innerHeight == 724) || (window.innerWidth == 812 && window.innerHeight == 343) || (window.innerWidth == 343 && window.innerHeight == 812);
+		os.iphoneXWeixin = os.iphoneX && os.weixin;
+		os.iphoneXWeibo = os.iphoneX && os.weibo;
 		os.iphone6Plus = (screen.width == 414 && screen.height == 736) || (screen.width == 414 && window.innerHeight >= 622);
 		os.iphone6 = (screen.width == 375 && screen.height == 667) || (screen.width == 375 && window.innerHeight <= 603);
 		os.iphone5 = (screen.width == 320 && screen.height == 568) || (screen.width == 320 && window.innerHeight >= 460);
@@ -63,6 +65,8 @@ function importBase() {
 	base.lock = false;
 	base.cssMedia = 750;
 	base.scrollTop = -1;
+	base.iphoneXOffsetLandscape=44;
+	base.iphoneXOffsetPortrait=35;
 
 	base.init = function(dir, unit, wd, ht, scale, lock, follow) {
 		this.dir = dir || 'portrait';
@@ -81,18 +85,15 @@ function importBase() {
 		console.log('css unit:' + unit);
 		this.debug = parseInt(this.getQueryString('debug')) || 0;
 		console.log('ibase debug:' + base.debug);
-
 		if(this.dir == 'portrait') {
-			if(base.dir == 'portrait') {
-				if(this.unit == 'rem' || this.unit == 'em') {
-					document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
-					document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
-				} //end if
-				else {
-					document.write('<meta name="viewport" content="width=' + base.cssMedia + ', minimum-scale = ' + window.screen.width / base.cssMedia + ', maximum-scale = ' + window.screen.width / base.cssMedia + ', target-densitydpi=device-dpi">');
-					document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
-				} //edn else
+			if(this.unit == 'rem' || this.unit == 'em') {
+				document.write('<meta name="viewport" content="width=device-width,target-densitydpi=device-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">');
+				document.write('<link rel="stylesheet" type="text/css" href="css/common.css" />');
 			} //end if
+			else {
+				document.write('<meta name="viewport" content="width=' + base.cssMedia + ', minimum-scale = ' + window.screen.width / base.cssMedia + ', maximum-scale = ' + window.screen.width / base.cssMedia + ', target-densitydpi=device-dpi">');
+				document.write('<link rel="stylesheet" type="text/css" href="css/common.px.css" />');
+			} //edn else
 			document.write('<aside class="turnBoxPortrait" id="turnBox"><div class="phone"><img src="images/common/turn_phone.png"><i class="yes"></i><i class="no"></i></div><p>竖屏体验更佳</p></aside>');
 			this.turnBox = document.getElementById("turnBox");
 			if(this.dir != base.getOrient(true)) {
