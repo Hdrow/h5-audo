@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <title>微信竖屏模板页</title>
@@ -14,33 +14,56 @@
 ibase.init('portrait','rem');//第一个参数：锁定方向、第二个参数：css度量单位
 ibase.load('css/index.css');//无缓存加载文件
 </script>
+<link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 <!--------------------------------------------------------------html区域-------------------------------------------------------------------------------------------->
-<article>
-	<<header id="header" class="">
-		
-	</header><!-- /header -->
-	<<nav>
-		
-	</nav>
-	<section>
-		<div>
-			<ul>
-				<<li>
-					<<p>
-						<<span></span>
-						<a href=""></a>
-					</p>
-				</li>
-			</ul>
-		</div>
-	</section>
-	<<footer>
-		
-	</footer>
+<article class="t_index">
+    <div id="page1" class="page page1">
+        <div class="bg bg1 hide"><img src="./images/audi/p1.jpg"></div>
+        <div id="btnGif1" class="gif gif1"></div>
+        <div class="hand_click hand_click1 click"><img src="./images/audi/hand.png"></div> 
+        <div class="txt txt1">
+            <div class="tit tit1"></div>
+            <div class="content content1"></div>
+        </div>
+    <div class="bgm"><img src="images/bgm_on.png"></div>    
+    </div>
+
+    <div id="page2" class="page page2 hide">
+        <div class="bg bg2 hide"><img src="./images/audi/p2.jpg"></div>
+        <div id="btnGif2" class="gif gif2"></div> 
+        <div class="hand_click hand_click2 click"><img src="./images/audi/hand.png"></div> 
+        <div class="txt txt2">
+            <div class="tit tit2"></div>
+            <div class="content content2"></div>
+        </div>
+    <div class="bgm"><img src="images/bgm_on.png"></div>    
+    </div>
+
+    <div id="page3" class="page page3 hide">
+        <div class="bg bg3 hide"><img src="./images/audi/p3.jpg"></div>
+        <div id="btnGif3" class="gif gif3"></div> 
+        <div class="hand_click hand_click3 click"><img src="./images/audi/hand.png"></div> 
+        <div class="txt txt3">
+            <div class="tit tit3"></div>
+            <div class="content content3"></div>
+        </div>
+    <div class="bgm"><img src="images/bgm_on.png"></div>    
+    </div>
+
+    <div id="page4" class="page page4 hide">
+        <div class="bg bg4 hide"><img src="./images/audi/p4.jpg"></div>
+        <div id="btnGif4" class="gif gif4"></div> 
+        <div class="hand_click hand_click4 click"><img src="./images/audi/hand.png"></div> 
+        <div class="txt txt4">
+            <div class="tit tit4"></div>
+            <div class="content content4"></div>
+        </div>
+    <div class="bgm"><img src="images/bgm_on.png"></div>    
+    </div>
 </article>
-<<aside>
+<aside>
 	
 </aside>
 <!--------------------------------------------------------------javascript区域-------------------------------------------------------------------------------------->
@@ -51,6 +74,11 @@ ibase.load('css/index.css');//无缓存加载文件
 <script src="js/base/share.js"></script>
 <script src="http://bamboo.api.be-xx.com/js/loop_api.js"></script>
 <script src="js/base/user.js"></script>
-<script>ibase.load('js/index.js');</script>
+<script src="js/base/audio.js"></script>
+<script src="js/canvas/brush.js"></script>
+<script src="js/iphone.scratch.js"></script>
+<script src="js/iphone.gif.js"></script>
+
+<script src="js/index.js"></script>
 </body>
 </html>

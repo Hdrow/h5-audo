@@ -1,10 +1,84 @@
+/* css3动画 */
+.click {-webkit-animation:  click 1.5s linear infinite;}
+@keyframes click {
+    0% {-webkit-transform: scale(1);}
+    50% {-webkit-transform: scale(1.3);}
+    100% {-webkit-transform: scale(1);}
+}
+.top1 {-webkit-animation: top1 1s linear forwards;}
+@keyframes top1 {
+    0% {-webkit-transform: translateY(-1rem);opacity: 0;}
+    100% {-webkit-transform: translateY(0rem);opacity: 1;}
+}
+.top2 {-webkit-animation: top1 1s linear forwards;animation-delay: 1s;-moz-animation-delay: 1s;-webkit-animation-delay: 1s; }
+@keyframes top1 {
+    0% {-webkit-transform: translateY(0.35rem);opacity: 0;}
+    100% {-webkit-transform: translateY(1.35rem);opacity: 1;}
+}
+.bgm_click {-webkit-animation:  bgm_click 3s linear infinite;}
+@keyframes bgm_click {
+    0% {-webkit-transform: rotate(0);}
+    25% {-webkit-transform: rotate(90);}
+    50% {-webkit-transform: rotate(180);}
+    75% {-webkit-transform: rotate(270);}
+    100% {-webkit-transform: rotate(270);}
+}
 /* ---------------------------------------- 默认css针对16:9标准比例屏幕微信----------------------------------------*/
+/* 动画共同 */
+.t_index {position: relative;overflow: hidden;}
+.t_index .page {position: absolute;z-index: 0;width: 100%;height: 100%;left: 0;top: 0;}
+.t_index .page canvas {position: absolute;z-index: 9; left: 0; top: 0;}
+.t_index .bgm {position: absolute;z-index: 5;width: 0.58rem;height: 0.58rem;right: 0.23rem;top: 0.93rem;}
+.t_index .bgm img {width: 100%;}
+a.bgmBtn {right: 0.22rem;top: 0.95rem;opacity: 0;}
+
+.t_index .page .bg {width: 100%;height: 100%;}
+.t_index .page .bg img {width: 100%;height: 100%;}
+.t_index .page .gif {position: absolute;z-index: 1;left: 0;top: 0;width: 100%;height: 100%;}
+.t_index .page .gif img {width: 100%;height: 100%;}
+
+.t_index .page .hand_click {opacity: 0;position:absolute;z-index: 2;width: 2.5rem;height: 2.5rem;transition: opacity 3s;-moz-transition:opacity 3s;-webkit-transition:opacity 3s;-o-transition:opacity 3s;}
+.t_index .page .hand_click img {position:absolute;width: 0.67rem;height: 1.35rem;left:50%;top: 50%;margin: -0.675rem 0 0 -0.335rem;}
+
+.t_index .page .txt {position: absolute;z-index: 3;width: 5.6rem;height: 2.8rem;left: 50%;transform: translateX(-50%);}
+.t_index .page .tit {position: absolute;width: 5.6rem;height: 1.35rem;left: 0; top: -1rem;opacity: 0;transition: top 4s;-moz-transition:top 4s;-webkit-transition:top 4s;-o-transition:top 4s;transition: opacity 1s;-moz-transition:opacity 1s;-webkit-transition:opacity 1s;-o-transition:opacity 1s;}
+.t_index .page .content {position: absolute;width: 5.6rem;height: 1.45rem;left: 0; top: 0.35rem;opacity: 0;transition: top 4s;-moz-transition:top 4s;-webkit-transition:top 4s;-o-transition:top 4s;transition: opacity 1s;-moz-transition:opacity 1s;-webkit-transition:opacity 1s;-o-transition:opacity 1s;}
+/* 
+.t_index .page .tit.hover {top: 0;opacity: 1;}
+.t_index .page .content.hover {top: 1.35rem;opacity: 1;} */
+
+/* 点击后的动画效果 */
+.hide {display: none;}
+
+.t_index .page1 .hand_click1 {top: 79%;right: 8%;}
+.t_index .page1 .txt1 {top: 14%;}
+.t_index .page1 .tit1 {background: url("../images/audi/txt1.png") 0 0;background-size: 5.6rem auto;}
+.t_index .page1 .content1 {background: url("../images/audi/txt1.png") 0 -1.35rem;background-size: 5.6rem auto;}
+
+.t_index .page2 .hand_click2 {top: 61%;right: 29%;}
+.t_index .page2 .txt2 {top: 13.5%;}
+.t_index .page2 .tit2 {background: url("../images/audi/txt2.png") 0 0;background-size: 5.6rem auto;}
+.t_index .page2 .content2 {background: url("../images/audi/txt2.png") 0 -1.35rem;background-size: 5.6rem auto;}
+
+.t_index .page3 .hand_click3 {top: 39%;right: 45%;}
+.t_index .page3 .txt3 {top: 68%;}
+.t_index .page3 .tit3 {background: url("../images/audi/txt3.png") 0 0;background-size: 5.6rem auto;}
+.t_index .page3 .content3 {background: url("../images/audi/txt3.png") 0 -1.35rem;background-size: 5.6rem auto;}
+
+.t_index .page4 .hand_click4 {top: 17%;right: 11%;}
+.t_index .page4 .txt4 {top: 68%;}
+.t_index .page4 .tit4 {background: url("../images/audi/txt4.png") 0 0;background-size: 5.6rem auto;}
+.t_index .page4 .content4 {background: url("../images/audi/txt4.png") 0 -1.35rem;background-size: 5.6rem auto;}
+
+
+
+
 
 /*---------------------------------------- 15:9 android 微信 && 16:9 浏览器----------------------*/
 @media screen and (device-width:360px) and (max-height:540px), screen and (device-width:412px) and (max-height:630px), screen and (device-width:320px) and (max-height:470px), screen and (device-width:375px) and (max-height:560px), screen and (device-width:414px) and (max-height:630px){
-
-}
-
+    
+    }
+    
 /*---------------------------------------- 18:9 android 微信 ----------------------*/
 @media screen and (device-width:360px) and (min-height:600px), screen and (device-width:412px) and (min-height:700px), screen and (device-width:393px) and (min-height:660px){
 
@@ -12,11 +86,54 @@
 
 /*---------------------------------------- 18:9 android 浏览器----------------------*/
 @media screen and (device-width:360px) and (min-height:540px) and (max-height:560px), screen and (device-width:412px) and (min-height:630px) and (max-height:640px), screen and (device-width:393px) and (min-height:600px) and (max-height:620px){
-	
+    
 }
 
 /*---------------------------------------- iphoneX 微信----------------------*/
 @media screen and (device-width:375px) and (min-height:720px){
+.t_index {position: relative;overflow: hidden;}
+.t_index .page {position: absolute;z-index: 0;width: 100%;height: 100%;left: 0;top: 0;}
+.t_index .page .bg {width: 100%;height: 100%;}
+.t_index .page .bg img {width: 100%;height: 82%;}
+.t_index .page .gif {position: absolute;z-index: 1;left: 0;top: 0;width: 100%;height: 100%;}
+.t_index .page .gif img {width: 100%;height: 82%;}
+
+.t_index .page .hand_click {position:absolute;z-index: 2;width: 2.5rem;height: 2.5rem;}
+.t_index .page .hand_click img {position:absolute;width: 0.67rem;height: 1.35rem;left:50%;top: 50%;margin: -0.675rem 0 0 -0.335rem;}
+
+.t_index .page .tit {position: absolute;width: 5.6rem;height: 1.35rem;left: 0; top: -1rem;opacity: 0;transition: top 2s;-moz-transition:top 2s;-webkit-transition:top 2s;-o-transition:top 2s;transition: opacity 2s;-moz-transition:opacity 2s;-webkit-transition:opacity 2s;-o-transition:opacity 2s;}
+.t_index .page .content {position: absolute;width: 5.6rem;height: 1.45rem;left: 0; top: 0.35rem;opacity: 0;transition: top 2s;-moz-transition:top 2s;-webkit-transition:top 2s;-o-transition:top 2s;transition: opacity 2s;-moz-transition:opacity 2s;-webkit-transition:opacity 2s;-o-transition:opacity 2s;}
+
+
+/* 手指点击动画 */
+.t_index .page.hide {display: none;}
+
+.t_index .page1 .hand_click1 {top: 64%;right: 7%;}
+.t_index .page1 .txt1 {top: 11.5%;}
+.t_index .page1 .tit1 {background: url("../images/audi/txt1.png") 0 0;background-size: 5.6rem auto;}
+.t_index .page1 .content1 {background: url("../images/audi/txt1.png") 0 -1.35rem;background-size: 5.6rem auto;}
+
+.t_index .page2 .hand_click2 {top: 50%;right: 29%;}
+.t_index .page2 .txt2 {top: 11%;}
+.t_index .page2 .tit2 {background: url("../images/audi/txt2.png") 0 0;background-size: 5.6rem auto;}
+.t_index .page2 .content2 {background: url("../images/audi/txt2.png") 0 -1.35rem;background-size: 5.6rem auto;}
+
+.t_index .page3 .hand_click3 {top: 39%;right: 45%;}
+.t_index .page3 .txt3 {top: 56%;}
+.t_index .page3 .tit3 {background: url("../images/audi/txt3.png") 0 0;background-size: 5.6rem auto;}
+.t_index .page3 .content3 {background: url("../images/audi/txt3.png") 0 -1.35rem;background-size: 5.6rem auto;}
+
+.t_index .page4 .hand_click4 {top: 14%;right: 11%;}
+.t_index .page4 .txt4 {top: 56%;}
+.t_index .page4 .tit4 {background: url("../images/audi/txt4.png") 0 0;background-size: 5.6rem auto;}
+.t_index .page4 .content4 {background: url("../images/audi/txt4.png") 0 -1.35rem;background-size: 5.6rem auto;}
+
+
+
+
+
+
+
 
 }
 
